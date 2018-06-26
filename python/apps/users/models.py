@@ -22,7 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def get_full_name(self):
-        return "{0} {1}".format(self.first_name, self.last_name).strip()
+        return '{0} {1}'.format(self.first_name, self.last_name).strip()
 
     def get_short_name(self):
         return self.last_name
