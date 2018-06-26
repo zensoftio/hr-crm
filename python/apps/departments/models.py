@@ -10,7 +10,7 @@ class Department(models.Model):
 
 class Requirement(models.Model):
     name = models.CharField(max_length=200)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     type = models.IntegerField()
 
     def __str__(self):
@@ -18,7 +18,7 @@ class Requirement(models.Model):
 
 
 class Position(models.Model):
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
 
     def __str__(self):
