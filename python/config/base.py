@@ -21,6 +21,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
 
         'apps.departments',
+        'rest_framework',
     ]
 
     MIDDLEWARE = [
