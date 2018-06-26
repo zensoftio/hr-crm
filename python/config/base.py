@@ -25,6 +25,7 @@ class Base(Configuration):
 
         'apps.users',
         'apps.departments',
+        'rest_framework',
     ]
 
     MIDDLEWARE = [
