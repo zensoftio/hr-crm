@@ -1,6 +1,7 @@
 import os
 from configurations import Configuration, values
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -20,6 +21,9 @@ class Base(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
 
+        'django_extensions',
+
+        'apps.users',
         'apps.departments',
         'rest_framework',
     ]
@@ -63,6 +67,8 @@ class Base(Configuration):
     WSGI_APPLICATION = 'wsgi.application'
 
     DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost/zensoftdb')
+
+    AUTH_USER_MODEL = 'users.User'
 
     AUTH_PASSWORD_VALIDATORS = [
         {
