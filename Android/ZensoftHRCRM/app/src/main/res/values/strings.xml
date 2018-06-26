@@ -6,4 +6,11 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="zensoft_hr">Zensoft HR</string>
+    <string name="email_holder">hr@zensoft.io</string>
+    <string name="requests">Requests</string>
+    <string name="vacancies">Vacancies</string>
+    <string name="candidates">Candidates</string>
+    <string name="interviews">Interviews</string>
+    <string name="statistics">Statistics</string>
 </resources>
