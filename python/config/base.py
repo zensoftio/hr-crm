@@ -24,7 +24,7 @@ class Base(Configuration):
         'django_extensions',
 
         'apps.users',
-
+        'apps.departments',
     ]
 
     MIDDLEWARE = [
