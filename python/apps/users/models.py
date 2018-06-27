@@ -1,11 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+from apps.departments.models import Department
 from .validators import email_validator
 from .managers import UserManager
-
-
-# Create your models here.
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -15,6 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    departments = models.ManyToManyField(Department)
 
     objects = UserManager()
 
