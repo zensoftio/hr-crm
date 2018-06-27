@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth import get_user_model
 
 from apps.departments.models import Position
-from django.db.models import BooleanField
+
 
 User = get_user_model()
 
