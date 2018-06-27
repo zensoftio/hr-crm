@@ -3,6 +3,6 @@ from apps.departments.models import Department
 from apps.departments.serializers import DepartamentSerializer
 
 
-class DepartmentList(generics.ListCreateAPIView):
+class DepartmentCreateListView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartamentSerializer

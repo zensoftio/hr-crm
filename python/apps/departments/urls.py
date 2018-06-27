@@ -3,6 +3,6 @@ from apps.departments import views
 
 
 urlpatterns = [
-    path('', views.DepartmentList.as_view()),
+    path('', views.DepartmentCreateListView.as_view()),
 ]
 
