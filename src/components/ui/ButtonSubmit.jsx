@@ -10,7 +10,6 @@ const styles = theme => ({
 export default class ButtonSubmit extends Component {
 
   render() {
-
     return (
       <Button variant="contained" className={styles.button}>
       {this.props.children}

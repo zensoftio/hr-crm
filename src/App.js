@@ -3,11 +3,11 @@ import React from 'react';
 //import { observer } from 'mobx-react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './scenes/general/Home';
-import OpenedPositions from './scenes/headOfDep/OpenedPositions';
-import Error from './scenes/headOfDep/Error';
+import OpenedPositions from './scenes/head/OpenedPositions';
+import Error from './scenes/head/Error';
 import Navigation from './scenes/general/Navigation';
-import CreatePosition from './scenes/headOfDep/CreatePosition';
-import Archive from './scenes/headOfDep/Archive';
+import CreatePosition from './scenes/head/CreatePosition';
+import Archive from './scenes/head/Archive';
 import Statistics from './scenes/general/Statistics';
 
 class App extends React.Component {  
