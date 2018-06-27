@@ -1,8 +1,11 @@
 from django.db import models
-
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth import get_user_model
 
-# Create your models here.
+from apps.departments.models import Position
+
+User = get_user_model()
+
 HH_TIER_TYPE = (('PR','premium'),
 				('ST+','standard+'),
 				('ST','standard'),
@@ -56,15 +59,17 @@ class Vacancy(models.Model):
 
 	salary_min = models.FloatField()
 	salary_max = models.FloatField()
-	request_id = models.ForeignKey('Request',
-									on_delete=models.PROTECT)
+	# request_id = models.ForeignKey('Request',
+	# 								on_delete=models.PROTECT)
 	image_link = models.URLField()
 
 	posts = ArrayField(
 							models.CharField(max_length=12,	blank=True),
 							size=10
 							)
-	position_id = models.ForeignKey('Position',
+	position_id = models.ForeignKey(Position,
 									on_delete=models.PROTECT),
-	created_by = models.ForeignKey('User', on_delete=models.PROTECT)
+	created_by = models.ForeignKey(User,
+									 on_delete=models.PROTECT)
+
 
