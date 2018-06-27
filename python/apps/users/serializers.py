@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from apps.departments.serializers import DepartamentSerializer
+from apps.departments.serializers import DepartmentSerializer
 
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    department = DepartamentSerializer()
+    department = DepartmentSerializer()
 
     class Meta:
         model = User
