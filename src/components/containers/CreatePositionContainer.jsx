@@ -42,7 +42,7 @@ class CreatePositionContainer extends Component {
             <div>
                 <SelectAutocomplete />
                 <TextArea />
-                <ButtonSubmit/>
+                <ButtonSubmit>отправить</ButtonSubmit>
             </div>        
         )
     }
