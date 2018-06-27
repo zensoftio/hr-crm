@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from apps.departments.models import Position
 from django.db.models import BooleanField
 
+from apps.requests.models import Request
+
 User = get_user_model()
 
 HH_TIER_TYPE = (('PR', 'premium'), ('ST+', 'standard+'),
@@ -58,8 +60,8 @@ class Vacancy(models.Model):
 
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-    # request_id = models.ForeignKey('Request',
-    # 								on_delete=models.PROTECT)
+    request_id = models.ForeignKey(Request,
+                                   on_delete=models.PROTECT)
     image_link = models.URLField()
 
     posts = ArrayField(
