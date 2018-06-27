@@ -22,10 +22,15 @@ class Base(Configuration):
         'django.contrib.staticfiles',
 
         'django_extensions',
-
-        'apps.users',
-        'apps.departments',
         'rest_framework',
+
+        'apps.candidates',
+        'apps.departments',
+        'apps.evaluations',
+        'apps.interviews',
+        'apps.requests',
+        'apps.users',
+        'apps.vacancies'
     ]
 
     MIDDLEWARE = [
