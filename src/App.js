@@ -2,13 +2,13 @@ import './index.css';
 import React from 'react';
 //import { observer } from 'mobx-react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './scenes/Home';
-import OpenedPositions from './scenes/OpenedPositions';
-import Error from './scenes/Error';
-import Navigation from './scenes/Navigation';
-import CreatePosition from './scenes/CreatePosition';
-import Archive from './scenes/Archive';
-import Statistics from './scenes/Statistics';
+import Home from './scenes/general/Home';
+import OpenedPositions from './scenes/headOfDep/OpenedPositions';
+import Error from './scenes/headOfDep/Error';
+import Navigation from './scenes/general/Navigation';
+import CreatePosition from './scenes/headOfDep/CreatePosition';
+import Archive from './scenes/headOfDep/Archive';
+import Statistics from './scenes/general/Statistics';
 
 class App extends React.Component {  
   render() {

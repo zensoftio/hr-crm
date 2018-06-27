@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from './Header';
 
 const Statistics = () => {
     return (
         <div>
-            <h2>СТАТИСТИКА</h2>
+            <Header title="Статистика"/>
         </div>
     )
 }

@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../general/Header';
 
 const OpenedPositions = () => {
     return (
         <div>
-            <h2>СПИСОК ОТКРЫТЫХ ВАКАНСИЙ</h2>
+            <Header title="Открытые Позиции"/>
         </div>
     )
 }
