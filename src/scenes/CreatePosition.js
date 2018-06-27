@@ -1,11 +1,12 @@
 import React from 'react';
-import CreatePositionContainer from '../components/containers/CreatePositionContainer';
+import Header from './Header';
 
 const CreatePosition = () => {
     return (
         <div>
-           <h2>СОЗДАНИЕ ПОЗИЦИИ</h2>
-           <CreatePositionContainer />
+            <Header title="Create Position"/>
+           <h2>CreatePosition</h2>
+           {/* <CreatePositionContainer/> */}
         </div>
     )
 }

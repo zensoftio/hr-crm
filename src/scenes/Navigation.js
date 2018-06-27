@@ -8,10 +8,11 @@ const Navigation = () => {
             <HeadPhoto />
             <ul className="nav-ul">
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/create_position">СОЗДАТЬ ПОЗИЦИЮ</Link></li>
-                <li><Link to="/opened_positions">ОТКРЫТЫЕ ПОЗИЦИИ</Link></li>
-                <li><Link to="/archive">АРХИВ ПОЗИЦИЙ</Link></li>
-                <li><Link to="/statistics">СТАТИСТИКА</Link></li>
+                <li><Link to="/create_position">Create Position</Link></li>
+                <li><Link to="/opened_positions">Opened Positions</Link></li>
+                <li><Link to="/archive">Archive Position</Link></li>
+                <li><Link to="/statistics">Statistics</Link></li>
+                
             </ul>
         </div>
     )

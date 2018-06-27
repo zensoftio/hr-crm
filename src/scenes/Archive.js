@@ -1,9 +1,11 @@
 import React from 'react';
+import Header from './Header';
 
 const Archive = () => {
     return (
         <div>
-            <h2>АРХИВ ПОЗИЦИЙ</h2>
+            <Header title="Archive of Positions"/>
+            <h2>Archive</h2>
         </div>
     )
 }
