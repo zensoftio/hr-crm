@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
+    departments = DepartmentSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
