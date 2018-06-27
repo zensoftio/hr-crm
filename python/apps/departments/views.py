@@ -5,4 +5,4 @@ from apps.departments.serializers import DepartmentSerializer, PositionSerialize
 
 class DepartmentCreateListView(generics.ListCreateAPIView):
     queryset = Department.objects.all()
-    serializer_class = DepartamentSerializer
+    serializer_class = DepartmentSerializer
