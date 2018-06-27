@@ -6,15 +6,15 @@ from apps.vacancies.models import Vacancy
 
 
 class Candidate(models.Model):
-    first_name = models.CharField(max_length=50, blank=True, default='')
-    last_name = models.CharField(max_length=50, blank=True, default='')
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField(max_length=254)
-    phone = models.CharField(max_length=30, blank=True, default='')
-    experience = models.IntegerField(blank=True)
-    level = models.CharField(max_length=30, blank=True)
+    phone = models.CharField(max_length=30, blank=True, null=True)
+    experience = models.IntegerField(blank=True, null=True)
+    level = models.CharField(max_length=30, blank=True, null=True)
     status = models.IntegerField(blank=True)
     vacancy = models.ForeignKey('Vacancy', on_delete=models.PROTECT)
-    skype = models.CharField(max_length=254, blank=True, default='')
+    skype = models.CharField(max_length=254, blank=True, null=True)
     position = models.ForeignKey('Position', on_delete=models.PROTECT)
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Candidate(models.Model):
 
 
 class Cv(models.Model):
-    url = models.TextField(blank=True)
+    url = models.TextField(blank=True, null=True)
     candidate = models.ForeignKey('Candidate', on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
 
