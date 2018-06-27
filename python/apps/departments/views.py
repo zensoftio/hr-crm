@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from apps.departments.models import Department
+from apps.departments.serializers import DepartamentSerializer
 
-# Create your views here.
+
+class DepartmentList(generics.ListCreateAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartamentSerializer
