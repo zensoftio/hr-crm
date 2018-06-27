@@ -6,7 +6,7 @@ import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-// import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const suggestions = [
   { label: 'Python Developer' },
@@ -17,16 +17,16 @@ const suggestions = [
 ];
 
 function renderInput(inputProps) {
-  const { ref, ...other } = inputProps;
+  const { classes, ref, ...other } = inputProps;
 
   return (
     <TextField
       fullWidth
       InputProps={{
         inputRef: ref,
-        // classes: {
-        //   input: classes.input,
-        // },
+        classes: {
+          input: classes.input,
+        },
         ...other,
       }}
     />
@@ -89,28 +89,27 @@ function getSuggestions(value) {
       });
 }
 
-// const styles = theme => ({
-//   container: {
-//     flexGrow: 1,
-//     position: 'relative',
-//     height: 250,
-//   },
-//   suggestionsContainerOpen: {
-//     position: 'absolute',
-//     zIndex: 1,
-//     marginTop: theme.spacing.unit,
-//     left: 0,
-//     right: 0,
-//   },
-//   suggestion: {
-//     display: 'block',
-//   },
-//   suggestionsList: {
-//     margin: 0,
-//     padding: 0,
-//     listStyleType: 'none',
-//   },
-// });
+const styles = theme => ({
+  container: {
+    flexGrow: 1,
+    position: 'relative',
+  },
+  suggestionsContainerOpen: {
+    position: 'absolute',
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    left: 0,
+    right: 0,
+  },
+  suggestion: {
+    display: 'block',
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+});
 
 class IntegrationAutosuggest extends React.Component {
   state = {
@@ -137,15 +136,15 @@ class IntegrationAutosuggest extends React.Component {
   };
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <Autosuggest
         theme={{
-          // container: classes.container,
-          // suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          // suggestionsList: classes.suggestionsList,
-          // suggestion: classes.suggestion,
+          container: classes.container,
+          suggestionsContainerOpen: classes.suggestionsContainerOpen,
+          suggestionsList: classes.suggestionsList,
+          suggestion: classes.suggestion,
         }}
         renderInputComponent={renderInput}
         suggestions={this.state.suggestions}
@@ -155,8 +154,8 @@ class IntegrationAutosuggest extends React.Component {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={{
-          // classes,
-          placeholder: 'Type ',
+          classes,
+          placeholder: 'например: python',
           value: this.state.value,
           onChange: this.handleChange,
         }}
@@ -169,4 +168,4 @@ IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default IntegrationAutosuggest;
+export default withStyles(styles)(IntegrationAutosuggest);

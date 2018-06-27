@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
+import { withStyles } from '@material-ui/core/styles';
+
 
 const styles = theme => ({
   textArea: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    width: '100%'
   },
 });
 
-export default class TextArea extends Component {
+class TextArea extends Component {
   state = {
     multiline: "Controlled"
   };
@@ -20,18 +21,21 @@ export default class TextArea extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className={styles.cont}>
+      <div>
         <TextField
           id="textArea-flexible"
           placeholder="введите текст"
           multiline
           rows="5"
           onChange={this.handleChange("multiline")}
-          className={styles.textArea}
           margin="normal"
+          className={classes.textArea}
         />
       </div>
     );
   }
 }
+
+export default withStyles(styles) (TextArea);
