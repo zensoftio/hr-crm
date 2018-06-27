@@ -1,6 +1,8 @@
 package com.erkprog.zensofthrcrm;
 
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.erkprog.zensofthrcrm.ui.Candidates.CandidatesList.CandidatesFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_vacancies) {
 
         } else if (id == R.id.nav_candidates) {
+            switchFragment(new CandidatesFragment());
 
         } else if (id == R.id.nav_interviews) {
 
@@ -84,5 +89,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected void switchFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, fragment)
+                .commit();
     }
 }
