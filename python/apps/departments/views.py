@@ -1,6 +1,6 @@
 from rest_framework import generics
 from apps.departments.models import Department, Position
-from apps.departments.serializers import DepartamentSerializer, PositionSerializer
+from apps.departments.serializers import DepartmentSerializer, PositionSerializer
 
 
 class DepartmentCreateListView(generics.ListCreateAPIView):
