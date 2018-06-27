@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.erkprog.zensofthrcrm.R;
 
-public class CandidatesFragment extends Fragment {
+public class CandidatesFragment extends Fragment implements CandidatesContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
