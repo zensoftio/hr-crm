@@ -1,5 +1,5 @@
 import React from 'react';
-import profile from './images/profile.jpg';
+import profile from '../components/images/profile.jpg';
 
 const HeadPhoto = () => {
     let name = 'Name';

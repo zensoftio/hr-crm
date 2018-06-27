@@ -3,7 +3,7 @@ import React from 'react';
 const OpenedPositions = () => {
     return (
         <div>
-            <h2>Opened Positions</h2>
+            <h2>СПИСОК ОТКРЫТЫХ ВАКАНСИЙ</h2>
         </div>
     )
 }

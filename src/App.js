@@ -8,7 +8,7 @@ import Error from './scenes/Error';
 import Navigation from './scenes/Navigation';
 import CreatePosition from './scenes/CreatePosition';
 import Archive from './scenes/Archive';
-import Statistics from './components/Statistics';
+import Statistics from './scenes/Statistics';
 
 
 class App extends React.Component {  
