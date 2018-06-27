@@ -71,7 +71,7 @@ class Base(Configuration):
 
     WSGI_APPLICATION = 'wsgi.application'
 
-    DATABASES = values.DatabaseURLValue(os.environ['DATABASE_URL'])
+    DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
     AUTH_USER_MODEL = 'users.User'
 
     AUTH_PASSWORD_VALIDATORS = [
