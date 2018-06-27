@@ -10,7 +10,6 @@ import CreatePosition from './scenes/CreatePosition';
 import Archive from './scenes/Archive';
 import Statistics from './scenes/Statistics';
 
-
 class App extends React.Component {  
   render() {
     return (
@@ -29,7 +28,6 @@ class App extends React.Component {
               <Route component={Error}/>
             </Switch>
           </div>
-
         </div>
       </BrowserRouter>
     );

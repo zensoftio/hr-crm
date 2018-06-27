@@ -36,16 +36,14 @@ import ButtonSubmit from '../ui/ButtonSubmit';
 import TextArea from '../ui/TextArea';
 import SelectAutocomplete from '../ui/SelectAutocomplete';
 
-
-
 class CreatePositionContainer extends Component {
     render() {
         return(
             <div>
-            <SelectAutocomplete />
-            <TextArea />
-            <ButtonSubmit/>
-            </div>
+                <SelectAutocomplete />
+                <TextArea />
+                <ButtonSubmit>отправить</ButtonSubmit>
+            </div>        
         )
     }
 }
