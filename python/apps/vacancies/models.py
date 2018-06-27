@@ -58,8 +58,8 @@ class Vacancy(models.Model):
 
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-    # request_id = models.ForeignKey('Request',
-    # 								on_delete=models.PROTECT)
+    request_id = models.ForeignKey('Request',
+                                   on_delete=models.PROTECT)
     image_link = models.URLField()
 
     posts = ArrayField(
