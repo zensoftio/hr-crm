@@ -37,3 +37,5 @@ class RequirementRetrieve(generics.RetrieveAPIView):
     """ Return requirement by id """
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
+
+    
