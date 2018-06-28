@@ -23,7 +23,7 @@ class Candidate(models.Model):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
 
-class Cv(models.Model):
+class CV(models.Model):
     url = models.TextField(blank=True, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)

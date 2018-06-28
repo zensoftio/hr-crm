@@ -9,6 +9,7 @@ class VacancySerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.email')
     request_id = RequestSerializer
     position_id = PositionSerializer
+
     class Meta:
         model = Vacancy
         exclude = []
