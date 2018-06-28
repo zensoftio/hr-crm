@@ -37,12 +37,17 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
         holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
         holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
         holder.requestName.setText("");
-        holder.status.setText(candidate.getStatus());
+        holder.status.setText(String.valueOf(candidate.getStatus()));
     }
 
     @Override
     public int getItemCount() {
         return (mCandidates != null ? mCandidates.size() : 0);
+    }
+
+    public void loadNewData(List<Candidate> candidates){
+        mCandidates = candidates;
+        this.notifyDataSetChanged();
     }
 
     static class CandidateViewHolder extends RecyclerView.ViewHolder {
