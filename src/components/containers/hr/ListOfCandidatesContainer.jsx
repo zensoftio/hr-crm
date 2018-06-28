@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,7 +14,7 @@ const CustomTableCell = withStyles(theme => ({
         color: theme.palette.common.white,
     },
     body: {
-        fontSize: 14,
+        fontSize: 13,
     },
 }))(TableCell);
 
@@ -35,45 +35,51 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(name, calories, fat, carbs, protein) {
+
+function createData(name, language, status, date, comment, attachment, profile) {
     id += 1;
-    return { id, name, calories, fat, carbs, protein };
+    return {id, name, language, status, date, comment, attachment, profile};
 }
 
 const data = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
+    createData('Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
+    createData('Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
+
 ];
 
 function ListOfCandidatesContainer(props) {
-    const { classes } = props;
+    const {classes} = props;
 
     return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <CustomTableCell>Dessert (100g serving)</CustomTableCell>
-                        <CustomTableCell numeric>Calories</CustomTableCell>
-                        <CustomTableCell numeric>Fat (g)</CustomTableCell>
-                        <CustomTableCell numeric>Carbs (g)</CustomTableCell>
-                        <CustomTableCell numeric>Protein (g)</CustomTableCell>
+                        <CustomTableCell>№</CustomTableCell>
+                        <CustomTableCell>Ф.И.О</CustomTableCell>
+                        <CustomTableCell>ЯЗЫК</CustomTableCell>
+                        <CustomTableCell>СТАТУС</CustomTableCell>
+                        <CustomTableCell>ДАТА</CustomTableCell>
+                        <CustomTableCell>КОММЕНТАРИЙ</CustomTableCell>
+                        <CustomTableCell>ВЛОЖЕНИЕ</CustomTableCell>
+                        <CustomTableCell>ПРОФИЛЬ</CustomTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data.map(n => {
                         return (
                             <TableRow className={classes.row} key={n.id}>
+                                <CustomTableCell> {n.id} </CustomTableCell>
                                 <CustomTableCell component="th" scope="row">
                                     {n.name}
                                 </CustomTableCell>
-                                <CustomTableCell numeric>{n.calories}</CustomTableCell>
-                                <CustomTableCell numeric>{n.fat}</CustomTableCell>
-                                <CustomTableCell numeric>{n.carbs}</CustomTableCell>
-                                <CustomTableCell numeric>{n.protein}</CustomTableCell>
+                                <CustomTableCell>{n.language}</CustomTableCell>
+                                <CustomTableCell>{n.status}</CustomTableCell>
+                                <CustomTableCell>{n.date}</CustomTableCell>
+                                <CustomTableCell>{n.comment}</CustomTableCell>
+                                <CustomTableCell>{n.attachment}</CustomTableCell>
+                                <CustomTableCell>{n.profile}</CustomTableCell>
                             </TableRow>
                         );
                     })}
