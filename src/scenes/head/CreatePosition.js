@@ -7,7 +7,11 @@ const CreatePosition = () => {
         <div>
             <Header title="Создать Позицию"/>
           
+<<<<<<< HEAD
            <CreatePositionContainer/>
+=======
+           {/*{ <CreatePositionContainer/> }*/}
+>>>>>>> 4ebd6311b462016ee6e99502819493e948000d89
         </div>
     )
 }

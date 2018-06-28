@@ -9,7 +9,11 @@ import Navigation from './scenes/general/Navigation';
 import CreatePosition from './scenes/head/CreatePosition';
 import Archive from './scenes/head/Archive';
 import Statistics from './scenes/general/Statistics';
+<<<<<<< HEAD
 import HR from './scenes/hr/CreateVacancy';
+=======
+import ListCandidates from "./scenes/hr/ListCandidates";
+>>>>>>> 4ebd6311b462016ee6e99502819493e948000d89
 
 class App extends React.Component {  
   render() {
@@ -27,6 +31,8 @@ class App extends React.Component {
               <Route path="/opened_positions" component={OpenedPositions}/>
               <Route path="/archive" component={Archive}/>
               <Route path="/statistics" component={Statistics}/>
+
+                <Route path="/hr/list_candidates" component={ListCandidates}/>
               <Route component={Error}/>
             </Switch>
           </div>
