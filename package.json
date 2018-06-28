@@ -9,6 +9,7 @@
     "babel-plugin-styled-components": "^1.5.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "multi-select-react": "^0.1.8",
     "react": "^16.4.0",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.2",
