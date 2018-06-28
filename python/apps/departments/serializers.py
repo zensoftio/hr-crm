@@ -18,4 +18,3 @@ class RequirementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement
         fields = ('id', 'department', 'name', 'type')
-
