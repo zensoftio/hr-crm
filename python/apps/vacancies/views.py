@@ -8,6 +8,9 @@ class VacancyList(generics.ListCreateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancySerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 class VacancyDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vacancy.objects.all()

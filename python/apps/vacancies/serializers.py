@@ -1,16 +1,17 @@
 from rest_framework import serializers
 
+from apps.departments.serializers import PositionSerializer
+from apps.requests.serializer import RequestSerializer
 from .models import Vacancy, Publication
 
 
-# Serializers define the API representation.
 class VacancySerializer(serializers.ModelSerializer):
+    created_by = serializers.ReadOnlyField(source='created_by.email')
+    request_id = RequestSerializer
+    position_id = PositionSerializer
     class Meta:
         model = Vacancy
-        fields = ('id', 'created', 'modified', 'topic', 'city', 'address',
-                  'hh_payment_type', 'work_conditions', 'experience', 'working_hours',
-                  'employment_patterns', 'salary_min', 'salary_min', 'salary_max',
-                  'request_id', 'image_link', 'posts', 'position_id', 'created_by')
+        exclude = []
 
 
 class PublicationSerializer(serializers.ModelSerializer):

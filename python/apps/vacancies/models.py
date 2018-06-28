@@ -20,7 +20,7 @@ EXPERIENCE = (('0', 'No-experience'),
 
 WORKING_HOURS = (('FT', 'full-time-day'),
                  ('RS', 'rotation_shift'),
-                 ('FT', 'flexible-time'),
+                 ('FLT', 'flexible-time'),
                  ('RJ', 'remote-job'),
                  ('SF', 'special-shift-day'),)
 
@@ -32,6 +32,7 @@ EMPLOYMENT_PATTERNS = (('FT', 'full-time'),
 
 
 class Vacancy(models.Model):
+
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -50,8 +51,8 @@ class Vacancy(models.Model):
                                   max_length=3,
                                   default='0')
     working_hours = models.CharField(choices=WORKING_HOURS,
-                                     max_length=2,
-                                     default='FT')
+                                     max_length=3,
+                                     default='FLT')
     employment_patterns = models.CharField(choices=EMPLOYMENT_PATTERNS,
                                            max_length=3,
                                            default='FT')
@@ -66,7 +67,7 @@ class Vacancy(models.Model):
     )
     position_id = models.ForeignKey(Position,
                                     on_delete=models.PROTECT),
-    created_by = models.ForeignKey(User,
+    created_by = models.ForeignKey(User, related_name='vacancies',
                                    on_delete=models.PROTECT)
 
 
