@@ -21,3 +21,9 @@ class RequirementListView(generics.ListAPIView):
 class RequirementCreateView(generics.CreateAPIView):
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
+
+
+class PositionListCreateView(generics.ListCreateAPIView):
+    queryset = Position.objects.all()
+    serializer_class = PositionSerializer
+

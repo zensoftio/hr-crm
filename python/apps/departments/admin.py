@@ -1,6 +1,5 @@
 from django.contrib import admin
-
-# Register your models here.
-from apps.departments.models import Position, Department, Requirement
+from apps.departments.models import Position, Requirement, Department
 
 admin.site.register([Department, Requirement, Position])
+
