@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.candidates.models import Comment, CV, Candidate
+
+admin.site.register([Candidate, CV, Comment])
