@@ -12,7 +12,6 @@ const Navigation = () => {
                 <li><Link to="/opened_positions">Открытые Позиции</Link></li>
                 <li><Link to="/archive">Архив Позиций</Link></li>
                 <li><Link to="/statistics">Статистика</Link></li>
-                
             </ul>
         </div>
     )

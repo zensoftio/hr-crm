@@ -9,6 +9,7 @@ import Navigation from './scenes/general/Navigation';
 import CreatePosition from './scenes/head/CreatePosition';
 import Archive from './scenes/head/Archive';
 import Statistics from './scenes/general/Statistics';
+import HR from './scenes/hr/CreateVacancy';
 
 class App extends React.Component {  
   render() {
@@ -21,6 +22,7 @@ class App extends React.Component {
           <div className="content">
             <Switch>
               <Route path="/" component={Home} exact/>
+              <Route path="/hr" component={HR} exact/>
               <Route path="/create_position" component={CreatePosition}/>   
               <Route path="/opened_positions" component={OpenedPositions}/>
               <Route path="/archive" component={Archive}/>
