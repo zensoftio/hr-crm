@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "@nestjs/common": "^5.0.0",
-    "@nestjs/core": "^5.0.0", 
+    "@nestjs/core": "^5.0.0",
+    "@nestjs/microservices": "^5.0.1",
+    "amqplib": "^0.5.2",
     "fastify-formbody": "^2.0.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0",
