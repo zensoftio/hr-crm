@@ -4,15 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CandidatesResponse {
+public class CriteriasResponse {
+
     @SerializedName("count")
     private Integer count;
     @SerializedName("next")
-    private String next;
+    private Object next;
     @SerializedName("previous")
-    private String previous;
+    private Object previous;
     @SerializedName("results")
-    private List<Candidate> candidateList = null;
+    private List<Criteria> criteriaList = null;
 
     public Integer getCount() {
         return count;
@@ -22,27 +23,28 @@ public class CandidatesResponse {
         this.count = count;
     }
 
-    public String getNext() {
+    public Object getNext() {
         return next;
     }
 
-    public void setNext(String next) {
+    public void setNext(Object next) {
         this.next = next;
     }
 
-    public String getPrevious() {
+    public Object getPrevious() {
         return previous;
     }
 
-    public void setPrevious(String previous) {
+    public void setPrevious(Object previous) {
         this.previous = previous;
     }
 
-    public List<Candidate> getCandidateList() {
-        return candidateList;
+    public List<Criteria> getCriteriaList() {
+        return criteriaList;
     }
 
-    public void setCandidateList(List<Candidate> candidateList) {
-        this.candidateList = candidateList;
+    public void setCriteriaList(List<Criteria> criteriaList) {
+        this.criteriaList = criteriaList;
     }
+
 }
