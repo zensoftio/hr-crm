@@ -8,17 +8,7 @@ class DepartmentCreateListView(generics.ListCreateAPIView):
     serializer_class = DepartmentSerializer
 
 
-class RequirementListView(generics.ListAPIView):
-    queryset = Requirement.objects.all()
-    serializer_class = RequirementSerializer
-
-    def get_queryset(self):
-        pk = self.request.query_params.get('department')
-        queryset = Requirement.objects.filter(department=pk)
-        return queryset
-
-
-class RequirementCreateView(generics.CreateAPIView):
+class RequirementListCreateView(generics.ListCreateAPIView):
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
 
