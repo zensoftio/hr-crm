@@ -49,25 +49,17 @@ class Vacancy(models.Model):
     experience = models.CharField(choices=EXPERIENCE,
                                   max_length=3,
                                   default='0')
-
     working_hours = models.CharField(choices=WORKING_HOURS,
                                      max_length=2,
                                      default='FT')
-
     employment_patterns = models.CharField(choices=EMPLOYMENT_PATTERNS,
                                            max_length=3,
                                            default='FT')
-
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-<<<<<<< HEAD
-    request_id = models.ForeignKey('Request',
-=======
     request_id = models.ForeignKey(Request,
->>>>>>> a37c2b28d07c45be15cc5818d85de50e80c7845a
                                    on_delete=models.PROTECT)
     image_link = models.URLField()
-
     posts = ArrayField(
         models.CharField(max_length=12, blank=True),
         size=10
