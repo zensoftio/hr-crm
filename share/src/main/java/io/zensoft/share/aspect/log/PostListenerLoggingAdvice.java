@@ -40,8 +40,8 @@ public class PostListenerLoggingAdvice {
      */
     @Before("io.zensoft.share.aspect.PostListenerPointCut.onPublishMethodCalled()")
     public void logBeforePublishMessageHandled(JoinPoint joinPoint) {
-        String queueNameWhereMessageCame = getQueueNameAnnotatedWithRabbitListener(joinPoint);
-        logger.info("Receiving message to queue : " + queueNameWhereMessageCame);
+        String requestReceiverQueue = getPostListenerQueueName(joinPoint);
+        logger.info("Receiving message to queue : " + requestReceiverQueue);
         logger.info("Message body : " + joinPoint.getArgs()[0]);
         logger.info("Message handler class signature :" + joinPoint.getSignature().toString());
     }
@@ -57,8 +57,8 @@ public class PostListenerLoggingAdvice {
      */
     @After("io.zensoft.share.aspect.PostListenerPointCut.onPublishMethodCalled()")
     public void logAfterPublishMessageHandled(JoinPoint joinPoint) {
-        String queueNameWhereMessageCame = getQueueNameAnnotatedWithRabbitListener(joinPoint);
-        logger.info("Queue '" + queueNameWhereMessageCame + "' with body '" + joinPoint.getArgs()[0] + "' handled");
+        String requestReceiverQueue = getPostListenerQueueName(joinPoint);
+        logger.info("Queue '" + requestReceiverQueue + "' with body '" + joinPoint.getArgs()[0] + "' handled");
         logger.info("Message handler class signature :" + joinPoint.getSignature().toString());
     }
 
@@ -68,7 +68,7 @@ public class PostListenerLoggingAdvice {
      * method should be annotated with RabbitListener
      * @see RabbitListener
      */
-    public String getQueueNameAnnotatedWithRabbitListener(JoinPoint joinPoint) {
+    public String getPostListenerQueueName(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
         RabbitListener rabbitListener = method.getAnnotation(RabbitListener.class);
