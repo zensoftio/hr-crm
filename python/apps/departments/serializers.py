@@ -9,6 +9,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class PositionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Position
         fields = ('id', 'department', 'name')

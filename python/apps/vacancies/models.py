@@ -1,10 +1,8 @@
-from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.fields import ArrayField
+from django.db import models
 
 from apps.departments.models import Position
-from django.db.models import BooleanField
-
 from apps.requests.models import Request
 
 User = get_user_model()
