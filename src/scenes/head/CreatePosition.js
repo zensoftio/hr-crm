@@ -6,7 +6,7 @@ const CreatePosition = () => {
         <div>
             <Header title="Создать Позицию"/>
           
-           	<CreatePositionContainer/>
+           <CreatePositionContainer/>
         </div>
     )
 }

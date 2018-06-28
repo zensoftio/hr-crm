@@ -25,12 +25,14 @@ class TextArea extends Component {
     return (
       <div>
         <TextField
+          label={this.props.label}
           id="textArea-flexible"
           placeholder="введите текст"
           multiline
           rows="5"
           onChange={this.handleChange("multiline")}
           margin="normal"
+          defaultValue={this.props.value}
           className={classes.textArea}
         />
       </div>

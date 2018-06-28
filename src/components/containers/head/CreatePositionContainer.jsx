@@ -1,11 +1,14 @@
 import React from 'react';
+import ButtonSubmit from '../../ui/ButtonSubmit';
+import TextArea from '../../ui/TextArea';
+import SelectAutocomplete from '../../ui/SelectAutocomplete';
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx';
 import SelectList from '../../ui/SelectList';
 import MultipleSelect from '../../ui/MultipleSelect';
 
 
-export default class CreatePositionContainer extends React.Component {
+class CreatePositionContainer extends React.Component {
 
 	constructor(props) {
     super(props);
@@ -46,9 +49,8 @@ export default class CreatePositionContainer extends React.Component {
 		this.setState(prev => ({
 			count: (prev.count > 0) ? prev.count - 1 : 0
 		}))
-	}	
+	}		
 
-		
     render() {
 
 			let instyle = {
@@ -114,3 +116,5 @@ export default class CreatePositionContainer extends React.Component {
     }
 
 }
+
+export default CreatePositionContainer;
