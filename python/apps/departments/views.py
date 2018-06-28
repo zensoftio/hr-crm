@@ -8,11 +8,12 @@ class DepartmentCreateListView(generics.ListCreateAPIView):
     serializer_class = DepartmentSerializer
 
 
-class RequirementCreateView(generics.CreateAPIView):
+class RequirementListCreateView(generics.ListCreateAPIView):
     queryset = Requirement.objects.all()
-    serializer_class = RequirementSerializer()
+    serializer_class = RequirementSerializer
 
 
 class PositionListCreateView(generics.ListCreateAPIView):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
+
