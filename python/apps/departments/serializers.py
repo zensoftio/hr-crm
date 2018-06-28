@@ -15,7 +15,8 @@ class PositionSerializer(serializers.ModelSerializer):
 
 
 class RequirementSerializer(serializers.ModelSerializer):
+    # department = serializers.PrimaryKeyRelatedField(source='department.id')
+
     class Meta:
         model = Requirement
         fields = ('id', 'department', 'name', 'type')
-
