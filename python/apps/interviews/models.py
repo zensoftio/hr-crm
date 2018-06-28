@@ -7,9 +7,9 @@ from apps.requests.models import Request
 User = get_user_model()
 
 INTERVIEW_STATUS = (
-    (1, 'Предстоит'),
-    (2, 'Прошло'),
-    (3, 'Отменено'),
+    (0, 'Предстоит'),
+    (1, 'Прошло'),
+    (2, 'Отменено'),
 )
 
 
