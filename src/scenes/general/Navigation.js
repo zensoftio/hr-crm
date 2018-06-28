@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HeadPhoto from './HeadPhoto';
 
-const Navigation = () => {
+const Navigation = (props) => {
     return (
         <div className="navigation">
             <HeadPhoto />

@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './scenes/general/Home';
 import OpenedPositions from './scenes/head/OpenedPositions';
-import Error from './scenes/head/Error';
+import Error from './scenes/general/Error';
 import Navigation from './scenes/general/Navigation';
 import CreatePosition from './scenes/head/CreatePosition';
 import Archive from './scenes/head/Archive';
