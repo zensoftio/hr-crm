@@ -13,29 +13,7 @@ class CreatePositionContainer extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-			count: 0,
-			department: [
-				'PM Department', 
-				'Human Resources',
-				'Head of Department'
-			],
-			developer: [
-				'Python Dev',
-				'JS Dev',
-				'Java Dev'
-			],
-			rank: [
-				'Junior',
-				'Middle',
-				'Senior'
-			],
-			requirements: [
-				'one',
-				'two',
-				'three',
-				'five',
-				'four'
-			]
+			count: 0		
 		};
 		
 	}
@@ -52,6 +30,28 @@ class CreatePositionContainer extends React.Component {
 	}		
 
     render() {
+			const	department = [
+				'PM Department', 
+				'Human Resources',
+				'Head of Department'
+			],
+			developer = [
+				'Python Dev',
+				'JS Dev',
+				'Java Dev'
+			],
+			rank = [
+				'Junior',
+				'Middle',
+				'Senior'
+			],
+			requirements = [
+				'one',
+				'two',
+				'three',
+				'five',
+				'four'
+			];
 
 			let instyle = {
 				display: 'inline-block',
@@ -70,7 +70,7 @@ class CreatePositionContainer extends React.Component {
 					<div style={divstyle}>
 						<label>
 							<span style={instyle}>ОТДЕЛ:</span>							
-							<SelectList vals={this.state.department}/>							
+							<SelectList vals={department}/>							
 						</label>						
 					</div>
 
@@ -86,7 +86,7 @@ class CreatePositionContainer extends React.Component {
 					<div style={divstyle}>
 						<label>
 							<span style={instyle}>НАЗВАНИЕ:</span>							
-							<SelectList vals={this.state.developer}/>							
+							<SelectList vals={developer}/>							
 						</label>						
 					</div>
 
@@ -97,7 +97,7 @@ class CreatePositionContainer extends React.Component {
 					<div style={divstyle}>
 						<label>
 							<span style={instyle}>УРОВЕНЬ:</span>							
-							<SelectList vals={this.state.rank}/>							
+							<SelectList vals={rank}/>							
 						</label>						
 					</div>					
 
