@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
+import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
             switchFragment(new CandidatesFragment());
 
         } else if (id == R.id.nav_interviews) {
-
+            switchFragment(new InterviewsFragment());
         } else if (id == R.id.nav_statistics) {
 
         }
