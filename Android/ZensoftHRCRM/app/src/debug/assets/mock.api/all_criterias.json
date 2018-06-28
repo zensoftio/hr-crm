@@ -1,0 +1,37 @@
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "OOP",
+      "department": 1
+    },
+    {
+      "id": 2,
+      "name": "Django",
+      "department": 1
+    },
+    {
+      "id": 3,
+      "name": "Serializer",
+      "department": 1
+    },
+    {
+      "id": 4,
+      "name": "Pandas",
+      "department": 1
+    },
+    {
+      "id": 5,
+      "name": "React Js",
+      "department": 2
+    },
+    {
+      "id": 6,
+      "name": "Spring framework",
+      "department": 3
+    }
+  ]
+}
