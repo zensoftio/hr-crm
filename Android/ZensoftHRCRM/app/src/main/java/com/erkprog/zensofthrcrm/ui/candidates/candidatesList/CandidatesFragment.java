@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
+import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import java.util.List;
 
 public class CandidatesFragment extends Fragment implements CandidatesContract.View {
+
+    private CandidatesContract.Presenter mPresenter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +27,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
+        mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
+
         return v;
     }
 

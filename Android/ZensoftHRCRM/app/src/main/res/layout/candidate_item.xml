@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/firstName"
+                android:id="@+id/citem_firstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -34,30 +34,30 @@
                 tools:text="FirstName" />
 
             <TextView
-                android:id="@+id/lastName"
+                android:id="@+id/citem_lastName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:textColor="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/firstName"
-                app:layout_constraintStart_toEndOf="@+id/firstName"
+                app:layout_constraintBottom_toBottomOf="@+id/citem_firstName"
+                app:layout_constraintStart_toEndOf="@+id/citem_firstName"
                 tools:text="LastName" />
 
             <TextView
-                android:id="@+id/request_name"
+                android:id="@+id/citem_request_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@+id/firstName"
-                app:layout_constraintTop_toBottomOf="@+id/firstName"
+                app:layout_constraintStart_toStartOf="@+id/citem_firstName"
+                app:layout_constraintTop_toBottomOf="@+id/citem_firstName"
                 tools:text="request_name" />
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/citem_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/lastName"
+                app:layout_constraintBottom_toBottomOf="@+id/citem_lastName"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="status" />
         </android.support.constraint.ConstraintLayout>
