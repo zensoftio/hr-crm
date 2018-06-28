@@ -67,10 +67,10 @@ function ListOfCandidatesContainer(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map(n => {
+                    {data.map((n, i) => {
                         return (
-                            <TableRow className={classes.row} key={n.id}>
-                                <CustomTableCell> {n.id} </CustomTableCell>
+                            <TableRow className={classes.row} key={i}>
+                                <CustomTableCell> {++i} </CustomTableCell>
                                 <CustomTableCell component="th" scope="row">
                                     {n.name}
                                 </CustomTableCell>
