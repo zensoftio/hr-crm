@@ -64,7 +64,6 @@ class CreatePositionContainer extends React.Component {
 				margin: '0 20px'
 			}
 			
-		console.log(this.props);
       return(
 				<div>
 					<div style={divstyle}>

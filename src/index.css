@@ -39,3 +39,17 @@ html, body {
     margin: 0;
     padding: 10px;
 }
+
+.archive_devs tr:nth-child(even){background-color: #f2f2f2;}
+
+.archive_devs tr:hover {background-color: #ddd;}
+
+.archive_devs th{
+	padding: 15px;
+	text-align: left;
+	background-color: #4CAF50;
+	color: white;
+}
+.archive_devs td {
+	text-align: center;
+}
