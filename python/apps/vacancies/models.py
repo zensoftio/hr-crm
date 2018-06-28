@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from apps.departments.models import Position
 
 
+from apps.requests.models import Request
+
 User = get_user_model()
 
 HH_TIER_TYPE = (('PR', 'premium'), ('ST+', 'standard+'),
@@ -58,7 +60,11 @@ class Vacancy(models.Model):
 
     salary_min = models.FloatField()
     salary_max = models.FloatField()
+<<<<<<< HEAD
     request_id = models.ForeignKey('Request',
+=======
+    request_id = models.ForeignKey(Request,
+>>>>>>> a37c2b28d07c45be15cc5818d85de50e80c7845a
                                    on_delete=models.PROTECT)
     image_link = models.URLField()
 
