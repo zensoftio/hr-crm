@@ -1,7 +1,7 @@
 import './index.css';
 import React from 'react';
 //import { observer } from 'mobx-react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Home from './scenes/general/Home';
 import OpenedPositions from './scenes/head/OpenedPositions';
 import Error from './scenes/head/Error';
@@ -10,31 +10,33 @@ import CreatePosition from './scenes/head/CreatePosition';
 import Archive from './scenes/head/Archive';
 import Statistics from './scenes/general/Statistics';
 import ListCandidates from "./scenes/hr/ListCandidates";
+import ListInterns from "./scenes/hr/ListIntern";
 
-class App extends React.Component {  
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="container">
+class App extends React.Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <div className="container">
 
-          <Navigation />
+                    <Navigation/>
 
-          <div className="content">
-            <Switch>
-              <Route path="/" component={Home} exact/>
-              <Route path="/create_position" component={CreatePosition}/>   
-              <Route path="/opened_positions" component={OpenedPositions}/>
-              <Route path="/archive" component={Archive}/>
-              <Route path="/statistics" component={Statistics}/>
+                    <div className="content">
+                        <Switch>
+                            <Route path="/" component={Home} exact/>
+                            <Route path="/create_position" component={CreatePosition}/>
+                            <Route path="/opened_positions" component={OpenedPositions}/>
+                            <Route path="/archive" component={Archive}/>
+                            <Route path="/statistics" component={Statistics}/>
 
-                <Route path="/hr/list_candidates" component={ListCandidates}/>
-              <Route component={Error}/>
-            </Switch>
-          </div>
-        </div>
-      </BrowserRouter>
-    );
-  }
+                            <Route path="/hr/list_candidates" component={ListCandidates}/>
+                            <Route path="/hr/list_interns" component={ListInterns}/>
+                            <Route component={Error}/>
+                        </Switch>
+                    </div>
+                </div>
+            </BrowserRouter>
+        );
+    }
 };
 
 export default App;
