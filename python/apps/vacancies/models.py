@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from apps.departments.models import Position
 from apps.requests.models import Request
 
 User = get_user_model()
@@ -56,25 +55,23 @@ class Vacancy(models.Model):
                                            default='FT')
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-    request_id = models.ForeignKey(Request,
+    request = models.ForeignKey(Request,
                                    on_delete=models.PROTECT)
     image_link = models.URLField()
     posts = ArrayField(
         models.CharField(max_length=12, blank=True),
         size=10
     )
-    position_id = models.ForeignKey(Position,
-                                    on_delete=models.PROTECT),
     created_by = models.ForeignKey(User, related_name='vacancies',
                                    on_delete=models.PROTECT)
 
 
 class Publication(models.Model):
-    vacancy_id = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     facebook = models.BooleanField()
     instagram = models.BooleanField()
     headhunter = models.BooleanField()
     diesel = models.BooleanField()
     jobkg = models.BooleanField()
+

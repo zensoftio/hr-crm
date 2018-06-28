@@ -1,14 +1,12 @@
 from rest_framework import serializers
 
-from apps.departments.serializers import PositionSerializer
 from apps.requests.serializer import RequestSerializer
 from .models import Vacancy, Publication
 
 
 class VacancySerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.email')
-    request_id = RequestSerializer
-    position_id = PositionSerializer
+    request = RequestSerializer
 
     class Meta:
         model = Vacancy
@@ -16,7 +14,9 @@ class VacancySerializer(serializers.ModelSerializer):
 
 
 class PublicationSerializer(serializers.ModelSerializer):
+    vacancy = VacancySerializer
+
     class Meta:
         model = Publication
-        fields = ('vacancy_id', 'created', 'created_by', 'facebook',
-                  'instagram', 'headhunter', 'diesel', 'jobkg')
+        exclude =[]
+

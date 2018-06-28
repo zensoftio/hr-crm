@@ -18,8 +18,8 @@ class VacancyDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PublicationList(generics.ListAPIView):
-    queryset = Vacancy.objects.all()
-    serializer_class = VacancySerializer
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
 
 
 class PublicationDetail(generics.RetrieveAPIView):
