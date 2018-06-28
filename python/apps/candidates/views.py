@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+
+# DO NOT DELETE IT UNTIL ALL URLS CREATED
+def test_func(request):
+    return HttpResponse("Test")
