@@ -19,3 +19,11 @@ class RequirementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement
         fields = ('id', 'department', 'name', 'type')
+
+
+class AuxPositionSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+
+    class Meta:
+        model = Position
+        fields = ('id', 'department', 'name')
