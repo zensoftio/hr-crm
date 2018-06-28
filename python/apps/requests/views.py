@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from apps.requests.models import Request
 from apps.requests.serializers import RequestSerializer, RequestPostSerializer
-from rest_framework import generics, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
 
 User = get_user_model()
 
@@ -30,6 +30,5 @@ class RequestList(APIView):
 
 
 class RequestDetail(generics.RetrieveAPIView):
-
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
