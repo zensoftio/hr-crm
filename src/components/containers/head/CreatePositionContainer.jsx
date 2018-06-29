@@ -64,7 +64,6 @@ class CreatePositionContainer extends React.Component {
 				margin: '0 20px'
 			}
 			
-		console.log(this.props);
       return(
 				<div>
 					<div style={divstyle}>
@@ -85,13 +84,28 @@ class CreatePositionContainer extends React.Component {
 
 					<div style={divstyle}>
 						<label>
-							<span style={instyle}>НАЗВАНИЕ:</span>							
-							<SelectList vals={developer}/>							
+							<span style={instyle}>НАЗВАНИЕ:</span>	
+							<SelectList vals={developer}/>
+								
 						</label>						
 					</div>
 
 					<div style={divstyle}>
-						<MultipleSelect />
+						<label>
+							<span style={instyle}>ТРЕБОВАНИЯ:</span>	
+							<span style={instyle}>
+								<MultipleSelect names={requirements}/>
+							</span>	
+						</label>						
+					</div>
+
+					<div style={divstyle}>
+						<label>
+							<span style={instyle}>НАВЫКИ:</span>	
+							<span style={instyle}>
+								<MultipleSelect names={requirements}/>
+							</span>	
+						</label>						
 					</div>
 
 					<div style={divstyle}>
@@ -104,13 +118,14 @@ class CreatePositionContainer extends React.Component {
 					<div style={divstyle}>
 						<label>
 							<span style={instyle}>ОБЩИЕ ТРЕБОВАНИЯ:</span>
-							<textarea defaultValue='type something'>								
-							</textarea>
+							<TextArea />
 						</label>
 					</div>
-
-			
-					
+					<div style={divstyle}>
+						<ButtonSubmit>
+							SUBMIT
+						</ButtonSubmit>
+					</div>	
 				</div>
 			);
     }
