@@ -40,9 +40,9 @@ class CV(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
 
     class Meta:
         default_related_name = 'comments'

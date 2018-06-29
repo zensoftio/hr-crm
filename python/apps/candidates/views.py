@@ -1,12 +1,8 @@
-from django.http import HttpResponse
-from rest_framework import generics
+from rest_framework import generics, status
 
-from .models import Candidate
-from .serializers import AuxCandidateSerializer, CandidateDetailSerializer
-
-
-def test_func(request):
-    return HttpResponse('Test')
+from .models import Candidate, Comment
+from .serializers import AuxCandidateSerializer, CandidateDetailSerializer, CommentCreateSerializer
+from rest_framework.response import Response
 
 
 class CandidateListView(generics.ListAPIView):
@@ -17,3 +13,16 @@ class CandidateListView(generics.ListAPIView):
 class CandidateDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Candidate.objects.all()
     serializer_class = CandidateDetailSerializer
+
+
+class CommentCreateView(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentCreateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = CommentCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
