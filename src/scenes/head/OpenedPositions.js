@@ -35,7 +35,7 @@ class OpenedPositions extends React.Component {
 			}))
 		}
 	}
-
+	//rendering
 	render() {
 		return(
 			<div>
