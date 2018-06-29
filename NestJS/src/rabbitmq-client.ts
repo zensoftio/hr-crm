@@ -22,6 +22,7 @@ export class RabbitMQClient extends ClientProxy {
 
   private handleMessage(message, server, callback: (err, result, disposed?: boolean) => void) {
     const { content } = message;
+    console.log("Message in client is " + message)
     const { err, response, disposed } = JSON.parse(content.toString());
     if (disposed) {
         server.close();

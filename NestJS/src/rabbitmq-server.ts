@@ -1,6 +1,10 @@
 import * as amqp from 'amqplib';
 import { Server, CustomTransportStrategy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { MessageService } from 'Messages/message.service';
+import { Repository } from 'typeorm';
+import { MessageController } from 'Messages/message.listener';
+import { Message } from 'Messages/message.entity';
 
 export class RabbitMQServer extends Server implements CustomTransportStrategy {
     private server: amqp.Connection = null;
@@ -13,7 +17,7 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
       }
 
   public async listen(callback: () => void) {
-    console.log("Microservice is Liestening")
+    console.log("Microservice is listening")
     await this.init();
     this.channel.consume(`${this.queue}_sub`, this.handleMessage.bind(this), {
       noAck: true,
@@ -28,6 +32,10 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
   private async handleMessage(message) {
     const { content } = message;
     const messageObj = JSON.parse(content.toString());
+    console.log("in handleMEssage " + messageObj)
+    
+    var controller = new MessageController();
+    controller.sendMessage(messageObj)
 
     const handlers = this.getHandlers();
     const pattern = JSON.stringify(messageObj.pattern);
