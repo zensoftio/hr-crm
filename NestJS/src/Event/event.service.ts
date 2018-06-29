@@ -2,15 +2,21 @@ import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, getRepository } from 'typeorm';
 import { Event } from './event.entity';
-import { google_calendar } from './google.calendar/main';
+import * as google from './calendar/google.calendar';
 
 @Injectable()
 export class EventService {
-  constructor() {}
+   constructor() {}
 
   async createEvent(event: Event){
-    await getRepository(Event).save(event);
+    google.run(event, function(response) {
+      const eventOfDatabase = event.content;
+      eventOfDatabase.id_event = response.id;
+      console.log(response.id);
+      getRepository(Event).save(eventOfDatabase);
+    })
   }
+
   // async updateEvent(event: Event){
   //   await this.eventRepository.save(event);
   // }
@@ -27,4 +33,5 @@ export class EventService {
   //   const event = await this.eventRepository.findOne({id: event.id});
   //   await this.eventRepository.remove(event);
   // }
+
 }

@@ -9,7 +9,10 @@ export class EventListener {
   }
 
   doEvent(){
-    this.eventService.createEvent(this.msg.content);
+    if(this.msg.description == "create"){
+      this.eventService.createEvent(this.msg);
+    }
+
   }
 
 }

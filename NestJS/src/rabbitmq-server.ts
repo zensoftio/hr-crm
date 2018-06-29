@@ -21,10 +21,10 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
         "description": "create",
         "content":{
           "id": "1",
-          "id_event": "284mddk392dsk392skd",
+          "id_event": "2ewllwdsl",
           "date": "29-06-2018",
-          "begin_time": "29-06-2018T12:00",
-          "end_time": "29-06-2018T18:00",
+          "begin_time": "2018-06-29T11:31:00+06:00",
+          "end_time": "2018-06-29T19:31:00+06:00",
           "email": ["shisyr2106@gmail.com", "shisyr96@gmail.com"],
           "description": "Description",
           "location": "Sovetskaya",
@@ -32,7 +32,6 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
         }
       }
     }
-    console.log(jsonObj);
     this.sendMessage(JSON.stringify(jsonObj))
     this.channel.consume(`${this.queue}_sub`, this.handleMessage.bind(this), {
       noAck: true,
@@ -60,7 +59,6 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
   }
   private sendToListener(message){
     var event = new Event.EventListener();
-    console.log(message);
     event.sendMessage(message.body);
     event.doEvent();
   }
