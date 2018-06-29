@@ -43,7 +43,7 @@ function TableList(props) {
             <Table className={classes.table}>
 
                 <TableHead>
-                    <TableRow >
+                    <TableRow>
                         {header.map((n, i) => (
                             <CustomTableCell key={i}>{n}</CustomTableCell>
                         ))}
@@ -57,13 +57,6 @@ function TableList(props) {
                                 <CustomTableCell key={k}>{element}</CustomTableCell>
                             ))}
 
-                            {/*<CustomTableCell component="th" scope="row">*/}
-                            {/*{n.name}*/}
-                            {/*</CustomTableCell>*/}
-                            {/*<CustomTableCell>{n.language}</CustomTableCell>*/}
-                            {/*<CustomTableCell>{n.status}</CustomTableCell>*/}
-                            {/*<CustomTableCell>{n.date}</CustomTableCell>*/}
-                            {/*<CustomTableCell>{n.comment}</CustomTableCell>*/}
                             {/*<CustomTableCell>{<Link to={n.attachment}>*/}
                             {/*CV*/}
                             {/*</Link>}</CustomTableCell>*/}
