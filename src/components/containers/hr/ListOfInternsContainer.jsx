@@ -34,14 +34,14 @@ const styles = theme => ({
     },
 });
 
-function createData(name, language, status, date, comment, attachment, profile) {
-    return {name, language, status, date, comment, attachment, profile};
+function createData(name, language, status, date, comment, attachment) {
+    return {name, language, status, date, comment, attachment};
 }
 
 const data = [
-    createData('Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
-    createData('Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
-    createData('Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', 'CV', 'Открыть'),
+    createData('Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', 'CV'),
+    createData('Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', 'CV'),
+    createData('Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', 'CV'),
 
 ];
 
@@ -60,7 +60,6 @@ function ListOfCandidatesContainer(props) {
                         <CustomTableCell>ДАТА</CustomTableCell>
                         <CustomTableCell>КОММЕНТАРИЙ</CustomTableCell>
                         <CustomTableCell>ВЛОЖЕНИЕ</CustomTableCell>
-                        <CustomTableCell>ПРОФИЛЬ</CustomTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -75,11 +74,8 @@ function ListOfCandidatesContainer(props) {
                                 <CustomTableCell>{n.status}</CustomTableCell>
                                 <CustomTableCell>{n.date}</CustomTableCell>
                                 <CustomTableCell>{n.comment}</CustomTableCell>
-                                <CustomTableCell>{<a href={n.attachment}>
+                                <CustomTableCell >{<a href={n.attachment}>
                                     CV
-                                </a>}</CustomTableCell>
-                                <CustomTableCell>{<a href={n.profile}>
-                                    Открыть
                                 </a>}</CustomTableCell>
                             </TableRow>
                         );
