@@ -16,6 +16,6 @@ INTERVIEW_STATUS = (
 class Interview(models.Model):
     date = models.DateTimeField()
     status = models.IntegerField(default=1, choices=INTERVIEW_STATUS)
-    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
-    request = models.ForeignKey(Request, on_delete=models.PROTECT, related_name='interviews')
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews', null=True)
+    request = models.ForeignKey(Request, on_delete=models.PROTECT, related_name='interviews', null=True)
     interviewers = models.ManyToManyField(User)
