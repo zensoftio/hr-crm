@@ -27,8 +27,8 @@ class Candidate(models.Model):
 
 
 class CV(models.Model):
-    url = models.TextField(blank=True, null=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='candidate')
+    url = models.CharField(max_length=50, blank=True, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='CV')
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
