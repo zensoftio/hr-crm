@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../general/Header';
 
 class OpenedPositions extends React.Component {
@@ -22,11 +23,6 @@ class OpenedPositions extends React.Component {
 		};
 	}
 
-	handleDeleteList = (listToDelete) => {
-		this.setState(prev => ({
-			positionList: prev.positionList.filter(list => list !== listToDelete)
-		}))
-	}
 	handleConfirm = (listToDelete) => {
 		const popup = window.confirm("Do You Want to Delete?");
 		if(popup === true) {
@@ -35,7 +31,7 @@ class OpenedPositions extends React.Component {
 			}))
 		}
 	}
-	//rendering
+	
 	render() {
 		return(
 			<div>
@@ -51,7 +47,7 @@ class OpenedPositions extends React.Component {
 					{this.state.positionList.map((item, i) => {
 						return (
 							<tr key={i}>
-								<td>{item.position}</td>
+								<td><Link to="/edit_positions">{item.position}</Link></td>
 								<td>{item.created}</td>
 								<td>
 									<button onClick={() =>this.handleConfirm(item)}>удалить</button>
@@ -67,57 +63,4 @@ class OpenedPositions extends React.Component {
 
 }
 
-{/*
-const OpenedPositions = () => {
-
-	const positionList = [
-		{
-			position: 'Python',
-			created: '12.12.2012'
-		},
-		{
-			position: 'JS',
-			created: '12.2.2013'
-		},
-		{
-			position: 'HTML-Верстальщик',
-			created: '10.5.2013'
-		},
-		{
-			position: 'Full-Stack Developer',
-			created: '11.12.2013'
-		},
-		{
-			position: 'IOS',
-			created: '14.2.2013'
-		}
-	];
-    return (
-        <div>
-            <Header title="Открытые Позиции"/>
-
-						<table>
-							<tbody className="table_head">
-							<tr>
-								<th>Название</th>
-								<th>Дата создания</th>
-								<th>Действия</th>
-							</tr>
-							{positionList.map((item, i) => {
-								return (
-									<tr key={i}>
-										<td>{item.position}</td>
-										<td>{item.created}</td>
-										<td>
-											<button>удалить</button>
-										</td>
-									</tr>
-								)
-							})}
-							</tbody>
-						</table>
-        </div>
-    )
-}
-*/}
 export default OpenedPositions;

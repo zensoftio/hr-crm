@@ -8,6 +8,7 @@ import Error from './scenes/general/Error';
 import Navigation from './scenes/general/Navigation';
 import CreatePosition from './scenes/head/CreatePosition';
 import Archive from './scenes/head/Archive';
+import EditPositions from './scenes/head/EditPositions';
 import Statistics from './scenes/general/Statistics';
 import CreateVacancy from './scenes/hr/CreateVacancy';
 import ListCandidates from "./scenes/hr/ListCandidates";
@@ -31,6 +32,7 @@ class App extends React.Component {
                             <Route path="/create_position" component={CreatePosition}/>
                             <Route path="/opened_positions" component={OpenedPositions}/>
                             <Route path="/archive" component={Archive}/>
+														<Route path="/edit_positions" component={EditPositions}/>
                             <Route path="/statistics" component={Statistics}/>
 
                             <Route path="/hr/list_candidates" component={ListCandidates}/>
