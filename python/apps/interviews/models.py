@@ -18,7 +18,7 @@ class Interview(models.Model):
     status = models.IntegerField(default=1, choices=INTERVIEW_STATUS)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     request = models.ForeignKey(Request, on_delete=models.PROTECT)
-    reviewers = models.ManyToManyField(User)
+    interviewers = models.ManyToManyField(User)
 
     class Meta:
         default_related_name = 'interviews'
