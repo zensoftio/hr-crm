@@ -23,7 +23,7 @@ const Archive = () => {
     <div>
       <Header title="Архив Позиций"/>
 			<table>
-				<tbody className="archive_devs">
+				<tbody className="table_head">
 				<tr>
 					<th>Название</th>
 					<th>Дата создания</th>

@@ -40,16 +40,17 @@ html, body {
     padding: 10px;
 }
 
-.archive_devs tr:nth-child(even){background-color: #f2f2f2;}
+.table_head tr:nth-child(even){background-color: #f2f2f2;}
 
-.archive_devs tr:hover {background-color: #ddd;}
+.table_head tr:hover {background-color: #ddd;}
 
-.archive_devs th{
+.table_head th{
 	padding: 15px;
-	text-align: left;
+	text-align: center;
 	background-color: #4CAF50;
 	color: white;
 }
-.archive_devs td {
+.table_head td {
 	text-align: center;
+	padding: 10px;
 }
