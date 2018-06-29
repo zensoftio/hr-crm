@@ -1,11 +1,8 @@
-import datetime
-
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
 from apps.departments.models import Position
-from apps.vacancies.models import Vacancy
 
 User = get_user_model()
 
@@ -18,10 +15,9 @@ class Candidate(models.Model):
     experience = models.FloatField(blank=True, null=True)
     level = models.CharField(max_length=30, blank=True, null=True)
     status = models.IntegerField(blank=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     skype = models.CharField(max_length=254, blank=True, null=True)
-    position = models.ForeignKey(Position, on_delete=models.PROTECT)
-    created = models.DateTimeField(auto_now_add=True)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT, null=True)
+    created = models.DateTimeField(default=timezone.now)
 
     class Meta:
         default_related_name = 'candidates'
@@ -44,9 +40,9 @@ class CV(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     created = models.DateTimeField(auto_now_add=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, null=True)
 
     class Meta:
         default_related_name = 'comments'

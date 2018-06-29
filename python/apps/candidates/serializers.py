@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.departments.serializers import DepartmentSerializer
+from apps.departments.serializers import DepartmentSerializer, PositionSerializer, AuxPositionSerializer
 from apps.interviews.serializers import AuxInterviewSerializer
 from apps.users.serializers import AuxUserSerializer
 from .models import Candidate, CV, Comment
@@ -25,6 +25,7 @@ class CandidateDetailSerializer(serializers.ModelSerializer):
     interviews = AuxInterviewSerializer(many=True)
     CVs = CVSerializer(many=True, source='CV')
     comments = CommentSerializer(many=True)
+    position = AuxPositionSerializer()
 
     class Meta:
         model = Candidate
