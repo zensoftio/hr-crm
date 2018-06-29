@@ -2,11 +2,13 @@ from rest_framework import serializers
 
 from apps.departments.serializers import AuxPositionSerializer, RequirementSerializer
 from apps.requests.models import Request
+from apps.departments.models import Requirement
 
 
 class RequestSerializer(serializers.ModelSerializer):
     position = AuxPositionSerializer()
-    requirements = RequirementSerializer(many=True, source='position.department.requirements')
+    # requirements = serializers.PrimaryKeyRelatedField(many=True, queryset=Requirement.objects.all())
+    # requirements = RequirementSerializer(many=True, source='position.department.requirements')
 
     class Meta:
         model = Request
@@ -14,11 +16,12 @@ class RequestSerializer(serializers.ModelSerializer):
 
 
 class RequestPostSerializer(serializers.ModelSerializer):
-    # requirements = RequirementSerializer(many=True, source='position.department.requirements')
+    requirements = serializers.PrimaryKeyRelatedField(many=True, queryset=Requirement.objects.all())
 
     class Meta:
         model = Request
-        fields = ('position', 'count', 'status', 'created_by')
+        fields = ('position', 'count', 'created_by', 'requirements')
+
 
     # def to_representation(self, instance):
     #     representation = super(RequestPostSerializer, self).to_representation(instance)

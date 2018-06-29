@@ -6,7 +6,4 @@ from apps.vacancies.models import Vacancy
 
 # Register your models here.
 
-admin.site.register(Department)
-admin.site.register(Position)
-admin.site.register(Request)
 admin.site.register(Vacancy)

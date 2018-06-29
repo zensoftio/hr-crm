@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.departments.serializers import PositionSerializer
-from apps.requests.serializer import RequestSerializer
+from apps.requests.serializers import RequestSerializer
 from .models import Vacancy, Publication
 
 
