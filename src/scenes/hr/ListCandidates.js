@@ -7,7 +7,7 @@ const ListCandidates = () => {
         <div>
             <Header title="Список кандидатов"/>
 
-             <ListOfCandidates/>
+            <ListOfCandidates/>
         </div>
     )
 }

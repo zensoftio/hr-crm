@@ -17,7 +17,6 @@ const Statistics = () => {
 			amount: 456
 		}
 	];
-	
   return (
     <div>
       <Header title="Статистика"/>
