@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../general/Header';
-import CreatePositionContainer from '../../components/containers/head/CreatePositionContainer';
-
+import CreatePositionContainer from '../../components/containers/head/CreatePositionContainer'
 const CreatePosition = () => {
     return (
         <div>
