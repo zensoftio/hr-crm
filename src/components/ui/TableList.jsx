@@ -1,5 +1,5 @@
 import React from 'react';
-
+//demo version
 const TableList = (props) => {
 	let vals = props.vals;
 	
