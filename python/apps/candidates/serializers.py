@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.candidates.models import Candidate
-from apps.departments.serializers import DepartmentSerializer
+from apps.departments.serializers import PositionSerializer
 
 
 class CandidateSerializer(serializers.ModelSerializer):
@@ -13,15 +13,15 @@ class CandidateSerializer(serializers.ModelSerializer):
 
 
 class CandidateInterviewSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer(source='position.department')
+    position = PositionSerializer()
 
     class Meta:
         model = Candidate
-        fields = ('id', 'first_name', 'last_name', 'department')
+        fields = ('id', 'first_name', 'last_name', 'position')
 
 
 class CandidateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         depth = 2
-        fields = ('first_name', 'last_name', 'position')
+        fields = ('first_name', 'last_name', 'position','status', 'created')
