@@ -11,6 +11,7 @@ class Evaluation(models.Model):
     comment = models.TextField()
     interview = models.ForeignKey(Interview, on_delete=models.PROTECT)
     reviewer = models.ForeignKey(User, on_delete=models.PROTECT)
+    feedbacks = models.ManyToManyField('Criteria', through='EvaluationCriteriaRelationship')
 
     def __str__(self):
         return self.comment
@@ -22,3 +23,11 @@ class Criteria(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class EvaluationCriteriaRelationship(models.Model):
+    evaluation = models.ForeignKey(Evaluation, on_delete=models.PROTECT)
+    rate = models.IntegerField()
+    criteria = models.ForeignKey(Criteria, on_delete=models.PROTECT)
+
+
