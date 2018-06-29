@@ -54,3 +54,18 @@ html, body {
 	text-align: center;
 	padding: 10px;
 }
+.statistic {
+	text-align: center;
+}
+.statistic ul li {
+	list-style-type: none;
+	font-size: 24px;
+	background: #f2f2f2;
+}
+.statistic ul li:hover {
+	background: #ddd;
+}
+.statistic span {
+	display: inline-block;
+	padding: 20px;
+}

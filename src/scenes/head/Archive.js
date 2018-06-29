@@ -16,6 +16,12 @@ const Archive = () => {
 			closed: today,
 			amount: 1
 		},
+		{
+			vacancy: 'Java',
+			created: '12.2.2003',
+			closed: today,
+			amount: 1
+		}
 	];
 
 	
