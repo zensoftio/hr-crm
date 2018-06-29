@@ -1,12 +1,9 @@
 package io.zensoft.share.service;
 
-import io.zensoft.share.model.PostDto;
-import io.zensoft.share.model.PostResponseDto;
+import io.zensoft.share.dto.PostDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface PublisherService {
-
-    PostResponseDto publish(PostDto postDto);
-
+    void publish(PostDto postDto);
 }
