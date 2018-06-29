@@ -20,7 +20,15 @@ class RequestPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ('position', 'count', 'created_by', 'requirements')
+        # fields = ('position', 'count', 'created_by', 'requirements')
+        fields = ('id', 'position', 'status', 'count', 'created', 'created_by', 'modified', 'requirements')
+
+    # def to_representation(self, instance):
+    #     data = super(RequestPostSerializer, self).to_representation(instance)
+    #     # result_data = {'status': 201, 'Allow': ['GET', 'POST', 'HEAD', 'OPTION'], }
+    #     result_data = {'response': ''}
+    #     result_data['response'] = data
+    #     return result_data
 
 
     # def to_representation(self, instance):
