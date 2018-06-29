@@ -1,9 +1,4 @@
 import React from 'react';
-import ButtonSubmit from '../../ui/ButtonSubmit';
-import TextArea from '../../ui/TextArea';
-import SelectAutocomplete from '../../ui/SelectAutocomplete';
-import { observer } from 'mobx-react'
-import { observable, action } from 'mobx';
 import SelectList from '../../ui/SelectList';
 import MultipleSelect from '../../ui/MultipleSelect';
 
@@ -44,13 +39,6 @@ class CreatePositionContainer extends React.Component {
 				'Junior',
 				'Middle',
 				'Senior'
-			],
-			requirements = [
-				'one',
-				'two',
-				'three',
-				'five',
-				'four'
 			];
 
 			let instyle = {

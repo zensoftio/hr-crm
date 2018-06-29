@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import HeadPhoto from './HeadPhoto';
 
-const Navigation = (props) => {
-    return (
-        <div className="navigation">
-            <HeadPhoto />
-            <ul className="nav-ul">
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/create_position">Создать Позицию</Link></li>
-                <li><Link to="/opened_positions">Открытые Позиции</Link></li>
-                <li><Link to="/archive">Архив Позиций</Link></li>
-                <li><Link to="/statistics">Статистика</Link></li>
-            </ul>
-        </div>
-    )
+const CreateNavItem = (props) => {
+    return props.menuItems.map((item, index) => (
+        <li key={index}><Link to={item.path}>{item.name}</Link></li>  
+    ))
+};
+@observer
+export default class Navigation extends Component {
+    render() {
+        return (
+            <div className="navigation">
+                <HeadPhoto />
+                <ul className="nav-ul">
+                    <CreateNavItem menuItems={this.props.menuItems}/>
+                </ul>
+            </div>
+        )
+    } 
 }
-
-export default Navigation;
