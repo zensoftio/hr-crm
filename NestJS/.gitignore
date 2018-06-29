@@ -3,4 +3,6 @@ package-lock.json
 *.log
 *.gz
 ormconfig.json
+scr/Event/calendar/credentials.json
 .env
+credentials.json
