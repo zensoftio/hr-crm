@@ -5,12 +5,11 @@ import { RabbitMQClient } from 'rabbitmq-client';
 
 @Controller('message')
 export class MessageController {
-  // constructor(private readonly messageService: MessageService){}
+   constructor(private readonly messageService: MessageService){}
 
   public sendMessage(data) {
     console.log(data)
     qs.sendMessageH(data)
-   
+
   }
 }
-

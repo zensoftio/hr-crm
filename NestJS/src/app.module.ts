@@ -11,23 +11,13 @@ import { MessageModule } from './Messages/message.module'
 import { RecepientModule } from './Recipients/recepient.module'
 import { EventModule } from './Event/event.module';
 
-
 @Module({
   imports: [
     TemplateModule,
     MessageModule,
     RecepientModule,
     EventModule,
-    TypeOrmModule.forRoot({
-      "type": "postgres",
-      "host": "localhost",
-      "port": 5432,
-      "username": "root",
-      "password": "root",
-      "database": "test3",
-      "entities": ["src/**/**.entity{.ts,.js}"],
-      "synchronize": true
-  })
+    TypeOrmModule.forRoot({})
   ],
   controllers: [AppController],
   providers: [AppService],
