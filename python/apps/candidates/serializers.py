@@ -4,10 +4,10 @@ from apps.candidates.models import Candidate
 from apps.departments.serializers import DepartmentSerializer
 
 
-class CandidateSerializer(serializers.ModelSerializer):
+class CandidateDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = ('first_name', 'last_name', 'email', 'phone', 'experience',
+        fields = ('id','first_name', 'last_name', 'email', 'phone', 'experience',
                   'level', 'status', 'vacancy', 'skype', 'position',)
         depth = 3
 
