@@ -1,5 +1,8 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 from apps.departments.models import Position
 from apps.vacancies.models import Vacancy
@@ -18,12 +21,16 @@ class Candidate(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     skype = models.CharField(max_length=254, blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        default_related_name = 'candidates'
 
     def __str__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
 
-class Cv(models.Model):
+class CV(models.Model):
     url = models.TextField(blank=True, null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)

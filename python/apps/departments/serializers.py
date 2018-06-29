@@ -9,14 +9,21 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class PositionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Position
         fields = ('id', 'department', 'name')
 
 
 class RequirementSerializer(serializers.ModelSerializer):
-    # department = serializers.PrimaryKeyRelatedField(source='department.id')
-
     class Meta:
         model = Requirement
         fields = ('id', 'department', 'name', 'type')
+
+
+class AuxPositionSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+
+    class Meta:
+        model = Position
+        fields = ('id', 'department', 'name')
