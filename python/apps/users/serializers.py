@@ -15,8 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserInterviewSerializer(serializers.ModelSerializer):
-    departments = DepartmentSerializer(many=True, read_only=True)
-
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'departments')

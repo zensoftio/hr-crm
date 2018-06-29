@@ -1,6 +1,11 @@
 import * as amqp from 'amqplib';
 import { Server, CustomTransportStrategy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { MessageService } from 'Messages/message.service';
+import { Repository } from 'typeorm';
+import { MessageController } from 'Messages/message.listener';
+import { Message } from 'Messages/message.entity';
+import * as Event from 'Event/event.listener';
 
 export class RabbitMQServer extends Server implements CustomTransportStrategy {
     private server: amqp.Connection = null;
@@ -13,8 +18,26 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
       }
 
   public async listen(callback: () => void) {
-    console.log("Microservice is Liestening")
+    console.log("Microservice is listening")
     await this.init();
+    var jsonObj = {
+      "title": "Event",
+      "body": {
+        "description": "create",
+        "content":{
+          "id": "1",
+          "id_event": "2ewllwdsl",
+          "date": "29-06-2018",
+          "begin_time": "2018-06-29T11:31:00+06:00",
+          "end_time": "2018-06-29T19:31:00+06:00",
+          "email": ["shisyr2106@gmail.com", "shisyr96@gmail.com"],
+          "description": "Description",
+          "location": "Sovetskaya",
+          "summary": "Interview"
+        }
+      }
+    }
+    this.sendMessage(JSON.stringify(jsonObj))
     this.channel.consume(`${this.queue}_sub`, this.handleMessage.bind(this), {
       noAck: true,
     });
@@ -28,7 +51,16 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
   private async handleMessage(message) {
     const { content } = message;
     const messageObj = JSON.parse(content.toString());
+    this.sendToListener(JSON.parse(messageObj));
+    console.log("in handleMEssage " + messageObj)
+    
+    var controller = new MessageController();
+    controller.sendMessage(messageObj)
 
+    console.log("in handleMEssage " + messageObj)
+
+    var controller = new MessageController();
+    controller.sendMessage(messageObj)
     const handlers = this.getHandlers();
     const pattern = JSON.stringify(messageObj.pattern);
     if (!this.messageHandlers[pattern]) {
@@ -39,10 +71,15 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
     const response$ = this.transformToObservable(await handler(messageObj.data)) as Observable<any>;
     response$ && this.send(response$, (data) => this.sendMessage(data));
   }
+  private sendToListener(message){
+    var event = new Event.EventListener();
+    event.sendMessage(message.body);
+    event.doEvent();
+  }
 
   private sendMessage(message) {
     const buffer = Buffer.from(JSON.stringify(message));
-    this.channel.sendToQueue(`${this.queue}_pub`, buffer);
+    this.channel.sendToQueue(`${this.queue}_sub`, buffer);
   }
 
   private async init() {

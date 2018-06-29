@@ -14,6 +14,7 @@ class CVSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     created_by = AuxUserSerializer()
+
     class Meta:
         model = Comment
         fields = ('id', 'text', 'created_by', 'created')
