@@ -13,6 +13,7 @@ import CreateVacancy from './scenes/hr/CreateVacancy';
 import ListCandidates from "./scenes/hr/ListCandidates";
 import ListInterns from "./scenes/hr/ListIntern";
 import ListReserves from "./scenes/hr/Reserve";
+import ListInterviews from "./scenes/hr/ListInterviews";
 
 class App extends React.Component {
     render() {
@@ -34,6 +35,7 @@ class App extends React.Component {
                             <Route path="/hr/list_candidates" component={ListCandidates}/>
                             <Route path="/hr/list_interns" component={ListInterns}/>
                             <Route path="/hr/list_reserves" component={ListReserves}/>
+                            <Route path="/hr/list_interviews" component={ListInterviews}/>
                             <Route component={Error}/>
                         </Switch>
                     </div>
