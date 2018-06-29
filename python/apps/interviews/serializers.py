@@ -1,17 +1,25 @@
 from rest_framework import serializers
 
-from apps.candidates.serializers import CandidateInterviewSerializer
-from apps.interviews.models import Interview
 from apps.requests.serializer import RequestInterviewSerializer
 from apps.users.serializers import UserInterviewSerializer
+from .models import Interview
 
 
 class InterviewListSerializer(serializers.ModelSerializer):
-    candidate = CandidateInterviewSerializer()
+    """Serializer for Interviews List Endpoint"""
+    candidate = 'apps.candidates.AuxCandidateSerializer()'
     request = RequestInterviewSerializer()
-    reviewers = UserInterviewSerializer(many=True)
+    interviewers = UserInterviewSerializer(many=True)
 
     class Meta:
         model = Interview
         depth = 3
-        fields = ('id', 'date', 'status', 'candidate', 'request', 'reviewers')
+        fields = ('id', 'date', 'status', 'candidate', 'request', 'interviewers')
+
+
+class AuxInterviewSerializer(serializers.ModelSerializer):
+    """Serializer for Detailed Candidate Endpoint"""
+
+    class Meta:
+        model = Interview
+        fields = ('id', 'status', 'date')
