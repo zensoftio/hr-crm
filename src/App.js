@@ -14,6 +14,7 @@ import ListCandidates from "./scenes/hr/ListCandidates";
 import ListInterns from "./scenes/hr/ListIntern";
 import ListReserves from "./scenes/hr/Reserve";
 import ListInterviews from "./scenes/hr/ListInterviews";
+import ListNotifications from "./scenes/hr/Notifications";
 
 class App extends React.Component {
     render() {
@@ -36,6 +37,7 @@ class App extends React.Component {
                             <Route path="/hr/list_interns" component={ListInterns}/>
                             <Route path="/hr/list_reserves" component={ListReserves}/>
                             <Route path="/hr/list_interviews" component={ListInterviews}/>
+                            <Route path="/hr/list_notifications" component={ListNotifications}/>
                             <Route component={Error}/>
                         </Switch>
                     </div>
