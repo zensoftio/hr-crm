@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { MessageController } from 'Messages/message.listener';
 import { Message } from 'Messages/message.entity';
 import * as Event from 'Event/event.listener';
+
 export class RabbitMQServer extends Server implements CustomTransportStrategy {
     private server: amqp.Connection = null;
     private channel: amqp.Channel = null;
@@ -51,6 +52,10 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
     const { content } = message;
     const messageObj = JSON.parse(content.toString());
     this.sendToListener(JSON.parse(messageObj));
+    console.log("in handleMEssage " + messageObj)
+    
+    var controller = new MessageController();
+    controller.sendMessage(messageObj)
 
     console.log("in handleMEssage " + messageObj)
 
