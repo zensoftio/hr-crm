@@ -5,6 +5,9 @@ export class Event {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  id_event: string;
+
   @Column({ length: 30 })
   date: string;
 

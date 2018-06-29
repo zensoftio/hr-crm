@@ -1,7 +1,10 @@
 from rest_framework import serializers
 
+
 from apps.departments.serializers import DepartmentSerializer
 from apps.interviews.serializers import AuxInterviewSerializer
+from apps.candidates.models import Candidate
+from apps.departments.serializers import PositionSerializer
 from .models import Candidate, CV
 
 
@@ -29,7 +32,7 @@ class CandidateDetailSerializer(serializers.ModelSerializer):
 class CandidateInterviewSerializer(serializers.ModelSerializer):
     """Candidate Serializer for Interiew List endpoint"""
     department = DepartmentSerializer(source='position.department')
-
+    
     class Meta:
         model = Candidate
         fields = ('id', 'first_name', 'last_name', 'department')
@@ -42,3 +45,4 @@ class AuxCandidateSerializer(serializers.ModelSerializer):
         model = Candidate
         depth = 3
         fields = ('first_name', 'last_name', 'position')
+
