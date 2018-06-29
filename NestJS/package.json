@@ -22,8 +22,14 @@
     "@nestjs/microservices": "^5.0.1",
     "@nestjs/typeorm": "^5.0.2",
     "amqplib": "^0.5.2",
+    "dotenv": "^6.0.0",
     "fastify-formbody": "^2.0.0",
+<<<<<<< HEAD
     "pg": "^7.4.3",
+=======
+    "googleapis": "^32.0.0",
+    "js-base64": "^2.4.5",
+>>>>>>> 18df6494f4b6acc3c548ab085ef1667338bc3655
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0",
     "typeorm": "^0.2.7",

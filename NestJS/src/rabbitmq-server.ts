@@ -1,7 +1,11 @@
 import * as amqp from 'amqplib';
 import { Server, CustomTransportStrategy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import * as Event from './Event/event.listener';
+import { MessageService } from 'Messages/message.service';
+import { Repository } from 'typeorm';
+import { MessageController } from 'Messages/message.listener';
+import { Message } from 'Messages/message.entity';
+import * as Event from 'Event/event.listener';
 export class RabbitMQServer extends Server implements CustomTransportStrategy {
     private server: amqp.Connection = null;
     private channel: amqp.Channel = null;
@@ -13,7 +17,7 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
       }
 
   public async listen(callback: () => void) {
-    console.log("Microservice is Liestening")
+    console.log("Microservice is listening")
     await this.init();
     var jsonObj = {
       "title": "Event",
@@ -47,6 +51,11 @@ export class RabbitMQServer extends Server implements CustomTransportStrategy {
     const { content } = message;
     const messageObj = JSON.parse(content.toString());
     this.sendToListener(JSON.parse(messageObj));
+
+    console.log("in handleMEssage " + messageObj)
+
+    var controller = new MessageController();
+    controller.sendMessage(messageObj)
     const handlers = this.getHandlers();
     const pattern = JSON.stringify(messageObj.pattern);
     if (!this.messageHandlers[pattern]) {
