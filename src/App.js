@@ -12,6 +12,7 @@ import Statistics from './scenes/general/Statistics';
 import CreateVacancy from './scenes/hr/CreateVacancy';
 import ListCandidates from "./scenes/hr/ListCandidates";
 import ListInterns from "./scenes/hr/ListIntern";
+import ListReserves from "./scenes/hr/Reserve";
 
 class App extends React.Component {
     render() {
@@ -32,6 +33,7 @@ class App extends React.Component {
 
                             <Route path="/hr/list_candidates" component={ListCandidates}/>
                             <Route path="/hr/list_interns" component={ListInterns}/>
+                            <Route path="/hr/list_reserves" component={ListReserves}/>
                             <Route component={Error}/>
                         </Switch>
                     </div>

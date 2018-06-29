@@ -74,7 +74,7 @@ function ListOfCandidatesContainer(props) {
                                 <CustomTableCell>{n.status}</CustomTableCell>
                                 <CustomTableCell>{n.date}</CustomTableCell>
                                 <CustomTableCell>{n.comment}</CustomTableCell>
-                                <CustomTableCell>{<a href={n.attachment}>
+                                <CustomTableCell >{<a href={n.attachment}>
                                     CV
                                 </a>}</CustomTableCell>
                             </TableRow>
