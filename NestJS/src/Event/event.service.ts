@@ -6,7 +6,10 @@ import * as google from './calendar/google.calendar';
 
 @Injectable()
 export class EventService {
-   constructor() {}
+  constructor(
+      @InjectRepository(Event)
+      private readonly eventRepository: Repository<Event>,
+      ) {}
 
   async createEvent(event: Event){
     google.run(event, function(response) {
@@ -16,22 +19,5 @@ export class EventService {
       getRepository(Event).save(eventOfDatabase);
     })
   }
-
-  // async updateEvent(event: Event){
-  //   await this.eventRepository.save(event);
-  // }
-  //
-  // async getEvent(event: Event): Promise<Event> {
-  //   return await this.eventRepository.findOne({id: event.id});
-  // }
-  //
-  // async listEvent(): Promise<Event[]> {
-  //   return await this.eventRepository.find();
-  // }
-  //
-  // async deleteEvent(event: Event){
-  //   const event = await this.eventRepository.findOne({id: event.id});
-  //   await this.eventRepository.remove(event);
-  // }
 
 }

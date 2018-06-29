@@ -1,15 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { RabbitMQServer } from './rabbitmq-server';
-import { RabbitMQClient } from './rabbitmq-client';
 import { MessageController } from 'Messages/message.listener';
 import { MessageModule } from 'Messages/message.module';
-
+import { Service, Container } from 'typedi';
+import { RabbitConnection } from './Rabbit';
+import * as Amqp from "amqp-ts";
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice(AppModule, {
-    strategy: new RabbitMQServer('amqp://localhost', 'channel'),
-  });
-  
-  app.listen( () => console.log('Microservice is listening'));
+  global.connection = new Amqp.Connection("amqp://guest:guest@localhost:5672");
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
 }
 bootstrap();
