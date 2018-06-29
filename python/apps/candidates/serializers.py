@@ -1,27 +1,53 @@
 from rest_framework import serializers
 
-from apps.candidates.models import Candidate
-from apps.departments.serializers import PositionSerializer
+from apps.departments.serializers import DepartmentSerializer, PositionSerializer, AuxPositionSerializer
+from apps.interviews.serializers import AuxInterviewSerializer
+from apps.users.serializers import AuxUserSerializer
+from .models import Candidate, CV, Comment
 
 
-class CandidateSerializer(serializers.ModelSerializer):
+class CVSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CV
+        fields = ('id', 'url', 'created')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    created_by = AuxUserSerializer()
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'text', 'created_by', 'created')
+
+
+class CandidateDetailSerializer(serializers.ModelSerializer):
+    """Candidate serializer for Detailed Candidate endpoint"""
+    interviews = AuxInterviewSerializer(many=True)
+    CVs = CVSerializer(many=True, source='CV')
+    comments = CommentSerializer(many=True)
+    position = AuxPositionSerializer()
+
     class Meta:
         model = Candidate
-        fields = ('first_name', 'last_name', 'email', 'phone', 'experience',
-                  'level', 'status', 'vacancy', 'skype', 'position',)
-        depth = 3
+        fields = ('id', 'first_name', 'last_name',
+                  'email', 'phone', 'experience',
+                  'level', 'CVs', 'status', 'skype', 'position',
+                  'interviews', 'comments')
 
 
 class CandidateInterviewSerializer(serializers.ModelSerializer):
-    position = PositionSerializer()
+    """Candidate Serializer for Interview List endpoint"""
+    department = DepartmentSerializer(source='position.department')
 
     class Meta:
         model = Candidate
-        fields = ('id', 'first_name', 'last_name', 'position')
+        fields = ('id', 'first_name', 'last_name', 'department')
 
 
-class CandidateListSerializer(serializers.ModelSerializer):
+class AuxCandidateSerializer(serializers.ModelSerializer):
+    """Candidate Serializer for Candidates List and Candidate Detail endpoint"""
+
     class Meta:
         model = Candidate
-        depth = 2
-        fields = ('first_name', 'last_name', 'position','status', 'created')
+        depth = 3
+        fields = ('first_name', 'last_name', 'position')
