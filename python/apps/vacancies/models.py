@@ -22,6 +22,11 @@ EMPLOYMENT_TYPE = (('FT', 'full-time'),
                    ('VOL', 'volunteer'),
                    ('INT', 'internship'))
 
+VACANCY_STATUS = (
+    (0, 'Unpublished'),
+    (1, 'Published')
+)
+
 
 class Vacancy(models.Model):
     title = models.CharField(max_length=200)
@@ -35,8 +40,10 @@ class Vacancy(models.Model):
     employment_type = models.CharField(choices=EMPLOYMENT_TYPE, max_length=3, default='FT')
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    last_published = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(choices=VACANCY_STATUS, default=0)
 
     class Meta:
         default_related_name = 'vacancies'
