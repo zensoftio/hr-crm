@@ -1,18 +1,17 @@
 import { EventService } from './event.service';
+import { Controller } from '@nestjs/common';
 
-export class EventListener {
-  private readonly eventService: EventService = new EventService();
-  constructor() {}
+@Controller('event')
+export class EventController {
+  constructor(private readonly eventService: EventService) {
 
-  sendMessage(msg){
-    this.msg = msg;
+     var exchange =  connection.declareExchange("hello", 'direct');
+     var queue = connection.declareQueue("event", {durable: true});
+     queue.bind(exchange, 'black');
+     queue.activateConsumer((message) => {
+         console.log("Message received: " + JSON.parse(message.getContent()));
+     }, {noAck: true});
   }
 
-  doEvent(){
-    if(this.msg.description == "create"){
-      this.eventService.createEvent(this.msg);
-    }
-
-  }
 
 }

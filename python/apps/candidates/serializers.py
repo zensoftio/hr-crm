@@ -20,6 +20,12 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'created_by', 'created')
 
 
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'text', 'candidate', 'created_by', 'created')
+
+
 class CandidateDetailSerializer(serializers.ModelSerializer):
     """Candidate serializer for Detailed Candidate endpoint"""
     interviews = AuxInterviewSerializer(many=True, read_only=True)
