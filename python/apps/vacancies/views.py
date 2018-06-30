@@ -13,7 +13,7 @@ class VacancyListView(generics.ListCreateAPIView):
         write_serializer = VacancySerializer(data=request.data)
         write_serializer.is_valid(raise_exception=True)
         self.perform_create(write_serializer)
-        read_serializer = AuxVacancySerializer(write_serializer.instance)
+        read_serializer = VacancySerializer(write_serializer.instance)
         return Response(read_serializer.data)
 
 

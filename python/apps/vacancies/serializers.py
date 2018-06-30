@@ -1,9 +1,11 @@
 from rest_framework import serializers
 
+from apps.departments.serializers import RequirementSerializer
 from .models import Vacancy, Publication
 
 
 class VacancySerializer(serializers.ModelSerializer):
+    requirements = RequirementSerializer(many=True)
     class Meta:
         model = Vacancy
         fields = '__all__'
