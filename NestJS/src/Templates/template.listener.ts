@@ -13,8 +13,16 @@ export class TemplateListener {
       queue.activateConsumer((message) => {
         var msg = message.getContent()
         var data = JSON.parse(msg)
-        console.log(msg)
-        templateService.create(data)
+        switch(data.task){
+            case "create":
+            templateService.create(data)
+            console.log("Successfully created new template")
+            break;
+            case "update":
+            templateService.update(data)
+            console.log("Successfully updated the template")
+        }
+        
         }, {noAck: true})
 
     }

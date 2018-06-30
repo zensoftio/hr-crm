@@ -36,7 +36,6 @@ export class TemplateService {
   async update(Template: Templates): Promise<Templates> {
     try {
         await this.TemplateRepository.save(Template)
-        console.log(Template)
         return Template;
     } catch (e) {
         console.log(e)
