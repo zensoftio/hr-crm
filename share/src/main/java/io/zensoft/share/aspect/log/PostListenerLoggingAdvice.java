@@ -8,7 +8,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -24,10 +23,12 @@ import java.lang.reflect.Method;
 @Component
 public class PostListenerLoggingAdvice {
 
+    private final Logger logger;
 
     @Autowired
-    @Qualifier("rabbitMqMessageListenerLogger")
-    private Logger logger;
+    public PostListenerLoggingAdvice(final Logger rabbitMqMessageListenerLogger) {
+        this.logger = rabbitMqMessageListenerLogger;
+    }
 
     /**
      * logs before message handled by controllers(listeners)
@@ -38,8 +39,8 @@ public class PostListenerLoggingAdvice {
      *
      * @param joinPoint object to extract information about message handler class
      */
-    @Before("io.zensoft.share.aspect.PostListenerPointCut.onPublishMethodCalled()")
-    public void logBeforePublishMessageHandled(JoinPoint joinPoint) {
+    @Before("io.zensoft.share.aspect.PostListenerPointCut.onAnyMethodCalled()")
+    public void logBeforeAnyMessageHandled(JoinPoint joinPoint) {
         String requestReceiverQueue = getPostListenerQueueName(joinPoint);
         logger.info("Receiving message to queue : " + requestReceiverQueue);
         logger.info("Message body : " + joinPoint.getArgs()[0]);
@@ -55,8 +56,8 @@ public class PostListenerLoggingAdvice {
      *
      * @param joinPoint object to extract information about message handler class
      */
-    @After("io.zensoft.share.aspect.PostListenerPointCut.onPublishMethodCalled()")
-    public void logAfterPublishMessageHandled(JoinPoint joinPoint) {
+    @After("io.zensoft.share.aspect.PostListenerPointCut.onAnyMethodCalled()")
+    public void logAfterAnyMessageHandled(JoinPoint joinPoint) {
         String requestReceiverQueue = getPostListenerQueueName(joinPoint);
         logger.info("Queue '" + requestReceiverQueue + "' with body '" + joinPoint.getArgs()[0] + "' handled");
         logger.info("Message handler class signature :" + joinPoint.getSignature().toString());
