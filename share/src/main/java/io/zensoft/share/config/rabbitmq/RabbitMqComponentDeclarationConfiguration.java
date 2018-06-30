@@ -2,6 +2,8 @@ package io.zensoft.share.config.rabbitmq;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -61,6 +63,11 @@ public class RabbitMqComponentDeclarationConfiguration {
     @Bean
     public Queue jobKgGetInfoQueue() {
         return new Queue(QUEUE_JOB_KG_GET_INFO);
+    }
+
+    @Bean
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 
 }

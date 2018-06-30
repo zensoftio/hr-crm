@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from apps.departments.models import Department, Requirement, Position
 
 
@@ -9,7 +10,6 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class PositionSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Position
         fields = ('id', 'department', 'name')
@@ -22,7 +22,8 @@ class RequirementSerializer(serializers.ModelSerializer):
 
 
 class AuxPositionSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
+    """Position Serializer with nested Department Serializer"""
+    department = DepartmentSerializer(read_only=True)
 
     class Meta:
         model = Position

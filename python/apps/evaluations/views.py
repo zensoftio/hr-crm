@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import generics
+from apps.evaluations.models import Criteria
+from apps.evaluations.serializers import CriteriaSerializer
 
-# Create your views here.
+
+class CriteriaCreateListView(generics.ListCreateAPIView):
+    queryset = Criteria.objects.all()
+    serializer_class = CriteriaSerializer
+
+
+
+
+
+

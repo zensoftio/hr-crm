@@ -1,7 +1,7 @@
 from django.urls import path
 
-from apps.candidates.views import test_func
+from apps.evaluations import views
 
 urlpatterns = [
-    path('evaluations/', test_func)
+    path('criterias/', views.CriteriaCreateListView.as_view()),
 ]
