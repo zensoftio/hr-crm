@@ -22,7 +22,7 @@ class RequirementSerializer(serializers.ModelSerializer):
 
 
 class AuxPositionSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
+    department = DepartmentSerializer(read_only=True)
 
     class Meta:
         model = Position
