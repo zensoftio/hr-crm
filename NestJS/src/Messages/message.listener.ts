@@ -12,7 +12,7 @@ var queue = connection.declareQueue('');
 export class MessageListener {
     constructor(private readonly messageService: MessageService,
     private readonly recipientService: RecipientService){
-      queue.bind(exchange, 'white');
+      queue.bind(exchange, 'message');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
         var data = JSON.parse(msg)
