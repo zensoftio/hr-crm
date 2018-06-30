@@ -4,3 +4,4 @@ package-lock.json
 *.gz
 ormconfig.json
 .env
+credentials.json

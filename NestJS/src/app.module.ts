@@ -24,7 +24,7 @@ import { EventModule } from 'Events/event.module';
       "port": 5432,
       "username": "root",
       "password": "root",
-      "database": "test3",
+      "database": "test4",
       "entities": ["src/**/**.entity{.ts,.js}"],
       "synchronize": true
   })

@@ -7,7 +7,7 @@ export class Recipient {
   id: number;
 
   @Column()
-  address: string;
+  email: string;
 
   @Column('text')
   type: string[];

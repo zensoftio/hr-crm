@@ -21,6 +21,7 @@
     "@nestjs/core": "^5.0.0",
     "@nestjs/microservices": "^5.0.1",
     "@nestjs/typeorm": "^5.0.2",
+    "amqp-ts": "^1.4.0",
     "amqplib": "^0.5.2",
     "dotenv": "^6.0.0",
     "fastify-formbody": "^2.0.0",
