@@ -17,16 +17,7 @@ import { EventModule } from './Event/event.module';
     MessageModule,
     RecepientModule,
    EventModule,
-    TypeOrmModule.forRoot({
-      "type": "postgres",
-      "host": "localhost",
-      "port": 5432,
-      "username": "root",
-      "password": "root",
-      "database": "test4",
-      "entities": ["src/**/**.entity{.ts,.js}"],
-      "synchronize": true
-  })
+    TypeOrmModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],
