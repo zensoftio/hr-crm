@@ -22,6 +22,7 @@ class RequirementSerializer(serializers.ModelSerializer):
 
 
 class AuxPositionSerializer(serializers.ModelSerializer):
+    """Position Serializer with nested Department Serializer"""
     department = DepartmentSerializer(read_only=True)
 
     class Meta:
