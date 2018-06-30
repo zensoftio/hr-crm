@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { Templates } from '../Templates/template.entity'
 import { Recipient } from 'Recipients/recepient.entity';
 
@@ -15,6 +15,9 @@ export class Message {
 
   @Column('text')
   attachment: string;
+
+  @CreateDateColumn()
+  createdAt: string;
 
   @ManyToOne(type => Templates, template => template.messages)
     template : Templates;

@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as Amqp from "amqp-ts";
 
 async function bootstrap() {
-  global.connection = new Amqp.Connection("amqp://localhost:5672");
+  global.connection = new Amqp.Connection("amqp://localhost");
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
 }

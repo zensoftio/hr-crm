@@ -12,7 +12,7 @@ export class Templates {
   @Column('text')
   body: string;
 
-  @Column()
+  @Column({nullable: true})
   attachment: string;
 
   @OneToMany(type => Message, message => message.template) // note: we will create author property in the Photo class below
