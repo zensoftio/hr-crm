@@ -16,8 +16,8 @@ import { EventModule } from './Event/event.module';
     TemplateModule,
     MessageModule,
     RecepientModule,
-    EventModule,
-    TypeOrmModule.forRoot({})
+   EventModule,
+    TypeOrmModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],
