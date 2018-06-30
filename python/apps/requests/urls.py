@@ -3,5 +3,5 @@ from apps.requests import views
 
 
 urlpatterns = [
-    path('requests/', views.RequestList.as_view())
+    path('requests/', views.RequestListCreateView.as_view())
 ]
