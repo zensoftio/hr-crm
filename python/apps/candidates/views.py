@@ -1,6 +1,5 @@
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
-
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -11,13 +10,13 @@ from .serializers import AuxCandidateSerializer, CandidateDetailSerializer, Comm
 
 def test_func(request):
     return HttpResponse('Test')
-  
+
 
 class CandidateListView(generics.ListAPIView):
     queryset = Candidate.objects.all()
     serializer_class = AuxCandidateSerializer
 
-    
+
 class CandidateDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Candidate.objects.all()
     serializer_class = CandidateDetailSerializer
@@ -25,12 +24,16 @@ class CandidateDetailView(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         position = request.data.get('position')
         if position:
-            position = Position.objects.get(pk=position)
-            candidate = Candidate.objects.get(pk=kwargs.get('pk'))
-            candidate.position = position
-            candidate.save()
-            serializer = CandidateDetailSerializer(candidate)
-            return Response(serializer.data)
+            try:
+                position = Position.objects.get(pk=position)
+                candidate = Candidate.objects.get(pk=kwargs.get('pk'))
+                candidate.position = position
+                candidate.save()
+                serializer = CandidateDetailSerializer(candidate)
+                return Response(serializer.data)
+            except ObjectDoesNotExist:
+                return Response({'error': "Position object does not exist"},
+                                status.HTTP_400_BAD_REQUEST)
         else:
             return super().update(request, *args, **kwargs)
 
