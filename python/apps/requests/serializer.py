@@ -16,7 +16,7 @@ class RequestListSerializer(serializers.ModelSerializer):
         fields = ('id', 'position', 'status', 'count', 'created')
 
 
-class RequestCreateSerializer(serializers.ModelSerializer):
+class RequestCreateOrUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         exclude = []
