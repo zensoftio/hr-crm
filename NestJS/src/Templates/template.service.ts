@@ -25,7 +25,7 @@ export class TemplateService {
 
   async deleteOne(int: number): Promise<Templates> {
     try {
-        const toDelete = this.TemplateRepository.findOne({id: int});
+        const toDelete = await this.TemplateRepository.findOne({id: int});
         await this.TemplateRepository.delete({id: int});
         return toDelete;
     } catch (e) {
@@ -36,6 +36,7 @@ export class TemplateService {
   async update(Template: Templates): Promise<Templates> {
     try {
         await this.TemplateRepository.save(Template)
+        console.log(Template)
         return Template;
     } catch (e) {
         console.log(e)
