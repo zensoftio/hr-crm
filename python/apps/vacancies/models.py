@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from apps.departments.models import Requirement
 from apps.requests.models import Request
 
 User = get_user_model()
@@ -44,6 +45,7 @@ class Vacancy(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     last_published = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=VACANCY_STATUS, default=0)
+    requirements = models.ManyToManyField(Requirement)
 
     class Meta:
         default_related_name = 'vacancies'
