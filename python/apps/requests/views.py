@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from apps.requests.models import Request
 from apps.requests.serializer import RequestListSerializer, RequestDetailSerializer, \
-    RequestCreateSerializer
+    RequestCreateOrUpdateSerializer
 
 User = get_user_model()
 
@@ -14,7 +14,7 @@ class RequestListCreateView(generics.ListCreateAPIView):
     serializer_class = RequestListSerializer
 
     def create(self, request, *args, **kwargs):
-        write_serializer = RequestCreateSerializer(data=request.data)
+        write_serializer = RequestCreateOrUpdateSerializer(data=request.data)
         write_serializer.is_valid(raise_exception=True)
         self.perform_create(write_serializer)
 
@@ -25,4 +25,20 @@ class RequestListCreateView(generics.ListCreateAPIView):
 
 class RequestDetail(generics.RetrieveUpdateAPIView):
     queryset = Request.objects.all()
-    serializer_class = RequestListSerializer
+    serializer_class = RequestDetailSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        write_serializer = RequestCreateOrUpdateSerializer(
+            instance, data=request.data, partial=partial
+        )
+        write_serializer.is_valid(raise_exception=True)
+        self.perform_update(write_serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        read_serializer = RequestDetailSerializer(instance)
+
+        return Response(read_serializer.data)
