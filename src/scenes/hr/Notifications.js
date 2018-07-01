@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import Header from '../general/Header';
+import ListOfNotifications from "../../components/containers/hr/ListOfNotificationsContainer";
 
-class Notifications extends Component {
+class ListNotifications extends Component {
     render() {
-        return(
-            <h1>All Notifications</h1>
+        return (
+            <div>
+                <Header title="Уведомление"/>
+
+                <ListOfNotifications/>
+            </div>
         )
     }
 }
 
-export default Notifications;
+export default ListNotifications;
+

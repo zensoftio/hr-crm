@@ -34,10 +34,6 @@ export default class HeadScene extends Component {
 
 const HeadNav = [
     {
-        name: 'Home',
-        path: '/'
-    },
-    {
         name: 'Создать позицию',
         path: '/create_position'
     },

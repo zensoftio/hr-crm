@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import Header from '../general/Header';
+import ListOfReserves from "../../components/containers/hr/ListOfReservesContainer";
 
-class Reserve extends Component {
+class ListReserves extends Component {
     render() {
-        return(
-            <h1>Reserve</h1>
+        return (
+            <div>
+                <Header title="Резерв"/>
+
+                <ListOfReserves/>
+            </div>
         )
     }
 }
 
-export default Reserve;
+export default ListReserves;
+

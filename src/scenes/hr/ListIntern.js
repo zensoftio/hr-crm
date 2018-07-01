@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Header from '../general/Header';
+import ListOfInterns from '../../components/containers/hr/ListOfInternsContainer';
 
-class InternList extends Component {
-    render() {
-        return(
-            <h1>List of Interns</h1>
-        )
-    }
+const ListInterns = () => {
+    return (
+        <div>
+            <Header title="Список стажеров"/>
+
+            <ListOfInterns/>
+        </div>
+    )
 }
 
-export default InternList;
+export default ListInterns;
+
