@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { TemplateService } from './template.service';
 
-const connection = new Amqp.Connection("amqp://localhost");
 const exchange = connection.declareExchange("exchangeForTemplate", 'direct', { durable: false });
 const queue = connection.declareQueue('template');
 
