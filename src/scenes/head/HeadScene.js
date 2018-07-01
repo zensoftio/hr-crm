@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from '../../scenes/general/Home';
 import OpenedPositions from '../../scenes/head/OpenedPositions';
 import Error from '../general/Error';
 import Navigation from '../../scenes/general/Navigation';
@@ -11,7 +10,7 @@ import '../../index.css';
 
 export default class HeadScene extends Component {
     render() {
-        return(
+        return( 
             <BrowserRouter>
                 <div className="container">
 
@@ -19,7 +18,7 @@ export default class HeadScene extends Component {
 
                 <div className="content">
                     <Switch>
-                        <Route path="/" component={Home} exact/>
+                        <Route path="/" component={OpenedPositions} exact/>
                         <Route path="/create_position" component={CreatePosition}/>   
                         <Route path="/opened_positions" component={OpenedPositions}/>
                         <Route path="/archive" component={Archive}/>

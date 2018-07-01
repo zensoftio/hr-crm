@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-            <User userRole="hr" />
+            <User userRole="head" />
         </Router>
       </div>
     );

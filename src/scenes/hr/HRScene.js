@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from '../general/Home';
 import Navigation from '../general/Navigation';
 import Notifications from './Notifications';
 import PositionList from './ListPositions';
@@ -62,7 +61,7 @@ export default class HRScene extends Component {
 
                     <div className="content">
                         <Switch>
-                            <Route path="/" component={Home}/>
+                            <Route path="/" component={PositionList} exact/>
                             <Route path="/list_of_positions" component={PositionList}/>
                             <Route path="/create_vacancy" component={CreateVacancy}/>
                             <Route path="/opened_vacancies" component={OpenedVacancies}/>
