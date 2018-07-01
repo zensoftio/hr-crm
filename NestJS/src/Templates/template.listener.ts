@@ -14,22 +14,40 @@ export class TemplateListener {
 
     public distributionTasks(task){
       if (task.title == "CREATE")this.createTemplate(task);
-      else if(task.title == "UPDATE")this.updateTamplate(task);
+      else if(task.title == "UPDATE")this.updateTemplate(task);
       else if(task.title == "DELETE")this.deleteTemplate(task);
       else if(task.title == "FIND_ONE")this.findOneTemplate(task);
-      else if(task.title == "GET_ALL")this.findAllTemplate(task);
+      else if(task.title == "FIND_ALL")this.findAllTemplate(task);
     }
 
-    async updateTamplate(template){
+    async findAllTemplate(template){
+      this.templateService.findAll()
+      .then( (temp) => { this.sendMessage(temp) })
+      .catch( (err) => { this.sendMessage("NOT FOUND") })
+    }
+
+    async findOneTemplate(template){
+      this.templateService.findOne(template.id)
+      .then( (temp) => { this.sendMessage(temp) })
+      .catch( (err) => { this.sendMessage("NOT FOUND") })
+    }
+
+    async deleteTemplate(template){
+      this.templateService.deleteOne(template.id)
+      .then( (temp) => { this.sendMessage("DELETED") })
+      .catch( (err) => { this.sendMessage("NOT DELETED") })
+    }
+
+    async updateTemplate(template){
       this.templateService.update(template.id,template)
       .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("Not Updated") })
+      .catch( (err) => { this.sendMessage("NOT UPDATED") })
     }
 
     async createTemplate(template){
       this.templateService.create(template)
       .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("Not Created") })
+      .catch( (err) => { this.sendMessage("NOT CREATED") })
     }
 
     private async sendMessage(msg){
