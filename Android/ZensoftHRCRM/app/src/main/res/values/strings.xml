@@ -15,4 +15,9 @@
   <string name="statistics">Statistics</string>
   <string name="first_name">First Name</string>
   <string name="last_name">Last Name</string>
+  <string name="comments">Comments</string>
+  <string name="cvs">CV\'s</string>
+  <string name="years_of_experience">Years of Experience</string>
+  <string name="department">Department</string>
+  <string name="attachment">attachment</string>
 </resources>

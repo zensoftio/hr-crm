@@ -24,7 +24,7 @@ public class Candidate {
     @SerializedName("cvs")
     private List<Cv> cvList = null;
     @SerializedName("interviews")
-    private List<Interview> interviewList = null;
+    private List<CandidateInterviewItem> interviewList = null;
     @SerializedName("comments")
     private List<Comment> commentList = null;
 
@@ -100,11 +100,11 @@ public class Candidate {
         this.cvList = cvList;
     }
 
-    public List<Interview> getInterviewList() {
+    public List<CandidateInterviewItem> getInterviewList() {
         return interviewList;
     }
 
-    public void setInterviewList(List<Interview> interviewList) {
+    public void setInterviewList(List<CandidateInterviewItem> interviewList) {
         this.interviewList = interviewList;
     }
 

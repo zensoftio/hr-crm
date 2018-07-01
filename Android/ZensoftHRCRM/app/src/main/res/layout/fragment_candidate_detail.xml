@@ -75,4 +75,64 @@
         tools:text="candidate's phone"/>
   </LinearLayout>
 
+  <TextView
+      android:id="@+id/textView3"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/department"/>
+
+  <TextView
+      android:id="@+id/cd_department"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="Android dep"/>
+
+  <TextView
+      android:id="@+id/textView4"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/years_of_experience"/>
+
+  <TextView
+      android:id="@+id/cd_years_xp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="5"/>
+
+  <TextView
+      android:id="@+id/textView8"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/cvs"/>
+
+  <ListView
+      android:id="@+id/cd_cvs_listview"
+      android:layout_gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  </ListView>
+
+  <TextView
+      android:id="@+id/textView9"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/comments"/>
+  <ListView
+      android:id="@+id/cd_comments_listview"
+      android:layout_gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  </ListView>
+  <TextView
+      android:id="@+id/textView10"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/interviews"/>
+  <ListView
+      android:id="@+id/cd_interviews_listview"
+      android:layout_gravity="center_vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  </ListView>
+
 </LinearLayout>
