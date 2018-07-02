@@ -17,8 +17,8 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.User;
+import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +51,9 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
-    mPresenter = new CandidateDetailPresenter(this);
     initUI(v);
+    mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
+    mPresenter.loadCandidateInfo();
     return v;
 
   }
@@ -80,7 +81,15 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-
+    mFirstName.setText(candidate.getFirstName());
+    mLastName.setText(candidate.getLastName());
+    mEmail.setText(candidate.getEmail());
+    mPhoneNumber.setText(candidate.getPhone());
+    mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
+    mYearsOfExp.setText(candidate.getExperience().toString());
+    mCvsAdapter.setData(candidate.getCvs());
+    mCommentsAdapter.setData(candidate.getComments());
+    mInterviewsAdapter.setData(candidate.getInterviews());
   }
 
   @Override
@@ -96,16 +105,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   class CvsAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<Cv> mCvsList;
+    private List<Cv> mCvsList;
 
-    CvsAdapter(Context context, ArrayList<Cv> cvsList) {
+    CvsAdapter(Context context, List<Cv> cvsList) {
       mContext = context;
       mCvsList = cvsList;
       mLayoutInflater = LayoutInflater.from(mContext);
     }
 
-    public void setData(ArrayList<Cv> newData) {
+    public void setData(List<Cv> newData) {
       mCvsList = newData;
+      this.notifyDataSetChanged();
     }
 
     @Override
@@ -130,7 +140,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       TextView createdDate = v.findViewById(R.id.cv_item_created_text);
 
       Cv cvItem = (Cv) getItem(position);
-      attachment.setText(R.string.attachment + position);
+//      attachment.setText(R.string.attachment + (position + 1));
+      attachment.setText("attachment" + String.valueOf(position + 1));
       createdDate.setText(cvItem.getCreated().toString());
 
       return v;
@@ -141,16 +152,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   class CommentsAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<Comment> mCommentsList;
+    private List<Comment> mCommentsList;
 
-    CommentsAdapter(Context context, ArrayList<Comment> data) {
+    CommentsAdapter(Context context, List<Comment> data) {
       mContext = context;
       mCommentsList = data;
       mLayoutInflater = LayoutInflater.from(mContext);
     }
 
-    public void setData(ArrayList<Comment> newData) {
+    public void setData(List<Comment> newData) {
       mCommentsList = newData;
+      this.notifyDataSetChanged();
     }
 
     @Override
@@ -175,7 +187,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       TextView date = v.findViewById(R.id.cd_comment_date);
       TextView text = v.findViewById(R.id.cd_comment_text);
 
-      Comment comment = (Comment)  getItem(position);
+      Comment comment = (Comment) getItem(position);
       User user = comment.getCreatedBy();
       createdBy.setText(user.getFirstName() + " " + user.getLastName());
       date.setText(comment.getCreated().toString());
@@ -189,16 +201,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   class InterviewsAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<CandidateInterviewItem> mInterviews;
+    private List<CandidateInterviewItem> mInterviews;
 
-    InterviewsAdapter(Context context, ArrayList<CandidateInterviewItem> data) {
+    InterviewsAdapter(Context context, List<CandidateInterviewItem> data) {
       mContext = context;
       mInterviews = data;
       mLayoutInflater = LayoutInflater.from(mContext);
     }
 
-    public void setData(ArrayList<CandidateInterviewItem> newData) {
+    public void setData(List<CandidateInterviewItem> newData) {
       mInterviews = newData;
+      this.notifyDataSetChanged();
     }
 
     @Override
@@ -223,17 +236,18 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       TextView date = v.findViewById(R.id.cd_interview_date);
       TextView interviewersText = v.findViewById(R.id.cd_interview_interviewers);
 
-      CandidateInterviewItem interview = (CandidateInterviewItem)  getItem(position);
+      CandidateInterviewItem interview = (CandidateInterviewItem) getItem(position);
       status.setText(interview.getStatus().toString());
       date.setText(interview.getDate().toString());
       List<User> interviewers = interview.getInterviewers();
       StringBuilder users = new StringBuilder();
-      for (User interviewer: interviewers){
+      users.append("interviewers:\n");
+      for (User interviewer : interviewers) {
         String firstName =
             interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
         String lastName =
             interviewer.getLastName() != null ? interviewer.getLastName() : "";
-        users.append(firstName + " " + lastName + "\n");
+        users.append("-" + firstName + " " + lastName + "\n");
       }
       interviewersText.setText(users);
 
