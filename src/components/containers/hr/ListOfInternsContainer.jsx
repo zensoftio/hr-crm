@@ -1,12 +1,17 @@
 import React from "react";
 import TableList from "../../ui/Table";
+import {Link} from "react-router-dom";
 
-const ListOfInterns = (props) => {
+const ListOfInterns = () => {
+
+    function MakeLinked(element, link) {
+        return <Link to={link}>{element} </Link>;
+    }
 
     const data = [
-        ['Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', 'CVlink'],
-        ['Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', 'CVlink'],
-        ['Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', 'CVlink'],
+        ['Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVlink')],
+        ['Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVlink')],
+        ['Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVlink')],
 
     ];
 
