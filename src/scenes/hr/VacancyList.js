@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import Header from '../general/Header';
+import VacancyListContainer from '../../components/containers/hr/ListOfVacanciesContainer';
 
 class VacancyList extends Component {
     render() {
         return(
-            <h1>List of Vacancy</h1>
+            <div>
+                <Header title="Открытые Вакансии" />
+                <VacancyListContainer />
+            </div>
         )
     }
 }
