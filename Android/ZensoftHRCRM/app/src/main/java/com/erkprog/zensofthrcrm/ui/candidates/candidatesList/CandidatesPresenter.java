@@ -12,7 +12,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class CandidatesPresenter implements CandidatesContract.Presenter, CandidatesRepository.OnLoadFinishedListener {
+public class CandidatesPresenter implements CandidatesContract.Presenter, CandidatesRepository.OnCandidatesLoadFinishedListener {
 
     private static final String TAG = "mylog:CandidatesPresenter";
 
