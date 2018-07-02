@@ -11,43 +11,53 @@ import Reserve from './Reserve';
 import Statistics from '../general/Statistics';
 import Error from '../general/Error';
 import InterviewList from './InterviewList';
+import SpecifyTheRoute from '../../utils/Route';
 
 const HRNav = [
     {
         name: "Запросы",
         path: "/list_of_positions",
+        component: PositionList
     },
     {
         name: "Создать вакансию",
-        path: "/create_vacancy"
+        path: "/create_vacancy",
+        component: CreateVacancy
     },
     {
         name: "Вакансии",
-        path: "/opened_vacancies"
+        path: "/opened_vacancies",
+        component: OpenedVacancies
     },
     {
         name: "Кандидаты",
-        path: "/list_of_candidates"
+        path: "/list_of_candidates",
+        component: CandidateList
     },
     {
         name: "Резерв",
-        path: "/reserve"
+        path: "/reserve",
+        component: Reserve
     },
     {
         name: "Стажеры",
-        path: "/list_of_interns"
+        path: "/list_of_interns",
+        component: InternList
     },
     {
         name: "Статистика",
-        path: "/statistics"
+        path: "/statistics",
+        component: Statistics
     },
     {
         name: "Интервью",
-        path: "/list_of_interviews"
+        path: "/list_of_interviews",
+        component: InterviewList
     },
     {
         name: "Уведомления",
-        path: "/notifications"
+        path: "/notifications",
+        component: Notifications
     }
 ];
 
@@ -61,16 +71,8 @@ export default class HRScene extends Component {
 
                     <div className="content">
                         <Switch>
-                            <Route path="/" component={PositionList} exact/>
-                            <Route path="/list_of_positions" component={PositionList}/>
-                            <Route path="/create_vacancy" component={CreateVacancy}/>
-                            <Route path="/opened_vacancies" component={OpenedVacancies}/>
-                            <Route path="/list_of_candidates" component={CandidateList}/>   
-                            <Route path="/reserve" component={Reserve}/>
-                            <Route path="/list_of_interns" component={InternList}/>   
-                            <Route path="/statistics" component={Statistics}/>
-                            <Route path="/list_of_interviews" component={InterviewList}/>
-                            <Route path="/notifications" component={Notifications}/>
+                            <Route path="/" component={OpenedVacancies} exact />
+                            <SpecifyTheRoute route={HRNav} />
                             <Route component={Error}/>
                         </Switch>
                     </div>
