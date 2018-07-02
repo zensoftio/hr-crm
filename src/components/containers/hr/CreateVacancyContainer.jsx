@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import ButtonSubmit from '../../ui/ButtonSubmit';
@@ -55,99 +56,106 @@ const RateList = [
     "Посменно",
   ];
 
+  const styles = theme => ({
+    label: {
+      margin: "10px 15px"
+    },
+    span: {
+      margin: "0 15px"
+    }
+  });
+
 class CreateVacancyContainer extends Component {
   render() {
+    const { classes } = this.props;
 
     return (
       <div>
-        <Grid item lg={6}>
-            <div>
-              Тариф Вакансии: 
+        <Grid item lg={8}>
+            <div className={classes.label}>
+              <span className={classes.span}>Тариф Вакансии:</span>  
               <Select vals={RateList} />
             </div>
-            <div>
-              Название темы: 
+            <div className={classes.label}>
+              <span className={classes.span}>Название темы:</span> 
               <Input placeholder="введите название" />
             </div> 
-            <div>
-              Название темы: 
+            <div className={classes.label}>
+              <span className={classes.span}>Название темы:</span> 
               <Input placeholder="введите название" />
             </div>
-            <div>
-              Выберите город:
+            <div className={classes.label}>
+              <span className={classes.span}>Выберите город:</span>
               <Select vals={CityList} />
             </div> 
-            <div>
-              Требования:
+            <div className={classes.label}>
+              <span className={classes.span}>Требования:</span>
               <MultiSelect names={Requirements} />
             </div> 
-            <div>
-              Опциональные требования: 
+            <div className={classes.label}>
+              <span className={classes.span}>Опциональные требования:</span> 
               <Input placeholder="введите требования" />
             </div> 
-            <div>
-              Адрес Офиса: 
+            <div className={classes.label}>
+              <span className={classes.span}>Адрес Офиса:</span> 
               <Input placeholder="введите адрес" value="Бишкек Ахунбаева 119А" />
             </div> 
-            <div>
-              Образование:
+            <div className={classes.label}>
+              <span className={classes.span}>Образование:</span>
               <Select vals={Education} />
             </div>
-            <div>
-              График работы:
+            <div className={classes.label}>
+              <span className={classes.span}>График работы:</span>
               <Input placeholder="введите график" />
             </div>
-            <div>
-              Опыт работы:
+            <div className={classes.label}>
+              <span className={classes.span}>Опыт работы:</span>
               <Select vals={Experience} />
             </div>
-            <div>
-              Условия работы:
+            <div className={classes.label}>
+              <span className={classes.span}>Условия работы:</span>
               <TextArea  value={Work_conditions}/>
             </div> 
-            <div>
-              Обязанности:
+            <div className={classes.label}>
+              <span className={classes.span}>Обязанности:</span>
               <TextArea  value={Duties}/>
             </div> 
-            <div>
-              Зарплата:
-              <div>
-                Min: <Input placeholder="min" />
-              </div>
-              <div>
-                Max: <Input placeholder="max" />
-              </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Зарплата:</span>
+                <span className={classes.span}><Input placeholder="min" /></span>
+                <span className={classes.span}><Input placeholder="max" /></span>
             </div>
-            <div>
-              Тип занятости:
+            <div className={classes.label}>
+              <span className={classes.span}>Тип занятости:</span>
               <Select vals={EmploymentType} />
             </div>
-            <div>
-              Прочее:
+            <div className={classes.label}>
+              <span className={classes.span}>Прочее:</span>
               <TextArea  placeholder="введите текст"/>
             </div>
-            <div>
-              Соц. сети:
+            <div className={classes.label}>
+              <span className={classes.span}>Соц. сети:</span>
               <Checkbox label="Facebook"/>
               <Checkbox label="Job.kg"/>
               <Checkbox label="Diesel"/>
             </div>
-            <div>
+            <div className={classes.label}>
               Изображение:
-              <input
-                accept="image/*"
-                multiple
-                type="file"
-              />
+                <input
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  className={classes.label}
+                />
             </div>
-            <div>
+            <div className={classes.label}>
               <ButtonSubmit>Опубликовать</ButtonSubmit>
             </div>
-        </Grid >
+        </Grid>
 
       </div>
     );
   }
 }
 
-export default CreateVacancyContainer;
+export default withStyles(styles)(CreateVacancyContainer);
