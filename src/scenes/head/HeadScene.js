@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import OpenedPositions from '../../scenes/head/OpenedPositions';
+import OpenedPositions from './OpenedPositions';
 import Error from '../general/Error';
-import Navigation from '../../scenes/general/Navigation';
-import CreatePosition from '../../scenes/head/CreatePosition';
-import Archive from '../../scenes/head/Archive';
-import Statistics from '../../scenes/general/Statistics';
+import Navigation from '../general/Navigation';
+import CreatePosition from './CreatePosition';
+import Archive from './Archive';
+import Statistics from '../general/Statistics';
+import EditPositions from './EditPositions';
 import '../../index.css';
 
 export default class HeadScene extends Component {
@@ -23,6 +24,7 @@ export default class HeadScene extends Component {
                         <Route path="/opened_positions" component={OpenedPositions}/>
                         <Route path="/archive" component={Archive}/>
                         <Route path="/statistics" component={Statistics}/>
+												<Route path="/edit_positions" component={EditPositions}/>
                         <Route component={Error}/>
                     </Switch>
                 </div>
