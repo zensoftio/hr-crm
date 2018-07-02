@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+
 from apps.departments.models import Requirement
 from apps.requests.models import Request
 
@@ -53,8 +54,8 @@ class Vacancy(models.Model):
 
 class Publication(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
-    created = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    created = models.DateTimeField(auto_now_add=True)
     facebook = models.BooleanField()
     diesel = models.BooleanField()
     jobkg = models.BooleanField()

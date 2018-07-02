@@ -36,8 +36,17 @@ class VacancyDetailSerializer(serializers.ModelSerializer):
         exclude = []
 
 
+class VacancyPublicationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vacancy
+        fields = ['id', 'created_by']
+
+
 class PublicationSerializer(serializers.ModelSerializer):
+    created_by = AuxUserSerializer
+
     class Meta:
         model = Publication
-        fields = ('vacancy_id', 'created', 'created_by', 'facebook',
-                  'instagram', 'headhunter', 'diesel', 'jobkg')
+        exclude = []
+

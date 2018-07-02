@@ -23,10 +23,11 @@ class VacancyDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VacancyDetailSerializer
 
 
-class PublicationList(generics.ListAPIView):
-    queryset = Vacancy.objects.all()
-    serializer_class = VacancyListSerializer
+class PublicationList(generics.ListCreateAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
 
+ 
 
 class PublicationDetail(generics.RetrieveAPIView):
     queryset = Publication.objects.all()
