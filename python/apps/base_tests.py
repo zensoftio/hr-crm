@@ -15,4 +15,4 @@ class ListCreateTestMixin(object):
         serializer = self.serializer(queryset, many=True)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data['results'], serializer.data)
