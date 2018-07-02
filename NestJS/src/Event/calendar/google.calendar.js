@@ -40,17 +40,13 @@ module.exports = {
       authorize(function(auth){
         calendar = google.calendar({version: 'v3', auth});
         let jsonObj = json.content;
-        if(jsonObj.begin_time && jsonObj.end_time && jsonObj.description && jsonObj.location){
-          event.location = jsonObj.location;
-          event.description = jsonObj.description;
-          event.start.dateTime = jsonObj.begin_time;
-          event.end.dateTime = jsonObj.end_time;
-          for(let i = 0;i < jsonObj.email.length;i++){
-            event.attendees.push({'email': jsonObj.email[i]});
-          }
+        if(json.description == "create" && hasAllObjects(jsonObj)){
+            create(jsonObj, function(data){
+              callback(data);
+            });
         }
-        if(json.description == "create"){
-          create(jsonObj, function(data){
+        else if(json.description == "list"){
+          getList(function (data){
             callback(data);
           });
         }
@@ -66,6 +62,17 @@ module.exports = {
   }
 }
 
+function hasAllObjects(jsonObj){
+  if(jsonObj.begin_time && jsonObj.end_time && jsonObj.description && jsonObj.location){
+    event.location = jsonObj.location;
+    event.description = jsonObj.description;
+    event.start.dateTime = jsonObj.begin_time;
+    event.end.dateTime = jsonObj.end_time;
+    for(let i = 0;i < jsonObj.email.length;i++){
+      event.attendees.push({'email': jsonObj.email[i]});
+    }
+  }
+}
 function create(json, callback){
 
   calendar.events.insert({auth: auth, calendarId: 'primary', resource: event}, function(err, event) {
@@ -78,6 +85,16 @@ function create(json, callback){
     //console.log(event.data);
     callback(event.data)
   });
+}
+
+function getList(callback){
+  calendar.events.list({auth: auth, calendarId: 'primary'}, function(err, response){
+    if(err){
+      console.log("There was an error contacting the Calendar service: " + err);
+      return;
+    }
+    console.log(response.data.items);
+  })
 }
 
 

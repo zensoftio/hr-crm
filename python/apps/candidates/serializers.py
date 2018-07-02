@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.departments.serializers import DepartmentSerializer, PositionSerializer, AuxPositionSerializer
+from apps.departments.serializers import DepartmentSerializer, AuxPositionSerializer
 from apps.interviews.serializers import AuxInterviewSerializer
 from apps.users.serializers import AuxUserSerializer
 from .models import Candidate, CV, Comment
@@ -20,12 +20,18 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'created_by', 'created')
 
 
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'text', 'candidate', 'created_by', 'created')
+
+
 class CandidateDetailSerializer(serializers.ModelSerializer):
     """Candidate serializer for Detailed Candidate endpoint"""
-    interviews = AuxInterviewSerializer(many=True)
-    CVs = CVSerializer(many=True, source='CV')
-    comments = CommentSerializer(many=True)
-    position = AuxPositionSerializer()
+    interviews = AuxInterviewSerializer(many=True, read_only=True)
+    CVs = CVSerializer(many=True, source='CV', read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+    position = AuxPositionSerializer(partial=True)
 
     class Meta:
         model = Candidate
@@ -48,6 +54,6 @@ class AuxCandidateSerializer(serializers.ModelSerializer):
     """Candidate Serializer for Candidates List and Candidate Detail endpoint"""
 
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'position')
         model = Candidate
         depth = 3
+        fields = ('id', 'first_name', 'last_name', 'position')

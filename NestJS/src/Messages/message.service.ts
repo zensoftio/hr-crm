@@ -1,18 +1,24 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 import { Message } from './message.entity';
+import { acceleratedmobilepageurl } from 'googleapis/build/src/apis/acceleratedmobilepageurl';
+import { Recipient } from 'Recipients/recepient.entity';
+import { RecipientService } from 'Recipients/recipient.service';
 
 @Injectable()
 export class MessageService {
     constructor(
         @InjectRepository(Message)
-        private readonly messageRepository: Repository<Message>,
+        private readonly messageRepository: Repository<Message>, 
+        private readonly recipientService: RecipientService
         ) {}
 
-  create(message: Message): Message {
-    this.messageRepository.save(message);
-    return message;
+  async create(message: Message): Promise<number> {
+
+    const response = await this.messageRepository.save(message)
+    const id = +await JSON.stringify(response.id)
+    return id
   }
 
   async findAll(): Promise<Message[]> {

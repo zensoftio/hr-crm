@@ -22,9 +22,6 @@ class Candidate(models.Model):
     class Meta:
         default_related_name = 'candidates'
 
-    class Meta:
-        default_related_name = 'candidates'
-
     def __str__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
@@ -40,9 +37,9 @@ class CV(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
 
     class Meta:
         default_related_name = 'comments'

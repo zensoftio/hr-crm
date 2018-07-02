@@ -1,9 +1,14 @@
 from rest_framework import generics
-from apps.evaluations.models import Evaluation, Criteria
-from apps.evaluations.serializers import EvaluationSerializer, CriteriaSerializer
+from apps.evaluations.models import Criteria
+from apps.evaluations.serializers import CriteriaSerializer
 
 
-class CriteriaListView(generics.ListAPIView):
-    queryset = Criteria
+class CriteriaCreateListView(generics.ListCreateAPIView):
+    queryset = Criteria.objects.all()
     serializer_class = CriteriaSerializer
+
+
+
+
+
 

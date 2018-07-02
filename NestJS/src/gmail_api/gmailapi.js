@@ -39,7 +39,7 @@ function authorize(callback, data) {
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
+    if (err) return getNewToken(oAuth2Client, callback, data);
     oAuth2Client.setCredentials(JSON.parse(token));
     
     callback(oAuth2Client, data);
@@ -52,7 +52,7 @@ function authorize(callback, data) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getNewToken(oAuth2Client, callback) {
+function getNewToken(oAuth2Client, callback, data) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -72,7 +72,7 @@ function getNewToken(oAuth2Client, callback) {
         if (err) return console.error(err);
         console.log('Token stored to', TOKEN_PATH);
       });
-      callback(oAuth2Client);
+      callback(oAuth2Client, data);
     });
   });
 }
@@ -136,7 +136,7 @@ function makeBody(data) {
   let fileToAttach = '/home/reedvl/Downloads/test.docx';
   var attach = new Buffer(fs.readFileSync(fileToAttach)) .toString("base64");
 
-  var arrays = defineTypeOfRecepients(data);
+  var arrays = defineTypeOfRecipients(data);
   let To = arrays[0].toString()
   let CC = arrays[1].toString()
   let BCC = arrays[2].toString()
@@ -167,20 +167,19 @@ function makeBody(data) {
       return encodedMail;
 }
 
-function defineTypeOfRecepients(data) {  
+function defineTypeOfRecipients(data) {  
   let i;
   let to = [], cc = [], bcc = [];
- 
-  for(i = 0; i < data.recepients.length; i++){
-    switch(data.recepients[i].type){
+  for(i = 0; i < data.recipients.length; i++){
+    switch(data.recipients[i].type){
       case "to":
-        to.push(data.recepients[i].email)
+        to.push(data.recipients[i].email)
         break;
       case "cc":
-        cc.push(data.recepients[i].email)
+        cc.push(data.recipients[i].email)
         break;
       case "bcc":
-        bcc.push(data.recepients[i].email)
+        bcc.push(data.recipients[i].email)
         break;
       default:
         break;
