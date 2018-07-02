@@ -10,7 +10,7 @@ import { RecipientService } from 'Recipients/recipient.service';
 export class MessageService {
     constructor(
         @InjectRepository(Message)
-        private readonly messageRepository: Repository<Message>, 
+        private readonly messageRepository: Repository<Message>,
         private readonly recipientService: RecipientService
         ) {}
 
