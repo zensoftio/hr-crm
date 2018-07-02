@@ -54,16 +54,19 @@ export class MessageListener {
 
   sendEmail(data){
     let i;
-    for(i = 0; i < data.recipients.length; i++) {
-      qs.sendMessageH(data, data.recipients[i])
+    try{
+      for(i = 0; i < data.recipients.length; i++) {
+        qs.sendMessageH(data, data.recipients[i])
+      }
+      this.getMsgId(data)
+    } catch(err) {
+      console.log(err)
     }
-    console.log("Message is send!")
-    this.getMsgId(data)
   }
 
   async getMsgId(data){
-    const a = await this.messageService.create(data)
-    data.recipients.map((rec) => rec.message = a)
+    const msgId = await this.messageService.create(data)
+    data.recipients.map((rec) => rec.message = msgId)
     return this.recipientService.create(data.recipients)
   }
 }
