@@ -12,7 +12,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
         depth = 3
-        fields = ('id', 'date', 'status', 'candidate', 'requests', 'interviewers')
+        fields = ('id', 'date', 'status', 'candidate', 'interviewers')
 
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
