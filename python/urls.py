@@ -11,4 +11,5 @@ urlpatterns = [
     path('', include('apps.requests.urls')),
     path('', include('apps.users.urls')),
     path('', include('apps.vacancies.urls')),
+    path('', include('apps.templates.urls')),
 ]
