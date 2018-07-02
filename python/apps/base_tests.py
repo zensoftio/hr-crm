@@ -1,4 +1,16 @@
+from rest_framework import status
+
+
 class ListTestMixin(object):
+    """
+        Mixin for testing creating Model instance
+
+        Usage:
+            url - endpoint e.g. '/candidates/'
+            model - e.g Candidate
+            serializer_class - e.g. CandidateSerializer
+    """
+
     url = None
     model = None
     serializer = None
@@ -13,6 +25,14 @@ class ListTestMixin(object):
 
 
 class CreateTestMixin(object):
+    """
+        Mixin for testing creating Model instance
+
+        Usage:
+            url - endpoint e.g. '/candidates/'
+            model - e.g Candidate
+            serializer_class - e.g. CandidateSerializer
+    """
     url = None
     model = None
     serializer = None
@@ -22,3 +42,30 @@ class CreateTestMixin(object):
         response = self.client.post(self.url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(1, self.model.objects.count())
+
+
+class GetInstanceTestMixin(object):
+    """
+    Mixin for testing concrete Candidate instance
+
+    Usage:
+        url - endpoint e.g. '/candidates/'
+        model - e.g Candidate
+        serializer_class - e.g. CandidateSerializer
+
+    ! Important:
+        You must override def setUp(self):
+        and create Model Instance e.g. Candidate.object.create()
+        And Create all Related objects(Related Fields in 'model')
+    """
+    url = None
+    model = None
+    serializer_class = None
+
+    def test_instance(self):
+        url = self.url + str(self.instance.id)
+        response = self.client.get(url)
+        serializer = self.serializer(self.instance)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
