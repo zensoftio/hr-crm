@@ -48,7 +48,7 @@ html, body {
 .table_head th{
 	padding: 15px;
 	text-align: center;
-	background-color: #4CAF50;
+	background-color: #4bbb8b;
 	color: white;
 }
 .table_head td {
@@ -69,4 +69,7 @@ html, body {
 .statistic span {
 	display: inline-block;
 	padding: 20px;
+}
+.label{
+    display: inline-block;
 }
