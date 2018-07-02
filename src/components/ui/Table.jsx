@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+
 const CustomTableCell = withStyles(theme => ({
     head: {
         backgroundColor: theme.palette.common.black,
@@ -56,10 +57,6 @@ function TableList(props) {
                             {rows.map((element, k) => (
                                 <CustomTableCell key={k}>{element}</CustomTableCell>
                             ))}
-
-                            {/*<CustomTableCell>{<Link to={n.attachment}>*/}
-                            {/*CV*/}
-                            {/*</Link>}</CustomTableCell>*/}
                         </TableRow>
                     ))}
                 </TableBody>
