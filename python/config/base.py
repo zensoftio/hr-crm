@@ -31,7 +31,8 @@ class Base(Configuration):
         'apps.interviews',
         'apps.requests',
         'apps.users',
-        'apps.vacancies'
+        'apps.vacancies',
+        'apps.templates'
     ]
 
     MIDDLEWARE = [
