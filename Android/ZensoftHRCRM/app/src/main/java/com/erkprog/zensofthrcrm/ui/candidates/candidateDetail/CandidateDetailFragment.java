@@ -1,16 +1,21 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
@@ -20,15 +25,19 @@ import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
+import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View {
+  private static final String TAG = "mylog:CandidateDetailFragment";
 
   private CandidateDetailContract.Presenter mPresenter;
-  private ListView mCvsListView;
-  private ListView mCommentsListView;
-  private ListView mInterviewsListView;
+//  private ListView mCvsListView;
+//  private ListView mCommentsListView;
+//  private ListView mInterviewsListView;
+
+  private LinearLayout mLayout;
 
   private CvsAdapter mCvsAdapter;
   private CommentsAdapter mCommentsAdapter;
@@ -59,6 +68,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   private void initUI(View v) {
+    mLayout = v.findViewById(R.id.cd_root_layout);
     mFirstName = v.findViewById(R.id.cd_first_name);
     mLastName = v.findViewById(R.id.cd_last_name);
     mEmail = v.findViewById(R.id.cd_email);
@@ -66,17 +76,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
 
-    mCvsListView = v.findViewById(R.id.cd_cvs_listview);
+//    mCvsListView = v.findViewById(R.id.cd_cvs_listview);
     mCvsAdapter = new CvsAdapter(getActivity(), new ArrayList<Cv>());
-    mCvsListView.setAdapter(mCvsAdapter);
+//    mCvsListView.setAdapter(mCvsAdapter);
 
-    mCommentsListView = v.findViewById(R.id.cd_comments_listview);
+//    mCommentsListView = v.findViewById(R.id.cd_comments_listview);
     mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
-    mCommentsListView.setAdapter(mCommentsAdapter);
+//    mCommentsListView.setAdapter(mCommentsAdapter);
 
-    mInterviewsListView = v.findViewById(R.id.cd_interviews_listview);
+//    mInterviewsListView = v.findViewById(R.id.cd_interviews_listview);
     mInterviewsAdapter = new InterviewsAdapter(getActivity(), new ArrayList<CandidateInterviewItem>());
-    mInterviewsListView.setAdapter(mInterviewsAdapter);
+//    mInterviewsListView.setAdapter(mInterviewsAdapter);
   }
 
   @Override
@@ -90,6 +100,80 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mCvsAdapter.setData(candidate.getCvs());
     mCommentsAdapter.setData(candidate.getComments());
     mInterviewsAdapter.setData(candidate.getInterviews());
+    addViewsToLayout();
+
+  }
+
+  private void addViewsToLayout() {
+    //add CV views to layout
+    addAdapterView(mCvsAdapter);
+
+    //add Comment views to layout
+    addAdapterView(mCommentsAdapter);
+
+    //add CV views to layout
+    addAdapterView(mInterviewsAdapter);
+
+  }
+
+
+  @SuppressLint("LongLogTag")
+  private void addAdapterView(final BaseAdapter adapter) {
+    int itemsCount = adapter.getCount();
+
+    if (itemsCount > 0) {
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(getTitleText(adapter));
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      for (int i = 0; i < adapter.getCount(); i++) {
+        View item = adapter.getView(i, null, null);
+        final int finalI = i;
+        item.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            if (adapter instanceof CvsAdapter) {
+              Cv cvItem = (Cv) adapter.getItem(finalI);
+              onCvItemClicked(cvItem);
+            } else if (adapter instanceof CommentsAdapter) {
+              Comment commentItem = (Comment) adapter.getItem(finalI);
+              onCommentItemClicked(commentItem);
+            } else if (adapter instanceof InterviewsAdapter) {
+              CandidateInterviewItem interviewItem = (CandidateInterviewItem) adapter.getItem(finalI);
+              onInterviewItemClicked(interviewItem);
+            }
+          }
+        });
+        mLayout.addView(item);
+      }
+    }
+
+  }
+
+  private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
+    mPresenter.onInterviewItemClicked(interviewItem);
+
+  }
+
+  private void onCommentItemClicked(Comment commentItem) {
+    mPresenter.onCommentItemClicked(commentItem);
+  }
+
+  private void onCvItemClicked(Cv cvItem) {
+    mPresenter.onCvItemClicked(cvItem);
+  }
+
+
+  private int getTitleText(BaseAdapter adapter) {
+    if (adapter instanceof CvsAdapter) {
+      return R.string.cvs;
+    } else if (adapter instanceof CommentsAdapter) {
+      return R.string.comments;
+    } else if (adapter instanceof InterviewsAdapter) {
+      return R.string.interviews;
+    }
+    return -1;
   }
 
   @Override
@@ -99,6 +183,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   @Override
   public void showToast(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
   }
 
@@ -140,7 +225,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       TextView createdDate = v.findViewById(R.id.cv_item_created_text);
 
       Cv cvItem = (Cv) getItem(position);
-//      attachment.setText(R.string.attachment + (position + 1));
       attachment.setText("attachment" + String.valueOf(position + 1));
       createdDate.setText(cvItem.getCreated().toString());
 
@@ -238,7 +322,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
       CandidateInterviewItem interview = (CandidateInterviewItem) getItem(position);
       status.setText(interview.getStatus().toString());
-      date.setText(interview.getDate().toString());
+      date.setText(interview.getDate());
       List<User> interviewers = interview.getInterviewers();
       StringBuilder users = new StringBuilder();
       users.append("interviewers:\n");
@@ -247,7 +331,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
             interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
         String lastName =
             interviewer.getLastName() != null ? interviewer.getLastName() : "";
-        users.append("-" + firstName + " " + lastName + "\n");
+        users.append("-").append(firstName).append(" ").append(lastName).append("\n");
       }
       interviewersText.setText(users);
 

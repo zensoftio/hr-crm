@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
+import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
+import com.erkprog.zensofthrcrm.data.entity.Comment;
+import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import retrofit2.Response;
@@ -39,6 +42,21 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   @Override
   public void onFailure(Throwable t) {
     Log.d(TAG, "onFailure: starts");
+
+  }
+
+  @Override
+  public void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
+    mView.showToast(interviewItem.getDate());
+  }
+
+  @Override
+  public void onCommentItemClicked(Comment commentItem) {
+
+  }
+
+  @Override
+  public void onCvItemClicked(Cv cvItem) {
 
   }
 }
