@@ -2,7 +2,6 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +23,6 @@ import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +30,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   private static final String TAG = "mylog:CandidateDetailFragment";
 
   private CandidateDetailContract.Presenter mPresenter;
-//  private ListView mCvsListView;
-//  private ListView mCommentsListView;
-//  private ListView mInterviewsListView;
 
   private LinearLayout mLayout;
 
@@ -76,17 +70,9 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
 
-//    mCvsListView = v.findViewById(R.id.cd_cvs_listview);
     mCvsAdapter = new CvsAdapter(getActivity(), new ArrayList<Cv>());
-//    mCvsListView.setAdapter(mCvsAdapter);
-
-//    mCommentsListView = v.findViewById(R.id.cd_comments_listview);
     mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
-//    mCommentsListView.setAdapter(mCommentsAdapter);
-
-//    mInterviewsListView = v.findViewById(R.id.cd_interviews_listview);
     mInterviewsAdapter = new InterviewsAdapter(getActivity(), new ArrayList<CandidateInterviewItem>());
-//    mInterviewsListView.setAdapter(mInterviewsAdapter);
   }
 
   @Override
@@ -153,7 +139,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
     mPresenter.onInterviewItemClicked(interviewItem);
-
   }
 
   private void onCommentItemClicked(Comment commentItem) {
@@ -164,6 +149,10 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPresenter.onCvItemClicked(cvItem);
   }
 
+  @Override
+  public boolean isActive() {
+    return isAdded();
+  }
 
   private int getTitleText(BaseAdapter adapter) {
     if (adapter instanceof CvsAdapter) {

@@ -5,26 +5,28 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import java.util.List;
 
 public interface CandidatesContract {
-    public interface View {
+  public interface View {
 
-        void showCandidates(List<Candidate> candidates);
+    void showCandidates(List<Candidate> candidates);
 
-        void showCandidateDetailUi(int candidateId);
+    void showCandidateDetailUi(int candidateId);
 
-        void showLoadingCandidatesError();
+    void showLoadingCandidatesError();
 
-        void showNoCandidates();
+    void showNoCandidates();
 
-        void showToast(String message);
+    void showToast(String message);
 
-    }
+    boolean isActive();
 
-    public interface Presenter {
+  }
 
-        void loadCandidates();
+  public interface Presenter {
 
-        void openCandidateDetails(Candidate requestedCandidate);
+    void loadCandidates();
+
+    void openCandidateDetails(Candidate requestedCandidate);
 
 
-    }
+  }
 }

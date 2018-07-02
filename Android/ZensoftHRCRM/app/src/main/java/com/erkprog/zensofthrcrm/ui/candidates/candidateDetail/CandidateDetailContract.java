@@ -5,8 +5,6 @@ import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 
-import java.util.List;
-
 public interface CandidateDetailContract {
 
   public interface View {
@@ -16,6 +14,8 @@ public interface CandidateDetailContract {
     void showLoadingCandidateError();
 
     void showToast(String message);
+
+    boolean isActive();
 
   }
 

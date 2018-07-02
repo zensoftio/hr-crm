@@ -33,6 +33,9 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   @SuppressLint("LongLogTag")
   @Override
   public void onFinished(Response<Candidate> response) {
+    if (!mView.isActive()) {
+      return;
+    }
     Log.d(TAG, "onFinished: success");
     Candidate candidate = response.body();
     mView.showCandidateDetails(candidate);
@@ -52,11 +55,11 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
 
   @Override
   public void onCommentItemClicked(Comment commentItem) {
-
+    mView.showToast(commentItem.getText());
   }
 
   @Override
   public void onCvItemClicked(Cv cvItem) {
-
+    mView.showToast(cvItem.getLink());
   }
 }
