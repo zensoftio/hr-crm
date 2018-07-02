@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-            <User userRole="head" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
+            <User userRole="hr" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
         </Router>
       </div>
     );

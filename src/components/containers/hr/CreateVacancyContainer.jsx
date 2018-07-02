@@ -1,93 +1,162 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import ButtonSubmit from '../../ui/ButtonSubmit';
+import Select from '../../ui/SelectList';
+import Grid from '@material-ui/core/Grid';
+import MultiSelect from '../../ui/MultipleSelect';
+import Checkbox from '../../ui/Checkbox';
+import "../../../index.css";
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
+const RateList = [
+  "Стандарт",
+  "Премиум",
+  "VIP"
+],
+  CityList = [
+    "Бишкек",
+    "Кара-Балта",
+    "Сокулук",
+    "Кант",
+  ],
+  Requirements = [
+    "one",
+    "three",
+    "four",
+    "five"
+  ],
+  Education = [
+    "Среднее",
+    "Средне-специальное",
+    "Высшее"
+  ],
+  Experience = [
+    "от 1 года",
+    "от 2 лет",
+    "от 3 лет",
+  ],
+  Work_conditions = [
+   `• работа в комфортном современном офисе в центре города;
+    •	руководство, готовое поддерживать вас и помогать в развитии;
+    •	корпоративные вечеринки и совместный отдых;
+    •	приятные бонусы и премии;
+    •	компенсации спорта;
+    •	своевременную оплату труда;
+    •	возможность бесплатного обучения на курсах наших программистов;
+    •	удобный график работы;
+    •	официальное трудоустройство;
+    •	возможность изучать английский язык с квалифицированным преподавателем прямо в офисе;`
+  ],
+  Duties = [
+    `•	Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.`
+  ],
+  EmploymentType = [
+    "Полный рабочий день",
+    "Посменно",
+  ];
 
-function tabChange(value){ 
-    return(
-        <TabContainer>
-        <Grid container spacing={16}>
-            <Grid item lg={8}>
-                {value === 0 ? (
-                    <div>
-                        Шаблон: <TextArea />
-                        <ButtonSubmit>Сохранить</ButtonSubmit>
-                    </div>
-                ):(
-                    <div>
-                        <Input label="Название темы" placeholder="введите название темы"/>
-                        <Input label="Название вакансии" placeholder="введите название вакансии" />
-                    </div> 
-                )}
-            </Grid>
-        </Grid>
-        </TabContainer>
-    );
-}
+const styles = ({
+  button_upload: {
+    display: 'none'
+  }
+})
+  
 
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-});
 
 class CreateVacancyContainer extends Component {
-  state = {
-    value: 0,
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
-    const { classes } = this.props;
-    const { value } = this.state;
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            scrollable
-            scrollButtons="auto"
-          >
-            <Tab label="Шаблон" />
-            <Tab label="Общий" />
-          </Tabs>
-        </AppBar>
-        {tabChange(value)}
+      <div>
+        <Grid item lg={6}>
+            <div>
+              Тариф Вакансии: 
+              <Select vals={RateList} />
+            </div>
+            <div>
+              Название темы: 
+              <Input placeholder="введите название" />
+            </div> 
+            <div>
+              Название темы: 
+              <Input placeholder="введите название" />
+            </div>
+            <div>
+              Выберите город:
+              <Select vals={CityList} />
+            </div> 
+            <div>
+              Требования:
+              <MultiSelect names={Requirements} />
+            </div> 
+            <div>
+              Опциональные требования: 
+              <Input placeholder="введите требования" />
+            </div> 
+            <div>
+              Адрес Офиса: 
+              <Input placeholder="введите адрес" value="Бишкек Ахунбаева 119А" />
+            </div> 
+            <div>
+              Образование:
+              <Select vals={Education} />
+            </div>
+            <div>
+              График работы:
+              <Input placeholder="введите график" />
+            </div>
+            <div>
+              Опыт работы:
+              <Select vals={Experience} />
+            </div>
+            <div>
+              Условия работы:
+              <TextArea  value={Work_conditions}/>
+            </div> 
+            <div>
+              Обязанности:
+              <TextArea  value={Duties}/>
+            </div> 
+            <div>
+              Зарплата:
+              <div>
+                Min: <Input placeholder="min" />
+              </div>
+              <div>
+                Max: <Input placeholder="max" />
+              </div>
+            </div>
+            <div>
+              Тип занятости:
+              <Select vals={EmploymentType} />
+            </div>
+            <div>
+              Прочее:
+              <TextArea  placeholder="введите текст"/>
+            </div>
+            <div>
+              Соц. сети:
+              <Checkbox label="Facebook"/>
+              <Checkbox label="Job.kg"/>
+              <Checkbox label="Diesel"/>
+            </div>
+            <div>
+              Изображение:
+              <input
+                accept="image/*"
+                multiple
+                type="file"
+                className={styles.button_upload}
+              />
+            </div>
+            <div>
+              <ButtonSubmit>Опубликовать</ButtonSubmit>
+            </div>
+        </Grid >
+
       </div>
     );
   }
 }
 
-CreateVacancyContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(CreateVacancyContainer);
+export default CreateVacancyContainer;
