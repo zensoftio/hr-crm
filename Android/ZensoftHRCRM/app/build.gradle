@@ -17,16 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+  }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation 'com.android.support:appcompat-v7:27.1.1'
+  implementation 'com.android.support:design:27.1.1'
+  implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
-    //create fake responses from json files
-    implementation 'com.github.tientun:retrofit-mock-response:1.0.0'
+  //create fake responses from json files
+  implementation 'com.github.tientun:retrofit-mock-response:1.0.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'

@@ -1,8 +1,6 @@
 package com.erkprog.zensofthrcrm.data.network.interviews;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
@@ -46,7 +44,6 @@ public class InterviewsRepository implements InterviewsContract.Repository {
             }
         });
     }
-
 
     public InterviewsRepository(Context context){
         mContext = context;

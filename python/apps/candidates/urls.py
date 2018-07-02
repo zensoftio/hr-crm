@@ -1,7 +1,9 @@
 from django.urls import path
 
-from apps.candidates.views import test_func
+from apps.candidates import views
 
 urlpatterns = [
-    path('candidates/', test_func)
+    path('candidates/', views.CandidateListView.as_view()),
+    path('candidates/<int:pk>', views.CandidateDetailView.as_view()),
+    path('comments/', views.CommentCreateView.as_view()),
 ]
