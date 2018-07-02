@@ -7,6 +7,5 @@ import org.springframework.stereotype.Service;
  * Created by temirlan on 6/29/18.
  */
 @Service
-public interface PostResponseService {
-    void save(PostResponse postResponse);
+public interface PostResponseService extends ModelService<PostResponse, Long> {
 }
