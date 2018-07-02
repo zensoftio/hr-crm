@@ -7,9 +7,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        
-            <User userRole="pm" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
-        
+
+            <User userRole="hr" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
+
       </div>
     );
   }

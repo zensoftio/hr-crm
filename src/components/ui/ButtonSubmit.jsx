@@ -12,9 +12,8 @@ export default class ButtonSubmit extends Component {
     render() {
         return (
 
-            <Button variant="contained" className={styles.button}>
+            <Button variant="contained" className={styles.button} >
                 {this.props.children}
-
             </Button>
         );
     }
