@@ -23,6 +23,7 @@ class Base(Configuration):
 
         'django_extensions',
         'rest_framework',
+        'django_filters',
 
         'apps.candidates',
         'apps.departments',
@@ -30,7 +31,8 @@ class Base(Configuration):
         'apps.interviews',
         'apps.requests',
         'apps.users',
-        'apps.vacancies'
+        'apps.vacancies',
+        'apps.templates'
     ]
 
     MIDDLEWARE = [
@@ -88,6 +90,17 @@ class Base(Configuration):
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
+
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'config.pagination.SizedPageNumberPagination',
+        'PAGE_SIZE': 10,
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.AllowAny',
+        ],
+        'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.SearchFilter',
+                                    'django_filters.rest_framework.DjangoFilterBackend',
+                                    'rest_framework.filters.OrderingFilter',)
+    }
 
     LANGUAGE_CODE = 'en-us'
 

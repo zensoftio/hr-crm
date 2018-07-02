@@ -1,118 +1,128 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
+import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class Candidate {
-    @SerializedName("id")
-    private Integer id;
-    @SerializedName("first_name")
-    private String firstName;
-    @SerializedName("last_name")
-    private String lastName;
-    @SerializedName("email")
-    private String email;
-    @SerializedName("department")
-    private Department department;
-    @SerializedName("experience")
-    private float experience;
-    @SerializedName("level")
-    private Integer level;
-    @SerializedName("status")
-    private Integer status;
-    @SerializedName("cvs")
-    private List<Cv> cvList = null;
-    @SerializedName("interviews")
-    private List<Interview> interviewList = null;
-    @SerializedName("comments")
-    private List<Comment> commentList = null;
 
-    public Integer getId() {
-        return id;
-    }
+  @SerializedName("id")
+  private Integer id;
+  @SerializedName("first_name")
+  private String firstName;
+  @SerializedName("last_name")
+  private String lastName;
+  @SerializedName("email")
+  private String email;
+  @SerializedName("position")
+  private Position position;
+  @SerializedName("experience")
+  private Float experience;
+  @SerializedName("level")
+  private String level;
+  @SerializedName("status")
+  private Integer status;
+  @SerializedName("phone")
+  private String phone;
+  @SerializedName("cvs")
+  private List<Cv> cvs = null;
+  @SerializedName("interviews")
+  private List<CandidateInterviewItem> interviews = null;
+  @SerializedName("comments")
+  private List<Comment> comments = null;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public Department getDepartment() {
-        return department;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+  public Position getPosition() {
+    return position;
+  }
 
-    public float getExperience() {
-        return experience;
-    }
+  public void setPosition(Position position) {
+    this.position = position;
+  }
 
-    public void setExperience(float experience) {
-        this.experience = experience;
-    }
+  public Float getExperience() {
+    return experience;
+  }
 
-    public Integer getLevel() {
-        return level;
-    }
+  public void setExperience(Float experience) {
+    this.experience = experience;
+  }
 
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
+  public String getLevel() {
+    return level;
+  }
 
-    public Integer getStatus() {
-        return status;
-    }
+  public void setLevel(String level) {
+    this.level = level;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public Integer getStatus() {
+    return status;
+  }
 
-    public List<Cv> getCvList() {
-        return cvList;
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public void setCvList(List<Cv> cvList) {
-        this.cvList = cvList;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public List<Interview> getInterviewList() {
-        return interviewList;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-    public void setInterviewList(List<Interview> interviewList) {
-        this.interviewList = interviewList;
-    }
+  public List<Cv> getCvs() {
+    return cvs;
+  }
 
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
+  public void setCvs(List<Cv> cvs) {
+    this.cvs = cvs;
+  }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
+  public List<CandidateInterviewItem> getInterviews() {
+    return interviews;
+  }
+
+  public void setInterviews(List<CandidateInterviewItem> interviews) {
+    this.interviews = interviews;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
+  }
 }

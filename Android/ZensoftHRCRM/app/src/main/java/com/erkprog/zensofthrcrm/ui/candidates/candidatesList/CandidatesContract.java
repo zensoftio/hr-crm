@@ -19,12 +19,11 @@ public interface CandidatesContract {
 
     }
 
-    public interface Presenter{
+    public interface Presenter {
 
         void loadCandidates();
 
         void openCandidateDetails(Candidate requestedCandidate);
-
 
 
     }
