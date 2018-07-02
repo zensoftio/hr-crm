@@ -1,0 +1,91 @@
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "date": "12-12-12 12:00",
+      "status": 1,
+      "candidate": {
+        "id": 1,
+        "first_name": "name",
+        "last_name": "last_name",
+        "department": {
+          "id": 1,
+          "name": "DevOps"
+        }
+      },
+      "request": {
+        "id": 2,
+        "name": "JS developer",
+        "status": "open",
+        "created": "22-12-21",
+        "last_published": "12-22-12"
+      },
+      "reviewers": [
+        {
+          "id": 1,
+          "first_name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
+          "department": {
+            "id": 1,
+            "name": "Java"
+          }
+        },
+        {
+          "id": 2,
+          "name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
+          "department": "HR",
+          "comments": "His soft skills not good enough"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "date": "12-12-12 12:00",
+      "status": 1,
+      "candidate": {
+        "id": 1,
+        "name": "name",
+        "last_name": "last_name",
+        "department": {
+          "id": 1,
+          "name": "DevOps"
+        }
+      },
+      "vacancy": {
+        "id": 2,
+        "name": "JS developer",
+        "status": "open",
+        "date_created": "22-12-21",
+        "date_last_published": "12-22-12"
+      },
+      "interviewers": [
+        {
+          "id": 1,
+          "name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
+          "department": {
+            "id": 4,
+            "name": "JS"
+          }
+        },
+        {
+          "id": 2,
+          "name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
+          "department": {
+            "id": 5,
+            "name": "HR"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -14,7 +14,7 @@ public class User {
     @SerializedName("last_name")
     private String lastName;
     @SerializedName("created")
-    private Date created;
+    private String created;
     @SerializedName("department")
     private Department department;
 
@@ -50,11 +50,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 

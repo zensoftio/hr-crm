@@ -21,7 +21,7 @@ public final class RestClientTest {
 
             final Retrofit retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://mock.api")
+                    .baseUrl("http://www.mocky.io/")
                     .client(client)
                     .build();
 

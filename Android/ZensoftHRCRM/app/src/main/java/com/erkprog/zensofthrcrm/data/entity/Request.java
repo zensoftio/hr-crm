@@ -12,9 +12,9 @@ public class Request {
     @SerializedName("name")
     private String name;
     @SerializedName("created")
-    private Date created;
+    private String created;
     @SerializedName("modified")
-    private Date modified;
+    private String modified;
     @SerializedName("userCreatedBy")
     private User userCreatedBy;
     @SerializedName("department")
@@ -44,19 +44,19 @@ public class Request {
         this.name = name;
     }
 
-    public Date getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
-    public Date getModified() {
+    public String getModified() {
         return modified;
     }
 
-    public void setModified(Date modified) {
+    public void setModified(String modified) {
         this.modified = modified;
     }
 

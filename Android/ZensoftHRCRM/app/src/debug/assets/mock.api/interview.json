@@ -1,0 +1,79 @@
+{
+  "id": 1,
+  "date": "12-12-12 12:00",
+  "status": 1,
+  "candidate": {
+    "id": 1,
+    "first_name": "name",
+    "last_name": "last_name",
+    "department": {
+      "id": 1,
+      "name": "DevOps"
+    }
+  },
+  "request": {
+    "id": 2,
+    "name": "JS developer",
+    "status": "open",
+    "created": "22-12-21",
+    "last_published": "12-22-12"
+  },
+  "interviewers": [
+    {
+      "id": 1,
+      "first_name": "name",
+      "last_name": "last_name",
+      "email": "test@email.com",
+      "department": {
+        "id": 1,
+        "name": "Java"
+      },
+      "evaluations": [
+        {
+          "id": 1,
+          "rating": "5",
+          "criteria": {
+            "id": 1,
+            "name": "OOP"
+          }
+        },
+        {
+          "id": 2,
+          "rating": "3",
+          "criteria": {
+            "id": 2,
+            "name": "English"
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "name",
+      "last_name": "last_name",
+      "email": "test@email.com",
+      "department": {
+        "id": 6,
+        "name": "HR"
+      },
+      "evaluations": [
+        {
+          "id": 1,
+          "rating": "5",
+          "criteria": {
+            "id": 1,
+            "name": "OOP"
+          }
+        },
+        {
+          "id": 2,
+          "rating": "3",
+          "criteria": {
+            "id": 2,
+            "name": "English"
+          }
+        }
+      ]
+    }
+  ]
+}

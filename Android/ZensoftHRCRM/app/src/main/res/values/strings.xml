@@ -13,4 +13,6 @@
     <string name="candidates">Candidates</string>
     <string name="interviews">Interviews</string>
     <string name="statistics">Statistics</string>
+    <string name="title_activity_interview">InterviewActivity</string>
+
 </resources>

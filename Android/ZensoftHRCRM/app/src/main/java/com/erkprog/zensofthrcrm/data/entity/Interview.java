@@ -2,16 +2,15 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 public class Interview {
     @SerializedName("id")
     private Integer id;
     @SerializedName("date")
-    private Date date;
+    private String date;
     @SerializedName("status")
-    private Integer status;
+    private Number status;
     @SerializedName("candidate")
     private Candidate candidate;
     @SerializedName("request")
@@ -27,19 +26,19 @@ public class Interview {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Integer getStatus() {
+    public Number getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Number status) {
         this.status = status;
     }
 
