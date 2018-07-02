@@ -29,7 +29,7 @@ export default class AdminScene extends Component {
 							<div className="content">
 								<Switch>								
 									
-									<Route path="/request_list" component={RequesList}/>
+									<Route path="/request_list" component={RequesList} exact/>
 									<Route path="/statistics" component={Statistics}/>
 									<Route path="/edit_request" component={EditRequest}/>
 									<Route component={Error} />
