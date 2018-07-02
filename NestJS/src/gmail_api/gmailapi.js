@@ -15,12 +15,14 @@ var SCOPES = [
 const TOKEN_PATH = 'credentials.json';
 
 // Load client secrets from a local file.
-exports.sendMessageH = function(data){
+exports.sendMessageH = function(data, recipient){ 
   //console.log(data)
   // fs.readFile('/home/reedvl/zen/test-app/nest/NestJS/NestJS/src/gmail_api/client_secret.json', (err, content) => {
   // if (err) return console.log('Error loading client secret file:', err);
   // // Authorize a client with credentials, then call the Google Sheets API.
-  authorize(sendMessage, data);
+  
+    authorize(sendMessage, data, recipient);
+
 }
 
 /**
@@ -29,21 +31,23 @@ exports.sendMessageH = function(data){
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(callback, data) {
+function authorize(callback, data, recipient) {
   // const {client_secret, client_id, redirect_uris} = credentials.installed;
   const client_id = process.env['CLIENT_ID'];
   const client_secret = process.env['CLIENT_SECRET'];
   const redirect_uris = process.env['REDIRECT_URIS'];
-  const oAuth2Client = new google.auth.OAuth2(
+ 
+    const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris);
-
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback, data);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    
-    callback(oAuth2Client, data);
+      // console.log(oAuth2Client)
+      // Check if we have previously stored a token.
+      fs.readFile(TOKEN_PATH, (err, token) => {
+        if (err) return getNewToken(oAuth2Client, callback, data, recipient);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      
+      callback(oAuth2Client, data, recipient);
   });
+
 }
 
 /**
@@ -52,7 +56,7 @@ function authorize(callback, data) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getNewToken(oAuth2Client, callback, data) {
+function getNewToken(oAuth2Client, callback, data, recipient) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -72,7 +76,7 @@ function getNewToken(oAuth2Client, callback, data) {
         if (err) return console.error(err);
         console.log('Token stored to', TOKEN_PATH);
       });
-      callback(oAuth2Client, data);
+      callback(oAuth2Client, data, recipient);
     });
   });
 }
@@ -117,43 +121,62 @@ function listLabels(auth) {
 
 }
 
-function sendMessage(auth, data) {
-  const gmail = google.gmail({version: 'v1', auth});
-  var raw = makeBody(data);
- 
-  gmail.users.messages.send({
+function sendMessage(auth, data, recipient) {
+    const gmail = google.gmail({version: 'v1', auth});
+    var raw = makeBody(data, recipient);
+    try{
+  gmail.users.messages.send({ 
       auth: auth,
       userId: 'me',
       resource: {
           raw: raw
       }
   })
+  }
+  catch(error){
+    console.log("Error during authorization " + error)
+  }
 }
 
-function makeBody(data) {
+function makeBody(data, recipient) {
   var boundary = "__myapp__";
   var nl = "\n";
   let fileToAttach = '/home/reedvl/Downloads/test.docx';
   var attach = new Buffer(fs.readFileSync(fileToAttach)) .toString("base64");
 
-  var arrays = defineTypeOfRecipients(data);
-  let To = arrays[0].toString()
-  let CC = arrays[1].toString()
-  let BCC = arrays[2].toString()
+  // var arrays = defineTypeOfRecipients(data);
+  // let To = arrays[0].toString()
+  // let CC = arrays[1].toString()
+  // let BCC = arrays[2].toString()
+  let type
+
+  switch(recipient.type){
+    case "to":
+      type = "to: " + recipient.email
+      break;
+    case "cc":
+      type = "cc: " + recipient.email
+      break;
+    case "bcc":
+      type = "bcc: " + recipient.email
+      break;
+    default:
+      break;
+  }
+  const body = data.content.replace(/NAME/g, recipient.name)
+
  var str = [
 
         "MIME-Version: 1.0",
         "Content-Transfer-Encoding: 7bit",
-        "to: " + To,
-        "cc: " + CC,
-        "bcc: " + BCC,
+        type,
         "from: dasha.ree1@gmail.com",
         "subject: " + data.subject,
         "Content-Type: multipart/alternate; boundary=" + boundary + nl,
         "--" + boundary,
         "Content-Type: text/plain; charset=UTF-8",
         "Content-Transfer-Encoding: 7bit" + nl,
-        data.content + nl,
+        body + nl,
         "--" + boundary,
         "--" + boundary,
         "Content-Type: Application/docx; name=a.docx",
@@ -167,6 +190,7 @@ function makeBody(data) {
       return encodedMail;
 }
 
+//function to send message to multiple recipients at once
 function defineTypeOfRecipients(data) {  
   let i;
   let to = [], cc = [], bcc = [];

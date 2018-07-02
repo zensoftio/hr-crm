@@ -1,5 +1,6 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
+import * as Amqp from "amqp-ts";
 
 @Controller('event')
 export class EventController {

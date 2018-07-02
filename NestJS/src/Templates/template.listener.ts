@@ -16,7 +16,8 @@ export class TemplateListener {
         switch(data.task){
             case "create":
             templateService.create(data)
-            console.log("Successfully created new template")
+            .then((done) => console.log("done"))
+            .catch((err) => console.log("error occured " +err))
             break;
             case "update":
             templateService.update(data)
