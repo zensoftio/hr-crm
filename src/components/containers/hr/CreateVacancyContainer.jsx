@@ -55,14 +55,6 @@ const RateList = [
     "Посменно",
   ];
 
-const styles = ({
-  button_upload: {
-    display: 'none'
-  }
-})
-  
-
-
 class CreateVacancyContainer extends Component {
   render() {
 
@@ -146,7 +138,6 @@ class CreateVacancyContainer extends Component {
                 accept="image/*"
                 multiple
                 type="file"
-                className={styles.button_upload}
               />
             </div>
             <div>

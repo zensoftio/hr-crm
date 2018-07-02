@@ -14,7 +14,6 @@ export default class ButtonSubmit extends Component {
 
             <Button variant="contained" className={styles.button} >
                 {this.props.children}
-                
             </Button>
         );
     }
