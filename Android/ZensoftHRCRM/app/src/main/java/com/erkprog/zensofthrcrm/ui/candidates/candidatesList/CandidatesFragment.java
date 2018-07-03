@@ -37,7 +37,6 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     initRecyclerView(v);
     mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
     mPresenter.loadCandidates();
-
     return v;
   }
 
@@ -60,9 +59,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public void showCandidateDetailUi(int candidateId) {
-    Intent intent = new Intent(getActivity(), CandidateDetail.class);
+    Intent intent = CandidateDetail.getIntent(getActivity(), candidateId);
     startActivity(intent);
-
   }
 
   @Override
@@ -87,7 +85,6 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public void onItemClick(int position) {
-    showCandidateDetailUi(2);
-
+    mPresenter.onCandidateItemClick(mAdapter.getCandidate(position));
   }
 }

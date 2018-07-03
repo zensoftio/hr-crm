@@ -28,6 +28,7 @@ import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View {
   private static final String TAG = "mylog:CandidateDetailFragment";
+  public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
 
   private CandidateDetailContract.Presenter mPresenter;
 
@@ -55,8 +56,10 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
     initUI(v);
+    int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
+    showToast(String.valueOf(candidateId));
     mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
-    mPresenter.loadCandidateInfo();
+    mPresenter.loadCandidateInfo(candidateId);
     return v;
 
   }
@@ -147,6 +150,14 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   private void onCvItemClicked(Cv cvItem) {
     mPresenter.onCvItemClicked(cvItem);
+  }
+
+  public static CandidateDetailFragment newInstance(@Nullable int candidateId) {
+    Bundle arguments = new Bundle();
+    arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
+    CandidateDetailFragment fragment = new CandidateDetailFragment();
+    fragment.setArguments(arguments);
+    return fragment;
   }
 
   @Override

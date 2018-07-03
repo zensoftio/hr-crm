@@ -12,7 +12,8 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class CandidatesPresenter implements CandidatesContract.Presenter, CandidatesRepository.OnCandidatesLoadFinishedListener {
+public class CandidatesPresenter implements CandidatesContract.Presenter, CandidatesRepository
+    .OnCandidatesLoadFinishedListener {
 
   private static final String TAG = "mylog:CandidatesPresenter";
 
@@ -33,6 +34,11 @@ public class CandidatesPresenter implements CandidatesContract.Presenter, Candid
   @Override
   public void openCandidateDetails(Candidate requestedCandidate) {
 
+  }
+
+  @Override
+  public void onCandidateItemClick(Candidate candidate) {
+    mView.showCandidateDetailUi(candidate.getId());
   }
 
   @SuppressLint("LongLogTag")

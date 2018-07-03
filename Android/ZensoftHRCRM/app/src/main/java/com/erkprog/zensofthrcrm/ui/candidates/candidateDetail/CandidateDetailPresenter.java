@@ -25,7 +25,7 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   }
 
   @Override
-  public void loadCandidateInfo() {
+  public void loadCandidateInfo(int candidateId) {
     mRepository.getDetailCandidateFromJson(this);
 
   }

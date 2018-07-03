@@ -7,7 +7,7 @@ import com.erkprog.zensofthrcrm.data.entity.Cv;
 
 public interface CandidateDetailContract {
 
-  public interface View {
+  interface View {
 
     void showCandidateDetails(Candidate candidate);
 
@@ -19,9 +19,9 @@ public interface CandidateDetailContract {
 
   }
 
-  public interface Presenter {
+  interface Presenter {
 
-    void loadCandidateInfo();
+    void loadCandidateInfo(int candidateId);
 
     void onInterviewItemClicked(CandidateInterviewItem interviewItem);
 
