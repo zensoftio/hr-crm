@@ -13,7 +13,7 @@ public class InterviewsPresenter implements InterviewsContract.Presenter, Interv
     private InterviewsContract.Repository mRepository;
     private Context mContext;
 
-    public InterviewsPresenter(InterviewsContract.View mView,InterviewsContract.Repository mRepository,Context mContext) {
+    public InterviewsPresenter(InterviewsContract.View mView, InterviewsContract.Repository mRepository, Context mContext) {
         this.mView = mView;
         this.mRepository = mRepository;
         this.mContext = mContext;
@@ -22,7 +22,7 @@ public class InterviewsPresenter implements InterviewsContract.Presenter, Interv
     @Override
     public void getInterviews(Context mContext) {
 
-        mRepository.getInterviewsList(this,mContext);
+        mRepository.getInterviewsList(this, mContext);
 
     }
 
@@ -35,7 +35,7 @@ public class InterviewsPresenter implements InterviewsContract.Presenter, Interv
 
     @Override
     public void onFinished(List<Interview> interviews) {
-        if(mView != null){
+        if (mView != null) {
             mView.showInterviews(interviews);
             mView.hideProgress();
         }
@@ -43,7 +43,7 @@ public class InterviewsPresenter implements InterviewsContract.Presenter, Interv
 
     @Override
     public void onFailure(Throwable t) {
-        if(mView != null){
+        if (mView != null) {
             mView.showToast(t);
             mView.hideProgress();
         }

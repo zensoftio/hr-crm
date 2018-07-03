@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface InterviewsContract {
 
-    interface View{
+    interface View {
 
         void showInterviews(List<Interview> interviews);
 
@@ -24,27 +24,27 @@ public interface InterviewsContract {
         void hideProgress();
 
 
-
     }
 
-    interface Presenter{
+    interface Presenter {
 
         void onDestroy();
 
-       // ?? void onRefreshData();
+        // ?? void onRefreshData();
 
         void getInterviews(Context mContext);
 
     }
 
-    interface Repository{
+    interface Repository {
 
         interface OnFinishedListener {
             void onFinished(List<Interview> interviews);
+
             void onFailure(Throwable t);
         }
 
-        void getInterviewsList(OnFinishedListener onFinishedListener,Context mContext);
+        void getInterviewsList(OnFinishedListener onFinishedListener, Context mContext);
     }
 
 }

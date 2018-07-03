@@ -48,7 +48,7 @@ public class InterviewsRepository implements InterviewsContract.Repository {
     }
 
 
-    public InterviewsRepository(Context context){
+    public InterviewsRepository(Context context) {
         mContext = context;
     }
 }

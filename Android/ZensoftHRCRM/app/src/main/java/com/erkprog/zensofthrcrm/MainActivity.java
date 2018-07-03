@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    protected void switchFragment(Fragment fragment){
+    protected void switchFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, fragment)

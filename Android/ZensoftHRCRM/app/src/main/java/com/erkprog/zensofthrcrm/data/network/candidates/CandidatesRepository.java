@@ -6,7 +6,7 @@ public class CandidatesRepository {
 
     private final Context mContext;
 
-    public CandidatesRepository(Context context){
+    public CandidatesRepository(Context context) {
         mContext = context;
     }
 }

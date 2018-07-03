@@ -8,7 +8,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
     private CandidatesContract.View mView;
     private CandidatesRepository mRepository;
 
-    public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository){
+    public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository) {
         mView = view;
         mRepository = repository;
     }

@@ -13,12 +13,12 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 
 import java.util.List;
 
-public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.CandidateViewHolder>{
+public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.CandidateViewHolder> {
 
     private List<Candidate> mCandidates;
     private Context mContext;
 
-    public CandidatesAdapter(Context context, List<Candidate> candidates){
+    public CandidatesAdapter(Context context, List<Candidate> candidates) {
         mCandidates = candidates;
         mContext = context;
     }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Department;
@@ -17,14 +18,14 @@ import com.erkprog.zensofthrcrm.ui.RecyclerItemClickListener;
 import java.util.List;
 
 
-public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.InterviewViewHolder>{
+public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.InterviewViewHolder> {
 
     private List<Interview> mInterviews;
     private Context mContext;
     private RecyclerItemClickListener recyclerItemClickListener;
 
 
-    public InterviewsAdapter(Context mContext, List<Interview> mInterviews, RecyclerItemClickListener recyclerItemClickListener){
+    public InterviewsAdapter(Context mContext, List<Interview> mInterviews, RecyclerItemClickListener recyclerItemClickListener) {
         this.mInterviews = mInterviews;
         this.mContext = mContext;
         this.recyclerItemClickListener = recyclerItemClickListener;

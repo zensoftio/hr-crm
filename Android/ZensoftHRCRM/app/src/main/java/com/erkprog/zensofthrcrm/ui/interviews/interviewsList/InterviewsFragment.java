@@ -50,7 +50,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_interviews_list, container, false);
 
-        mPresenter =  new InterviewsPresenter(this,new InterviewsRepository(this.getContext()),v.getContext());
+        mPresenter = new InterviewsPresenter(this, new InterviewsRepository(this.getContext()), v.getContext());
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviews);
         layoutManager = new LinearLayoutManager(v.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -59,7 +59,6 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
 
         return v;
     }
-
 
 
     @Override
@@ -76,7 +75,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     @Override
     public void showInterviews(List<Interview> interviews) {
 
-        InterviewsAdapter adapter = new InterviewsAdapter(mContext,interviews,recyclerItemClickListener);
+        InterviewsAdapter adapter = new InterviewsAdapter(mContext, interviews, recyclerItemClickListener);
         recyclerView.setAdapter(adapter);
 
     }
