@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import EditInterviewContainer from "../../components/containers/hr/EditInterviewContainer";
+import Header from "../general/Header";
 
 class EditInterview extends Component {
     render() {
         const {classes} = this.props;
         return (
-
             <div>
-                <h1>Edit interview</h1>
+                <Header title="Изменить интервью"/>
 
                 <EditInterviewContainer/>
             </div>
