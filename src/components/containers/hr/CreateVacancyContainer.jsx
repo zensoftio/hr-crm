@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
+import {withStyles} from '@material-ui/core/styles';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import ButtonSubmit from '../../ui/ButtonSubmit';
@@ -9,34 +9,34 @@ import Checkbox from '../../ui/Checkbox';
 import "../../../index.css";
 
 const RateList = [
-  "Стандарт",
-  "Премиум",
-  "VIP"
-],
-  CityList = [
-    "Бишкек",
-    "Кара-Балта",
-    "Сокулук",
-    "Кант",
-  ],
-  Requirements = [
-    "one",
-    "three",
-    "four",
-    "five"
-  ],
-  Education = [
-    "Среднее",
-    "Средне-специальное",
-    "Высшее"
-  ],
-  Experience = [
-    "от 1 года",
-    "от 2 лет",
-    "от 3 лет",
-  ],
-  Work_conditions = [
-   `• работа в комфортном современном офисе в центре города;
+        "Стандарт",
+        "Премиум",
+        "VIP"
+    ],
+    CityList = [
+        "Бишкек",
+        "Кара-Балта",
+        "Сокулук",
+        "Кант",
+    ],
+    Requirements = [
+        "one",
+        "three",
+        "four",
+        "five"
+    ],
+    Education = [
+        "Среднее",
+        "Средне-специальное",
+        "Высшее"
+    ],
+    Experience = [
+        "от 1 года",
+        "от 2 лет",
+        "от 3 лет",
+    ],
+    Work_conditions = [
+        `• работа в комфортном современном офисе в центре города;
     •	руководство, готовое поддерживать вас и помогать в развитии;
     •	корпоративные вечеринки и совместный отдых;
     •	приятные бонусы и премии;
@@ -46,14 +46,14 @@ const RateList = [
     •	удобный график работы;
     •	официальное трудоустройство;
     •	возможность изучать английский язык с квалифицированным преподавателем прямо в офисе;`
-  ],
-  Duties = [
-    `•	Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.`
-  ],
-  EmploymentType = [
-    "Полный рабочий день",
-    "Посменно",
-  ];
+    ],
+    Duties = [
+        `•	Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.`
+    ],
+    EmploymentType = [
+        "Полный рабочий день",
+        "Посменно",
+    ];
 
   const styles = theme => ({
     root: {
@@ -67,12 +67,11 @@ const RateList = [
     inlineBox: {
       display: 'inline-block'
     }
-  });
+});
 
 class CreateVacancyContainer extends Component {
-  render() {
-    const { classes } = this.props;
-
+    render() {
+        const {classes} = this.props;
     return (
       <div>
         <div>
@@ -158,6 +157,4 @@ class CreateVacancyContainer extends Component {
       </div>
     );
   }
-}
-
 export default withStyles(styles)(CreateVacancyContainer);

@@ -13,6 +13,7 @@ import Error from '../general/Error';
 import InterviewList from './ListInterviews';
 import SpecifyTheRoute from '../../utils/Route';
 import Profile from './Profile';
+import EditInterview from "./EditInterview";
 
 const HRNav = [
     {
@@ -59,6 +60,11 @@ const HRNav = [
         name: "Уведомления",
         path: "/notifications",
         component: Notifications
+    },
+    {
+        name: "Изменить интервью",
+        path: "/edit_interview",
+        component: EditInterview
     },
     {
         name: "",
