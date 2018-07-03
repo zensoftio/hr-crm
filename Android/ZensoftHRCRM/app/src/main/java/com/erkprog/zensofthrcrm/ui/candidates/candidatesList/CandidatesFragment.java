@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +37,6 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     initRecyclerView(v);
     mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
     mPresenter.loadCandidates();
-
     return v;
   }
 
@@ -47,8 +45,6 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_candidates);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
     recyclerView.setLayoutManager(layoutManager);
-//        DividerItemDecoration itemDecoration = new DividerItemDecoration(getBaseContext(), DividerItemDecoration.VERTICAL);
-//        recyclerView.addItemDecoration(itemDecoration);
 
     List<Candidate> candidates = new ArrayList<>();
     mAdapter = new CandidatesAdapter(getActivity(), candidates);
@@ -63,9 +59,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public void showCandidateDetailUi(int candidateId) {
-    Intent intent = new Intent(getActivity(), CandidateDetail.class);
+    Intent intent = CandidateDetail.getIntent(getActivity(), candidateId);
     startActivity(intent);
-
   }
 
   @Override
@@ -84,8 +79,12 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   @Override
-  public void onItemClick(int position) {
-    showCandidateDetailUi(2);
+  public boolean isActive() {
+    return isAdded();
+  }
 
+  @Override
+  public void onItemClick(int position) {
+    mPresenter.onCandidateItemClick(mAdapter.getCandidate(position));
   }
 }

@@ -1,5 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import com.erkprog.zensofthrcrm.R;
 
 public class CandidateDetail extends AppCompatActivity {
 
+  private static final String EXTRA_CANDIDATE_ID = "candidate_id";
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -17,12 +21,20 @@ public class CandidateDetail extends AppCompatActivity {
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment = fm.findFragmentById(R.id.candidate_detail_container);
 
+    int candidateId = getIntent().getIntExtra(EXTRA_CANDIDATE_ID, -1);
+
     if (fragment == null) {
-      fragment = new CandidateDetailFragment();
+      fragment = CandidateDetailFragment.newInstance(candidateId);
       fm.beginTransaction()
           .add(R.id.candidate_detail_container, fragment)
           .commit();
     }
 
+  }
+
+  public static Intent getIntent(Context context, int candidateId) {
+    Intent intent = new Intent(context, CandidateDetail.class);
+    intent.putExtra(EXTRA_CANDIDATE_ID, candidateId);
+    return intent;
   }
 }
