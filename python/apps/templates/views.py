@@ -6,16 +6,10 @@ from apps.templates.serializers import TemplateListSerializer, TemplateCreateSer
     TemplateDetailSerializer, AttachmentSerializer
 
 
-# from apps.templates.send import Send
-# from apps.templates.receive import Receive
 class TemplateListCreateView(generics.ListCreateAPIView):
     queryset = Template.objects.all()
     serializer_class = TemplateListSerializer
 
-    # o = Template.objects.all()[1]
-    # serializer = TemplateListSerializer(o)
-    # print(serializer.data)
-    # Send()
     def create(self, request, *args, **kwags):
         write_serializer = TemplateCreateSerializer(data=request.data)
         write_serializer.is_valid(raise_exception=True)
