@@ -4,12 +4,12 @@ import ModalDialog from '../../ui/ModalWindow';
 
 const modal = [
     <ModalDialog
-    title="Вакансия уже существует"
-    text="Выберите действие"
-    leftBtn="создать"
-    rightBtn="просмотр"
+        title="Вакансия уже существует"
+        text="Выберите действие"
+        leftBtn="создать"
+        rightBtn="просмотр"
     >
-    Создать
+        Создать
     </ModalDialog>
 ];
 
