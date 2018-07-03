@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div>
         
-            <User userRole="pm" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
+            <User userRole="interviewer" />{/*Put the department in which you develop: head, hr, pm, interviewer*/}
         
       </div>
     );

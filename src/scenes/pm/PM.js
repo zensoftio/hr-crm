@@ -5,20 +5,25 @@ import Statistics from '../general/Statistics';
 import Error from '../general/Error';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import EditRequest from './EditRequest';
+import SpecifyTheRoute from '../../utils/Route';
+
 
 export default class AdminScene extends Component {
     render() {
 			const pmNav = [
 				{
 					name: 'Список Запросов',
-					path: '/request_list'
+					path: '/request_list',
+					component: RequesList
 				},
 				{
 					name: 'Статистика',
-					path: '/statistics'
+					path: '/statistics',
+					component: Statistics
 				},
 				{		
-					path: '/edit_request'
+					path: '/edit_request',
+					component: EditRequest
 				}
 			];
         return(
@@ -29,9 +34,10 @@ export default class AdminScene extends Component {
 							<div className="content">
 								<Switch>								
 									
-									<Route path="/request_list" component={RequesList} exact/>
+									{/* <Route path="/request_list" component={RequesList} exact/>
 									<Route path="/statistics" component={Statistics}/>
-									<Route path="/edit_request" component={EditRequest}/>
+									<Route path="/edit_request" component={EditRequest}/> */}
+									<SpecifyTheRoute route={pmNav} />
 									<Route component={Error} />
 								</Switch>
 							</div>
