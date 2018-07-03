@@ -19,12 +19,8 @@ public class CandidatesPresenter implements CandidatesContract.Presenter, Candid
     private CandidatesContract.View mView;
     private CandidatesRepository mRepository;
 
-<<<<<<< HEAD
-    public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository) {
-=======
 
-    public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository){
->>>>>>> 57adb4677409b630aade1dd6124c6aff810bf383
+    public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository) {
         mView = view;
         mRepository = repository;
     }

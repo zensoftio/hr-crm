@@ -5,15 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.interviews.interview.InterviewActivity"
-    tools:showIn="@layout/activity_interview">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="28dp" />
+    tools:context=".ui.interviews.interviewDetail.InterviewDetail"
+    tools:showIn="@layout/activity_interview_detail">
 
 </android.support.constraint.ConstraintLayout>

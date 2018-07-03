@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class Interview {
@@ -10,7 +11,7 @@ public class Interview {
     @SerializedName("date")
     private String date;
     @SerializedName("status")
-    private Number status;
+    private Integer status;
     @SerializedName("candidate")
     private Candidate candidate;
     @SerializedName("request")
@@ -34,11 +35,11 @@ public class Interview {
         this.date = date;
     }
 
-    public Number getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Number status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

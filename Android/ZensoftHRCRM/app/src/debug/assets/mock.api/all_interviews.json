@@ -4,7 +4,7 @@
   "previous": null,
   "results": [
     {
-      "id": 1,
+      "id": 0,
       "date": "12-12-12 12:00",
       "status": 1,
       "candidate": {
@@ -17,9 +17,13 @@
         }
       },
       "request": {
+        "department": {
+          "id": 2,
+          "name": "Python"
+        },
         "id": 2,
         "name": "JS developer",
-        "status": "open",
+        "status": "1",
         "created": "22-12-21",
         "last_published": "12-22-12"
       },
@@ -47,32 +51,36 @@
     {
       "id": 1,
       "date": "12-12-12 12:00",
-      "status": 1,
+      "status": 2,
       "candidate": {
         "id": 1,
-        "name": "name",
+        "first_name": "name",
         "last_name": "last_name",
         "department": {
           "id": 1,
           "name": "DevOps"
         }
       },
-      "vacancy": {
+      "request": {
+        "department": {
+          "id": 2,
+          "name": "Python"
+        },
         "id": 2,
         "name": "JS developer",
-        "status": "open",
-        "date_created": "22-12-21",
-        "date_last_published": "12-22-12"
+        "status": "1",
+        "created": "22-12-21",
+        "last_published": "12-22-12"
       },
-      "interviewers": [
+      "reviewers": [
         {
           "id": 1,
-          "name": "name",
+          "first_name": "name",
           "last_name": "last_name",
           "email": "test@email.com",
           "department": {
-            "id": 4,
-            "name": "JS"
+            "id": 1,
+            "name": "Java"
           }
         },
         {
@@ -80,10 +88,53 @@
           "name": "name",
           "last_name": "last_name",
           "email": "test@email.com",
+          "department": "HR",
+          "comments": "His soft skills not good enough"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "date": "12-12-12 12:00",
+      "status": 2,
+      "candidate": {
+        "id": 1,
+        "first_name": "name",
+        "last_name": "last_name",
+        "department": {
+          "id": 1,
+          "name": "DevOps"
+        }
+      },
+      "request": {
+        "department": {
+          "id": 2,
+          "name": "Python"
+        },
+        "id": 2,
+        "name": "JS developer",
+        "status": "1",
+        "created": "22-12-21",
+        "last_published": "12-22-12"
+      },
+      "reviewers": [
+        {
+          "id": 1,
+          "first_name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
           "department": {
-            "id": 5,
-            "name": "HR"
+            "id": 1,
+            "name": "Java"
           }
+        },
+        {
+          "id": 2,
+          "name": "name",
+          "last_name": "last_name",
+          "email": "test@email.com",
+          "department": "HR",
+          "comments": "His soft skills not good enough"
         }
       ]
     }

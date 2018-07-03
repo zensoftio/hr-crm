@@ -1,5 +1,4 @@
 <resources>
-<<<<<<< HEAD
     <string name="app_name">Zensoft HR CRM</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,29 +13,11 @@
     <string name="candidates">Candidates</string>
     <string name="interviews">Interviews</string>
     <string name="statistics">Statistics</string>
-    <string name="title_activity_interview">InterviewActivity</string>
-
-=======
-  <string name="app_name">Zensoft HR CRM</string>
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="nav_header_title">Android Studio</string>
-  <string name="nav_header_subtitle">android.studio@android.com</string>
-  <string name="nav_header_desc">Navigation header</string>
-  <string name="action_settings">Settings</string>
-  <string name="zensoft_hr">Zensoft HR</string>
-  <string name="email_holder">hr@zensoft.io</string>
-  <string name="requests">Requests</string>
-  <string name="vacancies">Vacancies</string>
-  <string name="candidates">Candidates</string>
-  <string name="interviews">Interviews</string>
-  <string name="statistics">Statistics</string>
-  <string name="first_name">First Name</string>
-  <string name="last_name">Last Name</string>
-  <string name="comments">Comments</string>
-  <string name="cvs">CV\'s</string>
-  <string name="years_of_experience">Years of Experience</string>
-  <string name="department">Department</string>
-  <string name="attachment">attachment</string>
->>>>>>> 57adb4677409b630aade1dd6124c6aff810bf383
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="comments">Comments</string>
+    <string name="cvs">CV\'s</string>
+    <string name="years_of_experience">Years of Experience</string>
+    <string name="department">Department</string>
+    <string name="attachment">attachment</string>
 </resources>

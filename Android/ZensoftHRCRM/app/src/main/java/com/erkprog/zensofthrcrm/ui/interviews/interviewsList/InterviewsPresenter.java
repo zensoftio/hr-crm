@@ -1,6 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
 
-<<<<<<< HEAD
 import android.content.Context;
 import android.util.Log;
 
@@ -50,13 +49,3 @@ public class InterviewsPresenter implements InterviewsContract.Presenter, Interv
         }
     }
 }
-=======
-public class InterviewsPresenter implements InterviewsContract.Presenter {
-
-    @Override
-    public void getInterviews() {
-
-    }
-
-}
->>>>>>> 57adb4677409b630aade1dd6124c6aff810bf383

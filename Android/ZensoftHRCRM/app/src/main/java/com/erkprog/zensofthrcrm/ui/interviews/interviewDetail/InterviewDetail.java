@@ -1,4 +1,4 @@
-package com.erkprog.zensofthrcrm.ui.interviews.interview;
+package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,19 +7,15 @@ import android.view.MenuItem;
 
 import com.erkprog.zensofthrcrm.R;
 
-public class InterviewActivity extends AppCompatActivity {
+public class InterviewDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_interview);
+        setContentView(R.layout.activity_interview_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 
