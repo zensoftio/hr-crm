@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
+import EditInterviewContainer from "../../components/containers/hr/EditInterviewContainer";
 
 class EditInterview extends Component {
     render() {
+        const {classes} = this.props;
         return (
-            <h1>Edit interview</h1>
-        )
+
+            <div>
+                <h1>Edit interview</h1>
+
+                <EditInterviewContainer/>
+            </div>
+
+        );
     }
 }
 
