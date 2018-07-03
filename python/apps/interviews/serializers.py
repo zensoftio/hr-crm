@@ -28,6 +28,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
 class InterviewDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
+        fields = '__all__'
 
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
