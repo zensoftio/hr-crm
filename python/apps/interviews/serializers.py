@@ -62,6 +62,12 @@ class InterviewListSerializer(serializers.ModelSerializer):
         fields = ('id', 'date', 'status', 'candidate', 'interviewers')
 
 
+class InterviewCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interview
+        fields = ('candidate', 'interviewers', 'date')
+
+
 class InterviewDetailSerializer(serializers.ModelSerializer):
     candidate = AuxCandidateSerializer()
     interviewers = InterviewerDetailSerializer(many=True)
