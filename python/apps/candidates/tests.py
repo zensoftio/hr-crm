@@ -3,8 +3,9 @@ from rest_framework.test import APITestCase
 
 from apps.base_tests import ListTestMixin, GetInstanceTestMixin
 from apps.candidates.models import Candidate
-from apps.candidates.serializers import AuxCandidateSerializer, CandidateDetailSerializer
+from apps.candidates.serializers import CandidateDetailSerializer
 from apps.departments.models import Position, Department
+from apps.interviews.serializers import AuxCandidateSerializer
 
 
 class CandidatesFixturesTest(APITestCase):
