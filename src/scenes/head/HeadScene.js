@@ -16,15 +16,15 @@ export default class HeadScene extends Component {
             <BrowserRouter>
                 <div className="container">
 
-                <Navigation menuItems={HeadNav}/>
+                	<Navigation menuItems={HeadNav}/>
 
-                <div className="content">
+                	<div className="content">
                     <Switch>
                         <Route path="/" component={OpenedPositions} exact/>
                         <SpecifyTheRoute route={HeadNav} />
                         <Route component={Error}/>
                     </Switch>
-                </div>
+                	</div>
                 </div>
             </BrowserRouter>
         );

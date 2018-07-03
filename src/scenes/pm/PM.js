@@ -17,7 +17,7 @@ export default class AdminScene extends Component {
 					name: 'Статистика',
 					path: '/statistics'
 				},
-				{					
+				{		
 					path: '/edit_request'
 				}
 			];
