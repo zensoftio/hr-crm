@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, VacancyCreateTestMixin
+from apps.base_tests import ListTestMixin, CreateTestMixin
 from .models import Vacancy
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer
 
@@ -11,10 +11,16 @@ class VacancyListTestCase(ListTestMixin, APITestCase):
     serializer = VacancyListSerializer
 
 
-class VacancyCreateListTestCase(VacancyCreateTestMixin, APITestCase):
+class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
     url = '/vacancies/'
     model = Vacancy
     serializer = VacancyCreateUpdateSerializer
+
+    # Overload test_creation method to check result for 3 objects
+    def test_creation(self):
+        response = self.client.post(self.url, self.request_body)
+        self.assertEqual(201, response.status_code)
+        self.assertEqual(3, self.model.objects.count())
 
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json']
 

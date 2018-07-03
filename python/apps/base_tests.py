@@ -69,23 +69,3 @@ class GetInstanceTestMixin(object):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)
-
-
-class VacancyCreateTestMixin(object):
-    """
-        Mixin for testing creating Model instance
-
-        Usage:
-            url - endpoint e.g. '/vacancies/'
-            model - e.g Candidate
-            serializer_class - e.g. VacancyCreateUpdateSerializer
-    """
-    url = None
-    model = None
-    serializer = None
-    request_body = {}
-
-    def test_creation(self):
-        response = self.client.post(self.url, self.request_body)
-        self.assertEqual(201, response.status_code)
-        self.assertEqual(3, self.model.objects.count())
