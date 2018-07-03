@@ -73,7 +73,7 @@ class InterviewDetailSerializer(serializers.ModelSerializer):
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
     """Serializer for Detailed Candidate Endpoint"""
-    interviewers = AuxUserSerializer(many=True)
+    interviewers = InterviewerSerializer(many=True)
 
     class Meta:
         depth = 3
