@@ -8,7 +8,7 @@ export class EventController {
   constructor(private readonly eventService: EventService) {
       this.queue = connection.declareQueue("event", {durable: true});
       this.queue.activateConsumer(this._onMessage, {noAck: true});
-      this.msg = {
+        this.msg = {
         "title": "",
         "body": {}
       }
@@ -40,15 +40,19 @@ export class EventController {
 
    private _onMessage = (message) => {
      const json = JSON.parse(message.getContent());
-     let result = this.getActionFromMessage(json);
-     let answer;
-     setTimeout(async function(){
-       answer = await result;
-     }, 0);
-     while(answer === undefined){
-       require('deasync').sleep(100);
-     }
-     console.log(answer)
-     return answer;
+
+     return  this.getActionFromMessage(json).then(it => {
+       console.log(it);
+       return it;
+     });
+     // let answer;
+     // setTimeout(async function(){
+     //   answer = await result;
+     // }, 0);
+     // while(answer === undefined){
+     //   require('deasync').sleep(100);
+     // }
+     // console.log(answer)
+     // return answer;
    }
 }
