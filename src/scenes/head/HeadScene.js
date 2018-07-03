@@ -51,9 +51,9 @@ const HeadNav = [
         name: 'Статистика',
         path: '/statistics',
         component: Statistics
-		},
-		{			
-			path: '/edit_positions',
-			component: EditPositions
-	}
+    },
+    {			
+        path: '/edit_positions',
+        component: EditPositions
+    }
 ]

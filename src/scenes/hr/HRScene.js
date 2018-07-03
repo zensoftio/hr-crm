@@ -12,6 +12,7 @@ import Statistics from '../general/Statistics';
 import Error from '../general/Error';
 import InterviewList from './ListInterviews';
 import SpecifyTheRoute from '../../utils/Route';
+import Profile from './Profile';
 
 const HRNav = [
     {
@@ -58,6 +59,11 @@ const HRNav = [
         name: "Уведомления",
         path: "/notifications",
         component: Notifications
+    },
+    {
+        name: "",
+        path: "/profile",
+        component: Profile
     }
 ];
 
