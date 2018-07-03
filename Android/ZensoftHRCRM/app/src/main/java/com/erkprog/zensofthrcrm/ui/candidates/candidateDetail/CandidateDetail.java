@@ -17,7 +17,7 @@ public class CandidateDetail extends AppCompatActivity {
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment = fm.findFragmentById(R.id.candidate_detail_container);
 
-    if (fragment == null){
+    if (fragment == null) {
       fragment = new CandidateDetailFragment();
       fm.beginTransaction()
           .add(R.id.candidate_detail_container, fragment)
