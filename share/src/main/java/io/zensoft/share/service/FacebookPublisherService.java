@@ -1,9 +1,9 @@
 package io.zensoft.share.service;
 
-import io.zensoft.share.model.Post;
-import io.zensoft.share.model.PostResponse;
-import io.zensoft.share.service.model.PostResponseService;
-import io.zensoft.share.service.model.PostService;
+import io.zensoft.share.model.Vacancy;
+import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.service.model.VacancyResponseModelService;
+import io.zensoft.share.service.model.VacancyModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class FacebookPublisherService extends BasePublisherService {
+public class FacebookPublisherService {
     private final Properties properties;
 
     private final String appAccessToken;
@@ -31,10 +31,9 @@ public class FacebookPublisherService extends BasePublisherService {
     private final Facebook facebookUser;
     private final Facebook facebookPage;
 
-    public FacebookPublisherService(RestTemplate restTemplate, PostService postService, PostResponseService postResponseService) throws Exception {
-        super(restTemplate, postService, postResponseService);
+    public FacebookPublisherService() throws Exception {
         properties = new Properties();
-        properties.load(new FileReader("src/main/resources/facebookConfig"));
+        properties.load(new FileReader("src/main/java/io/zensoft/share/config/Facebook/facebookConfig"));
 
         appAccessToken = properties.getProperty("appId") + "|" + properties.getProperty("appSecret");
         facebookApp= new FacebookTemplate(appAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
@@ -49,8 +48,8 @@ public class FacebookPublisherService extends BasePublisherService {
 
     public static void main(String[] args) throws Exception {
         FacebookPublisherService facebookPublisherService =
-                new FacebookPublisherService(null, null, null);
-        facebookPublisherService.publishPhoto((Post)null);
+                new FacebookPublisherService();
+        facebookPublisherService.publishPhoto((Vacancy) null);
     }
 
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
@@ -82,14 +81,14 @@ public class FacebookPublisherService extends BasePublisherService {
         return access_token;
     }
 
-    public PostResponse publish(Post post) {
+    public VacancyResponse publish(Vacancy vacancy) {
         PagePostData pagePostData = new PagePostData(properties.getProperty("pageId"));
-        pagePostData.message(getText(post));
+        pagePostData.message(getText(vacancy));
         String postId = facebookUser.pageOperations().post(pagePostData);
         return null;
     }
 
-    public PostResponse publishPhoto(Post post) throws Exception {
+    public VacancyResponse publishPhoto(Vacancy post) throws Exception {
         String publishPhotoRequestUrl = getPublishPhotoRequestUrl(post);
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map;
@@ -103,20 +102,20 @@ public class FacebookPublisherService extends BasePublisherService {
         return null;
     }
 
-    private String getPublishPhotoRequestUrl(Post post) {
+    private String getPublishPhotoRequestUrl(Vacancy vacancy) {
         String url = properties.getProperty("publishPhotoRequestUrlTemplate");
         url = url.replace("{pageId}", properties.getProperty("pageId"));
-        url = url.replace("{photoUrl}", getPhotoUrl(post));
-        url = url.replace("{caption}", getText(post));
+        url = url.replace("{photoUrl}", getPhotoUrl(vacancy));
+        url = url.replace("{caption}", getText(vacancy));
         url = url.replace("{isPublished}", "true");
         return url;
     }
 
-    private String getPhotoUrl(Post post) {
+    private String getPhotoUrl(Vacancy vacancy) {
         return "http://lmndeit.kg/wp-content/uploads/2016/09/1066_178169975899042_3386044648562112580_n.png";
     }
 
-    private String getText(Post post) {
+    private String getText(Vacancy vacancy) {
         return "Default text";
     }
 
