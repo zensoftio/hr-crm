@@ -11,7 +11,7 @@ class Base(Configuration):
 
     DEBUG = values.BooleanValue(False)
 
-    ALLOWED_HOSTS = ['192.168.89.96']
+    ALLOWED_HOSTS = values.ListValue()
 
     INSTALLED_APPS = [
         'django.contrib.admin',
