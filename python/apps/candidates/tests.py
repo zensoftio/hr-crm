@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
@@ -7,7 +6,13 @@ from apps.candidates.models import Candidate
 from apps.candidates.serializers import AuxCandidateSerializer, CandidateDetailSerializer
 from apps.departments.models import Position, Department
 
-User = get_user_model()
+
+class CandidatesFixturesTest(APITestCase):
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json']
+
+    def test_list(self):
+        queryset = Candidate.objects.all()
+        self.assertEqual(queryset.count(), 3)
 
 
 class CandidatesListTest(APITestCase, ListTestMixin):

@@ -1,0 +1,107 @@
+[
+{
+    "model": "candidates.candidate",
+    "pk": 1,
+    "fields": {
+        "first_name": "John",
+        "last_name": "Beaver",
+        "email": "beaver@zensoft.io",
+        "phone": "1413423423413",
+        "experience": 4.0,
+        "level": "Middle",
+        "status": 2,
+        "skype": "skype.com",
+        "position": 2,
+        "created": "2018-07-03T04:02:02Z"
+    }
+},
+{
+    "model": "candidates.candidate",
+    "pk": 2,
+    "fields": {
+        "first_name": "Julieth",
+        "last_name": "Reaver",
+        "email": "reaver@zensoft.io",
+        "phone": "1413423423413",
+        "experience": 1.0,
+        "level": "Junior",
+        "status": 3,
+        "skype": "skype.com",
+        "position": 3,
+        "created": "2018-07-03T04:02:38Z"
+    }
+},
+{
+    "model": "candidates.candidate",
+    "pk": 3,
+    "fields": {
+        "first_name": "Donald",
+        "last_name": "Buckster",
+        "email": "buckster@zensoft.io",
+        "phone": "8880122123",
+        "experience": 4.0,
+        "level": "Senior",
+        "status": 2,
+        "skype": "skype.com",
+        "position": 1,
+        "created": "2018-07-03T04:03:03Z"
+    }
+},
+{
+    "model": "candidates.cv",
+    "pk": 1,
+    "fields": {
+        "url": "link.com",
+        "candidate": 1,
+        "created": "2018-07-03T04:04:09.581Z"
+    }
+},
+{
+    "model": "candidates.cv",
+    "pk": 2,
+    "fields": {
+        "url": "link.com",
+        "candidate": 3,
+        "created": "2018-07-03T04:04:17.993Z"
+    }
+},
+{
+    "model": "candidates.cv",
+    "pk": 3,
+    "fields": {
+        "url": "link.com",
+        "candidate": 2,
+        "created": "2018-07-03T04:04:26.302Z"
+    }
+},
+{
+    "model": "candidates.comment",
+    "pk": 1,
+    "fields": {
+        "text": "Some Test Comment about Julieth",
+        "created_by": 1,
+        "created": "2018-07-03T04:04:51.208Z",
+        "candidate": 2
+    }
+},
+{
+    "model": "candidates.comment",
+    "pk": 2,
+    "fields": {
+        "text": "Some Test Comment about Donald",
+        "created_by": 2,
+        "created": "2018-07-03T04:05:11.560Z",
+        "candidate": 3
+    }
+},
+{
+    "model": "candidates.comment",
+    "pk": 3,
+    "fields": {
+        "text": "Some Test Comment about John",
+        "created_by": 1,
+        "created": "2018-07-03T04:05:24.150Z",
+        "candidate": 1
+    }
+}
+]

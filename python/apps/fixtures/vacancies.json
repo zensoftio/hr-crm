@@ -1,0 +1,76 @@
+[
+{
+    "model": "vacancies.vacancy",
+    "pk": 1,
+    "fields": {
+        "title": "Django Developer Needed",
+        "request": 2,
+        "created_by": 1,
+        "city": "Bishkek",
+        "address": "Admin str. 123",
+        "work_conditions": "Test set of conditions",
+        "experience": "1-3",
+        "working_hours": "RS",
+        "employment_type": "FT",
+        "salary_min": 200.0,
+        "salary_max": 800.0,
+        "image": "",
+        "created": "2018-07-03T04:09:16.718Z",
+        "last_published": "2018-07-03T04:09:16.718Z",
+        "status": 0,
+        "requirements": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "vacancies.vacancy",
+    "pk": 2,
+    "fields": {
+        "title": "HR Manager for friendly team Zensoft",
+        "request": 3,
+        "created_by": 1,
+        "city": "Bishkek",
+        "address": "Admin str. 123",
+        "work_conditions": "Test set of conditions 222",
+        "experience": "1-3",
+        "working_hours": "FLT",
+        "employment_type": "FT",
+        "salary_min": 100.0,
+        "salary_max": 1000.0,
+        "image": "",
+        "created": "2018-07-03T04:10:18.015Z",
+        "last_published": "2018-07-03T04:10:18.015Z",
+        "status": 1,
+        "requirements": [
+            7,
+            8
+        ]
+    }
+},
+{
+    "model": "vacancies.publication",
+    "pk": 1,
+    "fields": {
+        "vacancy": 1,
+        "created_by": 1,
+        "created": "2018-07-03T04:10:30.456Z",
+        "facebook": true,
+        "diesel": false,
+        "jobkg": true
+    }
+},
+{
+    "model": "vacancies.publication",
+    "pk": 2,
+    "fields": {
+        "vacancy": 2,
+        "created_by": 2,
+        "created": "2018-07-03T04:10:39.198Z",
+        "facebook": true,
+        "diesel": true,
+        "jobkg": true
+    }
+}
+]
