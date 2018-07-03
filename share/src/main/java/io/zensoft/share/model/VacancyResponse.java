@@ -11,23 +11,24 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PostResponse {
+public class VacancyResponse {
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
     @JoinColumn()
-    private Post post;
+    private Vacancy vacancy;
 
     private String message;
     private String url;
 
     @Enumerated(value = EnumType.STRING)
-    private PostStatus status;
+    private VacancyStatus status;
 
     @Enumerated(value = EnumType.STRING)
-    private PostServiceType postServiceType;
+    private PublisherServiceType publisherServiceType;
 
     private Date publishDate;
+
 }
