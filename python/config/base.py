@@ -70,6 +70,10 @@ class Base(Configuration):
     for config in TEMPLATES:
         config['OPTIONS']['debug'] = DEBUG
 
+    FIXTURE_DIRS = (
+        'apps/fixtures',
+    )
+
     WSGI_APPLICATION = 'wsgi.application'
 
     DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
