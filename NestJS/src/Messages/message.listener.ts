@@ -23,7 +23,7 @@ export class MessageListener {
         async function getMsgId(data){
           const a = await messageService.create(data)
           data.recipients.map((rec) => rec.message = a)
-          
+
           return recipientService.create(data.recipients)
         }
 

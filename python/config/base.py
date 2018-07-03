@@ -11,7 +11,7 @@ class Base(Configuration):
 
     DEBUG = values.BooleanValue(False)
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = values.ListValue()
 
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -23,14 +23,15 @@ class Base(Configuration):
 
         'django_extensions',
         'rest_framework',
+        'django_filters',
 
         'apps.candidates',
         'apps.departments',
-        'apps.evaluations',
         'apps.interviews',
         'apps.requests',
         'apps.users',
-        'apps.vacancies'
+        'apps.vacancies',
+        'apps.templates'
     ]
 
     MIDDLEWARE = [
@@ -69,6 +70,10 @@ class Base(Configuration):
     for config in TEMPLATES:
         config['OPTIONS']['debug'] = DEBUG
 
+    FIXTURE_DIRS = (
+        'apps/fixtures',
+    )
+
     WSGI_APPLICATION = 'wsgi.application'
 
     DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
@@ -89,9 +94,20 @@ class Base(Configuration):
         },
     ]
 
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'config.pagination.SizedPageNumberPagination',
+        'PAGE_SIZE': 10,
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.AllowAny',
+        ],
+        'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.SearchFilter',
+                                    'django_filters.rest_framework.DjangoFilterBackend',
+                                    'rest_framework.filters.OrderingFilter',)
+    }
+
     LANGUAGE_CODE = 'en-us'
 
-    TIME_ZONE = 'UTC'
+    TIME_ZONE = 'Asia/Bishkek'
 
     USE_I18N = True
 
