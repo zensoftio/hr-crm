@@ -88,8 +88,8 @@ public class FacebookPublisherService {
         return null;
     }
 
-    public VacancyResponse publishPhoto(Vacancy post) throws Exception {
-        String publishPhotoRequestUrl = getPublishPhotoRequestUrl(post);
+    public VacancyResponse publishPhoto(Vacancy vacancy) throws Exception {
+        String publishPhotoRequestUrl = getPublishPhotoRequestUrl(vacancy);
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map;
         try {
@@ -98,7 +98,6 @@ public class FacebookPublisherService {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
-        System.out.println(map);
         return null;
     }
 
