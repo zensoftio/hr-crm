@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class EditInterview extends Component {
     render() {
-        return(
+        return (
             <h1>Edit interview</h1>
         )
     }

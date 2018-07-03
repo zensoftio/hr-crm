@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class VacancyList extends Component {
     render() {
-        return(
+        return (
             <h1>List of Vacancy</h1>
         )
     }
