@@ -1,4 +1,4 @@
-package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
+package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,11 +19,13 @@ import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailContract;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View {
+public class InterviewDetailFragment extends Fragment implements CandidateDetailContract.View {
 
   private CandidateDetailContract.Presenter mPresenter;
   private ListView mCvsListView;

@@ -8,42 +8,42 @@ import com.google.gson.annotations.SerializedName;
 
 public class CandidateInterviewItem {
 
-    @SerializedName("id")
-    private Integer id;
-    @SerializedName("status")
-    private Integer status;
-    //  @SerializedName("date")
+  @SerializedName("id")
+  private Integer id;
+  @SerializedName("status")
+  private Integer status;
+  //  @SerializedName("date")
 //  private Date date;
-    @SerializedName("date")
-    private String date;
-    @SerializedName("interviewers")
-    private List<User> interviewers = null;
+  @SerializedName("date")
+  private String date;
+  @SerializedName("interviewers")
+  private List<User> interviewers = null;
 
-    public Integer getId() {
-        return id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public Integer getStatus() {
-        return status;
-    }
+  public Integer getStatus() {
+    return status;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public String getDate() {
-        return date;
-    }
+  public String getDate() {
+    return date;
+  }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+  public void setDate(String date) {
+    this.date = date;
+  }
 
-    //  public Date getDate() {
+  //  public Date getDate() {
 //    return date;
 //  }
 //
@@ -51,12 +51,12 @@ public class CandidateInterviewItem {
 //    this.date = date;
 //  }
 
-    public List<User> getInterviewers() {
-        return interviewers;
-    }
+  public List<User> getInterviewers() {
+    return interviewers;
+  }
 
-    public void setInterviewers(List<User> interviewers) {
-        this.interviewers = interviewers;
-    }
+  public void setInterviewers(List<User> interviewers) {
+    this.interviewers = interviewers;
+  }
 
 }

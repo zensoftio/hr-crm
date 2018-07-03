@@ -23,69 +23,69 @@ import java.util.List;
 public class CandidatesFragment extends Fragment implements CandidatesContract.View,
         CandidatesAdapter.OnItemClickListener {
 
-    private CandidatesContract.Presenter mPresenter;
-    private CandidatesAdapter mAdapter;
+  private CandidatesContract.Presenter mPresenter;
+  private CandidatesAdapter mAdapter;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
-        initRecyclerView(v);
-        mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
-        mPresenter.loadCandidates();
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
+    initRecyclerView(v);
+    mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
+    mPresenter.loadCandidates();
 
-        return v;
-    }
+    return v;
+  }
 
-    private void initRecyclerView(View v) {
+  private void initRecyclerView(View v) {
 
-        final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_candidates);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+    final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_candidates);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    recyclerView.setLayoutManager(layoutManager);
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(getBaseContext(), DividerItemDecoration.VERTICAL);
 //        recyclerView.addItemDecoration(itemDecoration);
 
-        List<Candidate> candidates = new ArrayList<>();
-        mAdapter = new CandidatesAdapter(getActivity(), candidates);
-        mAdapter.setOnItemClickListener(this);
-        recyclerView.setAdapter(mAdapter);
-    }
+    List<Candidate> candidates = new ArrayList<>();
+    mAdapter = new CandidatesAdapter(getActivity(), candidates);
+    mAdapter.setOnItemClickListener(this);
+    recyclerView.setAdapter(mAdapter);
+  }
 
-    @Override
-    public void showCandidates(List<Candidate> candidates) {
-        mAdapter.loadNewData(candidates);
-    }
+  @Override
+  public void showCandidates(List<Candidate> candidates) {
+    mAdapter.loadNewData(candidates);
+  }
 
-    @Override
-    public void showCandidateDetailUi(int candidateId) {
-        Intent intent = new Intent(getActivity(), CandidateDetail.class);
-        startActivity(intent);
+  @Override
+  public void showCandidateDetailUi(int candidateId) {
+    Intent intent = new Intent(getActivity(), CandidateDetail.class);
+    startActivity(intent);
 
-    }
+  }
 
-    @Override
-    public void showLoadingCandidatesError() {
+  @Override
+  public void showLoadingCandidatesError() {
 
-    }
+  }
 
-    @Override
-    public void showNoCandidates() {
+  @Override
+  public void showNoCandidates() {
 
-    }
+  }
 
-    @Override
-    public void showToast(String message) {
+  @Override
+  public void showToast(String message) {
 
-    }
+  }
 
-    @Override
-    public void onItemClick(int position) {
-        showCandidateDetailUi(2);
+  @Override
+  public void onItemClick(int position) {
+    showCandidateDetailUi(2);
 
-    }
+  }
 }

@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface CandidateDetailContract {
 
-    public interface View {
+  public interface View {
 
-        void showCandidateDetails(Candidate candidate);
+    void showCandidateDetails(Candidate candidate);
 
-        void showLoadingCandidateError();
+    void showLoadingCandidateError();
 
-        void showToast(String message);
+    void showToast(String message);
 
-    }
+  }
 
-    public interface Presenter {
+  public interface Presenter {
 
-        void loadCandidateInfo();
+    void loadCandidateInfo();
 
-    }
+  }
 }

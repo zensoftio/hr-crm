@@ -12,51 +12,51 @@ import retrofit2.Response;
 
 public class CandidatesRepository {
 
-    private final Context mContext;
+  private final Context mContext;
 
-    public interface OnCandidatesLoadFinishedListener {
-        void onFinished(Response<CandidatesResponse> response);
+  public interface OnCandidatesLoadFinishedListener {
+    void onFinished(Response<CandidatesResponse> response);
 
-        void onFailure(Throwable t);
-    }
+    void onFailure(Throwable t);
+  }
 
-    public interface OnDetailCandidateLoadFinishedListener {
-        void onFinished(Response<Candidate> response);
+  public interface OnDetailCandidateLoadFinishedListener {
+    void onFinished(Response<Candidate> response);
 
-        void onFailure(Throwable t);
-    }
+    void onFailure(Throwable t);
+  }
 
-    public CandidatesRepository(Context context) {
-        mContext = context;
-    }
+  public CandidatesRepository(Context context) {
+    mContext = context;
+  }
 
-    public void getCandidatesFromJson(final OnCandidatesLoadFinishedListener listener) {
-        RestClientTest.getClient(mContext).getCandidates().enqueue(new Callback<CandidatesResponse>() {
-            @Override
-            public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
-                listener.onFinished(response);
-            }
+  public void getCandidatesFromJson(final OnCandidatesLoadFinishedListener listener) {
+    RestClientTest.getClient(mContext).getCandidates().enqueue(new Callback<CandidatesResponse>() {
+      @Override
+      public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
+        listener.onFinished(response);
+      }
 
-            @Override
-            public void onFailure(Call<CandidatesResponse> call, Throwable t) {
-                listener.onFailure(t);
-            }
-        });
-    }
+      @Override
+      public void onFailure(Call<CandidatesResponse> call, Throwable t) {
+        listener.onFailure(t);
+      }
+    });
+  }
 
-    public void getDetailCandidateFromJson(final OnDetailCandidateLoadFinishedListener listener) {
-        RestClientTest.getClient(mContext).getDetailedCandidate().enqueue(new Callback<Candidate>() {
-            @Override
-            public void onResponse(Call<Candidate> call, Response<Candidate> response) {
-                listener.onFinished(response);
-            }
+  public void getDetailCandidateFromJson(final OnDetailCandidateLoadFinishedListener listener) {
+    RestClientTest.getClient(mContext).getDetailedCandidate().enqueue(new Callback<Candidate>() {
+      @Override
+      public void onResponse(Call<Candidate> call, Response<Candidate> response) {
+        listener.onFinished(response);
+      }
 
-            @Override
-            public void onFailure(Call<Candidate> call, Throwable t) {
-                listener.onFailure(t);
-            }
-        });
-    }
+      @Override
+      public void onFailure(Call<Candidate> call, Throwable t) {
+        listener.onFailure(t);
+      }
+    });
+  }
 
 
 }

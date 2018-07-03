@@ -1,14 +1,15 @@
-package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
+package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailContract;
 
 import retrofit2.Response;
 
-public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
+public class InterviewDetailPresenter implements CandidateDetailContract.Presenter,
         CandidatesRepository.OnDetailCandidateLoadFinishedListener {
 
   private static final String TAG = "mylog:CandidateDetailPresente";
@@ -16,7 +17,7 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   private CandidateDetailContract.View mView;
   private CandidatesRepository mRepository;
 
-  public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
+  public InterviewDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
     mView = view;
     mRepository = repository;
   }

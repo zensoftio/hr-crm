@@ -10,16 +10,16 @@ import retrofit2.http.GET;
 
 public interface RestServiceTest {
 
-    @GET("/all_candidates")
-    Call<CandidatesResponse> getCandidates();
+  @GET("/all_candidates")
+  Call<CandidatesResponse> getCandidates();
 
-    @GET("/all_criterias")
-    Call<CriteriasResponse> getCriteries();
+  @GET("/all_criterias")
+  Call<CriteriasResponse> getCriteries();
 
-    @GET("/candidate_detail")
-    Call<Candidate> getDetailedCandidate();
+  @GET("/candidate_detail")
+  Call<Candidate> getDetailedCandidate();
 
-    @GET("/all_interviews")
-    Call<InterviewsResponse> getInterviews();
+  @GET("/all_interviews")
+  Call<InterviewsResponse> getInterviews();
 
 }
