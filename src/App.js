@@ -1,5 +1,5 @@
 import './index.css';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 /* User Roles */
 import User from './Roles';
 
@@ -13,6 +13,7 @@ class App extends Component {
       </div>
     );
   }
+
 };
 
 export default App;

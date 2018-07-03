@@ -1,93 +1,161 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import ButtonSubmit from '../../ui/ButtonSubmit';
+import Select from '../../ui/SelectList';
+import Grid from '@material-ui/core/Grid';
+import MultiSelect from '../../ui/MultipleSelect';
+import Checkbox from '../../ui/Checkbox';
+import "../../../index.css";
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
+const RateList = [
+  "Стандарт",
+  "Премиум",
+  "VIP"
+],
+  CityList = [
+    "Бишкек",
+    "Кара-Балта",
+    "Сокулук",
+    "Кант",
+  ],
+  Requirements = [
+    "one",
+    "three",
+    "four",
+    "five"
+  ],
+  Education = [
+    "Среднее",
+    "Средне-специальное",
+    "Высшее"
+  ],
+  Experience = [
+    "от 1 года",
+    "от 2 лет",
+    "от 3 лет",
+  ],
+  Work_conditions = [
+   `• работа в комфортном современном офисе в центре города;
+    •	руководство, готовое поддерживать вас и помогать в развитии;
+    •	корпоративные вечеринки и совместный отдых;
+    •	приятные бонусы и премии;
+    •	компенсации спорта;
+    •	своевременную оплату труда;
+    •	возможность бесплатного обучения на курсах наших программистов;
+    •	удобный график работы;
+    •	официальное трудоустройство;
+    •	возможность изучать английский язык с квалифицированным преподавателем прямо в офисе;`
+  ],
+  Duties = [
+    `•	Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.`
+  ],
+  EmploymentType = [
+    "Полный рабочий день",
+    "Посменно",
+  ];
 
-function tabChange(value){ 
-    return(
-        <TabContainer>
-        <Grid container spacing={16}>
-            <Grid item lg={8}>
-                {value === 0 ? (
-                    <div>
-                        Шаблон: <TextArea />
-                        <ButtonSubmit>Сохранить</ButtonSubmit>
-                    </div>
-                ):(
-                    <div>
-                        <Input label="Название темы" placeholder="введите название темы"/>
-                        <Input label="Название вакансии" placeholder="введите название вакансии" />
-                    </div> 
-                )}
-            </Grid>
-        </Grid>
-        </TabContainer>
-    );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-});
+  const styles = theme => ({
+    label: {
+      margin: "10px 15px"
+    },
+    span: {
+      margin: "0 15px"
+    }
+  });
 
 class CreateVacancyContainer extends Component {
-  state = {
-    value: 0,
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            scrollable
-            scrollButtons="auto"
-          >
-            <Tab label="Шаблон" />
-            <Tab label="Общий" />
-          </Tabs>
-        </AppBar>
-        {tabChange(value)}
+      <div>
+        <Grid item lg={8}>
+            <div className={classes.label}>
+              <span className={classes.span}>Тариф Вакансии:</span>  
+              <Select vals={RateList} />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Название темы:</span> 
+              <Input placeholder="введите название" />
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Название темы:</span> 
+              <Input placeholder="введите название" />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Выберите город:</span>
+              <Select vals={CityList} />
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Требования:</span>
+              <MultiSelect names={Requirements} />
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Опциональные требования:</span> 
+              <Input placeholder="введите требования" />
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Адрес Офиса:</span> 
+              <Input placeholder="введите адрес" value="Бишкек Ахунбаева 119А" />
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Образование:</span>
+              <Select vals={Education} />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>График работы:</span>
+              <Input placeholder="введите график" />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Опыт работы:</span>
+              <Select vals={Experience} />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Условия работы:</span>
+              <TextArea  value={Work_conditions}/>
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Обязанности:</span>
+              <TextArea  value={Duties}/>
+            </div> 
+            <div className={classes.label}>
+              <span className={classes.span}>Зарплата:</span>
+                <span className={classes.span}><Input placeholder="min" /></span>
+                <span className={classes.span}><Input placeholder="max" /></span>
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Тип занятости:</span>
+              <Select vals={EmploymentType} />
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Прочее:</span>
+              <TextArea  placeholder="введите текст"/>
+            </div>
+            <div className={classes.label}>
+              <span className={classes.span}>Соц. сети:</span>
+              <Checkbox label="Facebook"/>
+              <Checkbox label="Job.kg"/>
+              <Checkbox label="Diesel"/>
+            </div>
+            <div className={classes.label}>
+              Изображение:
+                <input
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  className={classes.label}
+                />
+            </div>
+            <div className={classes.label}>
+              <ButtonSubmit>Опубликовать</ButtonSubmit>
+            </div>
+        </Grid>
+
       </div>
     );
   }
 }
-
-CreateVacancyContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(CreateVacancyContainer);

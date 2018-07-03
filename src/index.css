@@ -70,3 +70,10 @@ html, body {
 	display: inline-block;
 	padding: 20px;
 }
+.label{
+    display: inline-block;
+}
+#label span {
+    margin: 10px, 15px;
+    padding: 10px, 15px;
+}

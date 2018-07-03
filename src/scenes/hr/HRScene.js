@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from '../general/Navigation';
 import Notifications from './Notifications';
 import PositionList from './ListPositions';
 import CreateVacancy from './CreateVacancy';
 import InternList from './ListIntern';
-import CandidateList from  './ListCandidates';
+import CandidateList from './ListCandidates';
 import OpenedVacancies from './VacancyList';
 import Reserve from './Reserve';
 import Statistics from '../general/Statistics';
 import Error from '../general/Error';
-import InterviewList from './InterviewList';
+import InterviewList from './ListInterviews';
 import SpecifyTheRoute from '../../utils/Route';
 
 const HRNav = [
@@ -63,16 +63,16 @@ const HRNav = [
 
 export default class HRScene extends Component {
     render() {
-        return(
+        return (
             <BrowserRouter>
                 <div className="container">
 
-                    <Navigation menuItems={HRNav} />
+                    <Navigation menuItems={HRNav}/>
 
                     <div className="content">
                         <Switch>
-                            <Route path="/" component={OpenedVacancies} exact />
-                            <SpecifyTheRoute route={HRNav} />
+                            <Route path="/" component={OpenedVacancies} exact/>
+                            <SpecifyTheRoute route={HRNav}/>
                             <Route component={Error}/>
                         </Switch>
                     </div>
