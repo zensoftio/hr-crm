@@ -14,15 +14,12 @@ export class EventService {
   async createEvent(event: Event): Promise<Event>{
     return new Promise(function(resolve, reject){
       google.run(event, function(err, response) {
-        if(err){
-          resolve(err);
-        }
-        else{
-          const eventOfDatabase = event.body;
+        let eventOfDatabase = event.body;
+        if(!err){
           eventOfDatabase.id_event = response.id;
           getRepository(Event).insert(eventOfDatabase);
-          resolve(eventOfDatabase);
         }
+        resolve((err) ? err : eventOfDatabase);
       });
     })
   }
@@ -51,18 +48,15 @@ export class EventService {
           event.body.id = eventOfDatabase.id;
           event.body.id_event = eventOfDatabase.id_event;
           google.run(event, function(err, response){
-            if(err){
-              resolve(err);
-            }
-            else{
+            if(!err){
               getRepository(Event).save(event.body);
-              resolve(event.body);
             }
+            resolve((err) ? err : event.body);
           });
         }
     });
   }
-  async removeEvent(event: Event){
+  async removeEvent(event: Event): string{
     return new Promise(async (resolve, reject) =>{
       const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
       if(!eventOfDatabase){
@@ -71,14 +65,8 @@ export class EventService {
       else{
         event.body = eventOfDatabase;
         google.run(event, function(err, response){
-          if(err){
-            getRepository(Event).delete(eventOfDatabase);
-            resolve(err);
-          }
-          else{
-            getRepository(Event).delete(eventOfDatabase);
-            resolve(response);
-          }
+          getRepository(Event).delete(eventOfDatabase);
+          resolve((err) ? err : response);
         });
       }
     });

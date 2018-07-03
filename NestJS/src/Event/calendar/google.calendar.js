@@ -42,17 +42,17 @@ module.exports = {
       authorize(function(auth){
         calendar = google.calendar({version: 'v3', auth});
         let jsonObj = json.body;
-        if(json.title == "create" && hasAllObjects(jsonObj)){
+        if(json.title === "create" && hasAllObjects(jsonObj)){
             create(jsonObj, function(err, data){
               callback(err, data);
             });
         }
-        else if(json.title == "update" && hasAllObjects(jsonObj)){
+        else if(json.title === "update" && hasAllObjects(jsonObj)){
             update(jsonObj, function(err, data){
               callback(err, data);
             });
         }
-        else if(json.title == "remove" && hasAllObjects(jsonObj)){
+        else if(json.title === "remove" && hasAllObjects(jsonObj)){
             remove(jsonObj, function(err, data){
               if(err){
                 callback(err, "");
