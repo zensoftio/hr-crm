@@ -11,7 +11,7 @@ class Base(Configuration):
 
     DEBUG = values.BooleanValue(False)
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = values.ListValue()
 
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -107,7 +107,7 @@ class Base(Configuration):
 
     LANGUAGE_CODE = 'en-us'
 
-    TIME_ZONE = 'UTC'
+    TIME_ZONE = 'Asia/Bishkek'
 
     USE_I18N = True
 

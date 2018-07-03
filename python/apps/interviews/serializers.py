@@ -1,17 +1,74 @@
 from rest_framework import serializers
 
+from apps.candidates.models import Candidate
 from apps.users.serializers import AuxUserSerializer
-from .models import Interview, Criteria
+from .models import Interview, Criteria, Interviewer, Evaluation
+
+
+class AuxCriteriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Criteria
+        fields = ('id', 'name')
+
+
+class CriteriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Criteria
+        fields = ('id', 'name', 'department')
+
+
+class AuxCandidateSerializer(serializers.ModelSerializer):
+    """Candidate Serializer for Candidates List and Candidate Detail endpoint"""
+
+    class Meta:
+        model = Candidate
+        depth = 3
+        fields = ('id', 'first_name', 'last_name', 'position')
+
+
+class EvaluationSerializer(serializers.ModelSerializer):
+    criteria = AuxCriteriaSerializer()
+
+    class Meta:
+        model = Evaluation
+        fields = ('id', 'rate', 'criteria')
+
+
+class InterviewerSerializer(serializers.ModelSerializer):
+    user = AuxUserSerializer()
+
+    class Meta:
+        model = Interviewer
+        fields = ('id', 'user')
+
+
+class InterviewerDetailSerializer(serializers.ModelSerializer):
+    user = AuxUserSerializer()
+    evaluations = EvaluationSerializer(many=True)
+
+    class Meta:
+        model = Interviewer
+        fields = ('id', 'user', 'comment', 'evaluations')
 
 
 class InterviewListSerializer(serializers.ModelSerializer):
     """Serializer for Interviews List Endpoint"""
-    interviewers = AuxUserSerializer(many=True)
+    interviewers = InterviewerSerializer(many=True)
+    candidate = AuxCandidateSerializer()
 
     class Meta:
         model = Interview
         depth = 3
         fields = ('id', 'date', 'status', 'candidate', 'interviewers')
+
+
+class InterviewDetailSerializer(serializers.ModelSerializer):
+    candidate = AuxCandidateSerializer()
+    interviewers = InterviewerDetailSerializer(many=True)
+
+    class Meta:
+        model = Interview
+        fields = ('id', 'candidate', 'status', 'date', 'interviewers')
 
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
@@ -22,9 +79,3 @@ class AuxInterviewSerializer(serializers.ModelSerializer):
         depth = 3
         model = Interview
         fields = ('id', 'status', 'date', 'interviewers')
-
-
-class CriteriaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Criteria
-        fields = ('id', 'name', 'department')
