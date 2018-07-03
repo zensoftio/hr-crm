@@ -23,7 +23,7 @@ class AuxCandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         depth = 3
-        fields = ('id', 'first_name', 'last_name', 'position')
+        fields = ('id', 'first_name', 'last_name', 'position', 'status')
 
 
 class EvaluationSerializer(serializers.ModelSerializer):
