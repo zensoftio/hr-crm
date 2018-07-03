@@ -11,8 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 import android.view.Window;
 import android.view.WindowManager;
+=======
+import android.widget.Button;
+>>>>>>> 57adb4677409b630aade1dd6124c6aff810bf383
 
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;

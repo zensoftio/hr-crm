@@ -1,10 +1,10 @@
 package io.zensoft.share.repository;
 
-import io.zensoft.share.model.PostDto;
+import io.zensoft.share.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostDtoRepository extends JpaRepository<PostDto, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
 }

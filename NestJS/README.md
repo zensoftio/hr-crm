@@ -23,16 +23,13 @@ $ npm run start:dev
 npm run start:prod
 ```
 
-## Test
+## Usage
+
+Create an `.env` file with client id, client secret and redirect_uris for the app. To get those go to https://console.developers.google.com/start/api?id=gmail to create or select a project in the Google Developers Console.
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+CLIENT_ID=
+CLIENT_SECRET=
+REDIRECT_URIS=
 ```
 

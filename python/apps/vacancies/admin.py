@@ -1,3 +1,6 @@
 from django.contrib import admin
+from apps.vacancies.models import Vacancy, Publication
 
-# Register your models here.
+
+admin.site.register(Vacancy)
+admin.site.register(Publication)
