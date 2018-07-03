@@ -9,37 +9,10 @@ import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailCon
 
 import retrofit2.Response;
 
-public class InterviewDetailPresenter implements CandidateDetailContract.Presenter,
-        CandidatesRepository.OnDetailCandidateLoadFinishedListener {
-
-  private static final String TAG = "mylog:CandidateDetailPresente";
-
-  private CandidateDetailContract.View mView;
-  private CandidatesRepository mRepository;
-
-  public InterviewDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
-    mView = view;
-    mRepository = repository;
-  }
+public class InterviewDetailPresenter implements InterviewDetailContract.Presenter {
 
   @Override
-  public void loadCandidateInfo() {
-    mRepository.getDetailCandidateFromJson(this);
-
-  }
-
-  @SuppressLint("LongLogTag")
-  @Override
-  public void onFinished(Response<Candidate> response) {
-    Log.d(TAG, "onFinished: success");
-    Candidate candidate = response.body();
-    mView.showCandidateDetails(candidate);
-  }
-
-  @SuppressLint("LongLogTag")
-  @Override
-  public void onFailure(Throwable t) {
-    Log.d(TAG, "onFailure: starts");
+  public void loadInterviewInfo() {
 
   }
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CandidatesFragment extends Fragment implements CandidatesContract.View,
-        CandidatesAdapter.OnItemClickListener {
+    CandidatesAdapter.OnItemClickListener {
 
   private CandidatesContract.Presenter mPresenter;
   private CandidatesAdapter mAdapter;

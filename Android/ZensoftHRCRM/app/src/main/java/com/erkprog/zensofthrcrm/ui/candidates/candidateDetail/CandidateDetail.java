@@ -20,8 +20,8 @@ public class CandidateDetail extends AppCompatActivity {
     if (fragment == null) {
       fragment = new CandidateDetailFragment();
       fm.beginTransaction()
-              .add(R.id.candidate_detail_container, fragment)
-              .commit();
+          .add(R.id.candidate_detail_container, fragment)
+          .commit();
     }
 
   }

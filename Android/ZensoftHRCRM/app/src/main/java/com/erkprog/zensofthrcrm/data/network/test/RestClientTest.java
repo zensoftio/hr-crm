@@ -15,15 +15,15 @@ public final class RestClientTest {
   public static RestServiceTest getClient(Context context) {
     if (mRestService == null) {
       final OkHttpClient client = new OkHttpClient
-              .Builder()
-              .addInterceptor(new FakeInterceptor(context))
-              .build();
+          .Builder()
+          .addInterceptor(new FakeInterceptor(context))
+          .build();
 
       final Retrofit retrofit = new Retrofit.Builder()
-              .addConverterFactory(GsonConverterFactory.create())
-              .baseUrl("http://mock.api")
-              .client(client)
-              .build();
+          .addConverterFactory(GsonConverterFactory.create())
+          .baseUrl("http://mock.api")
+          .client(client)
+          .build();
 
       mRestService = retrofit.create(RestServiceTest.class);
     }

@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
+  <android.support.v7.widget.CardView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      app:cardBackgroundColor="@color/commentCardViewBackground"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@color/commentCardViewBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/commentCardViewTitleBackground"
+          android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cd_comment_username"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="6"
+            android:textColor="@color/main_attributes"
+            tools:text="FirstName Lastname"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/commentCardViewTitleBackground"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/cd_comment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            tools:text="created date"/>
+      </LinearLayout>
 
-                <TextView
-                    android:id="@+id/cd_comment_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:textColor="@color/main_attributes"
-                    tools:text="FirstName Lastname" />
-
-                <TextView
-                    android:id="@+id/cd_comment_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    tools:text="created date" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/cd_comment_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/main_attributes"
-                tools:text="comment text" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+      <TextView
+          android:id="@+id/cd_comment_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:textColor="@color/main_attributes"
+          tools:text="comment text"/>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

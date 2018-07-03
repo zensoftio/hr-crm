@@ -9,7 +9,7 @@ import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import retrofit2.Response;
 
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
-        CandidatesRepository.OnDetailCandidateLoadFinishedListener {
+    CandidatesRepository.OnDetailCandidateLoadFinishedListener {
 
   private static final String TAG = "mylog:CandidateDetailPresente";
 

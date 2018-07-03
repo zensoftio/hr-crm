@@ -17,7 +17,7 @@ import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+    implements NavigationView.OnNavigationItemSelectedListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawer.addDrawerListener(toggle);
     toggle.syncState();
 
@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity
 
   protected void switchFragment(Fragment fragment) {
     getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.main_fragment_container, fragment)
-            .commit();
+        .beginTransaction()
+        .replace(R.id.main_fragment_container, fragment)
+        .commit();
   }
 }

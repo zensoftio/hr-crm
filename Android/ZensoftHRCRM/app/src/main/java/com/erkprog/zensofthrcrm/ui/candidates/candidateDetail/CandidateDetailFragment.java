@@ -244,9 +244,9 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       users.append("interviewers:\n");
       for (User interviewer : interviewers) {
         String firstName =
-                interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
+            interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
         String lastName =
-                interviewer.getLastName() != null ? interviewer.getLastName() : "";
+            interviewer.getLastName() != null ? interviewer.getLastName() : "";
         users.append("-" + firstName + " " + lastName + "\n");
       }
       interviewersText.setText(users);

@@ -6,9 +6,9 @@ public interface InterviewDetailContract {
 
   public interface View {
 
-    void showCandidateDetails(Interview interview);
+    void showInterviewDetails(Interview interview);
 
-    void showLoadingCandidateError();
+    void showLoadingInterviewError();
 
     void showToast(String message);
 
@@ -16,7 +16,7 @@ public interface InterviewDetailContract {
 
   public interface Presenter {
 
-    void loadCandidateInfo();
+    void loadInterviewInfo();
 
   }
 }
