@@ -5,7 +5,8 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import java.util.List;
 
 public interface CandidatesContract {
-  public interface View {
+
+  interface View {
 
     void showCandidates(List<Candidate> candidates);
 
@@ -17,14 +18,17 @@ public interface CandidatesContract {
 
     void showToast(String message);
 
+    boolean isActive();
+
   }
 
-  public interface Presenter {
+  interface Presenter {
 
     void loadCandidates();
 
     void openCandidateDetails(Candidate requestedCandidate);
 
+    void onCandidateItemClick(Candidate candidate);
 
   }
 }

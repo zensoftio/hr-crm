@@ -1,12 +1,13 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
-
-import java.util.List;
+import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
+import com.erkprog.zensofthrcrm.data.entity.Comment;
+import com.erkprog.zensofthrcrm.data.entity.Cv;
 
 public interface CandidateDetailContract {
 
-  public interface View {
+  interface View {
 
     void showCandidateDetails(Candidate candidate);
 
@@ -14,11 +15,18 @@ public interface CandidateDetailContract {
 
     void showToast(String message);
 
+    boolean isActive();
+
   }
 
-  public interface Presenter {
+  interface Presenter {
 
-    void loadCandidateInfo();
+    void loadCandidateInfo(int candidateId);
 
+    void onInterviewItemClicked(CandidateInterviewItem interviewItem);
+
+    void onCommentItemClicked(Comment commentItem);
+
+    void onCvItemClicked(Cv cvItem);
   }
 }
