@@ -27,7 +27,6 @@ class Base(Configuration):
 
         'apps.candidates',
         'apps.departments',
-        'apps.evaluations',
         'apps.interviews',
         'apps.requests',
         'apps.users',
