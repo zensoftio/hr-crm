@@ -6,6 +6,8 @@ import Select from '../../components/ui/SelectList';
 import Paper from '@material-ui/core/Paper';
 import TextArea from '../../components/ui/TextArea';
 import Button from '../../components/ui/ButtonSubmit';
+import Divider from '@material-ui/core/Divider';
+import { Document } from 'react-pdf/dist/entry.webpack';
 
 const Department = [
     "PM",
@@ -29,7 +31,7 @@ const Department = [
  
 const style = {
     box: {
-        margin: '1em 1.5em'
+        margin: '1em .5em'
     },
     paperBox: {
         margin: '1em 1.5em',
@@ -38,6 +40,7 @@ const style = {
 }
 
 class UserProfile extends Component {
+
     render() { 
         const { classes } = this.props;
 
@@ -65,28 +68,43 @@ class UserProfile extends Component {
                         <span className={classes.box}>Skype:</span>   
                         <Input placeholder="введите адрес" />
                     </div>
-                    <div>
+                    <div style={{margin: "1em 0"}}>
                         <span className={classes.box}>Отдел:</span>   
                         <Select vals={Department}/>
                     </div>
-                    <div>
+                    <div style={{margin: "1em 0"}}>
                         <span className={classes.box}>Опыт:</span>   
                         <Select vals={Experience}/>
                     </div>
-                    <div>
+                    <div style={{margin: "1em 0"}}>
                         <span className={classes.box}>Уровень:</span>   
                         <Select vals={Level}/>
                     </div>
-                    <div>
+                    <div style={{margin: "1em 0"}}>
                         <span className={classes.box}>Статус:</span>   
                         <Select vals={Status}/>
                     </div>
                     <div>
-                        <span className={classes.box}>Комментарий:</span> 
-                        <TextArea placeholder="введите комментарий" />
+                        <span className={classes.box}>Резюме:</span>
+                        <a href=""> CV.pdf </a>
+                    </div>
+                    <div className={classes.box}>
+                        Комментарий:
+                        <TextArea />
+                    </div>
+                    <div className={classes.box}>
+                        <Button>Создать комментарий</Button>
+                    </div>
+                    <div className={classes.paperBox}>
+                        <Divider />
                     </div>
                     <div>
-                        <Button>Создать комментарий</Button>
+                        <span className={classes.box}><Button>Пригласить на интервью</Button></span>
+                        <span className={classes.box}><Button>Нанять</Button></span>
+                        <span className={classes.box}><Button>Удалить</Button></span>
+                        <span className={classes.box}><Button>Сохранить</Button></span>
+                        <span className={classes.box}><Button>Отправить ТЗ</Button></span>
+                        <span className={classes.box}><Button>Отправить письмо</Button></span>
                     </div>
                 </Paper>
             </div>
