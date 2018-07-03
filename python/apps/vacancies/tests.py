@@ -16,7 +16,6 @@ class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
     model = Vacancy
     serializer = VacancyCreateUpdateSerializer
 
-    # Overload test_creation method to check result for 3 objects
     def test_creation(self):
         response = self.client.post(self.url, self.request_body)
         self.assertEqual(201, response.status_code)
