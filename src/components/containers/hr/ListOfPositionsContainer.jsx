@@ -2,7 +2,7 @@ import React from "react";
 import TableList from "../../ui/Table";
 import Button from '../../ui/ButtonSubmit';
 
-const ListOfPositions = (props) => {
+const ListOfPositions = () => {
 
     const data = [
         ['Name', 'JavaScript', '12/12/2017', 3, <Button>Создать</Button>],

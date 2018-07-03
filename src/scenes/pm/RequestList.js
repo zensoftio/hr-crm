@@ -1,53 +1,31 @@
 import React from 'react';
 import Header from '../general/Header';
 import { Link } from 'react-router-dom';
+import TableList from '../../components/ui/Table';
 
 const RequestList = () => {
-	const reqList = [
-		{
-			name: 'JS',
-			created: '13.06.2017',
-			amount: 2,
-			status: 'Утвержден'
-		},
-		{
-			name: 'Python',
-			created: '14.02.2017',
-			amount: 1,
-			status: 'Отклонен'
-		},
-		{
-			name: 'Java',
-			created: '16.12.2016',
-			amount: 2,
-			status: 'Утвержден'
-		}
-	];
+	const openLink = <Link to="/edit_request">Открыть</Link>;
+
+	const data = [
+		[
+			'Python', '12.12.2012', 2, 'Утвержден', openLink
+		],
+		[
+			'JS', '10.02.2015', 1, 'Отклонен', openLink
+		],
+		[
+			'iOS', '02.11.2016', 1, 'Утвержден', openLink
+		]
+	],
+	header = [
+		'#', 'Название', 'Дата создания', 'Количество', 'Статус', 'Действие'
+	];	
+
 	return (
 		<div>
 			<Header title="Список Запросов" />
-			<table>
-				<tbody className="table_head">
-				<tr>
-					<th>Название</th>
-					<th>Дата создания</th>
-					<th>Количество</th>
-					<th>Статус</th>
-					<th>Действие</th>
-				</tr>
-				{reqList.map((list, i) => {
-					return (
-						<tr key={i}>
-							<td>{list.name}</td>
-							<td>{list.created}</td>
-							<td>{list.amount}</td>
-							<td>{list.status}</td>
-							<td><Link to="/edit_request">Открыть</Link></td>
-						</tr>
-					)
-				})}
-				</tbody>
-			</table>
+			
+			<TableList header={header} data={data}/>
 		</div>
 	);
 }
