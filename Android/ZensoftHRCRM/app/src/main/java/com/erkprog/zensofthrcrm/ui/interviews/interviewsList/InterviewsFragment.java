@@ -54,6 +54,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     layoutManager = new LinearLayoutManager(v.getContext());
     recyclerView.setLayoutManager(layoutManager);
     mContext = v.getContext();
+
     mPresenter.getInterviews(mContext);
 
 
