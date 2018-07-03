@@ -32,11 +32,7 @@ export default class AdminScene extends Component {
 							<Navigation menuItems={pmNav} />
 
 							<div className="content">
-								<Switch>								
-									
-									{/* <Route path="/request_list" component={RequesList} exact/>
-									<Route path="/statistics" component={Statistics}/>
-									<Route path="/edit_request" component={EditRequest}/> */}
+								<Switch>
 									<SpecifyTheRoute route={pmNav} />
 									<Route component={Error} />
 								</Switch>
