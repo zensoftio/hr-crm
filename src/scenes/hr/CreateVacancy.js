@@ -5,21 +5,20 @@ import Header from '../general/Header';
 import Paper from '@material-ui/core/Paper';
 
 const styles = {
-    paper: {
-        margin: "15px 10px",
-        padding: "15px 10px"
-    }
+  paperBox: {
+    margin: '1em 1.5em',
+    padding: '1.5em 1em'
+  }
 };
 
 class CreateVacancy extends Component {
-
     render() {
         const {classes} = this.props;
-
+      
         return (
             <div>
                 <Header title="Создать Вакансию"/>
-                <Paper className={classes.paper}>
+                <Paper className={classes.paperBox}>
                     <CreateVacancyContainer/>
                 </Paper>
             </div>
