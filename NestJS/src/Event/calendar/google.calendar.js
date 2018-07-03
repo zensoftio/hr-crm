@@ -84,7 +84,7 @@ function hasAllObjects(jsonObj){
 function create(json, callback){
   calendar.events.insert({auth: auth, calendarId: 'primary', resource: event}, function(err, response) {
     if (err) {
-      callback(err, '');
+      callback("Cannot create because of invalid email, begin_time, or end_time!", '');
     }
     else{
       callback(undefined, response.data)
@@ -101,10 +101,10 @@ function update(json, callback){
           resource: event
   }, function(err, response){
     if(err) {
-      callback('Cannot update because of incorrect data!', '');
+      callback('Cannot update because of invalid email, begin_time, or end_time!', '');
     }
     else{
-      callback('', 'Updated!');
+      callback('', response.data);
     }
   });
 }
@@ -116,7 +116,7 @@ function remove(json, callback){
       eventId: json.id_event
     },function(err, response){
       if(err){
-        callback("Cannot remove because of incorrect data!", "");
+        callback("There is no such event in the google calendar!", "");
       }
       else{
         callback("", "Deleted!");

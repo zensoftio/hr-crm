@@ -1,78 +1,54 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
+import * as Amqp from "amqp-ts";
+import deasyncPromise from 'deasync-promise';
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-    var exchange =  connection.declareExchange("ExchangeName", 'direct');
-    var queue = connection.declareQueue("event", {durable: true});
-    queue.bind(exchange, 'black');
-    queue.activateConsumer(async (message) => {
-         let json = JSON.parse(message.getContent());
-         await run(json, this.eventService, function(err, response){
-           let msg = {
-             "title": json.title,
-             "body": {}
-           }
-           msg.body = response;
-           console.log("Message received: ");
-           console.log(msg);
-      });
-    }, {noAck: true});
+      this.queue = connection.declareQueue("event", {durable: true});
+      this.queue.activateConsumer(this._onMessage, {noAck: true});
+      this.msg = {
+        "title": "",
+        "body": {}
+      }
   }
-}
-async function run(json, eventService, callback){
-  if(json.title == "create"){
-    await eventService.createEvent(json, function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        callback('', response);
-      }
-    });
+
+  public async getActionFromMessage(message): Promise<any> {
+    this.msg.title = await message.title;
+    this.msg.body = await message.body;
+    if(this.msg.title === 'create'){
+       this.msg.body = await this.eventService.createEvent(this.msg);
+    }
+    else if(this.msg.title === 'update'){
+       this.msg.body = await this.eventService.updateEvent(this.msg);
+    }
+    else if(this.msg.title === 'getone'){
+      this.msg.body = await this.eventService.getOne(this.msg);
+    }
+    else if(this.msg.title === 'getlist'){
+       this.msg.body = await this.eventService.getList();
+    }
+    else if(this.msg.title === 'remove'){
+       this.msg.body = await this.eventService.removeEvent(this.msg);
+    }
+    else{
+       this.msg.body = await 'Incorrect title';
+    }
+    return this.msg;
   }
-  else if(json.title == "update"){
-    await eventService.updateEvent(json, function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        callback('', response);
-      }
-    });
-  }
-  else if(json.title == "getlist"){
-    await eventService.getList(function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        callback('', response);
-      }
-    });
-  }
-  else if(json.title == "getone"){
-    await eventService.getOne(json, function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        callback('', response);
-      }
-    });
-  }
-  else if(json.title == "remove"){
-    await eventService.removeEvent(json, function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        callback('', response);
-      }
-    });
-  }
-  else{
-    callback("Send back message about incorrect title!", '');
-  }
+
+   private _onMessage = (message) => {
+     const json = JSON.parse(message.getContent());
+     let result = this.getActionFromMessage(json);
+     let answer;
+     setTimeout(async function(){
+       answer = await result;
+     }, 0);
+     while(answer === undefined){
+       require('deasync').sleep(100);
+     }
+     console.log(answer)
+     return answer;
+   }
 }

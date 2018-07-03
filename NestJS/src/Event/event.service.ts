@@ -11,57 +11,75 @@ export class EventService {
       private readonly eventRepository: Repository<Event>,
       ) {}
 
-  async createEvent(event: Event, callback){
-    google.run(event, function(err, response) {
-      if(err){
-        callback(err, '');
-      }
-      else{
-        const eventOfDatabase = event.body;
-        eventOfDatabase.id_event = response.id;
-        getRepository(Event).insert(eventOfDatabase);
-        callback('', eventOfDatabase);
-      }
-    });
+  async createEvent(event: Event): Promise<Event>{
+    return new Promise(function(resolve, reject){
+      google.run(event, function(err, response) {
+        if(err){
+          resolve(err);
+        }
+        else{
+          const eventOfDatabase = event.body;
+          eventOfDatabase.id_event = response.id;
+          getRepository(Event).insert(eventOfDatabase);
+          resolve(eventOfDatabase);
+        }
+      });
+    })
   }
 
-  async getList(callback){
-    const events = await getRepository(Event).find({});
-    callback('', events);
+  async getList(): Promise<Event[]>{
+    let eventOfDatabase = await getRepository(Event).find({});
+
+    if(!eventOfDatabase) eventOfDatabase = "There is no events!";
+
+    return eventOfDatabase;
   }
-  async getOne(event: Event, callback) {
-    const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
-    if(eventOfDatabase){
-      callback('', eventOfDatabase);
-    }
-    else{
-      callback(`cannot find 'event of database' because of incorrect 'id_event'`, '');
-    }
-}
-  async updateEvent(event: Event, callback){
-    const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
-    event.body.id = eventOfDatabase.id;
-    event.body.id_event = eventOfDatabase.id_event;
-    google.run(event, function(err, response){
-      if(err){
-        callback(err, '');
-      }
-      else{
-        getRepository(Event).save(event.body);
-        callback('', event.body);
-      }
+
+  async getOne(event: Event): Promise<Event>{
+    let eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+    if(!eventOfDatabase) eventOfDatabase = "whether invalid id_event or no such event";
+    return eventOfDatabase;
+  }
+
+  async updateEvent(event: Event): Promise<Event>{
+    return new Promise(async (resolve, reject) => {
+        const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+        if(!eventOfDatabase){
+          resolve("whether invalid id_event or no such event!");
+        }
+        else{
+          event.body.id = eventOfDatabase.id;
+          event.body.id_event = eventOfDatabase.id_event;
+          google.run(event, function(err, response){
+            if(err){
+              resolve(err);
+            }
+            else{
+              getRepository(Event).save(event.body);
+              resolve(event.body);
+            }
+          });
+        }
     });
   }
-  async removeEvent(event: Event, callback){
-    const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
-    event.body = eventOfDatabase;
-    google.run(event, function(err, response){
-      if(err){
-        callback(err, '');
+  async removeEvent(event: Event){
+    return new Promise(async (resolve, reject) =>{
+      const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+      if(!eventOfDatabase){
+        resolve("whether invalid id_event or no such event!");
       }
       else{
-        getRepository(Event).delete(eventOfDatabase);
-        callback('', response);
+        event.body = eventOfDatabase;
+        google.run(event, function(err, response){
+          if(err){
+            getRepository(Event).delete(eventOfDatabase);
+            resolve(err);
+          }
+          else{
+            getRepository(Event).delete(eventOfDatabase);
+            resolve(response);
+          }
+        });
       }
     });
   }
