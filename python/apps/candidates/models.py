@@ -21,6 +21,8 @@ class Candidate(models.Model):
 
     class Meta:
         default_related_name = 'candidates'
+        verbose_name_plural = 'candidates'
+        ordering = ('last_name',)
 
     def __str__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)

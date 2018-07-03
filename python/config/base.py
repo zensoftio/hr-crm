@@ -27,11 +27,11 @@ class Base(Configuration):
 
         'apps.candidates',
         'apps.departments',
-        'apps.evaluations',
         'apps.interviews',
         'apps.requests',
         'apps.users',
-        'apps.vacancies'
+        'apps.vacancies',
+        'apps.templates'
     ]
 
     MIDDLEWARE = [
@@ -69,6 +69,10 @@ class Base(Configuration):
 
     for config in TEMPLATES:
         config['OPTIONS']['debug'] = DEBUG
+
+    FIXTURE_DIRS = (
+        'apps/fixtures',
+    )
 
     WSGI_APPLICATION = 'wsgi.application'
 
