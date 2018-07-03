@@ -3,22 +3,24 @@ package io.zensoft.share.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostResponseDto {
+@ToString
+public class VacancyResponseDto {
 
-    private Long postDtoId;
+    private Long id;
 
     private String message;
     private String url;
 
     private String status;
 
-    private String postServiceType;
+    private String publisherServiceType;
 
     private Date publishDate;
 }
