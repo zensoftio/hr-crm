@@ -1,0 +1,149 @@
+[
+{
+    "model": "departments.department",
+    "pk": 1,
+    "fields": {
+        "name": "Project Management"
+    }
+},
+{
+    "model": "departments.department",
+    "pk": 2,
+    "fields": {
+        "name": "Python"
+    }
+},
+{
+    "model": "departments.department",
+    "pk": 3,
+    "fields": {
+        "name": "Java"
+    }
+},
+{
+    "model": "departments.department",
+    "pk": 4,
+    "fields": {
+        "name": "Human Resources"
+    }
+},
+{
+    "model": "departments.department",
+    "pk": 5,
+    "fields": {
+        "name": "JS"
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 1,
+    "fields": {
+        "name": "OOP",
+        "department": 2,
+        "type": 1
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 2,
+    "fields": {
+        "name": "Python Knowledge",
+        "department": 2,
+        "type": 2
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 3,
+    "fields": {
+        "name": "Java Knowledge",
+        "department": 3,
+        "type": 1
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 4,
+    "fields": {
+        "name": "Spring",
+        "department": 3,
+        "type": 2
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 5,
+    "fields": {
+        "name": "ES",
+        "department": 5,
+        "type": 1
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 6,
+    "fields": {
+        "name": "NestJS",
+        "department": 5,
+        "type": 2
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 7,
+    "fields": {
+        "name": "Psychology",
+        "department": 4,
+        "type": 2
+    }
+},
+{
+    "model": "departments.requirement",
+    "pk": 8,
+    "fields": {
+        "name": "Management",
+        "department": 1,
+        "type": 2
+    }
+},
+{
+    "model": "departments.position",
+    "pk": 1,
+    "fields": {
+        "department": 1,
+        "name": "PM for Highload Project"
+    }
+},
+{
+    "model": "departments.position",
+    "pk": 2,
+    "fields": {
+        "department": 2,
+        "name": "Senior Django Developer"
+    }
+},
+{
+    "model": "departments.position",
+    "pk": 3,
+    "fields": {
+        "department": 3,
+        "name": "Middle Java Developer"
+    }
+},
+{
+    "model": "departments.position",
+    "pk": 4,
+    "fields": {
+        "department": 4,
+        "name": "New HR required"
+    }
+},
+{
+    "model": "departments.position",
+    "pk": 5,
+    "fields": {
+        "department": 5,
+        "name": "React JS Developer"
+    }
+}
+]
