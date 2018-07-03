@@ -19,7 +19,7 @@ export class TemplateListener {
         FIND_ALL: this.findAllTemplate,
         FIND_ONE: this.findOneTemplate,
       };
-      if (obj[task.title] != null) {
+      if (obj[task.title]) {
         obj[task.title](task)
       } else {
         this.sendMessage("SOMETHING IS WRONG");
