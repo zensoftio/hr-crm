@@ -5,7 +5,7 @@ from apps.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 from apps.departments.models import Department
 from .models import Criteria, Interview
 from apps.candidates.models import Candidate
-from .serializers import CriteriaSerializer, InterviewerSerializer, InterviewDetailSerializer
+from .serializers import CriteriaSerializer, InterviewDetailSerializer, InterviewListSerializer
 
 
 class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
@@ -24,7 +24,7 @@ class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
 class InterviewListTestCase(ListTestMixin, APITestCase):
     url = '/interviews/'
     model = Interview
-    serializer = InterviewerSerializer
+    serializer = InterviewListSerializer
 
 
 class InterviewDetailTest(GetInstanceTestMixin, APITestCase):
