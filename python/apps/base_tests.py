@@ -51,7 +51,7 @@ class GetInstanceTestMixin(object):
     Usage:
         url - endpoint e.g. '/candidates/'
         model - e.g Candidate
-        serializer_class - e.g. CandidateSerializer
+        serializer - e.g. CandidateSerializer
 
     ! Important:
         You must override def setUp(self):
@@ -60,7 +60,7 @@ class GetInstanceTestMixin(object):
     """
     url = None
     model = None
-    serializer_class = None
+    serializer = None
 
     def test_instance(self):
         url = self.url + str(self.instance.id)
