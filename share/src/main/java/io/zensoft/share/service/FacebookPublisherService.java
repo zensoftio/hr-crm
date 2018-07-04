@@ -33,7 +33,7 @@ public class FacebookPublisherService {
 
     public FacebookPublisherService() throws Exception {
         properties = new Properties();
-        properties.load(new FileReader("src/main/java/io/zensoft/share/config/Facebook/facebookConfig"));
+        properties.load(new FileReader("src/main/resources/facebookConfig"));
 
         appAccessToken = properties.getProperty("appId") + "|" + properties.getProperty("appSecret");
         facebookApp= new FacebookTemplate(appAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
