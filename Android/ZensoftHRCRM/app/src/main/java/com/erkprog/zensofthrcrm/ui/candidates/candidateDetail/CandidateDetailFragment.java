@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +30,7 @@ import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
     View.OnClickListener {
-  private static final String TAG = "mylog:CandidateDetailFragment";
+  private static final String TAG = "PROFILE DETAILS";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
 
   private CandidateDetailContract.Presenter mPresenter;
@@ -99,21 +98,104 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   private void addViewsToLayout() {
     //add CV views to layout
-    addAdapterView(mCvsAdapter);
+    addCvsViews(mCvsAdapter);
 
     //add Comment views to layout
-    addAdapterView(mCommentsAdapter);
+    addCommentViews(mCommentsAdapter);
 
     //add Interview views to layout
-    addAdapterView(mInterviewsAdapter);
+    addInterviewViews(mInterviewsAdapter);
 
     //add Buttons
     addActionButtons();
 
   }
 
-  @SuppressLint("LongLogTag")
-  private void addAdapterView(final BaseAdapter adapter) {
+  private void addInterviewViews(final InterviewsAdapter interviewsAdapter) {
+    int itemsCount = interviewsAdapter.getCount();
+
+    if (itemsCount > 0) {
+
+      // add description Textview
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(R.string.interviews);
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      // add interview views
+      for (int i = 0; i < itemsCount; i++) {
+        View item = interviewsAdapter.getView(i, null, null);
+        final int finalI = i;
+
+        item.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            CandidateInterviewItem interviewItem = (CandidateInterviewItem) interviewsAdapter.getItem(finalI);
+            onInterviewItemClicked(interviewItem);
+          }
+        });
+        mLayout.addView(item);
+      }
+    }
+  }
+
+  private void addCommentViews(final CommentsAdapter commentsAdapter) {
+    int itemsCount = commentsAdapter.getCount();
+
+    if (itemsCount > 0) {
+
+      // add description Textview
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(R.string.comments);
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      // add comment views
+      for (int i = 0; i < itemsCount; i++) {
+        View item = commentsAdapter.getView(i, null, null);
+        final int finalI = i;
+
+        item.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Comment commentItem = (Comment) commentsAdapter.getItem(finalI);
+            onCommentItemClicked(commentItem);
+          }
+        });
+        mLayout.addView(item);
+      }
+    }
+  }
+
+  private void addCvsViews(final CvsAdapter cvsAdapter) {
+    int itemsCount = cvsAdapter.getCount();
+
+    if (itemsCount > 0) {
+
+      // add description Textview
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(R.string.cvs);
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      // add cvs views
+      for (int i = 0; i < itemsCount; i++) {
+        View item = cvsAdapter.getView(i, null, null);
+        final int finalI = i;
+
+        item.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Cv cvItem = (Cv) cvsAdapter.getItem(finalI);
+              onCvItemClicked(cvItem);
+          }
+        });
+        mLayout.addView(item);
+      }
+    }
+  }
+
+  private void addAdapterViews(final BaseAdapter adapter) {
     int itemsCount = adapter.getCount();
 
     if (itemsCount > 0) {
@@ -128,15 +210,19 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         item.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+
             if (adapter instanceof CvsAdapter) {
               Cv cvItem = (Cv) adapter.getItem(finalI);
               onCvItemClicked(cvItem);
+
             } else if (adapter instanceof CommentsAdapter) {
               Comment commentItem = (Comment) adapter.getItem(finalI);
               onCommentItemClicked(commentItem);
+
             } else if (adapter instanceof InterviewsAdapter) {
               CandidateInterviewItem interviewItem = (CandidateInterviewItem) adapter.getItem(finalI);
               onInterviewItemClicked(interviewItem);
+
             }
           }
         });
@@ -144,6 +230,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       }
     }
 
+  }
+
+  private int getTitleText(BaseAdapter adapter) {
+    if (adapter instanceof CvsAdapter) {
+      return R.string.cvs;
+    } else if (adapter instanceof CommentsAdapter) {
+      return R.string.comments;
+    } else if (adapter instanceof InterviewsAdapter) {
+      return R.string.interviews;
+    }
+    return -1;
   }
 
   private void addActionButtons() {
@@ -186,17 +283,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public boolean isActive() {
     return isAdded();
-  }
-
-  private int getTitleText(BaseAdapter adapter) {
-    if (adapter instanceof CvsAdapter) {
-      return R.string.cvs;
-    } else if (adapter instanceof CommentsAdapter) {
-      return R.string.comments;
-    } else if (adapter instanceof InterviewsAdapter) {
-      return R.string.interviews;
-    }
-    return -1;
   }
 
   @Override
