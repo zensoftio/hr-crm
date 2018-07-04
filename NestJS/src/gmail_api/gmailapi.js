@@ -15,12 +15,21 @@ var SCOPES = [
 const TOKEN_PATH = 'credentials.json';
 
 // Load client secrets from a local file.
+// exports.getAllMessages = function(){
+//   authorize(sendMessage, data);
+// }
 exports.sendMessageH = function(data){
   //console.log(data)
   // fs.readFile('/home/reedvl/zen/test-app/nest/NestJS/NestJS/src/gmail_api/client_secret.json', (err, content) => {
   // if (err) return console.log('Error loading client secret file:', err);
   // // Authorize a client with credentials, then call the Google Sheets API.
   authorize(sendMessage, data);
+}
+
+exports.getAllMessages = function(){
+  console.log("In GMAIL API")
+  authorize(listLabels);
+  // authorize(getAllMessageList, data);
 }
 
 /**
@@ -41,7 +50,7 @@ function authorize(callback, data) {
   fs.readFile(TOKEN_PATH, (err, token) => {
     if (err) return getNewToken(oAuth2Client, callback, data);
     oAuth2Client.setCredentials(JSON.parse(token));
-    
+
     callback(oAuth2Client, data);
   });
 }
@@ -84,43 +93,44 @@ function getNewToken(oAuth2Client, callback, data) {
  */
 function listLabels(auth) {
   const gmail = google.gmail({version: 'v1', auth});
-  
+
   gmail.users.messages.list({
     userId: 'me',
     messageId: 'INBOX'
   },function (err,result){
     if(err) console.log(err)
     console.log(result.data)
-  },
-  gmail.users.messages.get({
-    userId: 'me',
-    id: '164221d5cd9d9269',
-    format: 'full'
-  },function (err,result){
-    if(err) console.log(err)
-    //Body of message
-    if(typeof result.data.payload['parts'] === 'undefined') {
-      console.log(Base64.decode(result.data.payload.body.data))
-    }
-    else {
-      if(typeof result.data.payload.parts[0].body['data'] === 'undefined')
-      {
-        console.log('body is empty')
-        console.log(result.data.payload.parts[1].body.attachmentId)
-      }else{
-        console.log('body not empty')
-        console.log(result.data.payload);
-      }
-    }
   })
-)
+  
+//   gmail.users.messages.get({
+//     userId: 'me',
+//     id: '164221d5cd9d9269',
+//     format: 'full'
+//   },function (err,result){
+//     if(err) console.log(err)
+//     //Body of message
+//     if(typeof result.data.payload['parts'] === 'undefined') {
+//       console.log(Base64.decode(result.data.payload.body.data))
+//     }
+//     else {
+//       if(typeof result.data.payload.parts[0].body['data'] === 'undefined')
+//       {
+//         console.log('body is empty')
+//         console.log(result.data.payload.parts[1].body.attachmentId)
+//       }else{
+//         console.log('body not empty')
+//         console.log(result.data.payload);
+//       }
+//     }
+//   })
+// )
 
 }
 
 function sendMessage(auth, data) {
   const gmail = google.gmail({version: 'v1', auth});
   var raw = makeBody(data);
- 
+
   gmail.users.messages.send({
       auth: auth,
       userId: 'me',
@@ -128,6 +138,10 @@ function sendMessage(auth, data) {
           raw: raw
       }
   })
+}
+
+function getAllMessageList(auth){
+
 }
 
 function makeBody(data) {
@@ -167,7 +181,7 @@ function makeBody(data) {
       return encodedMail;
 }
 
-function defineTypeOfRecipients(data) {  
+function defineTypeOfRecipients(data) {
   let i;
   let to = [], cc = [], bcc = [];
   for(i = 0; i < data.recipients.length; i++){
