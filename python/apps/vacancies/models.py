@@ -7,26 +7,25 @@ from apps.requests.models import Request
 
 User = get_user_model()
 
-EXPERIENCE = (('0', 'No-experience'),
-              ('1-3', '1-3 years'),
-              ('3-6', '3-6 years'),
-              ('6+', '6 or more'),)
+EXPERIENCE = (('0', 'Без опыта'),
+              ('1-3', '1-3 лет'),
+              ('3-6', '3-6 лет'),
+              ('6+', '6 лет и более'),)
 
-WORKING_HOURS = (('FT', 'full-time-day'),
-                 ('RS', 'rotation_shift'),
-                 ('FLT', 'flexible-time'),
-                 ('RJ', 'remote-job'),
-                 ('SF', 'special-shift-day'),)
+WORKING_HOURS = (('FT', 'Полный рабочий день'),
+                 ('FLT', 'Гибкий график'),
+                 ('RJ', 'Удаленная работа'),
+                )
 
-EMPLOYMENT_TYPE = (('FT', 'full-time'),
-                   ('PT', 'part-time'),
-                   ('TMP', 'project/temporary'),
-                   ('VOL', 'volunteer'),
-                   ('INT', 'internship'))
+EMPLOYMENT_TYPE = (('FT', 'Полный рабочий день'),
+                   ('PT', 'Не полный рабочий день'),
+                   ('TMP', 'Проект/временно'),
+                   ('VOL', 'Волонтерство'),
+                   ('INT', 'Стажировка'))
 
 VACANCY_STATUS = (
-    (0, 'Unpublished'),
-    (1, 'Published')
+    (0, 'Не опубликовано'),
+    (1, 'Опубликовано')
 )
 
 

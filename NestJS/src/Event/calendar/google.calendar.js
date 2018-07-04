@@ -10,21 +10,23 @@ let auth = null;
 let calendar = null;
 const TOKEN_PATH = 'credentials.json';
 
-  var event = {
-  'summary': "sdosdf",
-  'location': 'sffsdf',
-  'description': 'sdfsf',
+var event = {
+  'summary': 'Interview',
+  'location': '',
+  'description': '',
   'start': {
-    'dateTime': '2018-06-29T11:31:00+06:00',
+    'dateTime': '',
     'timeZone': 'America/Los_Angeles',
   },
   'end': {
-    'dateTime': '2018-06-29T11:31:00+06:00',
+    'dateTime': '',
     'timeZone': 'America/Los_Angeles',
   },
   'recurrence': [
     'RRULE:FREQ=DAILY;COUNT=1'
   ],
+  'singleEvents': true,
+  'sendNotifications': true,
   'attendees': [],
   'reminders': {
     'useDefault': false,
@@ -39,31 +41,35 @@ module.exports = {
     try {
       authorize(function(auth){
         calendar = google.calendar({version: 'v3', auth});
-        let jsonObj = json.content;
-        if(json.description == "create" && hasAllObjects(jsonObj)){
-            create(jsonObj, function(data){
-              callback(data);
+        let jsonObj = json.body;
+        if(json.title === "create" && hasAllObjects(jsonObj)){
+            create(jsonObj, function(err, data){
+              callback(err, data);
             });
         }
-        else if(json.description == "list"){
-          getList(function (data){
-            callback(data);
-          });
+        else if(json.title === "update" && hasAllObjects(jsonObj)){
+            update(jsonObj, function(err, data){
+              callback(err, data);
+            });
         }
-        // else if(json.description == "update"){
-        //   update(json, function(data){
-        //     callback(data);
-        //   })
-        // }
+        else if(json.title === "remove" && hasAllObjects(jsonObj)){
+            remove(jsonObj, function(err, data){
+              if(err){
+                callback(err, "");
+              }
+              callback("", data);
+            })
+        }
       });
     } catch (err) {
-      return console.log('Error loading client secret file:', err);
+      callback('Error loading client secret file:' + err, '');
     }
   }
 }
 
 function hasAllObjects(jsonObj){
   if(jsonObj.begin_time && jsonObj.end_time && jsonObj.description && jsonObj.location){
+    event.attendees = [];
     event.location = jsonObj.location;
     event.description = jsonObj.description;
     event.start.dateTime = jsonObj.begin_time;
@@ -71,32 +77,52 @@ function hasAllObjects(jsonObj){
     for(let i = 0;i < jsonObj.email.length;i++){
       event.attendees.push({'email': jsonObj.email[i]});
     }
+    return event.attendees.length > 0 ? true : false;
   }
+  return false;
 }
 function create(json, callback){
-
-  calendar.events.insert({auth: auth, calendarId: 'primary', resource: event}, function(err, event) {
+  calendar.events.insert({auth: auth, calendarId: 'primary', resource: event}, function(err, response) {
     if (err) {
-      console.log('There was an error contacting the Calendar service: ' + err);
-      return;
+      callback("Cannot create because of invalid email, begin_time, or end_time!", '');
     }
-    console.log(JSON.parse(event.config.data).summary)
-    console.log('Event created: %s', event);
-    //console.log(event.data);
-    callback(event.data)
+    else{
+      callback(undefined, response.data)
+    }
+
   });
 }
 
-function getList(callback){
-  calendar.events.list({auth: auth, calendarId: 'primary'}, function(err, response){
-    if(err){
-      console.log("There was an error contacting the Calendar service: " + err);
-      return;
+function update(json, callback){
+  calendar.events.update({
+          auth: auth,
+          calendarId: 'primary',
+          eventId: json.id_event,
+          resource: event
+  }, function(err, response){
+    if(err) {
+      callback('Cannot update because of invalid email, begin_time, or end_time!', '');
     }
-    console.log(response.data.items);
-  })
+    else{
+      callback('', response.data);
+    }
+  });
 }
-
+function remove(json, callback){
+  calendar.events.delete(
+    {
+      auth: auth,
+      calendarId: 'primary',
+      eventId: json.id_event
+    },function(err, response){
+      if(err){
+        callback("There is no such event in the google calendar!", "");
+      }
+      else{
+        callback("", "Deleted!");
+      }
+    });
+}
 
 function authorize(callback) {
   const client_secret = process.env.client_secret;
@@ -143,68 +169,3 @@ function getAccessToken(oAuth2Client, callback) {
     });
   });
 }
- //
- // function listEvents(auth) {
- //   const calendar = google.calendar({version: 'v3', auth});
- //
-
- //
- // // calendar.events.insert({
- // //   auth: auth,
- // //   calendarId: 'primary',
- // //   resource: event,
- // // }, function(err, event) {
- // //   if (err) {
- // //     console.log('There was an error contacting the Calendar service: ' + err);
- // //     return;
- // //   }
- // //   console.log(JSON.parse(event.config.data).summary)
- // //   console.log('Event created: %s', event);
- // // });
- //   calendar.events.list({
- //     calendarId: 'primary',
- //     timeMin: (new Date()).toISOString(),
- //     maxResults: 10,
- //     singleEvents: true,
- //     orderBy: 'startTime',
- //   }, (err, {data}) => {
- //     if (err) return console.log('The API returned an error: ' + err);
- //     const events = data.items;
- //     if (events.length) {
- //       console.log('Upcoming 10 events:');
- //       events.map((event, i) => {
- //         console.log(event)
- //         const start = event.start.dateTime || event.start.date;
- //         console.log(`${start} - ${event.summary}`);
- //       });
- //     } else {
- //       console.log('No upcoming events found.');
- //     }
- //   });
- // }
- //
- //
- // calendar.events.list({
- //   calendarId: 'primary',
- //   timeMin: (new Date()).toISOString(),
- //   maxResults: 10,
- //   singleEvents: true,
- //   orderBy: 'startTime',
- // }, (err, {data}) => {
- //   if (err) return console.log('The API returned an error: ' + err);
- //   const events = data.items;
- //   if (events.length) {
- //     console.log('Upcoming 10 events:');
- //     events.map((event, i) => {
- //       console.log(event)
- //       const start = event.start.dateTime || event.start.date;
- //       console.log(`${start} - ${event.summary}`);
- //     });
- //   } else {
- //     console.log('No upcoming events found.');
- //   }
- // });
-
- // //
- // {'email': 'talantbekov123@gmail.com'},
- // {'email': 'shisyr96@mail.ru'}
