@@ -79,6 +79,24 @@ class InterviewCreateSerializer(serializers.ModelSerializer):
             Interviewer.objects.create(interview=instance, user=user)
         return instance
 
+    def update(self, instance, validated_data):
+        new_users = validated_data.pop('interviewers')
+        old_users = [interviewer.user for interviewer in instance.interviewers.all()]
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        users_to_delete = set(old_users).difference(set(new_users))
+        users_to_create = set(new_users).difference(set(old_users))
+
+        for user in users_to_delete:
+            Interviewer.objects.get(interview=instance, user=user).delete()
+
+        for user in users_to_create:
+            Interviewer.objects.create(interview=instance, user=user)
+
+        return instance
+
 
 class InterviewDetailSerializer(serializers.ModelSerializer):
     candidate = AuxCandidateSerializer()
