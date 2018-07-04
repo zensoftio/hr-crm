@@ -1,6 +1,6 @@
 import os
-from configurations import Configuration, values
 
+from configurations import Configuration, values
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,6 +24,12 @@ class Base(Configuration):
         'django_extensions',
         'rest_framework',
         'django_filters',
+        'corsheaders',
+        'rest_framework.authtoken',
+        'social_django',
+        'rest_social_auth',
+        'oauth2_provider',
+        'rest_framework_social_oauth2',
 
         'apps.candidates',
         'apps.departments',
@@ -34,7 +40,23 @@ class Base(Configuration):
         'apps.templates'
     ]
 
+    SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+    SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
+
+    CSRF_COOKIE_SECURE = True
+    CORS_ORIGIN_ALLOW_ALL = True
+
+    AUTHENTICATION_BACKENDS = (
+        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.google.GoogleOAuth2',
+        'rest_framework_social_oauth2.backends.DjangoOAuth2',
+        'django.contrib.auth.backends.ModelBackend',)
+
     MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -62,6 +84,8 @@ class Base(Configuration):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'social_django.context_processors.backends',
+                    'social_django.context_processors.login_redirect',
                 ],
             },
         },
@@ -77,6 +101,7 @@ class Base(Configuration):
     WSGI_APPLICATION = 'wsgi.application'
 
     DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
+
     AUTH_USER_MODEL = 'users.User'
 
     AUTH_PASSWORD_VALIDATORS = [
@@ -102,7 +127,11 @@ class Base(Configuration):
         ],
         'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.SearchFilter',
                                     'django_filters.rest_framework.DjangoFilterBackend',
-                                    'rest_framework.filters.OrderingFilter',)
+                                    'rest_framework.filters.OrderingFilter',),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+            'rest_framework_social_oauth2.authentication.SocialAuthentication',
+        ),
     }
 
     LANGUAGE_CODE = 'en-us'
