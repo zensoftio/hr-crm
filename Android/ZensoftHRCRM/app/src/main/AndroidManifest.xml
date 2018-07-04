@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.erkprog.zensofthrcrm">
+<manifest package="com.erkprog.zensofthrcrm"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
   <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -21,10 +21,12 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ui.candidates.candidateDetail.CandidateDetail"></activity>
+    <activity android:name=".ui.candidates.candidateDetail.CandidateDetail"/>
     <activity
         android:name=".ui.interviews.interviewDetail.InterviewDetail"
-        android:label="@string/interviews"></activity>
+        android:label="@string/interviews"/>
+    <activity android:name=".ui.interviews.createInterview.CreateInterview">
+    </activity>
   </application>
 
 </manifest>

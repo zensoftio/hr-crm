@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -358,6 +360,9 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     switch (v.getId()) {
       case R.id.cd_interview_button:
         showToast("Create interview");
+        Intent intent = new Intent(getActivity(), CreateInterview.class);
+        startActivity(intent);
+
         break;
 
       case R.id.cd_delete_button:
