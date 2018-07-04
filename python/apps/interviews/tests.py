@@ -36,7 +36,4 @@ class InterviewDetailTest(GetInstanceTestMixin, APITestCase):
                 'vacancies.json']
 
     def setUp(self):
-        self.instance = Interview.objects.create(
-            date=timezone.now(),
-            candidate=Candidate.objects.get(pk=1)
-        )
+        self.instance = Interview.objects.get(pk=1)
