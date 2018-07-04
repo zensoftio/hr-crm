@@ -1,6 +1,0 @@
-appId=1482536371851716
-appSecret=9e40f603cc4dc436c78452cbe1b56931
-pageId=179314156095163
-userId=103714360544349
-link = "https://zensoft.io";
-publishPhotoRequestUrlTemplate=https://graph.facebook.com/{pageId}/photos?url={photoUrl}&caption={caption}&published={isPublished}
