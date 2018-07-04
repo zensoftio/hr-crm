@@ -9,6 +9,9 @@ export class Recipient {
   @Column()
   email: string;
 
+  @Column()
+  name: string;
+
   @Column('text')
   type: string[];
 

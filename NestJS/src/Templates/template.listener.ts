@@ -68,8 +68,10 @@ export class TemplateListener {
       queue.bind(exchange, 'template');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
+
         msg = JSON.parse(msg)
         this.distributionTasks(msg);
+
         }, {noAck: true})
     }
 

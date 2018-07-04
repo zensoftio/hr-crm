@@ -29,6 +29,7 @@
     "fastify-formbody": "^2.0.0",
     "googleapis": "^32.0.0",
     "js-base64": "^2.4.5",
+    "json-stringify-safe": "^5.0.1",
     "pg": "^7.4.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0",
