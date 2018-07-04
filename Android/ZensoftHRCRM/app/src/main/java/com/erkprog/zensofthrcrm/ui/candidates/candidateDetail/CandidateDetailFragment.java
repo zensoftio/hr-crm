@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,8 @@ import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View {
+public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
+    View.OnClickListener {
   private static final String TAG = "mylog:CandidateDetailFragment";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
 
@@ -100,11 +102,13 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     //add Comment views to layout
     addAdapterView(mCommentsAdapter);
 
-    //add CV views to layout
+    //add Interview views to layout
     addAdapterView(mInterviewsAdapter);
 
-  }
+    //add Buttons
+    addActionButtons();
 
+  }
 
   @SuppressLint("LongLogTag")
   private void addAdapterView(final BaseAdapter adapter) {
@@ -138,6 +142,15 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       }
     }
 
+  }
+
+  private void addActionButtons() {
+    View v = LayoutInflater.from(getActivity()).inflate(R.layout.cd_action_buttons, null, false);
+    v.findViewById(R.id.cd_interview_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_edit_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_message_button).setOnClickListener(this);
+    mLayout.addView(v);
   }
 
   private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
@@ -336,6 +349,31 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       interviewersText.setText(users);
 
       return v;
+    }
+  }
+
+  @Override
+  public void onClick(View v) {
+
+    switch (v.getId()) {
+      case R.id.cd_interview_button:
+        showToast("Create interview");
+        break;
+
+      case R.id.cd_delete_button:
+        showToast("Delete candidate profile");
+        break;
+
+      case R.id.cd_edit_button:
+        showToast("Edit profile");
+        break;
+
+      case R.id.cd_message_button:
+        showToast("Send message");
+        break;
+
+      default:
+        break;
     }
   }
 }
