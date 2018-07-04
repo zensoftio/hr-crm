@@ -10,7 +10,6 @@ class InterviewListCreateView(generics.ListCreateAPIView):
     queryset = Interview.objects.all()
     serializer_class = InterviewListSerializer
 
-    # TODO: Add interviewer creation. Interviewer != User
     def create(self, request, *args, **kwargs):
         write_serializer = InterviewCreateSerializer(data=request.data)
         write_serializer.is_valid(raise_exception=True)
