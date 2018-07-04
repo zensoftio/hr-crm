@@ -24,6 +24,7 @@ class Base(Configuration):
         'django_extensions',
         'rest_framework',
         'django_filters',
+        'corsheaders',
 
         'apps.candidates',
         'apps.departments',
@@ -42,7 +43,34 @@ class Base(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
     ]
+
+    CORS_ORIGIN_WHITELIST = values.ListValue()
+
+    CORS_ALLOW_METHODS = (
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    )
+
+    CORS_ALLOW_HEADERS = (
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
+    )
+
+    CORS_ORIGIN_ALLOW_ALL = True
 
     ROOT_URLCONF = 'urls'
 
