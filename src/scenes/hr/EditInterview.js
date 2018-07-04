@@ -4,7 +4,6 @@ import Header from "../general/Header";
 
 class EditInterview extends Component {
     render() {
-        const {classes} = this.props;
         return (
             <div>
                 <Header title="Изменить интервью"/>
