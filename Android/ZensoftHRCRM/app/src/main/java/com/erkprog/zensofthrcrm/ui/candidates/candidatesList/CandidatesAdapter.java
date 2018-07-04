@@ -60,6 +60,10 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
     this.notifyDataSetChanged();
   }
 
+  public Candidate getCandidate(int position) {
+    return mCandidates.get(position);
+  }
+
   static class CandidateViewHolder extends RecyclerView.ViewHolder {
     TextView firstName;
     TextView lastName;

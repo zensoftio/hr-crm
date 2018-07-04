@@ -1,0 +1,40 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$rvvex7vWl1Nq$A9D1pCDRiDTn1l6pevvyuPELfKKmVe+C3efv+MfO7iQ=",
+        "last_login": "2018-07-03T03:52:19.805Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@zensoft.io",
+        "created": "2018-07-03T03:52:09.095Z",
+        "is_active": true,
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": [],
+        "departments": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "test123",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "name",
+        "last_name": "lastname",
+        "email": "test_user@zensoft.io",
+        "created": "2018-07-03T03:53:23.765Z",
+        "is_active": true,
+        "is_staff": false,
+        "groups": [],
+        "user_permissions": [],
+        "departments": [
+            1
+        ]
+    }
+}
+]

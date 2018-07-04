@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from apps.interviews.models import Interview
+from apps.interviews.models import Interview, Criteria, Evaluation, Interviewer
 
-admin.site.register(Interview)
+admin.site.register([Criteria, Evaluation, Interview, Interviewer])
