@@ -1,7 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +18,10 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
     View.OnClickListener {
@@ -48,7 +43,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   private TextView mDepartment;
   private TextView mYearsOfExp;
 
-
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -64,7 +58,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
     mPresenter.loadCandidateInfo(candidateId);
     return v;
-
   }
 
   private void initUI(View v) {
@@ -93,7 +86,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mCommentsAdapter.setData(candidate.getComments());
     mInterviewsAdapter.setData(candidate.getInterviews());
     addViewsToLayout();
-
   }
 
   private void addViewsToLayout() {
@@ -245,158 +237,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   public void showToast(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-  }
-
-  class CvsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Cv> mCvsList;
-
-    CvsAdapter(Context context, List<Cv> cvsList) {
-      mContext = context;
-      mCvsList = cvsList;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    public void setData(List<Cv> newData) {
-      mCvsList = newData;
-      this.notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-      return mCvsList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return mCvsList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_cvs_item, parent, false);
-      TextView attachment = v.findViewById(R.id.cv_item_attachment);
-      TextView createdDate = v.findViewById(R.id.cv_item_created_text);
-
-      Cv cvItem = (Cv) getItem(position);
-      attachment.setText("attachment" + String.valueOf(position + 1));
-      createdDate.setText(cvItem.getCreated().toString());
-
-      return v;
-    }
-  }
-
-
-  class CommentsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Comment> mCommentsList;
-
-    CommentsAdapter(Context context, List<Comment> data) {
-      mContext = context;
-      mCommentsList = data;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    public void setData(List<Comment> newData) {
-      mCommentsList = newData;
-      this.notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-      return mCommentsList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return mCommentsList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_comment_item, parent, false);
-      TextView createdBy = v.findViewById(R.id.cd_comment_username);
-      TextView date = v.findViewById(R.id.cd_comment_date);
-      TextView text = v.findViewById(R.id.cd_comment_text);
-
-      Comment comment = (Comment) getItem(position);
-      User user = comment.getCreatedBy();
-      createdBy.setText(user.getFirstName() + " " + user.getLastName());
-      date.setText(comment.getCreated());
-      text.setText(comment.getText());
-
-      return v;
-    }
-  }
-
-
-  class InterviewsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<CandidateInterviewItem> mInterviews;
-
-    InterviewsAdapter(Context context, List<CandidateInterviewItem> data) {
-      mContext = context;
-      mInterviews = data;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    public void setData(List<CandidateInterviewItem> newData) {
-      mInterviews = newData;
-      this.notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-      return mInterviews.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return mInterviews.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_interview_item, parent, false);
-      TextView status = v.findViewById(R.id.cd_interview_status);
-      TextView date = v.findViewById(R.id.cd_interview_date);
-      TextView interviewersText = v.findViewById(R.id.cd_interview_interviewers);
-
-      CandidateInterviewItem interview = (CandidateInterviewItem) getItem(position);
-      status.setText(interview.getStatus().toString());
-      date.setText(interview.getDate());
-      List<User> interviewers = interview.getInterviewers();
-      StringBuilder users = new StringBuilder();
-      users.append("interviewers:\n");
-      for (User interviewer : interviewers) {
-        String firstName =
-            interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
-        String lastName =
-            interviewer.getLastName() != null ? interviewer.getLastName() : "";
-        users.append("-").append(firstName).append(" ").append(lastName).append("\n");
-      }
-      interviewersText.setText(users);
-
-      return v;
-    }
   }
 
   @Override
