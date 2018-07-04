@@ -18,7 +18,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 class TemplateCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Template
-        exclude = ['modified']
+        exclude = ['modified', 'created']
 
 
 class TemplateDetailSerializer(serializers.ModelSerializer):
