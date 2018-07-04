@@ -19,7 +19,7 @@ export class EventService {
           eventOfDatabase.id_event = response.id;
           getRepository(Event).insert(eventOfDatabase);
         }
-        resolve((err) ? err : eventOfDatabase);
+        err ? reject(err) : resolve(eventOfDatabase);
       });
     })
   }
@@ -42,7 +42,7 @@ export class EventService {
     return new Promise(async (resolve, reject) => {
         const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
         if(!eventOfDatabase){
-          resolve("whether invalid id_event or no such event!");
+          reject("whether invalid id_event or no such event!");
         }
         else{
           event.body.id = eventOfDatabase.id;
@@ -51,7 +51,7 @@ export class EventService {
             if(!err){
               getRepository(Event).save(event.body);
             }
-            resolve((err) ? err : event.body);
+            err ? reject(err) : resolve(event.body);
           });
         }
     });
@@ -66,7 +66,7 @@ export class EventService {
         event.body = eventOfDatabase;
         google.run(event, function(err, response){
           getRepository(Event).delete(eventOfDatabase);
-          resolve((err) ? err : response);
+          err ? reject(err) : resolve(response);
         });
       }
     });
