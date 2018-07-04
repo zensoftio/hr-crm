@@ -1,6 +1,6 @@
 import os
-from configurations import Configuration, values
 
+from configurations import Configuration, values
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -84,6 +84,8 @@ class Base(Configuration):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'social_django.context_processors.backends',
+                    'social_django.context_processors.login_redirect',
                 ],
             },
         },
@@ -125,7 +127,11 @@ class Base(Configuration):
         ],
         'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.SearchFilter',
                                     'django_filters.rest_framework.DjangoFilterBackend',
-                                    'rest_framework.filters.OrderingFilter',)
+                                    'rest_framework.filters.OrderingFilter',),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
+            'rest_framework_social_oauth2.authentication.SocialAuthentication',
+        ),
     }
 
     LANGUAGE_CODE = 'en-us'
