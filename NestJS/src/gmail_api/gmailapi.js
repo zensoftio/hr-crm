@@ -15,14 +15,20 @@ var SCOPES = [
 ];
 const TOKEN_PATH = 'credentials.json';
 
-// Load client secrets from a local file.
 exports.sendMessageH = async function(data, recipient){ 
+
   //console.log(data)
   // fs.readFile('/home/reedvl/zen/test-app/nest/NestJS/NestJS/src/gmail_api/client_secret.json', (err, content) => {
   // if (err) return console.log('Error loading client secret file:', err);
   // // Authorize a client with credentials, then call the Google Sheets API.
   
     return await authorize(sendMessage, data, recipient);
+}
+
+exports.getAllMessages = function(){
+  console.log("In GMAIL API")
+  authorize(listLabels);
+  // authorize(getAllMessageList, data);
 }
 
 /**
@@ -45,9 +51,10 @@ async function authorize(callback, data, recipient) {
     const token = fs.readFileSync(TOKEN_PATH)
     if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
     oAuth2Client.setCredentials(JSON.parse(token));
-  
+
     const a = await callback(oAuth2Client, data, recipient)
     return a
+
 }
 
 /**
@@ -88,36 +95,37 @@ function getNewToken(oAuth2Client, callback, data, recipient) {
  */
 function listLabels(auth) {
   const gmail = google.gmail({version: 'v1', auth});
-  
+
   gmail.users.messages.list({
     userId: 'me',
     messageId: 'INBOX'
   },function (err,result){
     if(err) console.log(err)
     console.log(result.data)
-  },
-  gmail.users.messages.get({
-    userId: 'me',
-    id: '164221d5cd9d9269',
-    format: 'full'
-  },function (err,result){
-    if(err) console.log(err)
-    //Body of message
-    if(typeof result.data.payload['parts'] === 'undefined') {
-      console.log(Base64.decode(result.data.payload.body.data))
-    }
-    else {
-      if(typeof result.data.payload.parts[0].body['data'] === 'undefined')
-      {
-        console.log('body is empty')
-        console.log(result.data.payload.parts[1].body.attachmentId)
-      }else{
-        console.log('body not empty')
-        console.log(result.data.payload);
-      }
-    }
   })
-)
+  
+//   gmail.users.messages.get({
+//     userId: 'me',
+//     id: '164221d5cd9d9269',
+//     format: 'full'
+//   },function (err,result){
+//     if(err) console.log(err)
+//     //Body of message
+//     if(typeof result.data.payload['parts'] === 'undefined') {
+//       console.log(Base64.decode(result.data.payload.body.data))
+//     }
+//     else {
+//       if(typeof result.data.payload.parts[0].body['data'] === 'undefined')
+//       {
+//         console.log('body is empty')
+//         console.log(result.data.payload.parts[1].body.attachmentId)
+//       }else{
+//         console.log('body not empty')
+//         console.log(result.data.payload);
+//       }
+//     }
+//   })
+// )
 
 }
 
@@ -138,6 +146,7 @@ async function sendMessage(auth, data, recipient) {
 }
 
 function makeBody(data, recipient) {
+
   var boundary = "__myapp__";
   var nl = "\n";
   let fileToAttach = '/home/reedvl/Downloads/test.docx';
@@ -176,8 +185,10 @@ function makeBody(data, recipient) {
       return encodedMail;
 }
 
+
 //function to send message to multiple recipients at once
 function defineTypeOfRecipients(data) {  
+
   let i;
   let to = [], cc = [], bcc = [];
   for(i = 0; i < data.recipients.length; i++){
