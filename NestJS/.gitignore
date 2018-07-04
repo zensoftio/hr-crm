@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+*.log
+*.gz
+ormconfig.json
+scr/Event/calendar/credentials.json
+scr/Event/calendar/something.js
+.env
+credentials.json

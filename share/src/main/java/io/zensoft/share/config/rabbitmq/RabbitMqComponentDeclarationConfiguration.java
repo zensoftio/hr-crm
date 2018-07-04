@@ -67,5 +67,4 @@ public class RabbitMqComponentDeclarationConfiguration {
         return new Jackson2JsonMessageConverter(snakeCaseObjectMapper);
     }
 
-
 }
