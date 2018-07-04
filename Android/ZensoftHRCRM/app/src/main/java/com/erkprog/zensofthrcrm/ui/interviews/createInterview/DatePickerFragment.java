@@ -35,12 +35,16 @@ public class DatePickerFragment extends DialogFragment {
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int hour = calendar.get(Calendar.HOUR);
+    int minute = calendar.get(Calendar.MINUTE);
 
     View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_picker, null);
 
     mDatePicker = v.findViewById(R.id.crint_date_picker);
     mDatePicker.init(year, month, day, null);
     mTimePicker = v.findViewById(R.id.crint_time_picker);
+    mTimePicker.setCurrentHour(hour);
+    mTimePicker.setCurrentMinute(minute);
     return new AlertDialog.Builder(getActivity())
         .setView(v)
         .setTitle("Date and Time Picker")
