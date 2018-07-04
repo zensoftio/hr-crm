@@ -18,13 +18,16 @@ import com.erkprog.zensofthrcrm.R;
 
 import java.util.Date;
 
-public class CreateInterviewFragment extends Fragment implements View.OnClickListener {
+public class CreateInterviewFragment extends Fragment implements CreateInterviewContract.View, View
+    .OnClickListener {
   private static final String TAG = "mylog:CreateInterviewFragment";
 
   public static final String CANDIDATE_ID = "candidate id";
   public static final String CANDIDATE_LASTNAME = "candidate last name";
   public static final String CANDIDATE_FIRSTNAME = "candidate first name";
   public static final String CANDIDATE_DEPARTMENT = "candidate department";
+
+  private CreateInterviewContract.Presenter mPresenter;
 
   private TextView mCandidateName;
   private TextView mDepartmentName;
@@ -49,11 +52,11 @@ public class CreateInterviewFragment extends Fragment implements View.OnClickLis
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_create_interview, container, false);
 
+    mPresenter = new CreateInterviewPresenter(this);
     mInterviewDate = new Date();
     initUI(v);
 
     Log.d(TAG, "onCreateView: " + mCandidateId);
-
 
     return v;
   }
@@ -92,9 +95,15 @@ public class CreateInterviewFragment extends Fragment implements View.OnClickLis
   }
 
   @Override
+  public void startDatePicker() {
+
+  }
+
+  @Override
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.crint_set_date_button:
+        mPresenter.onSetDateButtonClick();
         break;
 
       case R.id.crint_add_image:
@@ -107,5 +116,12 @@ public class CreateInterviewFragment extends Fragment implements View.OnClickLis
         break;
     }
 
+
+
+  }
+
+  @Override
+  public void showToast(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 }
