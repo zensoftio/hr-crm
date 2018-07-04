@@ -51,7 +51,7 @@ class Base(Configuration):
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_DJANGO_SETTINGS = {
-        "FCM_SERVER_KEY": "skein",
+        "FCM_SERVER_KEY": "[retrieve it tomorrow]",
     }
 
     AUTHENTICATION_BACKENDS = (
