@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from apps.candidates.models import Candidate
 from apps.users.serializers import AuxUserSerializer
 from .models import Interview, Criteria, Interviewer, Evaluation
+
+User = get_user_model()
 
 
 class AuxCriteriaSerializer(serializers.ModelSerializer):
@@ -62,6 +65,21 @@ class InterviewListSerializer(serializers.ModelSerializer):
         fields = ('id', 'date', 'status', 'candidate', 'interviewers')
 
 
+class InterviewCreateSerializer(serializers.ModelSerializer):
+    interviewers = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
+
+    class Meta:
+        model = Interview
+        fields = ('candidate', 'interviewers', 'date')
+
+    def create(self, validated_data):
+        users = validated_data.pop('interviewers')
+        instance = Interview.objects.create(**validated_data)
+        for user in users:
+            Interviewer.objects.create(interview=instance, user=user)
+        return instance
+
+
 class InterviewDetailSerializer(serializers.ModelSerializer):
     candidate = AuxCandidateSerializer()
     interviewers = InterviewerDetailSerializer(many=True)
@@ -73,7 +91,7 @@ class InterviewDetailSerializer(serializers.ModelSerializer):
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
     """Serializer for Detailed Candidate Endpoint"""
-    interviewers = AuxUserSerializer(many=True)
+    interviewers = InterviewerSerializer(many=True)
 
     class Meta:
         depth = 3

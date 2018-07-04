@@ -1,10 +1,10 @@
 package io.zensoft.share.repository;
 
-import io.zensoft.share.model.PostResponse;
+import io.zensoft.share.model.Vacancy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostResponseRepository extends JpaRepository<PostResponse, Long> {
+public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
 
 }

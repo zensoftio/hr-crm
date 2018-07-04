@@ -1,7 +1,7 @@
 package io.zensoft.share.model;
 
-public enum PostStatus {
+public enum VacancyStatus {
     SUCCESS,
     PENDING,
-    FAILED
+    FAILED,
 }
