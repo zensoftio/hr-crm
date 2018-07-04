@@ -1,10 +1,8 @@
 from rest_framework.test import APITestCase
-from django.utils import timezone
 
-from apps.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
+from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 from apps.departments.models import Department
 from .models import Criteria, Interview
-from apps.candidates.models import Candidate
 from .serializers import CriteriaSerializer, InterviewDetailSerializer, InterviewListSerializer
 
 
