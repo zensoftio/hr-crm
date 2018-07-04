@@ -3,13 +3,15 @@ import {MessageService} from './message.service'
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { RecipientService } from 'Recipients/recipient.service';
+import { WSAEPROVIDERFAILEDINIT } from 'constants';
 
 const connection = new Amqp.Connection("amqp://localhost");
 const exchange = connection.declareExchange("js-backend", 'direct', { durable: false });
-const queue = connection.declareQueue('messages');
+const queue = connection.declareQueue('message', {durable: false});
 
-@Controller('message')
+@Controller('messages')
 export class MessageListener {
+
     constructor(private readonly messageService: MessageService,
     private readonly recipientService: RecipientService){
       this.listenQueue();
@@ -19,32 +21,34 @@ export class MessageListener {
     queue.bind(exchange, 'message');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
+        console.log(msg)
         var data = JSON.parse(msg)
         this.takeAction(data);
     }, {noAck: true})
   }
 
   private takeAction(msg) {
+     let res;
     switch(msg.task){
       case "send":
-        this.sendEmail(msg)
+        res = this.sendEmail(msg)
         break;
       case "get":
-        const res = this.getMessages(msg)
+        res = this.getMessages(msg)
         break;
-
     }
+    return res 
   }
 
   async getMessages(data){
     const msgs = await this.messageService.findByRecipient(data.recipient)
     const response = JSON.stringify(msgs)
-    this.sendResponse(response)
+   this.sendResponse(response)
     return response
   }
 
   sendResponse(res) {
-    const queueRes = connection.declareQueue("message-response")
+    connection.declareQueue("message-response")
     connection.completeConfiguration().then(() => {
       var msg2 = new Amqp.Message(res);
       exchange.send(msg2);
@@ -52,16 +56,19 @@ export class MessageListener {
     });
   }
 
-  sendEmail(data){
-    let i;
-    try{
-      for(i = 0; i < data.recipients.length; i++) {
-        qs.sendMessageH(data, data.recipients[i])
-      }
-      this.getMsgId(data)
-    } catch(err) {
-      console.log(err)
-    }
+  async sendEmail(data){
+      const someFunc = async (data) => {
+        const promises = data.recipients.map((element) => qs.sendMessageH(data, element));
+        try {
+            const results = await Promise.all(promises);
+            this.getMsgId(data)
+            return results
+        } catch (err) {
+            return console.error(err)
+        }
+      } 
+      const results = await someFunc(data)
+      this.sendResponse(results)
   }
 
   async getMsgId(data){

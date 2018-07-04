@@ -4,6 +4,7 @@ const {google} = require('googleapis');
 var Base64 = require('js-base64').Base64;
 var exports = module.exports = {};
 const dotenv = require('dotenv').config();
+const stringify = require('json-stringify-safe')
 
 // If modifying these scopes, delete credentials.json.
 var SCOPES = [
@@ -15,14 +16,13 @@ var SCOPES = [
 const TOKEN_PATH = 'credentials.json';
 
 // Load client secrets from a local file.
-exports.sendMessageH = function(data, recipient){ 
+exports.sendMessageH = async function(data, recipient){ 
   //console.log(data)
   // fs.readFile('/home/reedvl/zen/test-app/nest/NestJS/NestJS/src/gmail_api/client_secret.json', (err, content) => {
   // if (err) return console.log('Error loading client secret file:', err);
   // // Authorize a client with credentials, then call the Google Sheets API.
   
-    authorize(sendMessage, data, recipient);
-
+    return await authorize(sendMessage, data, recipient);
 }
 
 /**
@@ -31,7 +31,7 @@ exports.sendMessageH = function(data, recipient){
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(callback, data, recipient) {
+async function authorize(callback, data, recipient) {
   // const {client_secret, client_id, redirect_uris} = credentials.installed;
   const client_id = process.env['CLIENT_ID'];
   const client_secret = process.env['CLIENT_SECRET'];
@@ -41,13 +41,13 @@ function authorize(callback, data, recipient) {
       client_id, client_secret, redirect_uris);
       // console.log(oAuth2Client)
       // Check if we have previously stored a token.
-      fs.readFile(TOKEN_PATH, (err, token) => {
-        if (err) return getNewToken(oAuth2Client, callback, data, recipient);
-      oAuth2Client.setCredentials(JSON.parse(token));
       
-      callback(oAuth2Client, data, recipient);
-  });
-
+    const token = fs.readFileSync(TOKEN_PATH)
+    if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
+    oAuth2Client.setCredentials(JSON.parse(token));
+  
+    const a = await callback(oAuth2Client, data, recipient)
+    return a
 }
 
 /**
@@ -121,21 +121,20 @@ function listLabels(auth) {
 
 }
 
-function sendMessage(auth, data, recipient) {
-    const gmail = google.gmail({version: 'v1', auth});
+async function sendMessage(auth, data, recipient) {
+    const gmail = google.gmail({version: 'v1', auth})
     var raw = makeBody(data, recipient);
-    try{
-  gmail.users.messages.send({ 
-      auth: auth,
-      userId: 'me',
-      resource: {
-          raw: raw
-      }
-  })
-  }
-  catch(error){
-    console.log("Error during authorization " + error)
-  }
+
+    const sentMessage = await gmail.users.messages.send({ 
+        auth: auth,
+        userId: 'me',
+        resource: {
+            raw: raw
+        }
+    })
+    console.log("Yes")
+    return sentMessage.status
+
 }
 
 function makeBody(data, recipient) {
@@ -148,21 +147,8 @@ function makeBody(data, recipient) {
   // let To = arrays[0].toString()
   // let CC = arrays[1].toString()
   // let BCC = arrays[2].toString()
-  let type
+  let type = recipient.type + ": " + recipient.email
 
-  switch(recipient.type){
-    case "to":
-      type = "to: " + recipient.email
-      break;
-    case "cc":
-      type = "cc: " + recipient.email
-      break;
-    case "bcc":
-      type = "bcc: " + recipient.email
-      break;
-    default:
-      break;
-  }
   const body = data.content.replace(/NAME/g, recipient.name)
 
  var str = [
