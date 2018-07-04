@@ -29,19 +29,10 @@ class OpenedPositions extends React.Component {
 		this.fetchData();
 	}
 	fetchData(){
-		// fetch('http://192.168.89.82:8000/requests/')
-		// 	.then(res => res.json())
-		// 	// .then(json => json.results.map(result => (
-		// 	// 	{
-		// 	// 		position: result.position.name,
-		// 	// 		created: result.created
-		// 	// 	}
-		// 	// )))
-		// 	// .then(positionList => this.setState({
-		// 	// 	positionList
-		// 	// }))
-		// 	.then(json => console.log(json))
-		// 	.catch(err => console.log('FAILED : ',err))
+		fetch('https://private-anon-fc0d4b79ec-zensofthr.apiary-mock.com/api/v1/requests?status=&department=')
+			.then(res => res.json())			
+			.then(json => console.log(json))
+			.catch(err => console.log('FAILED : ',err))
 			
 	}
 
