@@ -27,7 +27,7 @@ export default class App extends Component {
 
     render() {
         if(this.state.session) {
-            return <User userRole="pm" />
+            return <User userRole="interviewer" />
         }
         return(
             <div>
