@@ -2,12 +2,14 @@ import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import deasyncPromise from 'deasync-promise';
+import * as connection from 'Rabbit';
+
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-      this.queue = connection.declareQueue("event", {durable: true});
-      this.queue.activateConsumer(this._onMessage, {noAck: true});
+       this.queue = connection.default.declareQueue("event", {durable: true});
+       this.queue.activateConsumer(this._onMessage, {noAck: true});
   }
 
   public async getActionFromMessage(message): Promise<any> {
