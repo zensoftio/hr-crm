@@ -3,13 +3,15 @@ package io.zensoft.share.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDto {
+@ToString
+public class VacancyDto {
     private Long id;
     private String title;
     private String sphere;                          //"Интернет, IT, телеком, связь"
