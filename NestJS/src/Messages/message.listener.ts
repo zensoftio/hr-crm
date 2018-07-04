@@ -56,23 +56,18 @@ export class MessageListener {
   }
 
   async sendEmail(data){
-      const someFunc = async (data) => {
-        const promises = data.recipients.map((element) => qs.sendMessageH(data, element));
-        try {
-            const results = await Promise.all(promises);
-            this.getMsgId(data)
-            return results
-        } catch (err) {
-            return console.error(err)
-        }
-      } 
-      const results = await someFunc(data)
+      const results = await Promise.all(data.recipients.map((element) => qs.sendMessageH(data, element)));
+      try {
+          await this.saveMessagesToDb(data)
+      }catch(err) {
+          console.log(err)
+      }
       this.sendResponse(results)
   }
 
-  async getMsgId(data){
+  async saveMessagesToDb(data){
     const msgId = await this.messageService.create(data)
     data.recipients.map((rec) => rec.message = msgId)
-    return this.recipientService.create(data.recipients)
+    this.recipientService.create(data.recipients)
   }
 }
