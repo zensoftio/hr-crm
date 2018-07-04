@@ -70,7 +70,11 @@ const HRNav = [
         name: "",
         path: "/profile",
         component: Profile
+<<<<<<< HEAD
     },
+=======
+    }
+>>>>>>> origin
 ];
 
 export default class HRScene extends Component {
