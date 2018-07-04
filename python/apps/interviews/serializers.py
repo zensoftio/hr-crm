@@ -89,11 +89,9 @@ class InterviewCreateSerializer(serializers.ModelSerializer):
         users_to_delete = set(old_users).difference(set(new_users))
         users_to_create = set(new_users).difference(set(old_users))
 
-        for user in users_to_delete:
-            Interviewer.objects.get(interview=instance, user=user).delete()
-
-        for user in users_to_create:
-            Interviewer.objects.create(interview=instance, user=user)
+        Interviewer.objects.filter(interview=instance, user__in=users_to_delete).delete()
+        interviewers_to_create = [Interviewer(interview=instance, user=user) for user in users_to_create]
+        Interviewer.objects.bulk_create(interviewers_to_create)
 
         return instance
 
