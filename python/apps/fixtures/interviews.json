@@ -1,0 +1,29 @@
+[
+  {
+    "model": "interviews.interview",
+    "pk": 1,
+    "fields": {
+      "date": "2018-07-03T04:02:02Z",
+      "status": 0,
+      "candidate": 1
+    }
+  },
+  {
+    "model": "interviews.interview",
+    "pk": 2,
+    "fields": {
+      "date": "2018-07-03T04:02:02Z",
+      "status": 1,
+      "candidate": 2
+    }
+  },
+  {
+    "model": "interviews.interview",
+    "pk": 3,
+    "fields": {
+      "date": "2018-07-03T04:02:02Z",
+      "status": 2,
+      "candidate": 1
+    }
+  }
+]
