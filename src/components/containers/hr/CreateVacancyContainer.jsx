@@ -156,5 +156,6 @@ class CreateVacancyContainer extends Component {
         </div>
       </div>
     );
-  }
+	}
+}
 export default withStyles(styles)(CreateVacancyContainer);
