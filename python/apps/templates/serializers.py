@@ -26,4 +26,4 @@ class TemplateDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Template
-        exclude = ['modified']
+        exclude = []
