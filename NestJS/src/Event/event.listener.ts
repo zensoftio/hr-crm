@@ -12,11 +12,11 @@ export class EventController {
        this.queue.activateConsumer(this._onMessage, {noAck: true});
   }
 
-  public async getActionFromMessage(message): Promise<any> {
+  public async getActionFromMessage(message, callback) {
     try{
       this.msg = {
-        "title": await message.title,
-        "body": await message.body
+        'title': message.title,
+        'body': message.body
       }
       if(this.msg.title === 'create'){
         this.msg.body = await this.eventService.createEvent(this.msg);
@@ -40,19 +40,21 @@ export class EventController {
     catch(err){
       this.msg.body = err;
     }
-    return this.msg;
+    callback(this.msg);
   }
 
    private _onMessage = (message) => {
      const json = JSON.parse(message.getContent());
-     const result = this.getActionFromMessage(json);
      let answer;
-     setTimeout(async function(){
-      answer = await result;
-     }, 0);
-     while(answer === undefined){
-      require('deasync').sleep(100);
-     }
+     let done = false;
+     
+     this.getActionFromMessage(json, function(result){
+       answer = result;
+       done = true;
+     });
+
+     require('deasync').loopWhile(function(){return !done});
+
      return answer;
    }
 }
