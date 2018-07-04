@@ -19,7 +19,6 @@ public class RabbitMqExchangeBindingConfiguration {
     private final String publish = "publish";
     private final String getInfo = "getInfo";
 
-
     public Binding bindQueueToTopicWith(Queue queue, TopicExchange exchange, String with) {
         return BindingBuilder.bind(queue).to(exchange).with(with);
     }
@@ -34,18 +33,6 @@ public class RabbitMqExchangeBindingConfiguration {
     @Autowired
     public Binding facebookGetInfoBinding(Queue facebookGetInfoQueue) {
         return bindQueueToTopicWith(facebookGetInfoQueue, shareTopicExchange, "facebook." + getInfo);
-    }
-
-    @Bean
-    @Autowired
-    public Binding telegramPublishBinding(Queue telegramPublisherQueue) {
-        return bindQueueToTopicWith(telegramPublisherQueue, shareTopicExchange, "telegram." + publish);
-    }
-
-    @Bean
-    @Autowired
-    public Binding telegramGetInfoBinding(Queue telegramGetInfoQueue) {
-        return bindQueueToTopicWith(telegramGetInfoQueue, shareTopicExchange, "telegram." + getInfo);
     }
 
     @Bean
