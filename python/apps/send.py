@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import pika
 from rest_framework.renderers import JSONRenderer
 
