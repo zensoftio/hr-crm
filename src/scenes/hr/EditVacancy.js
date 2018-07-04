@@ -17,9 +17,13 @@ class CreateVacancy extends Component {
 
         return (
           <div>
-            <Header title="Создать Вакансию" />
+            <Header title="Редактировать Вакансию" />
             <Paper className={classes.paperBox}> 
               <CreateVacancyContainer />
+              <div>
+                  История изменений:
+
+              </div>
             </Paper>
           </div>
         );

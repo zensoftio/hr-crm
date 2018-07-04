@@ -31,12 +31,16 @@ const EditRequest = () => {
 		'katanta'
 	]
 
-	let instyle = {
+	const instyle = {
 		display: 'inline-block',
 		marginRight: 20
 	};
-	let divstyle = {
+	const divstyle = {
 		margin: 20
+	}
+	const btnstyle = {
+		padding: '10px 15px',
+		margin: '0px 20px'
 	}
 
 	return(
@@ -87,6 +91,11 @@ const EditRequest = () => {
 					<span style={instyle}>ОБЩИЕ ТРЕБОВАНИЯ:</span>
 					<TextArea />
 				</label>
+			</div>
+
+			<div style={divstyle}>
+				<button style={btnstyle}>Утвердить</button>
+				<button style={btnstyle}>Отклонить</button>
 			</div>
 			
 		</div>

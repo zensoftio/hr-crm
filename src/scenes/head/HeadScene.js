@@ -16,7 +16,9 @@ export default class HeadScene extends Component {
             <BrowserRouter>
                 <div className="container">
 
-                    <Navigation menuItems={HeadNav}/>
+
+                	
+                 <Navigation menuItems={HeadNav}/>
 
                     <div className="content">
                         <Switch>
@@ -25,6 +27,7 @@ export default class HeadScene extends Component {
                             <Route component={Error}/>
                         </Switch>
                     </div>
+
                 </div>
             </BrowserRouter>
         );

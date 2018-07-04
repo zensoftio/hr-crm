@@ -22,7 +22,7 @@ class ModalWindow extends Component {
   render() {
     return (    
       <div>
-        <Button onClick={this.handleClickOpen}>{this.props.children}</Button>
+        <Button variant="outlined" onClick={this.handleClickOpen} >{this.props.children}</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
