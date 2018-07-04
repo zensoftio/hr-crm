@@ -45,13 +45,6 @@ public class FacebookPublisherService {
         facebookPage = new FacebookTemplate(pageAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
     }
 
-
-    public static void main(String[] args) throws Exception {
-        FacebookPublisherService facebookPublisherService =
-                new FacebookPublisherService();
-        facebookPublisherService.publishPhoto((Vacancy) null);
-    }
-
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
     private String getTestUserAccessToken() throws Exception {
         Map<String, String> uriVariables = new LinkedHashMap<>();
