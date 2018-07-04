@@ -48,12 +48,3 @@ class CandidateInterviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         fields = ('id', 'first_name', 'last_name', 'department')
-
-
-class AuxCandidateSerializer(serializers.ModelSerializer):
-    """Candidate Serializer for Candidates List and Candidate Detail endpoint"""
-
-    class Meta:
-        model = Candidate
-        depth = 3
-        fields = ('id', 'first_name', 'last_name', 'position')
