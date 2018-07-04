@@ -24,6 +24,12 @@ class Base(Configuration):
         'django_extensions',
         'rest_framework',
         'django_filters',
+        'corsheaders',
+        'rest_framework.authtoken',
+        'social_django',
+        'rest_social_auth',
+        'oauth2_provider',
+        'rest_framework_social_oauth2',
 
         'apps.candidates',
         'apps.departments',
@@ -34,7 +40,23 @@ class Base(Configuration):
         'apps.templates'
     ]
 
+    SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+    SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+    CSRF_COOKIE_SECURE = True
+    CORS_ORIGIN_ALLOW_ALL = True
+
+    AUTHENTICATION_BACKENDS = (
+        'social_core.backends.facebook.FacebookOAuth2',
+        'social_core.backends.google.GoogleOAuth2',
+        'rest_framework_social_oauth2.backends.DjangoOAuth2',
+        'django.contrib.auth.backends.ModelBackend',)
+
     MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -77,6 +99,7 @@ class Base(Configuration):
     WSGI_APPLICATION = 'wsgi.application'
 
     DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
+
     AUTH_USER_MODEL = 'users.User'
 
     AUTH_PASSWORD_VALIDATORS = [
