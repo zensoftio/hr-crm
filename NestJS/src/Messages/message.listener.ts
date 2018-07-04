@@ -58,16 +58,16 @@ export class MessageListener {
   async sendEmail(data){
       const results = await Promise.all(data.recipients.map((element) => qs.sendMessageH(data, element)));
       try {
-          await this.saveMessagesToDb(data)
-      }catch(err) {
+          await this.saveRecipientsToDb(data)
+      }catch (err) {
           console.log(err)
       }
       this.sendResponse(results)
   }
 
-  async saveMessagesToDb(data){
+  async saveRecipientsToDb(data){
     const msgId = await this.messageService.create(data)
     data.recipients.map((rec) => rec.message = msgId)
-    this.recipientService.create(data.recipients)
+    return this.recipientService.create(data.recipients)
   }
 }
