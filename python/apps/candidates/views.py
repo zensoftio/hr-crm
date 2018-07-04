@@ -4,8 +4,9 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 
 from apps.departments.models import Position
+from apps.interviews.serializers import AuxCandidateSerializer
 from .models import Candidate, Comment
-from .serializers import AuxCandidateSerializer, CandidateDetailSerializer, CommentCreateSerializer
+from .serializers import CandidateDetailSerializer, CommentCreateSerializer
 
 
 def test_func(request):

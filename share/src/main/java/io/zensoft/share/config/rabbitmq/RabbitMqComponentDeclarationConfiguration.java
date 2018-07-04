@@ -1,5 +1,7 @@
 package io.zensoft.share.config.rabbitmq;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -13,8 +15,6 @@ public class RabbitMqComponentDeclarationConfiguration {
     public static final String TOPIC_SHARE = "share";
     public static final String QUEUE_FACEBOOK_PUBLISH = "facebookPublish";
     public static final String QUEUE_FACEBOOK_GET_INFO = "facebookGetInfo";
-    public static final String QUEUE_TELEGRAM_PUBLISH = "telegramPublish";
-    public static final String QUEUE_TELEGRAM_GET_INFO = "telegramGetInfo";
     public static final String QUEUE_DIESEL_PUBLISH = "dieselPublish";
     public static final String QUEUE_DIESEL_GET_INFO = "dieselGetInfo";
     public static final String QUEUE_JOB_KG_PUBLISH = "jobKgPublish";
@@ -33,16 +33,6 @@ public class RabbitMqComponentDeclarationConfiguration {
     @Bean
     public Queue facebookGetInfoQueue() {
         return new Queue(QUEUE_FACEBOOK_GET_INFO);
-    }
-
-    @Bean()
-    public Queue telegramPublisherQueue() {
-        return new Queue(QUEUE_TELEGRAM_PUBLISH);
-    }
-
-    @Bean
-    public Queue telegramGetInfoQueue() {
-        return new Queue(QUEUE_TELEGRAM_GET_INFO);
     }
 
     @Bean()
@@ -66,8 +56,15 @@ public class RabbitMqComponentDeclarationConfiguration {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public ObjectMapper snakeCaseObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        return objectMapper;
+    }
+
+    @Bean
+    public MessageConverter jsonMessageConverter(ObjectMapper snakeCaseObjectMapper) {
+        return new Jackson2JsonMessageConverter(snakeCaseObjectMapper);
     }
 
 }

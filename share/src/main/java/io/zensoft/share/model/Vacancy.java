@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Post {
+public class Vacancy {
     @Id
     @GeneratedValue
     private Long id;

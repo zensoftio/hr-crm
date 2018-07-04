@@ -1,6 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ import java.util.Date;
 
 public class CreateInterviewFragment extends Fragment implements CreateInterviewContract.View, View
     .OnClickListener {
-  private static final String TAG = "mylog:CreateInterviewFragment";
+  private static final String TAG = "CREATE INTRVW FRAGMENT";
 
   public static final String CANDIDATE_ID = "candidate id";
   public static final String CANDIDATE_LASTNAME = "candidate last name";
@@ -51,7 +50,6 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     super.onCreate(savedInstanceState);
   }
 
-  @SuppressLint("LongLogTag")
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,9 +80,6 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     mAddInterviewersButton.setOnClickListener(this);
     mCreateButton = v.findViewById(R.id.crint_create_button);
     mCreateButton.setOnClickListener(this);
-  }
-
-  private void updateUi() {
   }
 
   public static CreateInterviewFragment newInstance(int candidateId, String lastName, String
