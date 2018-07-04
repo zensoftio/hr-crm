@@ -15,6 +15,6 @@ export class Templates {
   @Column({nullable: true})
   attachment: string;
 
-  @OneToMany(type => Message, message => message.template) // note: we will create author property in the Photo class below
+  @OneToMany(type => Message , message => message.template) // note: we will create author property in the Photo class below
   messages: Message[];
 } 

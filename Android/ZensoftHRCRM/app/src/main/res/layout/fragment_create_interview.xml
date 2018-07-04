@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <TextView
+      android:id="@+id/textView5"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/candidate"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  <TextView
+      android:id="@+id/crint_candidate_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="30dp"
+      android:layout_marginTop="8dp"
+      android:textColor="@color/main_attributes"
+      app:layout_constraintStart_toStartOf="@+id/textView5"
+      app:layout_constraintTop_toBottomOf="@+id/textView5"
+      tools:text="candidate name"/>
+
+  <TextView
+      android:id="@+id/textView8"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="@string/department"
+      app:layout_constraintStart_toStartOf="@+id/textView5"
+      app:layout_constraintTop_toBottomOf="@+id/crint_candidate_name"/>
+
+  <TextView
+      android:id="@+id/crint_department"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="30dp"
+      android:layout_marginTop="8dp"
+      android:text=""
+      android:textColor="@color/main_attributes"
+      app:layout_constraintStart_toStartOf="@+id/textView8"
+      app:layout_constraintTop_toBottomOf="@+id/textView8"
+      tools:text="Department"/>
+
+  <TextView
+      android:id="@+id/textView10"
+      android:layout_width="wrap_content"
+      android:layout_height="19dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/date"
+      app:layout_constraintStart_toStartOf="@+id/textView8"
+      app:layout_constraintTop_toBottomOf="@+id/crint_department"/>
+
+  <TextView
+      android:id="@+id/crint_date"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="30dp"
+      android:layout_marginTop="8dp"
+      android:text=""
+      android:textColor="@color/main_attributes"
+      app:layout_constraintStart_toStartOf="@+id/textView10"
+      app:layout_constraintTop_toBottomOf="@+id/textView10"
+      tools:text="2011-10-10"/>
+
+  <Button
+      android:id="@+id/crint_set_date_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="40dp"
+      android:text=" Set det and time"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/crint_interviewers"/>
+
+  <TextView
+      android:id="@+id/textView7"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="Interviewers"
+      app:layout_constraintStart_toStartOf="@+id/textView10"
+      app:layout_constraintTop_toBottomOf="@+id/crint_date"/>
+
+  <TextView
+      android:id="@+id/crint_interviewers"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="30dp"
+      android:layout_marginTop="8dp"
+      android:textColor="@color/main_attributes"
+      app:layout_constraintStart_toStartOf="@+id/textView7"
+      app:layout_constraintTop_toBottomOf="@+id/textView7"
+      tools:text="interviewers"/>
+
+  <ImageView
+      android:id="@+id/crint_add_image"
+      android:layout_width="wrap_content"
+      android:layout_height="19dp"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintStart_toEndOf="@+id/textView7"
+      app:layout_constraintTop_toBottomOf="@+id/crint_date"
+      android:src="@drawable/ic_add_circle"/>
+
+  <Button
+      android:id="@+id/crint_create_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="Create Interview"
+      app:layout_constraintStart_toEndOf="@+id/crint_set_date_button"
+      app:layout_constraintTop_toTopOf="@+id/crint_set_date_button"/>
+</android.support.constraint.ConstraintLayout>
