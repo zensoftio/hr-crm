@@ -195,54 +195,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     }
   }
 
-  private void addAdapterViews(final BaseAdapter adapter) {
-    int itemsCount = adapter.getCount();
-
-    if (itemsCount > 0) {
-      TextView descriptionText = new TextView(getActivity());
-      descriptionText.setText(getTitleText(adapter));
-      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
-      mLayout.addView(descriptionText);
-
-      for (int i = 0; i < adapter.getCount(); i++) {
-        View item = adapter.getView(i, null, null);
-        final int finalI = i;
-        item.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-
-            if (adapter instanceof CvsAdapter) {
-              Cv cvItem = (Cv) adapter.getItem(finalI);
-              onCvItemClicked(cvItem);
-
-            } else if (adapter instanceof CommentsAdapter) {
-              Comment commentItem = (Comment) adapter.getItem(finalI);
-              onCommentItemClicked(commentItem);
-
-            } else if (adapter instanceof InterviewsAdapter) {
-              CandidateInterviewItem interviewItem = (CandidateInterviewItem) adapter.getItem(finalI);
-              onInterviewItemClicked(interviewItem);
-
-            }
-          }
-        });
-        mLayout.addView(item);
-      }
-    }
-
-  }
-
-  private int getTitleText(BaseAdapter adapter) {
-    if (adapter instanceof CvsAdapter) {
-      return R.string.cvs;
-    } else if (adapter instanceof CommentsAdapter) {
-      return R.string.comments;
-    } else if (adapter instanceof InterviewsAdapter) {
-      return R.string.interviews;
-    }
-    return -1;
-  }
-
   private void addActionButtons() {
     View v = LayoutInflater.from(getActivity()).inflate(R.layout.cd_action_buttons, null, false);
     v.findViewById(R.id.cd_interview_button).setOnClickListener(this);
@@ -264,7 +216,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPresenter.onCvItemClicked(cvItem);
   }
 
-  @SuppressLint("LongLogTag")
   @Override
   public void startCreateInterview(Candidate candidate) {
     Log.d(TAG, "startCreateInterview: " + candidate.getId());
@@ -272,7 +223,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     startActivity(intent);
   }
 
-  public static CandidateDetailFragment newInstance(@Nullable int candidateId) {
+  public static CandidateDetailFragment newInstance(int candidateId) {
     Bundle arguments = new Bundle();
     arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
     CandidateDetailFragment fragment = new CandidateDetailFragment();
@@ -383,7 +334,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       Comment comment = (Comment) getItem(position);
       User user = comment.getCreatedBy();
       createdBy.setText(user.getFirstName() + " " + user.getLastName());
-      date.setText(comment.getCreated().toString());
+      date.setText(comment.getCreated());
       text.setText(comment.getText());
 
       return v;

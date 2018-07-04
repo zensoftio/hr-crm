@@ -14,7 +14,7 @@ import retrofit2.Response;
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
     CandidatesRepository.OnDetailCandidateLoadFinishedListener {
 
-  private static final String TAG = "mylog:CandidateDetailPresente";
+  private static final String TAG = "PROFILE PRESENTER";
 
   private CandidateDetailContract.View mView;
   private CandidatesRepository mRepository;
@@ -42,11 +42,9 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
     mView.showCandidateDetails(mCandidate);
   }
 
-  @SuppressLint("LongLogTag")
   @Override
   public void onFailure(Throwable t) {
     Log.d(TAG, "onFailure: starts");
-
   }
 
   @Override
