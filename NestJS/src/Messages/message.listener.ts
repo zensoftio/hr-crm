@@ -3,7 +3,6 @@ import {MessageService} from './message.service'
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { RecipientService } from 'Recipients/recipient.service';
-import { WSAEPROVIDERFAILEDINIT } from 'constants';
 
 const connection = new Amqp.Connection("amqp://localhost");
 const exchange = connection.declareExchange("js-backend", 'direct', { durable: false });

@@ -11,11 +11,14 @@ public class Comment {
     @SerializedName("text")
     private String text;
 
-    @SerializedName("createdBy")
+    @SerializedName("created_by")
     private User createdBy;
 
-    @SerializedName("created")
-    private Date created;
+//    @SerializedName("created")
+//    private Date created;
+
+  @SerializedName("created")
+  private String created;
 
     public Integer getId() {
         return id;
@@ -41,11 +44,19 @@ public class Comment {
         this.createdBy = createdBy;
     }
 
-    public Date getCreated() {
-        return created;
-    }
+  public String getCreated() {
+    return created;
+  }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+  public void setCreated(String created) {
+    this.created = created;
+  }
+
+  //    public Date getCreated() {
+//        return created;
+//    }
+//
+//    public void setCreated(Date created) {
+//        this.created = created;
+//    }
 }
