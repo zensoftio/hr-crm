@@ -8,9 +8,6 @@ export class Event {
   @Column()
   id_event: string;
 
-  @Column({ length: 30 })
-  date: string;
-
   @Column()
   begin_time: string;
 

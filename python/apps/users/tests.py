@@ -1,3 +1,11 @@
-from django.test import TestCase
+from django.contrib.auth import get_user_model
+from rest_framework.test import APITestCase
 
-# Create your tests here.
+from apps.base_tests import ListTestMixin
+from apps.users.serializers import UserSerializer
+
+
+class UsersListTest(APITestCase, ListTestMixin):
+    url = '/users/'
+    model = get_user_model()
+    serializer = UserSerializer
