@@ -18,6 +18,7 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
 
   private CandidateDetailContract.View mView;
   private CandidatesRepository mRepository;
+  private Candidate mCandidate;
 
   public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
     mView = view;
@@ -37,8 +38,8 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
       return;
     }
     Log.d(TAG, "onFinished: success");
-    Candidate candidate = response.body();
-    mView.showCandidateDetails(candidate);
+    mCandidate = response.body();
+    mView.showCandidateDetails(mCandidate);
   }
 
   @SuppressLint("LongLogTag")
@@ -61,5 +62,14 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   @Override
   public void onCvItemClicked(Cv cvItem) {
     mView.showToast(cvItem.getLink());
+  }
+
+  @Override
+  public void onCreateInterviewClicked() {
+    if (!mView.isActive() || (mCandidate == null)){
+      return;
+    }
+
+    mView.startCreateInterview(mCandidate);
   }
 }

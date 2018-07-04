@@ -52,13 +52,14 @@
       android:id="@+id/textView10"
       android:layout_width="wrap_content"
       android:layout_height="19dp"
-      android:layout_marginTop="20dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
       android:text="@string/date"
       app:layout_constraintStart_toStartOf="@+id/textView8"
-      app:layout_constraintTop_toBottomOf="@+id/crint_set_date_button"/>
+      app:layout_constraintTop_toBottomOf="@+id/crint_department"/>
 
   <TextView
-      android:id="@+id/crtint_date"
+      android:id="@+id/crint_date"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="30dp"
@@ -74,10 +75,10 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="40dp"
       android:text=" Set det and time"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/crint_department"/>
+      app:layout_constraintTop_toBottomOf="@+id/crint_interviewers"/>
 
   <TextView
       android:id="@+id/textView7"
@@ -86,7 +87,7 @@
       android:layout_marginTop="8dp"
       android:text="Interviewers"
       app:layout_constraintStart_toStartOf="@+id/textView10"
-      app:layout_constraintTop_toBottomOf="@+id/crtint_date"/>
+      app:layout_constraintTop_toBottomOf="@+id/crint_date"/>
 
   <TextView
       android:id="@+id/crint_interviewers"
@@ -100,13 +101,13 @@
       tools:text="interviewers"/>
 
   <ImageView
-      android:id="@+id/imageView2"
+      android:id="@+id/crint_add_image"
       android:layout_width="wrap_content"
       android:layout_height="19dp"
       android:layout_marginStart="40dp"
       android:layout_marginTop="8dp"
       app:layout_constraintStart_toEndOf="@+id/textView7"
-      app:layout_constraintTop_toBottomOf="@+id/crtint_date"
+      app:layout_constraintTop_toBottomOf="@+id/crint_date"
       android:src="@drawable/ic_add_circle"/>
 
   <Button
@@ -114,8 +115,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginTop="30dp"
       android:text="Create Interview"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/crint_interviewers"/>
+      app:layout_constraintStart_toEndOf="@+id/crint_set_date_button"
+      app:layout_constraintTop_toTopOf="@+id/crint_set_date_button"/>
 </android.support.constraint.ConstraintLayout>

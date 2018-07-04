@@ -167,6 +167,14 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPresenter.onCvItemClicked(cvItem);
   }
 
+  @SuppressLint("LongLogTag")
+  @Override
+  public void startCreateInterview(Candidate candidate) {
+    Log.d(TAG, "startCreateInterview: " + candidate.getId());
+    Intent intent = CreateInterview.newIntent(getActivity(), candidate);
+    startActivity(intent);
+  }
+
   public static CandidateDetailFragment newInstance(@Nullable int candidateId) {
     Bundle arguments = new Bundle();
     arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
@@ -359,10 +367,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
     switch (v.getId()) {
       case R.id.cd_interview_button:
-        showToast("Create interview");
-        Intent intent = new Intent(getActivity(), CreateInterview.class);
-        startActivity(intent);
-
+        mPresenter.onCreateInterviewClicked();
         break;
 
       case R.id.cd_delete_button:
