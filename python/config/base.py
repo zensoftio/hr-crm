@@ -51,9 +51,10 @@ class Base(Configuration):
     CSRF_COOKIE_SECURE = True
     CORS_ORIGIN_ALLOW_ALL = True
 
-    FCM_SERVER_KEY = values.SecretValue()
+    FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
+
     FCM_DJANGO_SETTINGS = {
-        "FCM_SERVER_KEY": FCM_SERVER_KEY
+        "FCM_SERVER_KEY": FCM_SERVER_KEY,
     }
 
     AUTHENTICATION_BACKENDS = (
