@@ -34,10 +34,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   private LinearLayout mLayout;
 
-  private CvsAdapter mCvsAdapter;
-  private CommentsAdapter mCommentsAdapter;
-  private InterviewsAdapter mInterviewsAdapter;
-
   private TextView mFirstName;
   private TextView mLastName;
   private TextView mEmail;
@@ -70,19 +66,16 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPhoneNumber = v.findViewById(R.id.cd_phone);
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
-
-    mCvsAdapter = new CvsAdapter(getActivity(), new ArrayList<Cv>());
-    mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
-    mInterviewsAdapter = new InterviewsAdapter(getActivity(), new ArrayList<CandidateInterviewItem>());
   }
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-    mFirstName.setText(candidate.getFirstName());
-    mLastName.setText(candidate.getLastName());
-    mEmail.setText(candidate.getEmail());
-    mPhoneNumber.setText(candidate.getPhone());
-    mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
+    mFirstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
+    mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
+    mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
+    mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
+    String department = candidate.getPosition().getDepartmentModel().getName();
+    mDepartment.setText(department != null ? department : "");
     mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
     addExtraViews(candidate);
   }
@@ -95,16 +88,18 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     addCommentViews(candidate.getComments());
 
     //add Interview views to layout
-    addInterviewViews(mInterviewsAdapter);
+    addInterviewViews(candidate.getInterviews());
 
     //add Buttons
     addActionButtons();
-
-
   }
 
-  private void addInterviewViews(final InterviewsAdapter interviewsAdapter) {
-    int itemsCount = interviewsAdapter.getCount();
+  private void addInterviewViews(List<CandidateInterviewItem> interviewList) {
+    if (interviewList == null) {
+      return;
+    }
+
+    int itemsCount = interviewList.size();
 
     if (itemsCount > 0) {
 
@@ -115,18 +110,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       mLayout.addView(descriptionText);
 
       // add interview views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = interviewsAdapter.getView(i, null, null);
-        final int finalI = i;
+      for (final CandidateInterviewItem interviewItem : interviewList) {
+        View interviewView = ViewBuilder.createInterviewView(getActivity(), interviewItem);
 
-        item.setOnClickListener(new View.OnClickListener() {
+        interviewView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            CandidateInterviewItem interviewItem = (CandidateInterviewItem) interviewsAdapter.getItem(finalI);
             onInterviewItemClicked(interviewItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(interviewView);
       }
     }
   }
@@ -146,7 +140,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
       mLayout.addView(descriptionText);
 
-      // add cvs views
+      // add comment views
       for (final Comment commentItem : commentList) {
         View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
 
@@ -254,14 +248,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
 
       case R.id.cd_delete_button:
+        //TODO: implement profile deleting
         showToast("Delete candidate profile");
         break;
 
       case R.id.cd_edit_button:
+        //TODO: implement profile editing
         showToast("Edit profile");
         break;
 
       case R.id.cd_message_button:
+        //TODO: implement sending message
         showToast("Send message");
         break;
 
