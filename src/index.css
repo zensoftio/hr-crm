@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif, Tahoma;
+}
+.container {
+    display: flex;
+}
+.content {
+    flex-grow: 9;
+}
+.navigation {
+    background: #4d394b;
+    height: 100vh;
+    padding: 0 40px;
+    padding-top: 30px;
+}
+.nav-ul li{
+    list-style-type: none;
+    margin: 40px 0;
+
+}
+.nav-ul li a {
+    color: #e7e6fc;
+}
+.profile_photo {
+    width: 50px;
+}
+.headphoto {
+    text-align: center;
+}
+
+.header_main {
+    background: #b8dff0;
+    text-align: center
+}
+.header_main h2 {
+    margin: 0;
+    padding: 10px;
+}
+
+.table_head tr:nth-child(even){background-color: #f2f2f2;}
+
+.table_head tr:hover {background-color: #ddd;}
+
+.table_head th{
+	padding: 15px;
+	text-align: center;
+	background-color: #4bbb8b;
+	color: white;
+}
+.table_head td {
+	text-align: center;
+	padding: 10px;
+}
+.statistic {
+	text-align: center;
+}
+.statistic ul li {
+	list-style-type: none;
+	font-size: 24px;
+	background: #f2f2f2;
+}
+.statistic ul li:hover {
+	background: #ddd;
+}
+.statistic span {
+	display: inline-block;
+	padding: 20px;
+}
+.label{
+    display: inline-block;
+}
+#label span {
+    margin: 10px, 15px;
+    padding: 10px, 15px;
+}
