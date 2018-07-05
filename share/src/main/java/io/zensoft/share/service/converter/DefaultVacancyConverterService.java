@@ -2,6 +2,7 @@ package io.zensoft.share.service.converter;
 
 import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.model.Requirement;
+import io.zensoft.share.model.RequirementType;
 import io.zensoft.share.model.Vacancy;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +39,12 @@ public class DefaultVacancyConverterService implements DtoConverterService<Vacan
 
         List<Requirement> requirements = new ArrayList<>();
 
-        //python complicated here
+        //python complicated here, there was better solution
         vacancyDto.getRequirements().stream().forEach(requirementDto -> {
             Requirement requirement = new Requirement();
             requirement.setName(requirementDto.getName());
-            requirement.setType(requirementDto.getType());
+            RequirementType requirementType = RequirementType.getByInt(requirementDto.getType());
+            requirement.setType(requirementType);
             requirements.add(requirement);
         });
         vacancy.setRequirements(requirements);
