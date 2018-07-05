@@ -1,7 +1,8 @@
-package io.zensoft.share.service;
+package io.zensoft.share.service.Facebook;
 
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.service.PublisherService;
 import io.zensoft.share.service.model.VacancyResponseModelService;
 import io.zensoft.share.service.model.VacancyModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class FacebookPublisherService {
+@Service
+public class FacebookPublisherService implements PublisherService {
     private final Properties properties;
 
     private final String appAccessToken;
@@ -31,10 +33,14 @@ public class FacebookPublisherService {
     private final Facebook facebookUser;
     private final Facebook facebookPage;
 
-    public FacebookPublisherService() throws Exception {
+    public FacebookPublisherService(){
         properties = new Properties();
-        properties.load(new FileReader("src/main/resources/facebookConfig"));
 
+        try {
+            properties.load(new FileReader("src/main/resources/facebook.config"));
+        } catch (Exception e) {
+
+        }
         appAccessToken = properties.getProperty("appId") + "|" + properties.getProperty("appSecret");
         facebookApp= new FacebookTemplate(appAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
 
@@ -46,42 +52,45 @@ public class FacebookPublisherService {
     }
 
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
-    private String getTestUserAccessToken() throws Exception {
+    private String getTestUserAccessToken(){
         Map<String, String> uriVariables = new LinkedHashMap<>();
-        ResponseEntity<Map> map;
+        ResponseEntity<Map> map = null;
         try {
             map = ((FacebookTemplate) facebookApp).getRestTemplate().exchange(
                     "https://graph.facebook.com/" + properties.getProperty("appId") + "/accounts/test-users/",
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+
         }
         String access_token = ((ArrayList<Map<String, Object>>)map.getBody().get("data")).get(0).get("access_token").toString();
         return access_token;
     }
 
-    private String getPageAccessToken () throws Exception {
+    private String getPageAccessToken () {
         Map<String, String> uriVariables = new LinkedHashMap<>();
-        ResponseEntity<Map> map;
+        ResponseEntity<Map> map = null;
         try {
             map = ((FacebookTemplate) facebookUser).getRestTemplate().exchange(
                     "https://graph.facebook.com/" + properties.getProperty("userId") + "/accounts",
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+
         }
         String access_token = ((ArrayList<Map<String, Object>>)map.getBody().get("data")).get(0).get("access_token").toString();
         return access_token;
     }
 
+    @Override
     public VacancyResponse publish(Vacancy vacancy) {
-        PagePostData pagePostData = new PagePostData(properties.getProperty("pageId"));
-        pagePostData.message(getText(vacancy));
-        String postId = facebookUser.pageOperations().post(pagePostData);
+        return publishPhoto(vacancy);
+    }
+
+    @Override
+    public VacancyResponse getInfo(Vacancy vacancy) {
         return null;
     }
 
-    public VacancyResponse publishPhoto(Vacancy vacancy) throws Exception {
+    public VacancyResponse publishPhoto(Vacancy vacancy) {
         String publishPhotoRequestUrl = getPublishPhotoRequestUrl(vacancy);
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map;
@@ -89,7 +98,7 @@ public class FacebookPublisherService {
             map = ((FacebookTemplate) facebookPage).getRestTemplate().exchange( publishPhotoRequestUrl,
                     HttpMethod.POST, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+
         }
         return null;
     }
@@ -104,11 +113,11 @@ public class FacebookPublisherService {
     }
 
     private String getPhotoUrl(Vacancy vacancy) {
-        return "http://lmndeit.kg/wp-content/uploads/2016/09/1066_178169975899042_3386044648562112580_n.png";
+        return vacancy.getImage();
     }
 
     private String getText(Vacancy vacancy) {
-        return "Default text";
+        return vacancy.getTitle();
     }
 
 }
