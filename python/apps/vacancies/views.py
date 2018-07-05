@@ -1,14 +1,16 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
+
 from .models import Vacancy, Publication
-from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer,\
-                    PublicationSerializer
+from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
+    PublicationSerializer
 
 
 class VacancyListView(generics.ListCreateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
+    filter_fields = ('status',)
 
     def create(self, request, *args, **kwargs):
         write_serializer = VacancyCreateUpdateSerializer(data=request.data)
@@ -27,7 +29,6 @@ class PublicationList(generics.ListCreateAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
 
- 
 
 class PublicationDetail(generics.RetrieveAPIView):
     queryset = Publication.objects.all()
