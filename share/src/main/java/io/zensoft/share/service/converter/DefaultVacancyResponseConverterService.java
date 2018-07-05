@@ -11,7 +11,14 @@ import org.springframework.stereotype.Service;
 public class DefaultVacancyResponseConverterService implements DtoConverterService<VacancyResponse, VacancyResponseDto> {
     @Override
     public VacancyResponseDto toDto(VacancyResponse vacancyResponse) {
-        return null;
+        VacancyResponseDto vacancyResponseDto = new VacancyResponseDto();
+        vacancyResponseDto.setUid(vacancyResponse.getVacancy().getUid());
+        vacancyResponseDto.setMessage(vacancyResponse.getMessage());
+        vacancyResponseDto.setUrl(vacancyResponse.getUrl());
+        vacancyResponseDto.setStatus(vacancyResponse.getStatus().name());
+        vacancyResponseDto.setPublisherServiceType(vacancyResponse.getPublisherServiceType().name());
+        vacancyResponseDto.setPublishDate(vacancyResponse.getPublishDate());
+        return vacancyResponseDto;
     }
 
     @Override
