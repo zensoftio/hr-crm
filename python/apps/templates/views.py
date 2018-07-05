@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from apps.templates.models import Template, Attachment
 from apps.templates.serializers import TemplateListSerializer, TemplateCreateSerializer, \
     TemplateDetailSerializer, AttachmentSerializer
-from apps.templates.send import Send
+# from apps.templates.send import Send
 
 
 class TemplateListCreateView(generics.ListCreateAPIView):
