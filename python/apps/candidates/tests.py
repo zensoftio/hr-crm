@@ -47,17 +47,16 @@ class CandidatesDetailTest(APITestCase, GetInstanceTestMixin):
         )
 
 
-# class CandidateUpdateTestCase(APITestCase, UpdateTestMixin):
-#     url = '/candidates/'
-#     model = Candidate
-#     serializer = CandidateDetailSerializer
-#
-#     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
-#                 'interviews.json']
-#
-#     def setUp(self):
-#         self.instance = Candidate.objects.get(pk=1)
-#         self.update_data = {
-#             "first_name": "Almaz",
-#             "last_name": "Karat"
-#         }
+class CandidateUpdateTestCase(APITestCase, UpdateTestMixin):
+    model = Candidate
+    serializer = CandidateDetailSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
+
+    def setUp(self):
+        self.instance = Candidate.objects.get(pk=1)
+        self.update_data = {
+            "first_name": "Almaz",
+            "last_name": "Karat"
+        }

@@ -72,11 +72,9 @@ class GetInstanceTestMixin(object):
 
 
 class UpdateTestMixin(object):
-    url = None
     model = None
     serializer = None
 
     def test_update(self):
-        url = self.url + str(self.instance.id)
-        response = self.client.patch(url, self.update_data)
+        response = self.client.patch(self.instance.get_absolute_url(), self.update_data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

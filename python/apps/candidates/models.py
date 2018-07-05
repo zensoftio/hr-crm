@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 from apps.departments.models import Position
 
@@ -40,6 +41,9 @@ class Candidate(models.Model):
 
     def __str__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse('candidate-detail', kwargs={'pk': self.id})
 
 
 class CV(models.Model):
