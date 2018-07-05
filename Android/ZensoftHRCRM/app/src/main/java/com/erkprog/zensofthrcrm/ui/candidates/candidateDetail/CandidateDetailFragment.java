@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
     View.OnClickListener {
@@ -81,25 +83,23 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mEmail.setText(candidate.getEmail());
     mPhoneNumber.setText(candidate.getPhone());
     mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
-    mYearsOfExp.setText(candidate.getExperience().toString());
-    mCvsAdapter.setData(candidate.getCvs());
-    mCommentsAdapter.setData(candidate.getComments());
-    mInterviewsAdapter.setData(candidate.getInterviews());
-    addViewsToLayout();
+    mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
+    addExtraViews(candidate);
   }
 
-  private void addViewsToLayout() {
+  private void addExtraViews(Candidate candidate) {
     //add CV views to layout
-    addCvsViews(mCvsAdapter);
+    addCvsViews(candidate.getCvs());
 
     //add Comment views to layout
-    addCommentViews(mCommentsAdapter);
+    addCommentViews(candidate.getComments());
 
     //add Interview views to layout
     addInterviewViews(mInterviewsAdapter);
 
     //add Buttons
     addActionButtons();
+
 
   }
 
@@ -131,8 +131,12 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     }
   }
 
-  private void addCommentViews(final CommentsAdapter commentsAdapter) {
-    int itemsCount = commentsAdapter.getCount();
+  private void addCommentViews(List<Comment> commentList) {
+    if (commentList == null) {
+      return;
+    }
+
+    int itemsCount = commentList.size();
 
     if (itemsCount > 0) {
 
@@ -142,25 +146,28 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
       mLayout.addView(descriptionText);
 
-      // add comment views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = commentsAdapter.getView(i, null, null);
-        final int finalI = i;
+      // add cvs views
+      for (final Comment commentItem : commentList) {
+        View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
 
-        item.setOnClickListener(new View.OnClickListener() {
+        commentView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Comment commentItem = (Comment) commentsAdapter.getItem(finalI);
             onCommentItemClicked(commentItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(commentView);
       }
     }
   }
 
-  private void addCvsViews(final CvsAdapter cvsAdapter) {
-    int itemsCount = cvsAdapter.getCount();
+  private void addCvsViews(List<Cv> cvList) {
+    if (cvList == null) {
+      return;
+    }
+
+    int itemsCount = cvList.size();
 
     if (itemsCount > 0) {
 
@@ -171,18 +178,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       mLayout.addView(descriptionText);
 
       // add cvs views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = cvsAdapter.getView(i, null, null);
-        final int finalI = i;
+      for (final Cv cvItem : cvList) {
+        View cvView = ViewBuilder.createCvView(getActivity(), cvItem, cvList.indexOf(cvItem));
 
-        item.setOnClickListener(new View.OnClickListener() {
+        cvView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Cv cvItem = (Cv) cvsAdapter.getItem(finalI);
-              onCvItemClicked(cvItem);
+            onCvItemClicked(cvItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(cvView);
       }
     }
   }
