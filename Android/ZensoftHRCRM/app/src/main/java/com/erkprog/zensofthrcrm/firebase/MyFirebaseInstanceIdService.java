@@ -1,8 +1,6 @@
 package com.erkprog.zensofthrcrm.firebase;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -14,6 +12,7 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
     String refreshedToken = FirebaseInstanceId.getInstance().getToken();
     Log.d("TOKEN", "Refreshed token: " + refreshedToken);
 
+    //TODO: send user's TOKEN to server here
 //    sendRegistrationToServer(refreshedToken);
   }
 }
