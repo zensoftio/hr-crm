@@ -1,6 +1,5 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-import json
 
 from apps.templates.models import Template, Attachment
 from apps.templates.serializers import TemplateListSerializer, TemplateCreateSerializer, \
@@ -12,14 +11,11 @@ class TemplateListCreateView(generics.ListCreateAPIView):
     queryset = Template.objects.all()
     serializer_class = TemplateListSerializer
 
-    def get(self, request, *args, **kwargs):
-        d = {"task": "FIND_ALL"}
-        # body = json.dumps(d)
-        # body = json.loads(body)
-        # print(body)
-        send = Send()
-        send.publish_request(d)
-        return Response(d, status=status.HTTP_200_OK)
+    # def get(self, request, *args, **kwargs):
+    #     message = {"task": "FIND_ALL"}
+    #     send = Send()
+    #     send.publish_request(message)
+    #     return Response(message, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwags):
         write_serializer = TemplateCreateSerializer(data=request.data)
