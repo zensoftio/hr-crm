@@ -1,42 +1,95 @@
 package io.zensoft.share.service;
 
-import io.zensoft.share.dto.PostDto;
-import io.zensoft.share.model.Post;
-import io.zensoft.share.model.PostResponse;
-import io.zensoft.share.service.model.PostResponseService;
-import io.zensoft.share.service.model.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.zensoft.share.dto.VacancyDto;
+import io.zensoft.share.dto.VacancyResponseDto;
+import io.zensoft.share.model.Vacancy;
+import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.service.converter.DtoConverterService;
+import io.zensoft.share.service.model.VacancyModelService;
+import io.zensoft.share.service.model.VacancyResponseModelService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public abstract class BasePublisherService implements PublisherService {
-    protected final RestTemplate restTemplate;
-    private final PostService postService;
-    private final PostResponseService postResponseService;
+    protected final VacancyResponseModelService defaultVacancyResponseModelService;
+    private final VacancyModelService defaultVacancyModelService;
+    private final DtoConverterService<Vacancy, VacancyDto> vacancyConverter;
+    private final DtoConverterService<VacancyResponse, VacancyResponseDto> vacancyResponseConverter;
+    private final ResponseSenderService<VacancyResponseDto> responseSenderService;
 
-    @Autowired
-    public BasePublisherService(RestTemplate restTemplate, PostService postService, PostResponseService postResponseService) {
-        this.restTemplate = restTemplate;
-        this.postService = postService;
-        this.postResponseService = postResponseService;
+    public BasePublisherService(VacancyResponseModelService defaultVacancyResponseModelService,
+                                VacancyModelService defaultVacancyModelService,
+                                DtoConverterService<Vacancy, VacancyDto> vacancyConverter,
+                                DtoConverterService<VacancyResponse, VacancyResponseDto> vacancyResponseConverter,
+                                ResponseSenderService<VacancyResponseDto> responseSenderService) {
+        this.defaultVacancyResponseModelService = defaultVacancyResponseModelService;
+        this.defaultVacancyModelService = defaultVacancyModelService;
+        this.vacancyConverter = vacancyConverter;
+        this.vacancyResponseConverter = vacancyResponseConverter;
+        this.responseSenderService = responseSenderService;
     }
 
+    /**
+     * pre-publisher method.
+     * before publishing to services it converts
+     * dto objects and saves to database
+     *
+     * @param vacancyDto DTO object received from listener
+     */
     @Override
-    public void publish(PostDto postDto) {
-        Post post = convertDto(postDto);
-        postService.save(post);
-        PostResponse postResponse = publish(post);
-        postResponseService.save(postResponse);
-        //after send response to monolith
+    @Transactional
+    public final void publish(VacancyDto vacancyDto) {
+        Vacancy vacancy = vacancyConverter.fromDto(vacancyDto);
+        defaultVacancyModelService.save(vacancy);
+
+        VacancyResponse vacancyResponse = publish(vacancy);
+
+        defaultVacancyResponseModelService.save(vacancyResponse);
+        VacancyResponseDto vacancyResponseDto = vacancyResponseConverter.toDto(vacancyResponse);
+
+        responseSenderService.respond(vacancyResponseDto);
     }
 
-    //TODO
-    private Post convertDto(PostDto postDto) {
-        Post post = new Post();
-        return post;
+
+    /**
+     * pre process method that before
+     * sending response converts dto objects
+     *
+     * @param vacancyDto
+     */
+    @Override
+    @Transactional
+    public final void getInfo(VacancyDto vacancyDto) {
+        Vacancy vacancy = vacancyConverter.fromDto(vacancyDto);
+
+        VacancyResponse vacancyResponse = getInfo(vacancy);
+
+        VacancyResponseDto vacancyResponseDto = vacancyResponseConverter.toDto(vacancyResponse);
+
+        responseSenderService.respond(vacancyResponseDto);
+
     }
 
-    public abstract PostResponse publish(Post post);
+
+    /**
+     * Retrieve VacancyResponse object from db
+     * for the requested Vacancy.
+     * Called from this.publish(VacancyDto).
+     *
+     * @param vacancy Post object
+     * @return VacancyResponse object for requested service
+     */
+    protected abstract VacancyResponse getInfo(Vacancy vacancy);
+
+    /**
+     * Publish to service.
+     * Create new VacancyResponse object with
+     * requested Vacancy object and return it.
+     *
+     * @param vacancy Vacancy object taken from request
+     * @return VacancyResponse object with updated data
+     */
+    protected abstract VacancyResponse publish(Vacancy vacancy);
+
 }
