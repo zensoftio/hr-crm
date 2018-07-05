@@ -20,14 +20,15 @@ export class InboxService {
       await this.inboxRepository.update(toUpdate.id,toDate);
       return toUpdate;
     }catch (e){
-      console.log(e)
+      return e;
     }
 
   }
 
   async getMessages(message){
     const date = await this.update(message.date);
-    return date;
+    const msg = await gmail.getAllMessages(message.date);
+    return msg;
   }
 
   async getOneMessage(message){
