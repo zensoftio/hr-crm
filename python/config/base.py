@@ -52,7 +52,7 @@ class Base(Configuration):
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_DJANGO_SETTINGS = {
-        "FCM_SERVER_KEY": "[retrieve it tomorrow]",
+        "FCM_SERVER_KEY": "AAAAfOW1psI:APA91bFDLJo7Xahg41XwwoYkaKMNUK88PRl00SHSW_ll1pFkytR4oxgXG8E9r5X3GbDsWz_EYqtZVmaSCcu2rtv6yPHwT-MVd0en1292i1ouOF8EjOSzi9KE67DvbWpD7_vtiD016gI1",
     }
 
     AUTHENTICATION_BACKENDS = (
@@ -96,8 +96,6 @@ class Base(Configuration):
         'x-csrftoken',
         'x-requested-with',
     )
-
-    CORS_ORIGIN_ALLOW_ALL = True
 
     ROOT_URLCONF = 'urls'
 

@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
 
 from apps.departments.models import Position, Requirement
+from apps.utils.notifications import request_created
 
 User = get_user_model()
 
@@ -20,3 +22,6 @@ class Request(models.Model):
 
     class Meta:
         default_related_name = 'requests'
+
+
+post_save.connect(receiver=request_created, sender=Request)
