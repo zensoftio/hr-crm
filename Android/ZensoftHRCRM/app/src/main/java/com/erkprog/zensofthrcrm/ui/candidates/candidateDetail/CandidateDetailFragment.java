@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,6 @@ import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
@@ -116,7 +113,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         interviewView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            onInterviewItemClicked(interviewItem);
+            mPresenter.onInterviewItemClicked(interviewItem);
           }
         });
 
@@ -147,7 +144,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         commentView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            onCommentItemClicked(commentItem);
+            mPresenter.onCommentItemClicked(commentItem);
           }
         });
 
@@ -178,7 +175,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         cvView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            onCvItemClicked(cvItem);
+            mPresenter.onCvItemClicked(cvItem);
           }
         });
 
@@ -194,18 +191,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
     v.findViewById(R.id.cd_message_button).setOnClickListener(this);
     mLayout.addView(v);
-  }
-
-  private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
-    mPresenter.onInterviewItemClicked(interviewItem);
-  }
-
-  private void onCommentItemClicked(Comment commentItem) {
-    mPresenter.onCommentItemClicked(commentItem);
-  }
-
-  private void onCvItemClicked(Cv cvItem) {
-    mPresenter.onCvItemClicked(cvItem);
   }
 
   @Override
