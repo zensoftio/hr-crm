@@ -54,8 +54,8 @@ public class DatePickerFragment extends DialogFragment {
             int year = mDatePicker.getYear();
             int month = mDatePicker.getMonth();
             int day = mDatePicker.getDayOfMonth();
-            int hour = 10;
-            int minute = 0;
+            int hour;
+            int minute;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
               hour = mTimePicker.getHour();
               minute = mTimePicker.getMinute();
@@ -79,6 +79,7 @@ public class DatePickerFragment extends DialogFragment {
   }
 
   private void sendResult(int resultCode, Date date) {
+    //return new Date to CreateInterviewFragment
     if (getTargetFragment() == null) {
       return;
     }

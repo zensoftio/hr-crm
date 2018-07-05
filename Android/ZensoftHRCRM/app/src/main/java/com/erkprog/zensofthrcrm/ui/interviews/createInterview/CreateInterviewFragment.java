@@ -110,9 +110,11 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
         break;
 
       case R.id.crint_add_image:
+        //TODO: display list of available interviewers here
         break;
 
       case R.id.crint_create_button:
+        //TODO: create new interview here (implement POST request)
         break;
 
       default:
@@ -132,6 +134,7 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     }
 
     if (requestCode == REQUEST_DATE_CODE) {
+      //New date and time for interview sucessfully received from DatePickerFragment
       Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
       updateInterviewDate(date);
 
