@@ -156,6 +156,7 @@ class CreateVacancyContainer extends Component {
         </div>
       </div>
     );
+
   }
 }
 

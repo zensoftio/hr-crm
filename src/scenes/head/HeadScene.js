@@ -8,6 +8,8 @@ import Archive from '../../scenes/head/Archive';
 import Statistics from '../../scenes/general/Statistics';
 import SpecifyTheRoute from '../../utils/Route';
 import EditPositions from './EditPositions';
+
+import App from '../../App';
 import '../../index.css';
 
 export default class HeadScene extends Component {
@@ -24,7 +26,8 @@ export default class HeadScene extends Component {
                         <Switch>
                             <Route path="/" component={OpenedPositions} exact/>
                             <SpecifyTheRoute route={HeadNav} />
-                            <Route component={Error}/>
+                            <Route component={Error}/>											
+
                         </Switch>
                     </div>
 
@@ -58,5 +61,10 @@ const HeadNav = [
     {			
         path: '/edit_positions',
         component: EditPositions
-    }
+		},
+		{
+			name: 'Logout',
+			path: '/app',
+			component: App
+		}
 ]

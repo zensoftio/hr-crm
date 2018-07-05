@@ -1,26 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../general/Header';
+import PositionService from '../../services/position';
+
 
 class OpenedPositions extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
 			positionList: [
-				{
-					position: 'Python',
-					created: '12.12.2012'
-				},
-				{
-					position: 'JS',
-					created: '12.2.2013'
-				},
-				{
-					position: 'iOS',
-					created: '12.2.2013'
-				}
+				// {
+				// 	position: 'Python',
+				// 	created: '12.12.2012'
+				// },
+				// {
+				// 	position: 'JS',
+				// 	created: '12.2.2013'
+				// },
+				// {
+				// 	position: 'iOS',
+				// 	created: '12.2.2013'
+				// }
 			]		
 		};
+	}
+
+	componentDidMount() {
+		this.fetchData();
+	}
+	fetchData(){
+		fetch('https://private-anon-fc0d4b79ec-zensofthr.apiary-mock.com/api/v1/requests?status=&department=')
+			.then(res => res.json())			
+			.then(json => console.log(json))
+			.catch(err => console.log('FAILED : ',err))
+			
 	}
 
 	handleConfirm = (listToDelete) => {
@@ -57,6 +70,7 @@ class OpenedPositions extends React.Component {
 					})}
 					</tbody>
 				</table>
+				
 			</div>
 		);
 	}
