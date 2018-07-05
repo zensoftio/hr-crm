@@ -3,32 +3,26 @@ package io.zensoft.share.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+
+/**
+ * Created by temirlan on 7/5/18.
+ */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
-public class VacancyResponse {
+public class Requirement {
     @Id
     @GeneratedValue
     private Long id;
-
+    private String name;
+    private Integer type;
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
     private Vacancy vacancy;
-
-    private String message;
-    private String url;
-
-    @Enumerated(value = EnumType.STRING)
-    private VacancyStatus status;
-
-    @Enumerated(value = EnumType.STRING)
-    private PublisherServiceType publisherServiceType;
-
-    private Date publishDate;
-
 }
