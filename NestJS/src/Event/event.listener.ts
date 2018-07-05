@@ -9,14 +9,14 @@ export class EventController {
   constructor(private readonly eventService: EventService) {
        this.initRabbitMQ(async (msg) => {
             var jsonObj = JSON.parse(msg.content.toString());
-            const result = await this.getActionFromMessage(jsonObj);
+            const result = await this.getDataFromService(jsonObj);
             console.log(result);
             channel.default.sendToQueue(msg.properties.replyTo, new Buffer.from(JSON.stringify(result)));
             channel.default.ack(msg);
        });
   }
 
-  public async getActionFromMessage(message: any): Promise<any> {
+  public async getDataFromService(message: any): Promise<any> {
     try{
       this.msg = {
         'title': message.title,
@@ -47,7 +47,6 @@ export class EventController {
     return this.msg;
   }
   private initRabbitMQ(callback){
-
     channel.default.assertQueue('event', {durable: true});
     channel.default.prefetch(1);
     console.log(' [x] Awaiting RPC requests');
