@@ -9,7 +9,7 @@ class TemplateListSerializer(serializers.ModelSerializer):
         fields = ('id', 'subject', 'type', 'content', 'created')
 
 
-class Base64FileField(serializers.ImageField):
+class Base64FileField(serializers.FileField):
     """
     A Django REST framework field for handling file-uploads through raw post data.
     It uses base64 for encoding and decoding the contents of the file.
@@ -48,8 +48,8 @@ class Base64FileField(serializers.ImageField):
     def get_file_extension(self, file_name, decoded_file):
         import imghdr
 
-        extension = imghdr.what(file_name, decoded_file)
-        extension = "jpg" if extension == "jpeg" else extension
+        # extension = imghdr.what(file_name, decoded_file)
+        extension = "txt" #if extension == "txt" else extension
 
         return extension
 
