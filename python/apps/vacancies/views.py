@@ -27,7 +27,6 @@ class PublicationList(generics.ListCreateAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
 
- 
 
 class PublicationDetail(generics.RetrieveAPIView):
     queryset = Publication.objects.all()

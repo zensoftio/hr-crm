@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from apps.candidates.models import Candidate
 from apps.departments.models import Department
@@ -20,6 +21,9 @@ class Interview(models.Model):
 
     def __str__(self):
         return '{name} {date}'.format(date=self.date, name=self.candidate.first_name)
+
+    def get_absolute_url(self):
+        return reverse('interview-detail', kwargs={'pk': self.id})
 
 
 class Interviewer(models.Model):

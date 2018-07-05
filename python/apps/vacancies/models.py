@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-
+from django.urls import reverse
 
 from apps.departments.models import Requirement
 from apps.requests.models import Request
@@ -50,6 +50,9 @@ class Vacancy(models.Model):
     class Meta:
         default_related_name = 'vacancies'
 
+    def get_absolute_url(self):
+        return reverse('vacancy-detail', kwargs={'pk': self.id})
+
 
 class Publication(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
@@ -61,3 +64,6 @@ class Publication(models.Model):
 
     class Meta:
         default_related_name = 'publications'
+
+    def get_absolute_url(self):
+        return reverse('publication-detail', kwargs={'pk': self.id})

@@ -58,13 +58,11 @@ class GetInstanceTestMixin(object):
         and create Model Instance e.g. Candidate.object.create()
         And Create all Related objects(Related Fields in 'model')
     """
-    url = None
     model = None
     serializer = None
 
     def test_instance(self):
-        url = self.url + str(self.instance.id)
-        response = self.client.get(url)
+        response = self.client.get(self.instance.get_absolute_url())
         serializer = self.serializer(self.instance)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

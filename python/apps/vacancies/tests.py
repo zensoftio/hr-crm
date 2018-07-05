@@ -1,8 +1,9 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, CreateTestMixin
-from .models import Vacancy
-from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer
+from apps.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
+from .models import Vacancy, Publication
+from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
+                                                                                                PublicationSerializer
 
 
 class VacancyListTestCase(ListTestMixin, APITestCase):
@@ -11,7 +12,7 @@ class VacancyListTestCase(ListTestMixin, APITestCase):
     serializer = VacancyListSerializer
 
 
-class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
+class VacancyCreateTestCase(CreateTestMixin, APITestCase):
     url = '/vacancies/'
     model = Vacancy
     serializer = VacancyCreateUpdateSerializer
@@ -43,3 +44,25 @@ class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
             8
         ]
     }
+
+
+class VacancyDetailTestCase(GetInstanceTestMixin, APITestCase):
+    model = Vacancy
+    serializer = VacancyDetailSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
+
+    def setUp(self):
+        self.instance = Vacancy.objects.get(pk=1)
+
+
+class PublicationDetailTestCase(GetInstanceTestMixin, APITestCase):
+    model = Publication
+    serializer = PublicationSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
+
+    def setUp(self):
+        self.instance = Publication.objects.get(pk=1)
