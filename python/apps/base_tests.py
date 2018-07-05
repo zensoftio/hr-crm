@@ -46,17 +46,16 @@ class CreateTestMixin(object):
 
 class GetInstanceTestMixin(object):
     """
-    Mixin for testing concrete Candidate instance
+        Mixin for testing receiving an instance separately
 
-    Usage:
-        url - endpoint e.g. '/candidates/'
-        model - e.g Candidate
-        serializer - e.g. CandidateSerializer
+        Usage:
+            model - e.g Candidate
+            serializer - e.g. CandidateSerializer
 
-    ! Important:
-        You must override def setUp(self):
-        and create Model Instance e.g. Candidate.object.create()
-        And Create all Related objects(Related Fields in 'model')
+        ! Important:
+            You must override def setUp(self):
+            and create Model Instance e.g. Candidate.object.create()
+            And Create all Related objects(Related Fields in 'model')
     """
     model = None
     serializer = None
@@ -70,9 +69,27 @@ class GetInstanceTestMixin(object):
 
 
 class UpdateTestMixin(object):
+    """
+        Mixin for testing updating Model instance
+
+        Usage:
+            model = e.g Candidate
+            serializer = e.g CandidateSerializer
+
+        ! Important:
+            You must override def setUp(self):
+            and get Model Instance e.g. Candidate.object.get(pk=1)
+            and write new data for fields of instance e.g
+                                                            self.update_data = {
+                                                                "field_1": "data",
+                                                                "field_2": "data"
+                                                                etc.
+                                                            }
+    """
     model = None
     serializer = None
 
     def test_update(self):
         response = self.client.patch(self.instance.get_absolute_url(), self.update_data)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)

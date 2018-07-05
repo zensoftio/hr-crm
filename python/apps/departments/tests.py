@@ -57,8 +57,8 @@ class PositionListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
     def setUp(self):
         department = Department.objects.create(name='Python')
         self.request_body = {
-            'department' : department.id,
-            'name' : 'Python'
+            'department': department.id,
+            'name': 'Python'
         }
 
 
