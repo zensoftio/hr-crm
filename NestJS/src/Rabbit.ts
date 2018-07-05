@@ -1,6 +1,15 @@
+var amqp = require('amqplib/callback_api');
 
-import * as Amqp from "amqp-ts";
+let channel;
+let done = false;
+if(channel === undefined){
+  amqp.connect('amqp://guest:guest@localhost:5672', function(err, conn) {
+    conn.createChannel(function(err, ch) {
+      channel = ch;
+      done = true;
+    });
+  });
+  require('deasync').loopWhile(function(){return !done});
+}
 
-const connection = new Amqp.Connection("amqp://guest:guest@localhost:5672");
-
-export default connection;
+export default channel;
