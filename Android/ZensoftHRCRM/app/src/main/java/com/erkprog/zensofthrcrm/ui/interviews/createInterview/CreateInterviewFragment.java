@@ -58,6 +58,7 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     mPresenter = new CreateInterviewPresenter(this);
     mInterviewDate = new Date();
     initUI(v);
+    setFields();
 
     Log.d(TAG, "onCreateView: " + mCandidateId);
 
@@ -65,14 +66,9 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   }
 
   private void initUI(View v) {
-    Bundle args = getArguments();
     mCandidateName = v.findViewById(R.id.crint_candidate_name);
-    mCandidateName.setText(args.getString(CANDIDATE_FIRSTNAME) + " " + args.getString(CANDIDATE_LASTNAME));
     mDepartmentName = v.findViewById(R.id.crint_department);
-    mDepartmentName.setText(args.getString(CANDIDATE_DEPARTMENT));
-    mCandidateId = args.getInt(CANDIDATE_ID);
     mDate = v.findViewById(R.id.crint_date);
-    mDate.setText(mInterviewDate.toString());
     mInterviewers = v.findViewById(R.id.crint_interviewers);
     mSetDateButton = v.findViewById(R.id.crint_set_date_button);
     mSetDateButton.setOnClickListener(this);
@@ -80,6 +76,18 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     mAddInterviewersButton.setOnClickListener(this);
     mCreateButton = v.findViewById(R.id.crint_create_button);
     mCreateButton.setOnClickListener(this);
+  }
+
+  private void setFields() {
+    Bundle args = getArguments();
+    StringBuilder candidateName = new StringBuilder();
+    candidateName.append(args.getString(CANDIDATE_FIRSTNAME))
+        .append(" ")
+        .append(args.getString(CANDIDATE_LASTNAME));
+    mCandidateName.setText(candidateName);
+    mDepartmentName.setText(args.getString(CANDIDATE_DEPARTMENT));
+    mCandidateId = args.getInt(CANDIDATE_ID);
+    mDate.setText(mInterviewDate.toString());
   }
 
   public static CreateInterviewFragment newInstance(int candidateId, String lastName, String
