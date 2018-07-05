@@ -1,21 +1,19 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
 import deasyncPromise from 'deasync-promise';
-import * as connection from 'Rabbit';
+import * as channel from 'Rabbit';
 
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-       this.queue = connection.default.declareQueue("event", {durable: true});
        this.initRabbitMQ(async (msg) => {
-         const json = JSON.parse(msg.getContent());
-         const result = await this.getActionFromMessage(json);
-         msg._channel.sendToQueue(
-                                  msg.properties.replyTo,
-                                  new Buffer.from(JSON.stringify(result))
-                                 );
-     });
+            var jsonObj = JSON.parse(msg.content.toString());
+            const result = await this.getActionFromMessage(jsonObj);
+            console.log(result);
+            channel.default.sendToQueue(msg.properties.replyTo, new Buffer.from(JSON.stringify(result)));
+            channel.default.ack(msg);
+       });
   }
 
   public async getActionFromMessage(message: any): Promise<any> {
@@ -48,10 +46,14 @@ export class EventController {
     }
     return this.msg;
   }
-
   private initRabbitMQ(callback){
-    this.queue.activateConsumer((msg) => {
+
+    channel.default.assertQueue('event', {durable: true});
+    channel.default.prefetch(1);
+    console.log(' [x] Awaiting RPC requests');
+    channel.default.consume('event', async function reply(msg) {
       callback(msg);
-    },{noAck: true});
+    });
   }
+
 }
