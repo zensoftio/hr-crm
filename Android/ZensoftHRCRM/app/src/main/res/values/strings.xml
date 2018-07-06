@@ -22,4 +22,23 @@
   <string name="attachment">attachment</string>
   <string name="candidate">Candidate</string>
   <string name="date">Date</string>
+  <string name="user_not_found">user not found</string>
+  <string name="date_not_found">date not found</string>
+  <string name="comment_not_found">comment not found</string>
+  <string name="interviewers">interviewers</string>
+  <string name="interviewers_not_found">interviewers not found</string>
+  <string name="scheduled">scheduled</string>
+  <string name="took_place">took place</string>
+  <string name="canceled">canceled</string>
+  <string name="not_considered">not considered</string>
+  <string name="considered">considered</string>
+  <string name="suitable">suitable</string>
+  <string name="not_suitable">not suitable</string>
+  <string name="testing">testing</string>
+  <string name="interview_scheduled">interview scheduled</string>
+  <string name="interview_took_place">interview took place</string>
+  <string name="worker">worker</string>
+  <string name="reserved">reserved</string>
+  <string name="intern">intern</string>
+  <string name="interview_failed">interview failed</string>
 </resources>
