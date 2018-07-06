@@ -1,7 +1,5 @@
 import os
-
 from rest_framework import serializers
-
 from apps.templates.models import Template, Attachment
 
 
@@ -56,6 +54,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
         exclude = []
 
 
+
 class TemplateCreateSerializer(serializers.ModelSerializer):
     attachments = AttachmentSerializer(many=True)
 
@@ -64,11 +63,17 @@ class TemplateCreateSerializer(serializers.ModelSerializer):
         exclude = ['modified', 'created']
 
     def create(self, validated_data):
-        tracks_data = validated_data.pop('attachments')
-        album = Template.objects.create(**validated_data)
-        for track_data in tracks_data:
-            Template.objects.create(album=album, **track_data)
-        return album
+        attachments = validated_data.pop('attachments')
+
+        template = Template.objects.create(**validated_data)
+
+        for attach in attachments:
+            file = attach['file']
+            type = attach['type']
+            attachment = Attachment.objects.create(file=file, type=type)
+            template.attachments.add(attachment)
+            template.save()
+        return template
 
 
 class TemplateDetailSerializer(serializers.ModelSerializer):
