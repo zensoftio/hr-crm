@@ -1,24 +1,42 @@
-version: '3'
+version: '2'
 
 services:
-  web:
-    restart: always
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/hr_crm
-    depends_on:
-      - postgres
-    command: python manage.py runserver 0.0.0.0:8000
-
   postgres:
     container_name: db
     restart: always
     image: postgres:latest
     expose:
       - "5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=hr_crm
+    env_file:
+      - .env
+
+  web:
+    restart: always
+    build: .
+    container_name: django
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    command: >
+        bash -c "python manage.py migrate
+        && python manage.py loaddata apps/fixtures/*
+        && gunicorn -w 3 -b 0.0.0.0:8000 wsgi"
+    volumes:
+      - ./static:/static
+
+  nginx:
+    image: nginx
+    restart: always
+    container_name: nginx
+    ports:
+      - "80:80"
+    links:
+      - web:web
+    depends_on:
+      - web
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./static:/static

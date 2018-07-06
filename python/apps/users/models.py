@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.urls import reverse
 
 from apps.departments.models import Department
 from .validators import email_validator
@@ -25,3 +26,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.last_name
+
+    def get_absolute_url(self):
+        return reverse('user-detail', kwargs={'pk': self.id})

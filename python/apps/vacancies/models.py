@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+
 import uuid
+from django.urls import reverse
+
 from apps.requests.models import Request
 
 User = get_user_model()
@@ -49,6 +52,10 @@ class Vacancy(models.Model):
 
     class Meta:
         default_related_name = 'vacancies'
+        verbose_name_plural = 'vacancies'
+
+    def get_absolute_url(self):
+        return reverse('vacancy-detail', kwargs={'pk': self.id})
 
 
 class Publication(models.Model):
@@ -61,3 +68,6 @@ class Publication(models.Model):
 
     class Meta:
         default_related_name = 'publications'
+
+    def get_absolute_url(self):
+        return reverse('publication-detail', kwargs={'pk': self.id})
