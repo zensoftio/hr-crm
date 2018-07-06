@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 
 class Attachment(models.Model):
@@ -20,8 +19,7 @@ class Template(models.Model):
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    attachments = models.ManyToManyField(Attachment)
-    # attachments = ArrayField(models.FileField(), models.DateTimeField())
+    attachments = models.ManyToManyField(Attachment)g
 
     def __str__(self):
         return self.subject
