@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Attachment(models.Model):
-    file = models.FileField()
+    file = models.FileField(upload_to='media')
     type = models.CharField(max_length=10)
     created = models.DateTimeField(auto_now_add=True)
 
