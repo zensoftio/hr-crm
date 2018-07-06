@@ -8,6 +8,7 @@ import io.zensoft.share.service.PublisherManagerService;
 import io.zensoft.share.service.converter.DefaultVacancyConverterService;
 import io.zensoft.share.service.converter.DefaultVacancyResponseConverterService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -15,6 +16,7 @@ public class FacebookListener implements VacancyListener {
 
     private final PublisherManagerService facebookPublisherManagerService;
 
+    @Autowired
     public FacebookListener(PublisherManagerService facebookPublisherManagerService){
         this.facebookPublisherManagerService = facebookPublisherManagerService;
     }
