@@ -3,10 +3,10 @@ import {MessageService} from './message.service'
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { RecipientService } from 'Recipients/recipient.service';
+import * as connection from 'Rabbit';
 
-const connection = new Amqp.Connection("amqp://localhost");
-const exchange = connection.declareExchange("js-backend", 'direct', { durable: false });
-const queue = connection.declareQueue('message', {durable: false});
+const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
+const queue = connection.default.declareQueue('message', {durable: false});
 
 @Controller('messages')
 export class MessageListener {
@@ -36,7 +36,7 @@ export class MessageListener {
         res = this.getMessages(msg)
         break;
     }
-    return res 
+    return res
   }
 
   async getMessages(data){
@@ -47,8 +47,8 @@ export class MessageListener {
   }
 
   sendResponse(res) {
-    connection.declareQueue("message-response")
-    connection.completeConfiguration().then(() => {
+    connection.default.declareQueue("message-response")
+    connection.default.completeConfiguration().then(() => {
       var msg2 = new Amqp.Message(res);
       exchange.send(msg2);
       console.log(' [x] Sent message-response  \'' + msg2.getContent() + '\'');
