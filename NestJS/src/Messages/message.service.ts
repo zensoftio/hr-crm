@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getRepository } from 'typeorm';
 import { Message } from './message.entity';
 import { acceleratedmobilepageurl } from 'googleapis/build/src/apis/acceleratedmobilepageurl';
-import { Recipient } from 'Recipients/recepient.entity';
+import { Recipient } from 'Recipients/recipient.entity';
 import { RecipientService } from 'Recipients/recipient.service';
 import { RelationCountAttribute } from 'typeorm/query-builder/relation-count/RelationCountAttribute';
 
@@ -15,10 +15,8 @@ export class MessageService {
 
 
   async create(message: Message): Promise<number> {
-
     const response = await this.messageRepository.save(message)
-      const id = +await JSON.stringify(response.id)
-    return id
+    return await JSON.stringify(response.id)
   }
 
   async findAll(): Promise<Message[]> {
@@ -31,8 +29,6 @@ export class MessageService {
     .leftJoinAndSelect("message.recipients", "recipient")
     .where("recipient.email = :email", { email: recipientEmail })
     .getMany()
-    
-    console.log(myMessages)
     return myMessages;
   }
 
@@ -46,7 +42,9 @@ export class MessageService {
         await this.messageRepository.delete({id: int});
         return toDelete;
     } catch (e) {
-        console.log(e);
+      console.log("Error2");
+      console.log(e);
+      console.log("Error2");
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { Templates } from '../Templates/template.entity'
-import { Recipient } from 'Recipients/recepient.entity';
+import { Recipient } from 'Recipients/recipient.entity';
 
 @Entity()
 export class Message {
@@ -20,7 +20,7 @@ export class Message {
   createdAt: string;
 
   @ManyToOne(type => Templates, template => template.messages)
-    template : Templates;
+  template : Templates;
 
   @OneToMany(type => Recipient, recipients => recipients.message) // note: we will create author property in the Photo class below
   recipients: Recipient[];
