@@ -48,7 +48,7 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
-    CSRF_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
@@ -58,7 +58,6 @@ class Base(Configuration):
     }
 
     AUTHENTICATION_BACKENDS = (
-        'social_core.backends.facebook.FacebookOAuth2',
         'social_core.backends.google.GoogleOAuth2',
         'rest_framework_social_oauth2.backends.DjangoOAuth2',
         'django.contrib.auth.backends.ModelBackend',)

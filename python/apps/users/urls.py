@@ -13,5 +13,4 @@ urlpatterns += [
     path('api/login/', include('rest_social_auth.urls_token')),
     path('api/login/', include('rest_social_auth.urls_session')),
     path('api/check/', check_token),
-
 ]
