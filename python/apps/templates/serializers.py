@@ -1,5 +1,6 @@
-from rest_framework import serializers
 import os
+
+from rest_framework import serializers
 
 from apps.templates.models import Template, Attachment
 
@@ -29,32 +30,20 @@ class Base64FileField(serializers.FileField):
                 # Break out the header from the base64 content
                 header, data = data.split(';base64,')
 
-            # Try to decode the file. Return validation error if it fails.
             try:
                 decoded_file = base64.b64decode(data)
             except TypeError:
                 self.fail('invalid_file')
 
             # Generate file name:
-            file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
-            # Get the file name extension:
-            # file_extension = self.get_file_extension(file_name, decoded_file)
-
+            file_name = str(uuid.uuid4())[:12]
             file_extension = os.path.splitext(file_name)[1]
-            print(file_name, file_extension)
-            complete_file_name = "%s.%s" % (file_name, file_extension, )
+
+            complete_file_name = "%s.%s" % (file_name, file_extension,)
 
             data = ContentFile(decoded_file, name=complete_file_name)
 
         return super(Base64FileField, self).to_internal_value(data)
-
-    def get_file_extension(self, file_name, decoded_file):
-        import imghdr
-
-        # extension = imghdr.what(file_name, decoded_file)
-        extension = "txt" #if extension == "txt" else extension
-
-        return extension
 
 
 class AttachmentSerializer(serializers.ModelSerializer):
