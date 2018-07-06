@@ -92,23 +92,23 @@ getMessagesByDate = async (auth,date,callback) => {
   date = new Date(date).getTime() / 1000;
   const query = 'is:inbox AND after: ${date}';
 
-  const getMail = await gmail.users.messages.list({
+  const messageList = await gmail.users.messages.list({
     userId: 'me',
     q: query,
   })
 
-  const messages = await getMessageById(getMail.data.messages,gmail);
+  const messages = await getMessageById(messageList.data.messages,gmail);
   return messages;
 }
 
 getMessageById = async (messages,gmail,callback) => {
   var msgList = [];
   const results = await Promise.all(messages.map(async (msg) => {
-    const getMessage = gmail.users.messages.get({
+    const singleMessage = gmail.users.messages.get({
       userId: 'me',
       id: msg.id,
     });
-    const message = await getMessage;
+    const message = await singleMessage;
     msgList.push(message);
   }));
   return getEmailAttachmentId(msgList);
