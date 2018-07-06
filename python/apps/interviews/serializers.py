@@ -58,6 +58,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
     """Serializer for Interviews List Endpoint"""
     interviewers = InterviewerSerializer(many=True)
     candidate = AuxCandidateSerializer()
+    filter_fields = ('status',)
 
     class Meta:
         model = Interview

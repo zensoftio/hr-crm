@@ -1,19 +1,22 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
-import * as Amqp from "amqp-ts";
-
 import deasyncPromise from 'deasync-promise';
-import * as connection from 'Rabbit';
+import * as channel from 'Rabbit';
 
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-       this.queue = connection.default.declareQueue("event", {durable: true});
-       this.queue.activateConsumer(this._onMessage, {noAck: true});
+       this.initRabbitMQ(async (msg) => {
+            var jsonObj = JSON.parse(msg.content.toString());
+            const result = await this.getDataFromService(jsonObj);
+            console.log(result);
+            channel.default.sendToQueue(msg.properties.replyTo, new Buffer.from(JSON.stringify(result)));
+            channel.default.ack(msg);
+       });
   }
 
-  public async getActionFromMessage(message, callback) {
+  public async getDataFromService(message: any): Promise<any> {
     try{
       this.msg = {
         'title': message.title,
@@ -41,21 +44,15 @@ export class EventController {
     catch(err){
       this.msg.body = err;
     }
-    callback(this.msg);
+    return this.msg;
+  }
+  private initRabbitMQ(callback){
+    channel.default.assertQueue('event', {durable: true});
+    channel.default.prefetch(1);
+    console.log(' [x] Awaiting RPC requests');
+    channel.default.consume('event', async function reply(msg) {
+      callback(msg);
+    });
   }
 
-   private _onMessage = (message) => {
-     const json = JSON.parse(message.getContent());
-     let answer;
-     let done = false;
-     
-     this.getActionFromMessage(json, function(result){
-       answer = result;
-       done = true;
-     });
-
-     require('deasync').loopWhile(function(){return !done});
-
-     return answer;
-   }
 }

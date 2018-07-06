@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
 
 from apps.candidates.models import Candidate
 from apps.departments.models import Department
+from apps.utils.notifications import interview_created
 
 User = get_user_model()
 
@@ -24,6 +26,9 @@ class Interview(models.Model):
 
     def get_absolute_url(self):
         return reverse('interview-detail', kwargs={'pk': self.id})
+
+
+post_save.connect(sender=Interview, receiver=interview_created)
 
 
 class Interviewer(models.Model):

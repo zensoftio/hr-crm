@@ -19,7 +19,7 @@ class PositionListCreateView(generics.ListCreateAPIView):
     """ Return all positions and create position """
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
-
+    filter_fields = ('department',)
 
 class PositionRetrieve(generics.RetrieveAPIView):
     """ Return position by id """

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, getRepository } from 'typeorm';
 import { Event } from './event.entity';
 import * as google from './calendar/google.calendar';
-
+import * as channel from 'Rabbit';
 @Injectable()
 export class EventService {
   constructor(

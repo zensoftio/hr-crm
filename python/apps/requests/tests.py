@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin, UpdateTestMixin
+from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin, UpdateTestMixin
 from .models import Request
 from .serializer import RequestListSerializer, RequestDetailSerializer, RequestCreateOrUpdateSerializer
 

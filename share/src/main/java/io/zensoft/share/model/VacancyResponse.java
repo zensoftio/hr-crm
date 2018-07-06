@@ -17,7 +17,7 @@ public class VacancyResponse {
     private Long id;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "vacancy_id")
     private Vacancy vacancy;
 
     private String message;

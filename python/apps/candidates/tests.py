@@ -1,17 +1,20 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, GetInstanceTestMixin, UpdateTestMixin
 from apps.candidates.models import Candidate
 from apps.candidates.serializers import CandidateDetailSerializer
+from apps.departments.models import Position, Department
 from apps.interviews.serializers import AuxCandidateSerializer
+from apps.utils.base_tests import ListTestMixin, GetInstanceTestMixin
 
 
 class CandidatesListTest(APITestCase, ListTestMixin):
+    url = '/candidates/'
     model = Candidate
     serializer = AuxCandidateSerializer
 
 
 class CandidatesDetailTest(APITestCase, GetInstanceTestMixin):
+    url = '/candidates/'
     model = Candidate
     serializer = CandidateDetailSerializer
 

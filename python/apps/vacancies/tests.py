@@ -1,9 +1,10 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
                                                                                                 PublicationSerializer
+from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
+
 
 
 class VacancyListTestCase(ListTestMixin, APITestCase):

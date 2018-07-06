@@ -31,6 +31,7 @@ class Base(Configuration):
         'rest_social_auth',
         'oauth2_provider',
         'rest_framework_social_oauth2',
+        'fcm_django',
 
         'apps.candidates',
         'apps.departments',
@@ -49,6 +50,12 @@ class Base(Configuration):
 
     CSRF_COOKIE_SECURE = True
     CORS_ORIGIN_ALLOW_ALL = True
+
+    FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
+
+    FCM_DJANGO_SETTINGS = {
+        "FCM_SERVER_KEY": FCM_SERVER_KEY,
+    }
 
     AUTHENTICATION_BACKENDS = (
         'social_core.backends.facebook.FacebookOAuth2',
@@ -91,8 +98,6 @@ class Base(Configuration):
         'x-csrftoken',
         'x-requested-with',
     )
-
-    CORS_ORIGIN_ALLOW_ALL = True
 
     ROOT_URLCONF = 'urls'
 

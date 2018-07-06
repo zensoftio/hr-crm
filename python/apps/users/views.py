@@ -14,6 +14,8 @@ class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    filter_fields = ('departments',)
+
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()

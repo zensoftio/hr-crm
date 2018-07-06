@@ -9,6 +9,7 @@ from apps.interviews.serializers import InterviewListSerializer, CriteriaSeriali
 class InterviewListCreateView(generics.ListCreateAPIView):
     queryset = Interview.objects.all()
     serializer_class = InterviewListSerializer
+    filter_fields = ('status', 'candidate__position')
 
     def create(self, request, *args, **kwargs):
         write_serializer = InterviewCreateSerializer(data=request.data)
@@ -44,3 +45,4 @@ class InterviewDetailView(generics.RetrieveUpdateAPIView):
 class CriteriaCreateListView(generics.ListCreateAPIView):
     queryset = Criteria.objects.all()
     serializer_class = CriteriaSerializer
+    filter_fields = ('department',)
