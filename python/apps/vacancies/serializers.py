@@ -5,6 +5,8 @@ from apps.requests.models import Request
 from apps.users.serializers import AuxUserSerializer
 from .models import Vacancy, Publication
 
+import uuid
+
 
 class VacancyListSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='request.position.name')
@@ -27,6 +29,7 @@ class VacancyRequestSerializer(serializers.ModelSerializer):
 
 
 class VacancyDetailSerializer(serializers.ModelSerializer):
+    uuid = serializers.UUIDField(format='hex')
     created_by = AuxUserSerializer(read_only=True)
     requirements = RequirementSerializer(many=True, read_only=True)
     request = VacancyRequestSerializer()
@@ -37,7 +40,6 @@ class VacancyDetailSerializer(serializers.ModelSerializer):
 
 
 class VacancyPublicationSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Vacancy
         fields = ['id', 'created_by']
@@ -50,3 +52,6 @@ class PublicationSerializer(serializers.ModelSerializer):
         model = Publication
         exclude = []
 
+#
+#
+# class JavaVacancySerializer(serializers.ModelSerializer):
