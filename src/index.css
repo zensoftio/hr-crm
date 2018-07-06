@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+.container {
+    display: flex;
+}
+.content {
+    flex-grow: 9;
+}
+.navigation {
+    background: #4d394b;
+    height: 100vh;
+    padding: 0 40px;
+    padding-top: 30px;
+}
+.nav-ul li{
+    list-style-type: none;
+    margin: 40px 0;
+
+}
+.nav-ul li a {
+    color: #e7e6fc;
+}
+.profile_photo {
+    width: 50px;
+}
+.headphoto {
+    text-align: center;
+}
+
+.header_main {
+    background: #b8dff0;
+    text-align: center
+}
+.header_main h2 {
+    margin: 0;
+    padding: 10px;
+}
