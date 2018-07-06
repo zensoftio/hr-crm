@@ -41,4 +41,10 @@
   <string name="reserved">reserved</string>
   <string name="intern">intern</string>
   <string name="interview_failed">interview failed</string>
+  <string name="approved">approved</string>
+  <string name="rejected">rejected</string>
+  <string name="required">required</string>
+  <string name="optional">optional</string>
+  <string name="general">general</string>
+  <string name="competency">competency</string>
 </resources>
