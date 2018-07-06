@@ -1,9 +1,9 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, CreateTestMixin
+from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 from apps.departments.models import Department
-from .models import Criteria
-from .serializers import CriteriaSerializer
+from .models import Criteria, Interview
+from .serializers import CriteriaSerializer, InterviewDetailSerializer, InterviewListSerializer
 
 
 class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
@@ -17,3 +17,21 @@ class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
             "name": "OOP",
             "department": department.id
         }
+
+
+class InterviewListTestCase(ListTestMixin, APITestCase):
+    url = '/interviews/'
+    model = Interview
+    serializer = InterviewListSerializer
+
+
+class InterviewDetailTest(GetInstanceTestMixin, APITestCase):
+    url = '/interviews/'
+    model = Interview
+    serializer = InterviewDetailSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'interviews.json',
+                'vacancies.json']
+
+    def setUp(self):
+        self.instance = Interview.objects.get(pk=1)

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <Button
+      android:id="@+id/cd_edit_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="Edit"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  <Button
+      android:id="@+id/cd_delete_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="Delete"
+      app:layout_constraintBottom_toBottomOf="@+id/cd_edit_button"
+      app:layout_constraintStart_toEndOf="@+id/cd_edit_button"/>
+
+  <Button
+      android:id="@+id/cd_message_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="Message"
+      app:layout_constraintBottom_toBottomOf="@+id/cd_delete_button"
+      app:layout_constraintStart_toEndOf="@+id/cd_delete_button"/>
+
+  <Button
+      android:id="@+id/cd_interview_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="Interview"
+      app:layout_constraintBottom_toBottomOf="@+id/cd_message_button"
+      app:layout_constraintStart_toEndOf="@+id/cd_message_button"/>
+</android.support.constraint.ConstraintLayout>

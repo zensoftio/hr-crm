@@ -17,9 +17,13 @@ public interface CandidateDetailContract {
 
     boolean isActive();
 
+    void startCreateInterview(Candidate candidate);
+
   }
 
   interface Presenter {
+
+    void onCreateInterviewClicked();
 
     void loadCandidateInfo(int candidateId);
 

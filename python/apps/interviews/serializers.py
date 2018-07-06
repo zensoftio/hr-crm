@@ -58,6 +58,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
     """Serializer for Interviews List Endpoint"""
     interviewers = InterviewerSerializer(many=True)
     candidate = AuxCandidateSerializer()
+    filter_fields = ('status',)
 
     class Meta:
         model = Interview
@@ -77,6 +78,22 @@ class InterviewCreateSerializer(serializers.ModelSerializer):
         instance = Interview.objects.create(**validated_data)
         for user in users:
             Interviewer.objects.create(interview=instance, user=user)
+        return instance
+
+    def update(self, instance, validated_data):
+        new_users = validated_data.pop('interviewers')
+        old_users = [interviewer.user for interviewer in instance.interviewers.all()]
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        users_to_delete = set(old_users).difference(set(new_users))
+        users_to_create = set(new_users).difference(set(old_users))
+
+        Interviewer.objects.filter(interview=instance, user__in=users_to_delete).delete()
+        interviewers_to_create = [Interviewer(interview=instance, user=user) for user in users_to_create]
+        Interviewer.objects.bulk_create(interviewers_to_create)
+
         return instance
 
 

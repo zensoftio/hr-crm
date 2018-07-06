@@ -9,6 +9,7 @@ from apps.templates.serializers import TemplateListSerializer, TemplateCreateSer
 class TemplateListCreateView(generics.ListCreateAPIView):
     queryset = Template.objects.all()
     serializer_class = TemplateListSerializer
+    filter_fields = ('type',)
 
     def create(self, request, *args, **kwags):
         write_serializer = TemplateCreateSerializer(data=request.data)
