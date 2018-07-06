@@ -14,10 +14,11 @@ import retrofit2.Response;
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
     CandidatesRepository.OnDetailCandidateLoadFinishedListener {
 
-  private static final String TAG = "mylog:CandidateDetailPresente";
+  private static final String TAG = "PROFILE PRESENTER";
 
   private CandidateDetailContract.View mView;
   private CandidatesRepository mRepository;
+  private Candidate mCandidate;
 
   public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
     mView = view;
@@ -37,15 +38,13 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
       return;
     }
     Log.d(TAG, "onFinished: success");
-    Candidate candidate = response.body();
-    mView.showCandidateDetails(candidate);
+    mCandidate = response.body();
+    mView.showCandidateDetails(mCandidate);
   }
 
-  @SuppressLint("LongLogTag")
   @Override
   public void onFailure(Throwable t) {
     Log.d(TAG, "onFailure: starts");
-
   }
 
   @Override
@@ -61,5 +60,14 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   @Override
   public void onCvItemClicked(Cv cvItem) {
     mView.showToast(cvItem.getLink());
+  }
+
+  @Override
+  public void onCreateInterviewClicked() {
+    if (!mView.isActive() || (mCandidate == null)){
+      return;
+    }
+
+    mView.startCreateInterview(mCandidate);
   }
 }

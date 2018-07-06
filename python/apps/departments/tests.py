@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import CreateTestMixin, ListTestMixin
+from apps.utils.base_tests import CreateTestMixin, ListTestMixin
 from .models import Department, Requirement, Position
 from .serializers import DepartmentSerializer, RequirementSerializer, \
                                                             PositionSerializer
