@@ -1,5 +1,7 @@
 import os
+
 from rest_framework import serializers
+
 from apps.templates.models import Template, Attachment
 
 
@@ -52,7 +54,6 @@ class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
         exclude = []
-
 
 
 class TemplateCreateSerializer(serializers.ModelSerializer):

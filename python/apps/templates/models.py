@@ -19,7 +19,7 @@ class Template(models.Model):
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    attachments = models.ManyToManyField(Attachment)g
+    attachments = models.ManyToManyField(Attachment)
 
     def __str__(self):
         return self.subject
