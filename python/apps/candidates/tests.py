@@ -6,16 +6,7 @@ from apps.candidates.serializers import CandidateDetailSerializer
 from apps.interviews.serializers import AuxCandidateSerializer
 
 
-class CandidatesFixturesTest(APITestCase):
-    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json']
-
-    def test_list(self):
-        queryset = Candidate.objects.all()
-        self.assertEqual(queryset.count(), 3)
-
-
 class CandidatesListTest(APITestCase, ListTestMixin):
-    url = '/candidates/'
     model = Candidate
     serializer = AuxCandidateSerializer
 

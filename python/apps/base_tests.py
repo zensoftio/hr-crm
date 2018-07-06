@@ -11,12 +11,12 @@ class ListTestMixin(object):
             serializer_class - e.g. CandidateSerializer
     """
 
-    url = None
     model = None
     serializer = None
 
     def test_get_list(self):
-        response = self.client.get(self.url)
+        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        response = self.client.get(url)
         queryset = self.model.objects.all()
         serializer = self.serializer(queryset, many=True)
 
@@ -33,13 +33,14 @@ class CreateTestMixin(object):
             model - e.g Candidate
             serializer_class - e.g. CandidateSerializer
     """
-    url = None
+
     model = None
     serializer = None
     request_body = {}
 
     def test_creation(self):
-        response = self.client.post(self.url, self.request_body)
+        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(1, self.model.objects.count())
 
@@ -79,15 +80,16 @@ class UpdateTestMixin(object):
         ! Important:
             You must override def setUp(self):
             and get Model Instance e.g. Candidate.object.get(pk=1)
-            and write new data for fields of instance e.g
-                                                            self.update_data = {
-                                                                "field_1": "data",
-                                                                "field_2": "data"
-                                                                etc.
-                                                            }
+            and set data for fields of instance e.g
+                                                    self.update_data = {
+                                                        "field_1": "data",
+                                                        "field_2": "data"
+                                                        etc.
+                                                    }
     """
     model = None
     serializer = None
+    update_data = {}
 
     def test_update(self):
         response = self.client.patch(self.instance.get_absolute_url(), self.update_data)

@@ -49,6 +49,7 @@ class Vacancy(models.Model):
 
     class Meta:
         default_related_name = 'vacancies'
+        verbose_name_plural = 'vacancies'
 
     def get_absolute_url(self):
         return reverse('vacancy-detail', kwargs={'pk': self.id})

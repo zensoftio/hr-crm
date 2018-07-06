@@ -7,18 +7,17 @@ from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, V
 
 
 class VacancyListTestCase(ListTestMixin, APITestCase):
-    url = '/vacancies/'
     model = Vacancy
     serializer = VacancyListSerializer
 
 
 class VacancyCreateTestCase(CreateTestMixin, APITestCase):
-    url = '/vacancies/'
     model = Vacancy
     serializer = VacancyCreateUpdateSerializer
 
     def test_creation(self):
-        response = self.client.post(self.url, self.request_body)
+        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(3, self.model.objects.count())
 

@@ -7,7 +7,6 @@ from .models import User
 
 
 class UsersListTest(APITestCase, ListTestMixin):
-    url = '/users/'
     model = get_user_model()
     serializer = UserSerializer
 

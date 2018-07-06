@@ -7,7 +7,6 @@ from .serializers import DepartmentSerializer, RequirementSerializer, \
 
 
 class DepartmentListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
-    url = '/departments/'
     model = Department
     request_body = {'name': 'Python'}
     serializer = DepartmentSerializer
@@ -25,7 +24,6 @@ class DepartmentDetailTestCase(GetInstanceTestMixin, APITestCase):
 
 
 class RequirementListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
-    url = '/requirements/'
     model = Requirement
     serializer = RequirementSerializer
 
@@ -50,7 +48,6 @@ class RequirementDetailTestCase(GetInstanceTestMixin, APITestCase):
 
 
 class PositionListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
-    url = '/positions/'
     model = Position
     serializer = PositionSerializer
 
