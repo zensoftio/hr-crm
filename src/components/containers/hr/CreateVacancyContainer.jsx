@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
-import ButtonSubmit from '../../ui/ButtonSubmit';
+import Button from '../../ui/ButtonSubmit';
 import Select from '../../ui/SelectList';
 import MultiSelect from '../../ui/MultipleSelect';
 import Checkbox from '../../ui/Checkbox';
 import "../../../index.css";
+// import { DeleteDataAPI } from '../../../services/DeleteDataAPI';
+// import { PutDataAPI } from '../../../services/PutDataAPI';
+import { PostDataAPI } from '../../../services/PostDataAPI';
 
 const RateList = [
         "Стандарт",
@@ -58,107 +61,127 @@ const RateList = [
   const styles = theme => ({
     root: {
       display: 'flex',
+      justifydefaultValue: 'flex-start',
       alignItems: 'center',
-      justifyContent: 'start'
+      margin: "1em 0"
     },
     box: {
-      margin: '1em 1.5em'
-    },
-    inlineBox: {
-      display: 'inline-block'
+      margin: '0 1em'
     }
 });
 
-class CreateVacancyContainer extends Component {
+class CreateVacancyContainer extends Component { 
+
+    constructor(props){
+      super(props)
+      this.state = {
+          topicName: ''
+      };
+    }
+    handleChange = (event) => {
+      this.setState({ 
+        [event.target.name]: event.target.defaultValue 
+      });
+    }
+    
+    handleSubmit = (event) => {
+      event.preventDefault();
+
+      const URL = 'http://0.0.0.0:5000/data/';
+      const data = this.state.topicName;
+
+      PostDataAPI(URL, data );
+    }
+
     render() {
-        const {classes} = this.props;
-    return (
-      <div>
-        <div>
-          <span className={classes.box}>Тариф Вакансии:</span>  
-          <Select vals={RateList} />
-        </div>
-        <div>
-          <span className={classes.box}>Название темы:</span> 
-          <Input placeholder="введите название" />
-        </div> 
-        <div>
-          <span className={classes.box}>Название темы:</span> 
-          <Input placeholder="введите название" />
-        </div>
-        <div>
-          <span className={classes.box}>Выберите город:</span>
-          <Select vals={CityList} />
-        </div> 
-        <div>
-          <span className={classes.box}>Требования:</span>
-          <MultiSelect names={Requirements} />
-        </div> 
-        <div>
-          <span className={classes.box}>Опциональные требования:</span> 
-          <Input placeholder="введите требования" />
-        </div> 
-        <div>
-          <span className={classes.box}>Адрес Офиса:</span> 
-          <Input placeholder="введите адрес" value="Бишкек Ахунбаева 119А" />
-        </div> 
-        <div>
-          <span className={classes.box}>Образование:</span>
-          <Select vals={Education} />
-        </div>
-        <div>
-          <span className={classes.box}>График работы:</span>
-          <Input placeholder="введите график" />
-        </div>
-        <div>
-          <span className={classes.box}>Опыт работы:</span>
-          <Select vals={Experience} />
-        </div>
-        <div>
-          <span className={classes.box}>Условия работы:</span>
-          <div className={classes.box}><TextArea  value={Work_conditions} /></div>
-        </div> 
-        <div>
-          <span className={classes.box}>Обязанности:</span>
-          <div className={classes.box}><TextArea  value={Duties}/></div>
-        </div> 
-        <div>
-          <span className={classes.box}>Зарплата:</span>
-            <span className={classes.box}><Input placeholder="min" /></span>
-            <span className={classes.box}><Input placeholder="max" /></span>
-        </div>
-        <div>
-          <span className={classes.box}>Тип занятости:</span>
-          <Select vals={EmploymentType} />
-        </div>
-        <div>
-          <span className={classes.box}>Прочее:</span>
-          <div className={classes.box}><TextArea  placeholder="введите текст"/></div>
-        </div>
-        <div className={classes}>
-          <span >Соц. сети:
-          <Checkbox label="Facebook"/>
-          <Checkbox label="Job.kg"/>
-          <Checkbox label="Diesel"/>
-          </span>
+      const { classes } = this.props;
           
-        </div>
-        <div className={classes.box}>
-          Изображение:
-            <input
-              accept="image/*"
-              multiple
-              type="file"
-            />
-        </div>
-        <div className={classes.box}>
-          <ButtonSubmit>Опубликовать</ButtonSubmit>
-        </div>
-      </div>
-    );
-  }
-<<<<<<< HEAD
+      return (
+        <div  style={{ margin: " 0 1em"}}>dfd
+          <div className={classes.root}>
+            Тариф Вакансии:
+            <span className={classes.box}><Select vals={RateList} /></span>
+          </div>
+          <div className={classes.root}>
+            Название темы: 
+            <span className={classes.box}><Input name="topicName" defaultValue={this.state.topicName}  onChange={this.handleChange} className={classes.box} placeholder="введите название" /></span>
+          </div> 
+          <div className={classes.root}>
+            Название вакансии: 
+            <span className={classes.box}><Input className={classes.box} placeholder="введите вакансии" /></span>
+          </div>
+          <div className={classes.root}>
+            Выберите город:
+            <span className={classes.box}><Select className={classes.box} vals={CityList} /></span>
+          </div> 
+          <div className={classes.root}>
+            Требования:
+            <span className={classes.box}><MultiSelect className={classes.box} names={Requirements} /></span>
+          </div> 
+          <div className={classes.root}>
+            Опциональные требования: 
+            <span className={classes.box}><Input className={classes.box} placeholder="введите требования" /></span>
+          </div> 
+          <div className={classes.root}>
+            Адрес Офиса: 
+            <span className={classes.box}><Input className={classes.box} placeholder="введите адрес" defaultValue="Бишкек Ахунбаева 119А" /></span>
+          </div> 
+          <div className={classes.root}> 
+            Образование:
+            <span className={classes.box}><Select className={classes.box} vals={Education} /></span>
+          </div>
+          <div className={classes.root}>
+            График работы:
+            <span className={classes.box}><Input className={classes.box} placeholder="введите график" /></span>
+          </div>
+          <div className={classes.root}>
+            Опыт работы:
+            <span className={classes.box}><Select className={classes.box} vals={Experience} /></span>
+          </div>
+          <div>
+            Условия работы:
+            <div><TextArea className={classes.box} defaultValue={Work_conditions} /></div>
+          </div> 
+          <div>
+            Обязанности:
+            <div><TextArea className={classes.box} defaultValue={Duties}/></div>
+          </div> 
+          <div className={classes.root}>
+            Зарплата:
+              <span className={classes.box}><Input className={classes.box} placeholder="min" /></span>
+              <span className={classes.box}><Input className={classes.box} placeholder="max" /></span>
+          </div>
+          <div className={classes.root}>
+            Тип занятости:
+            <span className={classes.box}><Select className={classes.box} vals={EmploymentType} /></span>
+          </div>
+          <div>
+            Прочее:
+            <div><TextArea className={classes.box} placeholder="введите текст"/></div>
+          </div>
+          <div className={classes.root}>
+            Соц. сети:
+            <span className={classes.box}><Checkbox label="Facebook"/></span>
+            <span className={classes.box}><Checkbox label="Job.kg"/></span>
+            <span className={classes.box}><Checkbox label="Diesel"/></span>
+            
+          </div>
+          <div className={classes.root}>
+            Изображение:
+              <span className={classes.box}>
+                <input
+                  accept="image/*"
+                  multiple
+                  type="file"
+                />
+              </span>
+          </div>
+          <div>
+            <Button type="button" onClick={this.handleSubmit} variant="contained">Опубликовать</Button>
+          </div>
+        </div> 
+      );
+    }
 }
-=======
->>>>>>> origin
+
 export default withStyles(styles)(CreateVacancyContainer);
