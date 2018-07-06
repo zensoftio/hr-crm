@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="6"
-            android:textColor="@color/main_attributes"
+            android:textColor="@color/mainAttributes"
             tools:text="status"/>
 
         <TextView
@@ -48,7 +48,7 @@
           android:id="@+id/cd_interview_interviewers"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:textColor="@color/main_attributes"
+          android:textColor="@color/mainAttributes"
           tools:text="interviewers list"/>
     </LinearLayout>
   </android.support.v7.widget.CardView>

@@ -22,7 +22,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="30dp"
       android:layout_marginTop="8dp"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/mainAttributes"
       app:layout_constraintStart_toStartOf="@+id/textView5"
       app:layout_constraintTop_toBottomOf="@+id/textView5"
       tools:text="candidate name"/>
@@ -43,7 +43,7 @@
       android:layout_marginStart="30dp"
       android:layout_marginTop="8dp"
       android:text=""
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/mainAttributes"
       app:layout_constraintStart_toStartOf="@+id/textView8"
       app:layout_constraintTop_toBottomOf="@+id/textView8"
       tools:text="Department"/>
@@ -65,7 +65,7 @@
       android:layout_marginStart="30dp"
       android:layout_marginTop="8dp"
       android:text=""
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/mainAttributes"
       app:layout_constraintStart_toStartOf="@+id/textView10"
       app:layout_constraintTop_toBottomOf="@+id/textView10"
       tools:text="2011-10-10"/>
@@ -95,7 +95,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="30dp"
       android:layout_marginTop="8dp"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/mainAttributes"
       app:layout_constraintStart_toStartOf="@+id/textView7"
       app:layout_constraintTop_toBottomOf="@+id/textView7"
       tools:text="interviewers"/>

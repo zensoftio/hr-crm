@@ -4,6 +4,7 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.entity.CriteriasResponse;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
+import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -22,4 +23,6 @@ public interface RestServiceTest {
   @GET("/all_interviews")
   Call<InterviewsResponse> getInterviews();
 
+  @GET("/all_vacancies")
+  Call<VacanciesResponse> getVacancies();
 }

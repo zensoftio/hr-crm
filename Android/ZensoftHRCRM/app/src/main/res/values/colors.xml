@@ -5,6 +5,7 @@
   <color name="colorAccent">#FF4081</color>
   <color name="commentCardViewBackground">#fffee0</color>
   <color name="commentCardViewTitleBackground">#f4c242</color>
-  <color name="cdInterviewCardViewTitleBackgroud">#68a2ff</color>
-  <color name="main_attributes">#000</color>
+  <color name="cdInterviewCardViewTitleBackgroud">#eaf6ff</color>
+  <color name="vacancyItemBackground">#eafeff</color>
+  <color name="mainAttributes">#000</color>
 </resources>

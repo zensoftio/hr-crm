@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
+import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
+import com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList.VacanciesPresenter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,6 +16,8 @@ public class CandidatesRepository {
 
   private final Context mContext;
 
+
+
   public interface OnCandidatesLoadFinishedListener {
     void onFinished(Response<CandidatesResponse> response);
 
@@ -22,6 +26,12 @@ public class CandidatesRepository {
 
   public interface OnDetailCandidateLoadFinishedListener {
     void onFinished(Response<Candidate> response);
+
+    void onFailure(Throwable t);
+  }
+
+  public interface OnVacanciesLoadFinishedListener{
+    void onFinished(Response<VacanciesResponse> response);
 
     void onFailure(Throwable t);
   }
@@ -53,6 +63,20 @@ public class CandidatesRepository {
 
       @Override
       public void onFailure(Call<Candidate> call, Throwable t) {
+        listener.onFailure(t);
+      }
+    });
+  }
+
+  public void getVacanciesFromJson(final OnVacanciesLoadFinishedListener listener) {
+    RestClientTest.getClient(mContext).getVacancies().enqueue(new Callback<VacanciesResponse>() {
+      @Override
+      public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
+        listener.onFinished(response);
+      }
+
+      @Override
+      public void onFailure(Call<VacanciesResponse> call, Throwable t) {
         listener.onFailure(t);
       }
     });

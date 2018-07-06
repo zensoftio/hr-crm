@@ -18,7 +18,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="5"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/mainAttributes"
       tools:text="attachment"/>
 
   <TextView
