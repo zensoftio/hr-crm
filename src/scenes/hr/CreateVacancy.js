@@ -13,18 +13,7 @@ const styles = {
 
 class CreateVacancy extends Component {
     render() {
-        const {classes} = this.props;
-<<<<<<< HEAD
-
-        return (
-          <div>
-            <Header title="Создать Вакансию" />
-            <Paper className={classes.paperBox}> 
-              <CreateVacancyContainer />
-            </Paper>
-          </div>
-=======
-      
+        const {classes} = this.props;      
         return (
             <div>
                 <Header title="Создать Вакансию"/>
@@ -32,7 +21,6 @@ class CreateVacancy extends Component {
                     <CreateVacancyContainer/>
                 </Paper>
             </div>
->>>>>>> origin
         );
     }
 }
