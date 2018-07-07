@@ -9,7 +9,11 @@ export default class AdminScene extends Component {
 			const interviewerNav = [
 				{
 					name: 'Список Интервью',
-        	path: '/list_interview'
+        			path: '/list_interview'
+				},
+				{
+					name: 'Критерии Оценки',
+        			path: '/candidate_grade'
 				}
 			];
          return(
@@ -18,7 +22,8 @@ export default class AdminScene extends Component {
 							<Navigation menuItems={interviewerNav}/>
 							<div className="content">
 								<Switch>
-									<Route path="/list_interview" component={ListInterview} exact/>
+									<Route path="/" component={ListInterview} exact />
+									<Route path="/list_interview" component={ListInterview} />
 									<Route path="/candidate_grade" component={CandidateGrade} />
 								</Switch>
 							</div>

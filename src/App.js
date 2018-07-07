@@ -4,6 +4,7 @@ import {GoogleAPI, GoogleLogin, GoogleLogout} from 'react-google-oauth'
 /* User Roles */
 import User from './Roles';
 
+
 const FailureHandle = () => {
     return <h1>Something went wrong</h1>
 }
@@ -17,17 +18,22 @@ export default class App extends Component {
     }
 
     signIn = (googleUser) => {
-        const userData = googleUser.getBasicProfile();
+				const userData = googleUser.getBasicProfile();
+				
         let tempStorage =  window.sessionStorage;
-        tempStorage.setItem("user", userData.ig);
+				tempStorage.setItem("user", userData.ig);
+				tempStorage.setItem("photo", userData.Paa);
         this.setState({
             session: userData
-        })
+				})
+				console.log(userData);
+				
+				
     }
 
     render() {
         if(this.state.session) {
-            return <User userRole="hr" />
+            return <User userRole="interviewer" />
         }
         return(
             <div>                
