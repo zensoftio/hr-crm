@@ -3,24 +3,28 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
+import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import retrofit2.Response;
 
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
-    CandidatesRepository.OnDetailCandidateLoadFinishedListener {
+    RemoteDataSource.OnDetailCandidateLoadFinishedListener {
 
   private static final String TAG = "PROFILE PRESENTER";
 
   private CandidateDetailContract.View mView;
-  private CandidatesRepository mRepository;
+//  private CandidatesRepository mRepository;
+  private DataRepository mRepository;
   private Candidate mCandidate;
 
-  public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
+//  public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
+  public CandidateDetailPresenter(CandidateDetailContract.View view, DataRepository repository) {
     mView = view;
     mRepository = repository;
   }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
@@ -55,7 +56,9 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     initUI(v);
     int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
     showToast(String.valueOf(candidateId));
-    mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
+//    mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
+    mPresenter = new CandidateDetailPresenter(this, DataRepository.getInstance(getActivity()
+        .getApplicationContext()));
     mPresenter.loadCandidateInfo(candidateId);
     return v;
   }
