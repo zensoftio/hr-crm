@@ -1,22 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
+import { MenuItem, Chip, Select, FormControl } from '@material-ui/core';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
+const styles = (theme) => ({
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 120,
-    maxWidth: 300,
   },
   chips: {
     display: 'flex',
@@ -25,7 +14,7 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing.unit / 4,
   },
-});
+})
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,66 +22,51 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
     },
   },
 };
 
-
-
 class MultipleSelect extends React.Component {
   state = {
-    name: [],
+    value: [],
   };
 
   handleChange = event => {
-    this.setState({ name: event.target.value });
+    this.setState({ value: event.target.value });
   };
 
   render() {
-    const { classes, theme, names } = this.props;
+    const { classes, optionValue, name } = this.props;
 
     return (
-      <div className={classes.root}>        
-       
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="select-multiple-chip">Chip</InputLabel>
+      <FormControl className={classes.formControl}>
           <Select
             multiple
-            value={this.state.name}
+            className={classes.chipBox}
+            value={this.state.value}
             onChange={this.handleChange}
-            input={<Input id="select-multiple-chip" />}
             renderValue={selected => (
               <div className={classes.chips}>
                 {selected.map(value => <Chip key={value} label={value} className={classes.chip} />)}
               </div>
             )}
+            autoWidth
             MenuProps={MenuProps}
-          >
-            {names.map(name => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={{
-                  fontWeight:
-                    this.state.name.indexOf(name) === -1
-                      ? theme.typography.fontWeightRegular
-                      : theme.typography.fontWeightMedium,
-                }}
-              >
-                {name}
-              </MenuItem>
-            ))}
+            displayEmpty>
+            { 
+              optionValue.map(item => (
+                <MenuItem
+                  key={item}
+                  value={item}
+                  name={name}>
+                  {item}
+                </MenuItem>
+              )) 
+            }
           </Select>
-        </FormControl>
-      </div>
+      </FormControl>
     );
   }
 }
 
-MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles, { withTheme: true })(MultipleSelect);
+export default withStyles(styles) (MultipleSelect);

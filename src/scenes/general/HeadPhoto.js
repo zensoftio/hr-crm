@@ -1,7 +1,7 @@
 import React from 'react';
 import profile from '../../components/images/profile.jpg';
 
-const current_user_name = sessionStorage.getItem("user");
+const current_user_name = window.sessionStorage.user;
 
 const HeadPhoto = () => {
 		let hod = 'HoD';

@@ -2,8 +2,7 @@ import axios from 'axios';
 
 export function PostDataAPI(url, data) {
     
-    axios({
-        url: url,
+    axios.post(url, {
         method: "POST",
         body: data
     }).then(function (response) {

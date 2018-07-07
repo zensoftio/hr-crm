@@ -159,6 +159,7 @@ class IntegrationAutosuggest extends React.Component {
           value: this.state.value,
           onChange: this.handleChange,
         }}
+        name={this.props.name}
       />
     );
   }
