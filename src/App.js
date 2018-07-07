@@ -18,17 +18,14 @@ export default class App extends Component {
     }
 
     signIn = (googleUser) => {
-				const userData = googleUser.getBasicProfile();
+        const userData = googleUser.getBasicProfile();
 				
         let tempStorage =  window.sessionStorage;
-				tempStorage.setItem("user", userData.ig);
-				tempStorage.setItem("photo", userData.Paa);
+            tempStorage.setItem("user", userData.ig)
+            tempStorage.setItem("photo", userData.Paa)
         this.setState({
             session: userData
-				})
-				console.log(userData);
-				
-				
+        })	
     }
 
     render() {
