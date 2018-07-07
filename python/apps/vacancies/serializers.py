@@ -27,7 +27,6 @@ class VacancyRequestSerializer(serializers.ModelSerializer):
 
 
 class VacancyDetailSerializer(serializers.ModelSerializer):
-    uuid = serializers.UUIDField(format='hex')
     created_by = AuxUserSerializer(read_only=True)
     requirements = RequirementSerializer(many=True, source='request.requirements')
     request = VacancyRequestSerializer()
