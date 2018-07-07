@@ -2,24 +2,24 @@ package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
 import android.util.Log;
 
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
 import retrofit2.Response;
 
-public class VacanciesPresenter implements VacanciesContract.Presenter, CandidatesRepository.OnVacanciesLoadFinishedListener {
+public class VacanciesPresenter implements VacanciesContract.Presenter, RemoteDataSource.OnVacanciesLoadFinishedListener {
 
   private static final String TAG = "VACANCIES PRESENTER";
 
   private VacanciesContract.View mView;
-  //  private DataRepository mRepository;
-  private CandidatesRepository mRepository;
+  private DataRepository mRepository;
 
-  public VacanciesPresenter(VacanciesContract.View view, CandidatesRepository repository) {
+  VacanciesPresenter(VacanciesContract.View view, DataRepository repository) {
     mView = view;
     mRepository = repository;
   }
@@ -27,7 +27,6 @@ public class VacanciesPresenter implements VacanciesContract.Presenter, Candidat
   @Override
   public void loadData() {
     mRepository.getVacanciesFromJson(this);
-
   }
 
   @Override

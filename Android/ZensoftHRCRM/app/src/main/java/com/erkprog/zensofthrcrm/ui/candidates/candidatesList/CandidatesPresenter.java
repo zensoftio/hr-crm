@@ -3,25 +3,25 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
 import retrofit2.Response;
 
-public class CandidatesPresenter implements CandidatesContract.Presenter, CandidatesRepository
-    .OnCandidatesLoadFinishedListener {
+public class CandidatesPresenter implements CandidatesContract.Presenter, RemoteDataSource.OnCandidatesLoadFinishedListener {
 
   private static final String TAG = "mylog:CandidatesPresenter";
 
   private CandidatesContract.View mView;
-  private CandidatesRepository mRepository;
+  private DataRepository mRepository;
 
 
-  public CandidatesPresenter(CandidatesContract.View view, CandidatesRepository repository) {
+  public CandidatesPresenter(CandidatesContract.View view, DataRepository repository) {
     mView = view;
     mRepository = repository;
   }

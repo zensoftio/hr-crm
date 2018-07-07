@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
     initRecyclerView(v);
-    mPresenter = new CandidatesPresenter(this, new CandidatesRepository(getActivity()));
+    mPresenter = new CandidatesPresenter(this, DataRepository.getInstance(getActivity().getApplicationContext()));
     mPresenter.loadCandidates();
     return v;
   }

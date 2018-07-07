@@ -19,7 +19,6 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 
 import java.util.ArrayList;
@@ -47,16 +46,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Log.d(TAG, "onCreate: starts");
   }
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
     initUI(v);
     int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
     showToast(String.valueOf(candidateId));
-//    mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
     mPresenter = new CandidateDetailPresenter(this, DataRepository.getInstance(getActivity()
         .getApplicationContext()));
     mPresenter.loadCandidateInfo(candidateId);
@@ -181,8 +181,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         item.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Cv cvItem = (Cv) cvsAdapter.getItem(finalI);
-              onCvItemClicked(cvItem);
+            Cv cvItem = (Cv) cvsAdapter.getItem(finalI);
+            onCvItemClicked(cvItem);
           }
         });
         mLayout.addView(item);
@@ -265,5 +265,11 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       default:
         break;
     }
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    Log.d(TAG, "onDestroy");
   }
 }

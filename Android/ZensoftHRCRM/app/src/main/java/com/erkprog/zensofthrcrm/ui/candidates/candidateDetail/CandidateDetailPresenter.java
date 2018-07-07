@@ -9,7 +9,6 @@ import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import retrofit2.Response;
 
@@ -19,11 +18,9 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   private static final String TAG = "PROFILE PRESENTER";
 
   private CandidateDetailContract.View mView;
-//  private CandidatesRepository mRepository;
   private DataRepository mRepository;
   private Candidate mCandidate;
 
-//  public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
   public CandidateDetailPresenter(CandidateDetailContract.View view, DataRepository repository) {
     mView = view;
     mRepository = repository;

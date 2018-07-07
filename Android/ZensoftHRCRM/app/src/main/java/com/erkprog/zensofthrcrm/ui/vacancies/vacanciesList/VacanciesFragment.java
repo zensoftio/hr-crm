@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,8 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_vacancies_list, container, false);
     initRecyclerView(v);
-    mPresenter = new VacanciesPresenter(this, new CandidatesRepository(getActivity()));
+    mPresenter = new VacanciesPresenter(this, DataRepository.getInstance(getActivity()
+        .getApplicationContext()));
     mPresenter.loadData();
     return v;
   }

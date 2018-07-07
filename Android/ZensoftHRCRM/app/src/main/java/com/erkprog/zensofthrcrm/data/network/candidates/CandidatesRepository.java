@@ -6,7 +6,6 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
-import com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList.VacanciesPresenter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
