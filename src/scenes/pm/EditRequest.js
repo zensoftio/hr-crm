@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from '../general/Header';
-import SelectList from '../../components/ui/SelectList';
+import Select from '../../components/ui/Select';
 import MultipleSelect from '../../components/ui/MultipleSelect';
 import PlusMinus from '../../components/ui/PlusMinus';
 import TextArea from '../../components/ui/TextArea';
+import Button from '@material-ui/core/Button'
 
 const EditRequest = () => {
 
@@ -37,11 +38,7 @@ const EditRequest = () => {
 	};
 	const divstyle = {
 		margin: 20
-	}
-	const btnstyle = {
-		padding: '10px 15px',
-		margin: '0px 20px'
-	}
+	};
 
 	return(
 		<div>
@@ -50,7 +47,7 @@ const EditRequest = () => {
 			<div style={divstyle}>
 				<label>
 					<span style={instyle}>ОТДЕЛ:</span>							
-					<SelectList vals={department}/>							
+					<Select optionValue={department}/>							
 				</label>						
 			</div>
 
@@ -64,7 +61,7 @@ const EditRequest = () => {
 			<div style={divstyle}>
 				<label>
 					<span style={instyle}>НАЗВАНИЕ:</span>	
-					<SelectList vals={developer}/>								
+					<Select optionValue={developer}/>								
 				</label>						
 			</div>
 
@@ -72,7 +69,7 @@ const EditRequest = () => {
 				<label>
 					<span style={instyle}>ТРЕБОВАНИЯ:</span>	
 					<span style={instyle}>
-						<MultipleSelect names={requirements}/>
+						<MultipleSelect optionValue={requirements}/>
 					</span>	
 				</label>						
 			</div>
@@ -81,7 +78,7 @@ const EditRequest = () => {
 				<label>
 					<span style={instyle}>ДОПОЛНИТЕЛЬНЫЕ ТРЕБОВАНИЯ:</span>	
 					<span style={instyle}>
-						<MultipleSelect names={additional_requirements}/>
+						<MultipleSelect optionValue={additional_requirements}/>
 					</span>	
 				</label>						
 			</div>
@@ -94,8 +91,8 @@ const EditRequest = () => {
 			</div>
 
 			<div style={divstyle}>
-				<button style={btnstyle}>Утвердить</button>
-				<button style={btnstyle}>Отклонить</button>
+				<span style={instyle}><Button variant="contained" color="primary">Утвердить</Button></span>
+				<span style={instyle}><Button variant="contained" color="secondary">Отклонить</Button></span>
 			</div>
 			
 		</div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from '@material-ui/core/styles';
-
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
   textArea: {
@@ -32,7 +32,7 @@ class TextArea extends Component {
           rows="5"
           onChange={this.handleChange("multiline")}
           margin="normal"
-          defaultValue={this.props.value}
+          defaultValue={this.props.defaultValue}
           className={classes.textArea}
         />
       </div>
@@ -40,4 +40,8 @@ class TextArea extends Component {
   }
 }
 
-export default withStyles(styles) (TextArea);
+TextArea.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(TextArea);

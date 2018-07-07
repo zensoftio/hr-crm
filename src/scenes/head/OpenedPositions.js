@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../general/Header';
-import PositionService from '../../services/position';
-
 
 class OpenedPositions extends React.Component {
 	constructor(props) {

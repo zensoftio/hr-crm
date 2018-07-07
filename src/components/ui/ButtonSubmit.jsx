@@ -1,5 +1,7 @@
 import React, {Component} from "react";
+import { withStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
     button: {
@@ -7,14 +9,21 @@ const styles = theme => ({
     }
 });
 
-export default class ButtonSubmit extends Component {
+class ButtonSubmit extends Component {
 
     render() {
-        return (
+        const { classes } = this.props;
 
-            <Button variant="contained" className={styles.button} >
+        return (
+            <Button variant="contained" onClick={this.props.onClick} className={classes.button} >
                 {this.props.children}
             </Button>
         );
     }
 }
+
+ButtonSubmit.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ButtonSubmit);

@@ -10,6 +10,7 @@ class CheckboxControl extends Component {
         control={
             <Checkbox />
         } 
+        name={this.props.name}
         label={this.props.label} 
         />
       </div>

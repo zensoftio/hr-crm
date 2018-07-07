@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-export default class DateTimePickers extends Component {
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+});
+
+class DateTimePickers extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
-        <form noValidate>
+        <form noValidate className={classes.container}>
         <TextField
           id="datetime-local"
           label={this.props.label}
@@ -19,3 +30,10 @@ export default class DateTimePickers extends Component {
     );
   }
 }
+
+DateTimePickers.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+
+export default withStyles(styles)(DateTimePickers)

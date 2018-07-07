@@ -18,26 +18,23 @@ export default class App extends Component {
     }
 
     signIn = (googleUser) => {
-				const userData = googleUser.getBasicProfile();
+        const userData = googleUser.getBasicProfile();
 				
         let tempStorage =  window.sessionStorage;
-				tempStorage.setItem("user", userData.ig);
-				tempStorage.setItem("photo", userData.Paa);
+            tempStorage.setItem("user", userData.ig)
+            tempStorage.setItem("photo", userData.Paa)
         this.setState({
             session: userData
-				})
-				console.log(userData);
-				
-				
+        })	
     }
 
     render() {
         if(this.state.session) {
-            return <User userRole="head" />
+            return <User userRole="interviewer" />
         }
         return(
-            <div>
-                <GoogleAPI clientId="161387635546-54csodkv5tms1nnflj33o8c9rhq3srhv.apps.googleusercontent.com"
+            <div>                
+                <GoogleAPI clientId="485499920078-nm7ajq0j1spkul2jlnv9j1g579fbiqjo.apps.googleusercontent.com"
                     onInitFailure={FailureHandle} >
                     <div>
                         <div>

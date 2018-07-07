@@ -1,14 +1,12 @@
 import React from 'react';
 import profile from '../../components/images/profile.jpg';
 
+const user = sessionStorage.getItem("user");
+const photo = sessionStorage.getItem("photo");
 
-
-	const user = sessionStorage.getItem("user");
-	const photo = sessionStorage.getItem("photo");
-
-	//set default profile photo if user 
-	//doesnt have it on google account
-	const profilePhoto = photo ? photo : profile;
+//set default profile photo if user 
+//doesnt have it on google account
+const profilePhoto = photo ? photo : profile;
 
 const HeadPhoto = () => {
 		let hod = 'HoD';

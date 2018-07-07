@@ -13,14 +13,15 @@ const styles = {
 
 class CreateVacancy extends Component {
     render() {
-        const {classes} = this.props;      
+        const {classes} = this.props;
+
         return (
-            <div>
-                <Header title="Создать Вакансию"/>
-                <Paper className={classes.paperBox}>
-                    <CreateVacancyContainer/>
-                </Paper>
-            </div>
+          <div>
+            <Header title="Создать Вакансию" />
+            <Paper className={classes.paperBox}> 
+              <CreateVacancyContainer />
+            </Paper>
+          </div>
         );
     }
 }
