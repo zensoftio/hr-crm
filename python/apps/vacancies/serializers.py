@@ -34,7 +34,7 @@ class VacancyDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vacancy
-        exclude = []
+        exclude = ['uuid']
 
 
 class VacancyPublicationSerializer(serializers.ModelSerializer):
