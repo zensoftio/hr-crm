@@ -25,4 +25,5 @@
   <string name="status">status</string>
   <string name="created">created</string>
   <string name="last_published">last published</string>
+  <string name="not_defined">not defined</string>
 </resources>

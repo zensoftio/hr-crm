@@ -26,7 +26,7 @@ public class Position {
     this.name = name;
   }
 
-  public Department getDepartmentModel() {
+  public Department getDepartment() {
     return departmentModel;
   }
 

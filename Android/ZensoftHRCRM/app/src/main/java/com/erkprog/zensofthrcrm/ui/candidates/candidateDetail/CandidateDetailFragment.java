@@ -83,7 +83,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mLastName.setText(candidate.getLastName());
     mEmail.setText(candidate.getEmail());
     mPhoneNumber.setText(candidate.getPhone());
-    mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
+    mDepartment.setText(candidate.getPosition().getDepartment().getName());
     mYearsOfExp.setText(candidate.getExperience().toString());
     mCvsAdapter.setData(candidate.getCvs());
     mCommentsAdapter.setData(candidate.getComments());
