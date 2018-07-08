@@ -18,6 +18,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
   private Context mContext;
   private OnItemClickListener mListener;
 
+  public RequestsAdapter(Context context, List<Request> requests) {
+    mRequests = requests;
+    mContext = context;
+  }
+
   @NonNull
   @Override
   public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,11 +42,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
         .not_defined));
 
     holder.status.setText(String.valueOf(request.getStatus()));
-    holder.count.setText(String.valueOf(request.getCount()));
+    holder.count.append(": ");
+    holder.count.append(String.valueOf(request.getCount()));
 
     String created = request.getCreated();
-
-    holder.created.setText(created != null ? created : mContext.getString(R.string.not_defined));
+    holder.created.append(": ");
+    holder.created.append(created != null ? created : mContext.getString(R.string.not_defined));
   }
 
   @Override
@@ -49,12 +55,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
     return mRequests != null ? mRequests.size() : 0;
   }
 
-  public void loadNewData(List<Request> data){
+  public void loadNewData(List<Request> data) {
     mRequests = data;
     notifyDataSetChanged();
   }
 
-  public Request getRequest(int position){
+  public Request getRequest(int position) {
     return mRequests.get(position);
   }
 

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
+import com.erkprog.zensofthrcrm.ui.requests.requestsList.RequestsFragment;
 import com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList.VacanciesFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.nav_requests) {
-      // Handle the camera action
+      switchFragment(RequestsFragment.newInstance());
+
     } else if (id == R.id.nav_vacancies) {
       switchFragment(VacanciesFragment.newInstance());
 

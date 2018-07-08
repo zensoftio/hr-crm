@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
+import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
 import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
@@ -103,6 +104,31 @@ public class RemoteDataSource {
 
       @Override
       public void onFailure(Call<VacanciesResponse> call, Throwable t) {
+        listener.onFailure(t);
+      }
+    });
+  }
+
+
+    /*
+  Get all requests from JSON file
+   */
+
+  public interface OnRequestsLoadFinishedListener {
+    void onFinished(Response<RequestsResponse> response);
+
+    void onFailure(Throwable t);
+  }
+
+  public void getRequestsFromJson(final OnRequestsLoadFinishedListener listener) {
+    mTestApi.getRequests().enqueue(new Callback<RequestsResponse>() {
+      @Override
+      public void onResponse(Call<RequestsResponse> call, Response<RequestsResponse> response) {
+        listener.onFinished(response);
+      }
+
+      @Override
+      public void onFailure(Call<RequestsResponse> call, Throwable t) {
         listener.onFailure(t);
       }
     });

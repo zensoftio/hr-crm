@@ -35,4 +35,8 @@ public class DataRepository {
   public void getCandidatesFromJson(RemoteDataSource.OnCandidatesLoadFinishedListener listener) {
     mRemoteDataSource.getCandidatesFromJson(listener);
   }
+
+  public void getRequestsFromJson(RemoteDataSource.OnRequestsLoadFinishedListener listener){
+    mRemoteDataSource.getRequestsFromJson(listener);
+  }
 }

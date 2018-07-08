@@ -1,0 +1,63 @@
+{
+  "count": 4,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "position": {
+        "id": 2,
+        "department": {
+          "id": 2,
+          "name": "Python"
+        },
+        "name": "Python Junior Developer"
+      },
+      "status": 0,
+      "count": 4,
+      "created": "2018-05-21T10:35:18+0000"
+    },
+    {
+      "id": 2,
+      "position": {
+        "id": 5,
+        "department": {
+          "id": 3,
+          "name": "QA"
+        },
+        "name": "Senior QA Engineer"
+      },
+      "status": 1,
+      "count": 1,
+      "created": "2018-05-21T10:35:18+0000"
+    },
+    {
+      "id": 3,
+      "position": {
+        "id": 2,
+        "department": {
+          "id": 5,
+          "name": "DevOps"
+        },
+        "name": "Middle DevOps Engineer"
+      },
+      "status": 0,
+      "count": 1,
+      "created": "2018-05-21T10:35:18+0000"
+    },
+    {
+      "id": 5,
+      "position": {
+        "id": 2,
+        "department": {
+          "id": 3,
+          "name": "QA"
+        },
+        "name": "Junior QA Engineer"
+      },
+      "status": 0,
+      "count": 1,
+      "created": "2018-05-21T10:35:18+0000"
+    }
+  ]
+}
