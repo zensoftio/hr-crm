@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
+  <color name="colorPrimary">#296edb</color>
+  <color name="colorPrimaryDark">#164287</color>
   <color name="colorAccent">#FF4081</color>
   <color name="commentCardViewBackground">#fffee0</color>
   <color name="commentCardViewTitleBackground">#f4c242</color>
   <color name="cdInterviewCardViewTitleBackgroud">#68a2ff</color>
   <color name="main_attributes">#000</color>
+  <color name="white">#FFF</color>
 </resources>
