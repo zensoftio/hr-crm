@@ -1,54 +1,42 @@
+import uuid
+
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 
-
-from apps.departments.models import Requirement
 from apps.requests.models import Request
 
 User = get_user_model()
 
-EXPERIENCE = (('0', 'Без опыта'),
-              ('1-3', '1-3 лет'),
-              ('3-6', '3-6 лет'),
-              ('6+', '6 лет и более'),)
-
-WORKING_HOURS = (('FT', 'Полный рабочий день'),
-                 ('FLT', 'Гибкий график'),
-                 ('RJ', 'Удаленная работа'),
-                )
-
-EMPLOYMENT_TYPE = (('FT', 'Полный рабочий день'),
-                   ('PT', 'Не полный рабочий день'),
-                   ('TMP', 'Проект/временно'),
-                   ('VOL', 'Волонтерство'),
-                   ('INT', 'Стажировка'))
-
-VACANCY_STATUS = (
-    (0, 'Не опубликовано'),
-    (1, 'Опубликовано')
-)
-
+WORKING_HOURS = ((0, 'Полный рабочий день'),
+                 (1, 'Гибкий график'),
+                 (2, 'Удаленная работа'),
+                 )
 
 class Vacancy(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     request = models.ForeignKey(Request, on_delete=models.PROTECT)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
-    work_conditions = models.CharField(max_length=200, blank=True)
-    experience = models.CharField(choices=EXPERIENCE, max_length=3, default='0')
-    working_hours = models.CharField(choices=WORKING_HOURS, max_length=3, default='FLT')
-    employment_type = models.CharField(choices=EMPLOYMENT_TYPE, max_length=3, default='FT')
+    work_conditions = ArrayField(base_field=models.CharField(max_length=200, blank=True))
+    working_hours = models.IntegerField(choices=WORKING_HOURS, default=0)
     salary_min = models.FloatField()
     salary_max = models.FloatField()
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to='media', null=True)
+    responsibilities = models.TextField(null=True)
+    comments = models.TextField(null=True)
     created = models.DateTimeField(auto_now_add=True)
     last_published = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=VACANCY_STATUS, default=0)
-    requirements = models.ManyToManyField(Requirement)
 
     class Meta:
         default_related_name = 'vacancies'
+        verbose_name_plural = 'vacancies'
+
+    def get_absolute_url(self):
+        return reverse('vacancy-detail', kwargs={'pk': self.id})
 
 
 class Publication(models.Model):
@@ -61,3 +49,6 @@ class Publication(models.Model):
 
     class Meta:
         default_related_name = 'publications'
+
+    def get_absolute_url(self):
+        return reverse('publication-detail', kwargs={'pk': self.id})
