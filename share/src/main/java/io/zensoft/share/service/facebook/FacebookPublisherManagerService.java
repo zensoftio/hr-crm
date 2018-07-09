@@ -1,4 +1,4 @@
-package io.zensoft.share.service.Facebook;
+package io.zensoft.share.service.facebook;
 
 import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.dto.VacancyResponseDto;

@@ -1,4 +1,4 @@
-package io.zensoft.share.service.Facebook;
+package io.zensoft.share.service.facebook;
 
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
@@ -11,7 +11,11 @@ import org.springframework.social.facebook.api.PagePostData;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,12 +26,12 @@ public class FacebookPublisherService implements PublisherService {
     private final Properties properties;
 
     private final String appAccessToken;
-    private final String userAccessToken;
-    private final String pageAccessToken;
+    private String userAccessToken;
+    private String pageAccessToken;
 
     private final Facebook facebookApp;
-    private final Facebook facebookUser;
-    private final Facebook facebookPage;
+    private Facebook facebookUser;
+    private Facebook facebookPage;
 
     public FacebookPublisherService(){
         properties = new Properties();
@@ -39,12 +43,10 @@ public class FacebookPublisherService implements PublisherService {
         }
         appAccessToken = properties.getProperty("appId") + "|" + properties.getProperty("appSecret");
         facebookApp= new FacebookTemplate(appAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
+    }
 
-        userAccessToken = getTestUserAccessToken();
-        facebookUser = new FacebookTemplate(userAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
-
-        pageAccessToken = getPageAccessToken();
-        facebookPage = new FacebookTemplate(pageAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
+    private void setPageAccessToken(String pageAccessToken) {
+        this.pageAccessToken = pageAccessToken;
     }
 
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
@@ -58,11 +60,13 @@ public class FacebookPublisherService implements PublisherService {
         } catch (Exception e) {
 
         }
-        String access_token = ((ArrayList<Map<String, Object>>)map.getBody().get("data")).get(0).get("access_token").toString();
+        Object testUsers = map.getBody().get("data");
+        ArrayList<Map<String, Object>> testUsersList = (ArrayList<Map<String, Object>>)testUsers;
+        String access_token = testUsersList.get(0).get("access_token").toString();
         return access_token;
     }
 
-    private String getPageAccessToken () {
+    private void setPageAccessToken () {
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map = null;
         try {
@@ -72,17 +76,40 @@ public class FacebookPublisherService implements PublisherService {
         } catch (Exception e) {
 
         }
-        String access_token = ((ArrayList<Map<String, Object>>)map.getBody().get("data")).get(0).get("access_token").toString();
-        return access_token;
+        Object object = map.getBody().get("data");
+        ArrayList<Map<String, Object>> pageList = (ArrayList<Map<String, Object>>) object;
+        pageList.forEach( (page) -> {
+            if(page.get("name").toString().contains("Zensoft")){
+                setPageAccessToken(page.get("access_token").toString());
+            }
+        });
     }
 
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
-        if (vacancy.getImage() != null) {
+        init(vacancy);
+        if (isValidImageUrl(vacancy.getImage())) {
             return publishPhoto(vacancy);
-        } else {
-            return publishText(vacancy);
         }
+        return publishText(vacancy);
+    }
+
+    private boolean isValidImageUrl(String imageUrl) {
+        Image image;
+        try {
+            image = ImageIO.read(new URL(imageUrl));
+        } catch (Exception e) {
+            return false;
+        }
+        return image != null;
+    }
+
+    private void init(Vacancy vacancy) {
+        userAccessToken = vacancy.getFacebookUserAccessToken();
+        facebookUser = new FacebookTemplate(userAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
+
+        setPageAccessToken();
+        facebookPage = new FacebookTemplate(pageAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
     }
 
     private VacancyResponse publishText(Vacancy vacancy) {
@@ -92,7 +119,6 @@ public class FacebookPublisherService implements PublisherService {
         facebookPage.pageOperations().post(pagePostData);
         return null;
     }
-
 
     @Override
     public VacancyResponse getInfo(Vacancy vacancy) {
