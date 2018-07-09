@@ -9,21 +9,21 @@ from apps.requests.models import Request
 
 User = get_user_model()
 
-EXPERIENCE = (('0', 'Без опыта'),
-              ('1-3', '1-3 лет'),
-              ('3-6', '3-6 лет'),
-              ('6+', '6 лет и более'),)
+EXPERIENCE = ((0, 'Без опыта'),
+              (1, '1-3 лет'),
+              (2, '3-6 лет'),
+              (3, '6 лет и более'),)
 
-WORKING_HOURS = (('FT', 'Полный рабочий день'),
-                 ('FLT', 'Гибкий график'),
-                 ('RJ', 'Удаленная работа'),
+WORKING_HOURS = ((0, 'Полный рабочий день'),
+                 (1, 'Гибкий график'),
+                 (2, 'Удаленная работа'),
                  )
 
-EMPLOYMENT_TYPE = (('FT', 'Полный рабочий день'),
-                   ('PT', 'Не полный рабочий день'),
-                   ('TMP', 'Проект/временно'),
-                   ('VOL', 'Волонтерство'),
-                   ('INT', 'Стажировка'))
+EMPLOYMENT_TYPE = ((0, 'Полный рабочий день'),
+                   (1, 'Не полный рабочий день'),
+                   (2, 'Проект/временно'),
+                   (3, 'Волонтерство'),
+                   (4, 'Стажировка'))
 
 VACANCY_STATUS = (
     (0, 'Не опубликовано'),
@@ -39,9 +39,9 @@ class Vacancy(models.Model):
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
     work_conditions = ArrayField(base_field=models.CharField(max_length=200, blank=True))
-    experience = models.CharField(choices=EXPERIENCE, max_length=3, default='0')
-    working_hours = models.CharField(choices=WORKING_HOURS, max_length=3, default='FLT')
-    employment_type = models.CharField(choices=EMPLOYMENT_TYPE, max_length=3, default='FT')
+    experience = models.IntegerField(choices=EXPERIENCE, default=0)
+    working_hours = models.IntegerField(choices=WORKING_HOURS, default=0)
+    employment_type = models.IntegerField(choices=EMPLOYMENT_TYPE, default=0)
     salary_min = models.FloatField()
     salary_max = models.FloatField()
     image = models.ImageField(upload_to='media', null=True)

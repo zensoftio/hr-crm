@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 
 
 class RabbitMQ:
-    """ Class for instantiating sending event """
+    """ Class for instantiating sending and receiving events """
 
     def __init__(self, host='localhost', user='', password=''):
         self.parameters = ''
