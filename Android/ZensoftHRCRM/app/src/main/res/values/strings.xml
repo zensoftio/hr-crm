@@ -22,4 +22,5 @@
   <string name="attachment">attachment</string>
   <string name="candidate">Candidate</string>
   <string name="date">Date</string>
+  <string name="sign_out">Sign out</string>
 </resources>

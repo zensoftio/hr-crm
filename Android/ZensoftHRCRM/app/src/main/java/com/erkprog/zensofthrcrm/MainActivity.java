@@ -1,7 +1,9 @@
 package com.erkprog.zensofthrcrm;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.erkprog.zensofthrcrm.ui.LoginActivity;
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
+
+  GoogleSignInClient mGoogleSignInClient;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,12 @@ public class MainActivity extends AppCompatActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .build();
+
+    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
   }
 
   @Override
@@ -83,14 +99,36 @@ public class MainActivity extends AppCompatActivity
 
     } else if (id == R.id.nav_interviews) {
       switchFragment(new InterviewsFragment());
+      
     } else if (id == R.id.nav_statistics) {
 
+    } else if (id == R.id.nav_sign_out){
+      signOut();
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
   }
+
+  private void signOut() {
+    mGoogleSignInClient.signOut()
+        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+          @Override
+          public void onComplete(@NonNull Task<Void> task) {
+            onSignedOut();
+          }
+        });
+  }
+
+  private void onSignedOut(){
+    Intent intent = new Intent(this, LoginActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
+    finish();
+  }
+
+
 
   protected void switchFragment(Fragment fragment) {
     getSupportFragmentManager()
