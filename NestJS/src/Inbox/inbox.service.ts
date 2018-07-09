@@ -23,7 +23,7 @@ export class InboxService {
 
   async getMessages(message: any):any{
     const date = await this.updateDate(message.date);
-    return msg = await gmail.getAllMessages(message.date);
+    return await gmail.getAllMessages(message.date);
   }
 
   async getOneMessage(message: any):any{
