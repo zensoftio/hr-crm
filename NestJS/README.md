@@ -32,4 +32,11 @@ CLIENT_ID=
 CLIENT_SECRET=
 REDIRECT_URIS=
 ```
-
+## Google Cloud Storage
+1) Google account as Developer
+2) Select or Create a Cloud Platform project
+3) Enable billing for your project
+4) Create Storage
+5) Create Bucket
+6) Enable the Google Cloud Storage API
+7) Get projectId and service-account
