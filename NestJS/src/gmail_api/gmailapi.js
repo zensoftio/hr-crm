@@ -122,39 +122,38 @@ async function sendMessage(auth, data, recipient) {
 }
 
 function makeBody(data, recipient) {
-
   var boundary = "__myapp__";
   var nl = "\n";
-  let fileToAttach = '/Users/Mukhamed/Downloads/pro/js-models/test/credentials.json';
-  var attach = new Buffer(fs.readFileSync(fileToAttach)) .toString("base64");
-  let attachment_name = data.attachment;
+  let filename = data.attachments[0].name;
   let type = recipient.type + ": " + recipient.email
-
+  let structure = []
+  data.attachments.forEach((attachment) => {
+    structure.push(
+      "--" + boundary,
+      "Content-Type: Application/octet-stream; name=" + attachment.name,
+      "Content-Disposition: attachment; filename=" + attachment.name,
+      "Content-Transfer-Encoding: base64" + nl,
+      attachment.data,
+      "--" + boundary,)
+  });
+  
   const body = data.content.replace(/NAME/g, recipient.name)
-
- var str = [
-
-        "MIME-Version: 1.0",
-        "Content-Transfer-Encoding: 7bit",
-        type,
-        "from: shisyr2106@gmail.com",
-        "subject: " + data.subject,
-        "Content-Type: multipart/alternate; boundary=" + boundary + nl,
-        "--" + boundary,
-        "Content-Type: text/plain; charset=UTF-8",
-        "Content-Transfer-Encoding: 7bit" + nl,
-        body + nl,
-        "--" + boundary,
-        "--" + boundary,
-        "Content-Type: Application/octet-stream; name=" + attachment_name,
-        'Content-Disposition: attachment; filename=' + attachment_name,
-        "Content-Transfer-Encoding: base64" + nl,
-        attach,
-        "--" + boundary + "--"
-    ].join("\n");
-
+  var str = [
+          "MIME-Version: 1.0",
+          "Content-Transfer-Encoding: 7bit",
+          type,
+          "from: shisyr2106@gmail.com",
+          "subject: " + data.subject,
+          "Content-Type: multipart/alternate; boundary=" + boundary + nl,
+          "--" + boundary,
+          "Content-Type: text/plain; charset=UTF-8",
+          "Content-Transfer-Encoding: 7bit" + nl,
+          body + nl,
+          "--" + boundary,
+          structure.join('\n')
+  ].join('\n')
   var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-      return encodedMail;
+  return encodedMail;
 }
 
 

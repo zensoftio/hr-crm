@@ -27,6 +27,7 @@
     "deasync-promise": "^1.0.1",
     "dotenv": "^6.0.0",
     "fastify-formbody": "^2.0.0",
+    "gmail-api-create-message-body": "^1.0.0",
     "googleapis": "^32.0.0",
     "js-base64": "^2.4.5",
     "json-stringify-safe": "^5.0.1",

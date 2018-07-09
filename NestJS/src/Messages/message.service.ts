@@ -15,7 +15,19 @@ export class MessageService {
 
 
   async create(message: Message): Promise<number> {
-    const response = await this.messageRepository.save(message)
+    let messageToDatabase = {
+      "subject": message.subject,
+      "content" : message.content,
+      "template" : message.template
+    }
+    let response;
+    try{
+       response = await this.messageRepository.save(messageToDatabase)
+    }
+    catch(err){
+      messageToDatabase.template = null;
+      response = await this.messageRepository.save(messageToDatabase);
+    }
     return await JSON.stringify(response.id)
   }
 
@@ -42,9 +54,7 @@ export class MessageService {
         await this.messageRepository.delete({id: int});
         return toDelete;
     } catch (e) {
-      console.log("Error2");
       console.log(e);
-      console.log("Error2");
     }
   }
 }

@@ -54,7 +54,7 @@ export class EventController {
   }
 
   private initRabbitMQ(callback){
-    queue.bind(exchange, 'black');
+    queue.bind(exchange, 'event');
       queue.activateConsumer((message) => {
         var data = JSON.parse(message.getContent());
         console.log(data)

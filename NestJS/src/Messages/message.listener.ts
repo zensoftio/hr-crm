@@ -40,9 +40,11 @@ export class MessageListener {
 
   async getMessages(data){
     const msgs = await this.messageService.findByRecipient(data.recipient)
+    console.log(msgs)
     const response = JSON.stringify(msgs)
-    this.sendResponse(response)
-    return response
+    console.log("------");
+    console.log(response);
+    // this.sendResponse(response)
   }
 
   sendResponse(res) {
@@ -58,15 +60,15 @@ export class MessageListener {
       const results = await Promise.all(data.recipients.map((element) => qs.sendMessageH(data, element)));
       try {
           await this.saveRecipientsToDb(data)
-      }catch (err) {
-        console.log("error");
+      }
+      catch (err) {
         console.log(err)
-        console.log("error");
       }
       this.sendResponse(results)
   }
 
   async saveRecipientsToDb(data){
+
     const msgId = await this.messageService.create(data)
     data.recipients.map((rec) => rec.message = msgId)
     return this.recipientService.create(data.recipients)

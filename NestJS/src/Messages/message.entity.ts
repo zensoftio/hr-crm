@@ -13,13 +13,10 @@ export class Message {
   @Column('text')
   content: string;
 
-  @Column('text')
-  attachment: string;
-
   @CreateDateColumn()
   createdAt: string;
 
-  @ManyToOne(type => Templates, template => template.messages)
+  @ManyToOne(type => Templates, template => (template.messages)? template.messages : null)
   template : Templates;
 
   @OneToMany(type => Recipient, recipients => recipients.message) // note: we will create author property in the Photo class below
