@@ -3,7 +3,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 var Base64 = require('js-base64').Base64;
 var exports = module.exports = {};
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config({path: '../../../../.env'});
 const stringify = require('json-stringify-safe')
 
 // If modifying these scopes, delete credentials.json.
@@ -13,56 +13,38 @@ var SCOPES = [
   'https://www.googleapis.com/auth/gmail.compose',
   'https://www.googleapis.com/auth/gmail.send'
 ];
-const TOKEN_PATH = 'credentials.json';
 
-exports.sendMessageH = async function(data, recipient){ 
+const TOKEN_PATH = '../NestJS/src/gmail_api/gmail_credentials.json';
 
-  //console.log(data)
-  // fs.readFile('/home/reedvl/zen/test-app/nest/NestJS/NestJS/src/gmail_api/client_secret.json', (err, content) => {
-  // if (err) return console.log('Error loading client secret file:', err);
-  // // Authorize a client with credentials, then call the Google Sheets API.
-  
+exports.sendMessageH = async function(data, recipient){
     return await authorize(sendMessage, data, recipient);
 }
 
 exports.getAllMessages = function(){
   console.log("In GMAIL API")
   authorize(listLabels);
-  // authorize(getAllMessageList, data);
 }
 
-/**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- */
 async function authorize(callback, data, recipient) {
   // const {client_secret, client_id, redirect_uris} = credentials.installed;
-  const client_id = process.env['CLIENT_ID'];
-  const client_secret = process.env['CLIENT_SECRET'];
-  const redirect_uris = process.env['REDIRECT_URIS'];
- 
-    const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris);
-      // console.log(oAuth2Client)
-      // Check if we have previously stored a token.
-      
-    const token = fs.readFileSync(TOKEN_PATH)
-    if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
-    oAuth2Client.setCredentials(JSON.parse(token));
+  const client_id = process.env['client_id'];
+  const client_secret = process.env['client_secret'];
+  const redirect_uris = process.env['redirect_uris'];
+  let token = {};
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
+  try {
+    console.log("In getting new token");
+    token = fs.readFileSync(TOKEN_PATH);
+  } catch (err) {
+    return getNewToken(oAuth2Client, callback, data, recipient);
+  }
+  oAuth2Client.setCredentials(JSON.parse(token));
 
-    const a = await callback(oAuth2Client, data, recipient)
-    return a
-
+  const a = await callback(oAuth2Client, data, recipient)
+  return a
 }
 
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback for the authorized client.
- */
+
 function getNewToken(oAuth2Client, callback, data, recipient) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
@@ -79,20 +61,17 @@ function getNewToken(oAuth2Client, callback, data, recipient) {
       if (err) return callback(err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
+      try {
+        fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
         console.log('Token stored to', TOKEN_PATH);
-      });
+      } catch (err) {
+        console.error(err);
+      }
       callback(oAuth2Client, data, recipient);
     });
   });
 }
 
-/**
- * Lists the labels in the user's account.
- *
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
 function listLabels(auth) {
   const gmail = google.gmail({version: 'v1', auth});
 
@@ -103,7 +82,7 @@ function listLabels(auth) {
     if(err) console.log(err)
     console.log(result.data)
   })
-  
+
 //   gmail.users.messages.get({
 //     userId: 'me',
 //     id: '164221d5cd9d9269',
@@ -133,7 +112,7 @@ async function sendMessage(auth, data, recipient) {
     const gmail = google.gmail({version: 'v1', auth})
     var raw = makeBody(data, recipient);
 
-    const sentMessage = await gmail.users.messages.send({ 
+    const sentMessage = await gmail.users.messages.send({
         auth: auth,
         userId: 'me',
         resource: {
@@ -146,48 +125,43 @@ async function sendMessage(auth, data, recipient) {
 }
 
 function makeBody(data, recipient) {
-
   var boundary = "__myapp__";
   var nl = "\n";
-  let fileToAttach = '/home/reedvl/Downloads/test.docx';
-  var attach = new Buffer(fs.readFileSync(fileToAttach)) .toString("base64");
-
-  // var arrays = defineTypeOfRecipients(data);
-  // let To = arrays[0].toString()
-  // let CC = arrays[1].toString()
-  // let BCC = arrays[2].toString()
+  let filename = data.attachments[0].name;
   let type = recipient.type + ": " + recipient.email
+  let structure = []
+  data.attachments.forEach((attachment) => {
+    structure.push(
+      "--" + boundary,
+      "Content-Type: Application/octet-stream; name=" + attachment.name,
+      "Content-Disposition: attachment; filename=" + attachment.name,
+      "Content-Transfer-Encoding: base64" + nl,
+      attachment.data,
+      "--" + boundary,)
+  });
 
   const body = data.content.replace(/NAME/g, recipient.name)
-
- var str = [
-
-        "MIME-Version: 1.0",
-        "Content-Transfer-Encoding: 7bit",
-        type,
-        "from: dasha.ree1@gmail.com",
-        "subject: " + data.subject,
-        "Content-Type: multipart/alternate; boundary=" + boundary + nl,
-        "--" + boundary,
-        "Content-Type: text/plain; charset=UTF-8",
-        "Content-Transfer-Encoding: 7bit" + nl,
-        body + nl,
-        "--" + boundary,
-        "--" + boundary,
-        "Content-Type: Application/docx; name=a.docx",
-        'Content-Disposition: attachment; filename=a.docx',
-        "Content-Transfer-Encoding: base64" + nl,
-        attach,
-        "--" + boundary + "--"
-    ].join("\n");
-
+  var str = [
+          "MIME-Version: 1.0",
+          "Content-Transfer-Encoding: 7bit",
+          type,
+          "from: shisyr2106@gmail.com",
+          "subject: " + data.subject,
+          "Content-Type: multipart/alternate; boundary=" + boundary + nl,
+          "--" + boundary,
+          "Content-Type: text/plain; charset=UTF-8",
+          "Content-Transfer-Encoding: 7bit" + nl,
+          body + nl,
+          "--" + boundary,
+          structure.join('\n')
+  ].join('\n')
   var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-      return encodedMail;
+  return encodedMail;
 }
 
 
 //function to send message to multiple recipients at once
-function defineTypeOfRecipients(data) {  
+function defineTypeOfRecipients(data) {
 
   let i;
   let to = [], cc = [], bcc = [];

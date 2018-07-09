@@ -8,14 +8,14 @@ import { AppService } from './app.service';
 
 import { TemplateModule } from './Templates/template.module'
 import { MessageModule } from './Messages/message.module'
-import { RecepientModule } from './Recipients/recepient.module'
+import { RecipientModule } from './Recipients/recipient.module'
 import { EventModule } from './Event/event.module';
 
 @Module({
   imports: [
     TemplateModule,
     MessageModule,
-    RecepientModule,
+    RecipientModule,
    EventModule,
     TypeOrmModule.forRoot()
   ],

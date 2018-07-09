@@ -20,7 +20,6 @@ export class MessageListener {
     queue.bind(exchange, 'message');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
-        console.log(msg)
         var data = JSON.parse(msg)
         this.takeAction(data);
     }, {noAck: true})
@@ -41,9 +40,11 @@ export class MessageListener {
 
   async getMessages(data){
     const msgs = await this.messageService.findByRecipient(data.recipient)
+    console.log(msgs)
     const response = JSON.stringify(msgs)
-   this.sendResponse(response)
-    return response
+    console.log("------");
+    console.log(response);
+    // this.sendResponse(response)
   }
 
   sendResponse(res) {
@@ -59,15 +60,18 @@ export class MessageListener {
       const results = await Promise.all(data.recipients.map((element) => qs.sendMessageH(data, element)));
       try {
           await this.saveRecipientsToDb(data)
-      }catch (err) {
-          console.log(err)
+      }
+      catch (err) {
+        console.log(err)
       }
       this.sendResponse(results)
   }
 
   async saveRecipientsToDb(data){
+
     const msgId = await this.messageService.create(data)
     data.recipients.map((rec) => rec.message = msgId)
+    console.log(data);
     return this.recipientService.create(data.recipients)
   }
 }
