@@ -5,6 +5,9 @@ import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.service.PublisherService;
 import io.zensoft.share.service.model.VacancyResponseModelService;
 import io.zensoft.share.service.model.VacancyModelService;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.HttpConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -15,7 +18,11 @@ import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.*;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -51,6 +58,45 @@ public class FacebookPublisherService implements PublisherService {
         facebookPage = new FacebookTemplate(pageAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
     }
 
+    public static void main(String[] args) {
+        FacebookPublisherService facebookPublisherService = new FacebookPublisherService();
+        facebookPublisherService.getUserAccessToken();
+
+    }
+
+    private String getUserAccessToken () {
+        String oauthRequestUrl = getOauthRequestUrl();
+        Connection.Response response = null;
+        Connection connection = Jsoup.connect(oauthRequestUrl).method(Connection.Method.GET).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36").followRedirects(true);
+        try {
+            response = connection.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(response.body());
+        System.out.println(connection);
+
+        Map<String, String> uriVariables = new LinkedHashMap<>();
+        ResponseEntity<String> map = null;
+        try {
+            map = ((FacebookTemplate) facebookApp).getRestTemplate().exchange( oauthRequestUrl,
+                    HttpMethod.GET, (HttpEntity<?>) null, String.class, (Object) uriVariables);
+        } catch (Exception e) {
+
+        }
+
+        System.out.println(map.getBody());
+        return map.toString();
+    }
+
+    private String getOauthRequestUrl() {
+        String url = properties.getProperty("oauthUrlTemplate");
+        url = url.replace("{appId}", properties.getProperty("appId"));
+        url = url.replace("{redirectUrl}", properties.getProperty("redirectUrl"));
+        url = url.replace("{responseType}", "token");
+        return url;
+    }
+
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
     private String getTestUserAccessToken(){
         Map<String, String> uriVariables = new LinkedHashMap<>();
@@ -82,8 +128,21 @@ public class FacebookPublisherService implements PublisherService {
 
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
-        return publishPhoto(vacancy);
+        if (vacancy.getImage() != null) {
+            return publishPhoto(vacancy);
+        } else {
+            return publishText(vacancy);
+        }
     }
+
+    private VacancyResponse publishText(Vacancy vacancy) {
+        PagePostData pagePostData = new PagePostData(properties.getProperty("pageId"));
+        pagePostData = pagePostData.message(vacancy.getTitle());
+        pagePostData.link(properties.getProperty("link"), null, null, null, null);
+        facebookPage.pageOperations().post(pagePostData);
+        return null;
+    }
+
 
     @Override
     public VacancyResponse getInfo(Vacancy vacancy) {
