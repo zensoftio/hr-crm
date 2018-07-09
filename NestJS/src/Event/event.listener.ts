@@ -9,7 +9,9 @@ const queue = connection.default.declareQueue('event', {durable: true});
 
 @Controller('event')
 export class EventController {
-  constructor(private readonly eventService: EventService) {
+  constructor(
+    private readonly eventService: EventService
+  ) {
        this.initRabbitMQ();
   }
 

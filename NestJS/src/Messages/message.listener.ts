@@ -71,6 +71,7 @@ export class MessageListener {
 
     const msgId = await this.messageService.create(data)
     data.recipients.map((rec) => rec.message = msgId)
+    console.log(data);
     return this.recipientService.create(data.recipients)
   }
 }

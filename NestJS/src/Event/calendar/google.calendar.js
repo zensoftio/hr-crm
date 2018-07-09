@@ -89,11 +89,11 @@ function create(json, callback){
     else{
       callback(undefined, response.data)
     }
-
   });
 }
 
 function update(json, callback){
+  console.log(event);
   calendar.events.update({
           auth: auth,
           calendarId: 'primary',
