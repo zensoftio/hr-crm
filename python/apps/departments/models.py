@@ -9,7 +9,7 @@ class Department(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('department-detail', kwargs={'pk': self.id})
+        return reverse('v1:department-detail', kwargs={'pk': self.id})
 
 
 class Requirement(models.Model):
@@ -21,7 +21,7 @@ class Requirement(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('requirement-detail', kwargs={'pk': self.id})
+        return reverse('v1:requirement-detail', kwargs={'pk': self.id})
 
 
 class Position(models.Model):
@@ -32,4 +32,4 @@ class Position(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('position-detail', kwargs={'pk': self.id})
+        return reverse('v1:position-detail', kwargs={'pk': self.id})
