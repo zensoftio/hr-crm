@@ -3,6 +3,7 @@
   <color name="colorPrimary">#296edb</color>
   <color name="colorPrimaryDark">#164287</color>
   <color name="colorAccent">#FF4081</color>
+  <color name="navViewBackground">#11268e</color>
   <color name="commentCardViewBackground">#fffee0</color>
   <color name="commentCardViewTitleBackground">#f4c242</color>
   <color name="cdInterviewCardViewTitleBackgroud">#68a2ff</color>

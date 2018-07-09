@@ -3,8 +3,8 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="@dimen/nav_header_height"
-              android:background="@drawable/side_nav_bar"
-              android:gravity="bottom"
+              android:background="@color/navViewBackground"
+              android:gravity="center_horizontal"
               android:orientation="vertical"
               android:paddingBottom="@dimen/activity_vertical_margin"
               android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -17,25 +17,26 @@
       android:layout_width="match_parent"
       android:layout_height="30dp"
       android:paddingTop="@dimen/nav_header_vertical_spacing"
-      app:srcCompat="@drawable/zensoft"/>
+      app:srcCompat="@drawable/zensoft_white"/>
 
-  <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:contentDescription="@string/nav_header_desc"
+  <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/user_profile_image"
+      android:layout_width="80dp"
+      android:layout_height="80dp"
       android:paddingTop="@dimen/nav_header_vertical_spacing"
-      app:srcCompat="@mipmap/ic_launcher_round"/>
+      app:civ_border_width="2dp"
+      app:civ_border_color="#FFF"/>
 
   <TextView
-      android:layout_width="match_parent"
+      android:id="@+id/user_name"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:paddingTop="@dimen/nav_header_vertical_spacing"
       android:text="@string/zensoft_hr"
       android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
   <TextView
-      android:id="@+id/textView"
+      android:id="@+id/user_email"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/email_holder"/>
