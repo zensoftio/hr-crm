@@ -153,7 +153,7 @@ class Base(Configuration):
     ]
 
     REST_FRAMEWORK = {
-        'DEFAULT_PAGINATION_CLASS': 'config.pagination.SizedPageNumberPagination',
+        'DEFAULT_PAGINATION_CLASS': 'apps.utils.pagination.SizedPageNumberPagination',
         'PAGE_SIZE': 10,
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.AllowAny',
