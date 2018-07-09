@@ -26,10 +26,9 @@ class Base(Configuration):
         'django_filters',
         'corsheaders',
 
-        'rest_framework.authtoken',
         'social_django',
-        'rest_social_auth',
         'oauth2_provider',
+        'rest_framework.authtoken',
         'rest_framework_social_oauth2',
         'fcm_django',
 
@@ -58,10 +57,20 @@ class Base(Configuration):
     }
 
     AUTHENTICATION_BACKENDS = (
-        'social_core.backends.facebook.FacebookOAuth2',
         'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.google.GooglePlusAuth',
         'rest_framework_social_oauth2.backends.DjangoOAuth2',
         'django.contrib.auth.backends.ModelBackend',)
+
+    SOCIAL_AUTH_PIPELINE = (
+        'social_core.pipeline.social_auth.social_details',
+        'social_core.pipeline.social_auth.social_uid',
+        'social_core.pipeline.social_auth.auth_allowed',
+        'social_core.pipeline.social_auth.social_user',
+        'social_core.pipeline.social_auth.associate_user',
+        'social_core.pipeline.social_auth.load_extra_data',
+        'social_core.pipeline.user.user_details',
+    )
 
     MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
@@ -153,8 +162,9 @@ class Base(Configuration):
     ]
 
     REST_FRAMEWORK = {
-        'DEFAULT_PAGINATION_CLASS': 'config.pagination.SizedPageNumberPagination',
+        'DEFAULT_PAGINATION_CLASS': 'apps.utils.pagination.SizedPageNumberPagination',
         'PAGE_SIZE': 10,
+        'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.AllowAny',
         ],

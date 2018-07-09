@@ -23,7 +23,10 @@ public class Vacancy {
     private String address;
     private String position;
     private int count;
-    private String workingConditions;
+    @ElementCollection
+    @CollectionTable(name = "vacancy_working_condition", joinColumns = @JoinColumn(name = "vacancy_id"))
+    @Column(name = "name")
+    private List<String> workingConditions;
     private String experience;
     private String workingHours;
     private String employmentType;

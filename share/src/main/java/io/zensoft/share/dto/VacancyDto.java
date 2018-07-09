@@ -1,5 +1,6 @@
 package io.zensoft.share.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,10 @@ public class VacancyDto {
     private List<RequirementDto> requirements;
     private String city;
     private String address;
+    @JsonProperty("name")
     private String position;
     private int count;
-    private String workingConditions;
+    private List<String> workingConditions;
     private String experience;
     private String workingHours;
     private String employmentType;
