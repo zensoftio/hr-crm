@@ -1,22 +1,17 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
-import deasyncPromise from 'deasync-promise';
-import * as channel from 'Rabbit';
-
+import * as connection from 'Rabbit';
+import * as Amqp from "amqp-ts";
+const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
+const queue = connection.default.declareQueue('event', {durable: true});
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-       this.initRabbitMQ(async (msg) => {
-            var jsonObj = JSON.parse(msg.content.toString());
-            const result = await this.getDataFromService(jsonObj);
-            console.log(result);
-            channel.default.sendToQueue(msg.properties.replyTo, new Buffer.from(JSON.stringify(result)));
-            channel.default.ack(msg);
-       });
+       this.initRabbitMQ();
   }
 
-  public async getDataFromService(message: any): Promise<any> {
+  public async getDataFromService(message: any) {
     try{
       this.msg = {
         'title': message.title,
@@ -44,15 +39,25 @@ export class EventController {
     catch(err){
       this.msg.body = err;
     }
-    return this.msg;
+    this.sendResponse(this.msg);
+  }
+  private sendResponse(res) {
+    connection.default.declareQueue("event-response", {durable: false})
+    connection.default.completeConfiguration().then(() => {
+      var msg2 = new Amqp.Message(res);
+      exchange.send(msg2);
+      console.log(' [x] Sent message-response  \'' + msg2.getContent() + '\'');
+    });
   }
   private initRabbitMQ(callback){
-    channel.default.assertQueue('event', {durable: true});
-    channel.default.prefetch(1);
-    console.log(' [x] Awaiting RPC requests');
-    channel.default.consume('event', async function reply(msg) {
-      callback(msg);
-    });
+    queue.bind(exchange, 'black');
+      queue.activateConsumer((message) => {
+        var data = JSON.parse(message.getContent());
+        console.log("GET");
+        console.log(data);
+        console.log("GET");
+        this.getDataFromService(data);
+    }, {noAck: true})
   }
 
 }
