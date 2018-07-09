@@ -68,3 +68,4 @@ nexmo.message.sendSms(from, to, text, (error, response) => {
   }
 });
 ```
+You need to put API_KEY and API_SECRET to NestJS/src/Event/phone_notification/sms.js
