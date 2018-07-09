@@ -10,7 +10,7 @@ from .managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField(max_length=25, blank=True)
-    email = models.CharField(max_length=100, unique=True, validators=[email_validator])
+    email = models.CharField(max_length=100, unique=True) # validators=[email_validator] ### For future authentication
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

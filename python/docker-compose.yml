@@ -21,11 +21,14 @@ services:
     depends_on:
       - postgres
     command: >
-        bash -c "python manage.py migrate
+        bash -c "
+        python wait_for_pg.py
+        && python manage.py migrate
+        && python manage.py collectstatic --noinput
         && python manage.py loaddata apps/fixtures/*
         && gunicorn -w 3 -b 0.0.0.0:8000 wsgi"
     volumes:
-      - ./static:/static
+      - ./static:/code/static
 
   nginx:
     image: nginx

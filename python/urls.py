@@ -14,5 +14,5 @@ v1 = ([
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('rest_framework_social_oauth2.urls')),
-    path('api/v1/', include(v1))
+    path('api/v1/', include(v1)),
 ]
