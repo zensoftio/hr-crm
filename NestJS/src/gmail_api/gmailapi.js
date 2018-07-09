@@ -3,7 +3,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 var Base64 = require('js-base64').Base64;
 var exports = module.exports = {};
-const dotenv = require('dotenv').config({path: "/Users/Mukhamed/Downloads/pro/js-models/test/.env"});
+const dotenv = require('dotenv').config({path: '../../../../.env'});
 const stringify = require('json-stringify-safe')
 
 // If modifying these scopes, delete credentials.json.
@@ -14,7 +14,7 @@ var SCOPES = [
   'https://www.googleapis.com/auth/gmail.send'
 ];
 
-const TOKEN_PATH = '/Users/Mukhamed/Downloads/Zensoft/main/hr-crm/NestJS/src/gmail_api/credentials.json';
+const TOKEN_PATH = '../NestJS/src/gmail_api/gmail_credentials.json';
 
 exports.sendMessageH = async function(data, recipient){
     return await authorize(sendMessage, data, recipient);
@@ -33,6 +33,7 @@ async function authorize(callback, data, recipient) {
   let token = {};
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
   try {
+    console.log("In getting new token");
     token = fs.readFileSync(TOKEN_PATH);
   } catch (err) {
     return getNewToken(oAuth2Client, callback, data, recipient);
@@ -60,10 +61,12 @@ function getNewToken(oAuth2Client, callback, data, recipient) {
       if (err) return callback(err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
+      try {
+        fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
         console.log('Token stored to', TOKEN_PATH);
-      });
+      } catch (err) {
+        console.error(err);
+      }
       callback(oAuth2Client, data, recipient);
     });
   });
@@ -136,7 +139,7 @@ function makeBody(data, recipient) {
       attachment.data,
       "--" + boundary,)
   });
-  
+
   const body = data.content.replace(/NAME/g, recipient.name)
   var str = [
           "MIME-Version: 1.0",
