@@ -3,74 +3,46 @@
     "model": "vacancies.vacancy",
     "pk": 1,
     "fields": {
+        "uuid": "aada680d-c43b-413b-86db-b63da812832f",
         "title": "Django Developer Needed",
         "request": 2,
         "created_by": 1,
         "city": "Bishkek",
         "address": "Admin str. 123",
-        "work_conditions": "Test set of conditions",
-        "experience": "1-3",
-        "working_hours": "RS",
-        "employment_type": "FT",
+        "work_conditions": "[\"Test set of conditions\"]",
+        "experience": 0,
+        "working_hours": 0,
+        "employment_type": 0,
         "salary_min": 200.0,
-        "salary_max": 800.0,
-        "image": "",
-        "created": "2018-07-03T04:09:16.718Z",
-        "last_published": "2018-07-03T04:09:16.718Z",
-        "status": 0,
-        "requirements": [
-            1,
-            2
-        ]
+        "salary_max": 500.0,
+        "image": "media/photo_2018-06-19_10-53-28.jpg",
+        "responsibilities": "qqweqweqweqweqweqweqwe",
+        "created": "2018-07-09T08:05:58.278Z",
+        "last_published": "2018-07-09T08:05:58.278Z",
+        "status": 0
     }
 },
 {
     "model": "vacancies.vacancy",
     "pk": 2,
     "fields": {
-        "title": "HR Manager for friendly team Zensoft",
-        "request": 3,
+        "uuid": "faa3e52a-ac0d-4a91-80e3-2aca56159a78",
+        "title": "New",
+        "request": 1,
         "created_by": 1,
-        "city": "Bishkek",
+        "city": "sjkfhsjkfhsdfjkdhjk",
         "address": "Admin str. 123",
-        "work_conditions": "Test set of conditions 222",
-        "experience": "1-3",
-        "working_hours": "FLT",
-        "employment_type": "FT",
-        "salary_min": 100.0,
-        "salary_max": 1000.0,
-        "image": "",
-        "created": "2018-07-03T04:10:18.015Z",
-        "last_published": "2018-07-03T04:10:18.015Z",
-        "status": 1,
-        "requirements": [
-            7,
-            8
-        ]
-    }
-},
-{
-    "model": "vacancies.publication",
-    "pk": 1,
-    "fields": {
-        "vacancy": 1,
-        "created_by": 1,
-        "created": "2018-07-03T04:10:30.456Z",
-        "facebook": true,
-        "diesel": false,
-        "jobkg": true
-    }
-},
-{
-    "model": "vacancies.publication",
-    "pk": 2,
-    "fields": {
-        "vacancy": 2,
-        "created_by": 2,
-        "created": "2018-07-03T04:10:39.198Z",
-        "facebook": true,
-        "diesel": true,
-        "jobkg": true
+        "work_conditions": "[\"Sjdfkgdfklgjkldfgjkl\"]",
+        "experience": 0,
+        "working_hours": 0,
+        "employment_type": 0,
+        "salary_min": 200.0,
+        "salary_max": 2020.0,
+        "image": "media/photo_2018-06-19_10-53-23.jpg",
+        "responsibilities": "ergklgjerklgjerklerjgklerjklerjlrgor",
+        "created": "2018-07-09T08:08:01.196Z",
+        "last_published": "2018-07-09T08:08:01.196Z",
+        "status": 0
     }
 }
 ]
