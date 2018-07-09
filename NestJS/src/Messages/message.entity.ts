@@ -16,7 +16,7 @@ export class Message {
   @CreateDateColumn()
   createdAt: string;
 
-  @ManyToOne(type => Templates, template => (template.messages)? template.messages : null)
+  @ManyToOne(type => Templates, template => template.messages)
   template : Templates;
 
   @OneToMany(type => Recipient, recipients => recipients.message) // note: we will create author property in the Photo class below
