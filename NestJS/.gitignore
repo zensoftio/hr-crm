@@ -7,3 +7,4 @@ scr/Event/calendar/credentials.json
 scr/Event/calendar/something.js
 .env
 credentials.json
+service-account.json

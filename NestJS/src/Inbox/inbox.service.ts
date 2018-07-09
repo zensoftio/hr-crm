@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as gmail from '../gmail_api/gmailapi'
+import * as cloud from '../google-cloud/cloud.js';
 import { InjectRepository, createQueryBuilder } from '@nestjs/typeorm';
 import { Repository, createQueryBuilder } from 'typeorm';
 import { Inboxes } from './inbox.entity';
@@ -28,6 +29,7 @@ export class InboxService {
   async getMessages(message){
     const date = await this.update(message.date);
     const msg = await gmail.getAllMessages(message.date);
+    // const upload = cloud.uploadToStrage();
     return msg;
   }
 

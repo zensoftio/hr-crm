@@ -5,6 +5,7 @@ var Base64 = require('js-base64').Base64;
 var exports = module.exports = {};
 const dotenv = require('dotenv').config();
 const stringify = require('json-stringify-safe')
+const cloud = require('../google-cloud/cloud.js')
 
 // If modifying these scopes, delete credentials.json.
 var SCOPES = [
@@ -89,8 +90,13 @@ authorize = async (callback, data, recipient) => {
 getMessagesByDate = async (auth,date,callback) => {
 
   const gmail = google.gmail({version: 'v1', auth});
-  date = new Date(date).getTime() / 1000;
-  const query = 'is:inbox AND after: ${date}';
+  // date = new Date(date).getTime() / 1000;
+  // console.log("DATE IS: " + date);
+  // const query = 'is:inbox AND after: ${date}';
+  date = 1530748800;
+  // date = 1530579600;
+
+  const query = `is:inbox AND after: ${date}`;
 
   const getMail = await gmail.users.messages.list({
     userId: 'me',
@@ -111,43 +117,101 @@ getMessageById = async (messages,gmail,callback) => {
     const message = await getMessage;
     msgList.push(message);
   }));
-  return getEmailAttachmentId(msgList);
+  return await getEmailAttachmentId(msgList,gmail);
 }
 
-getEmailAttachmentId = async (msgList) => {
-  var emailWithAttachment = [];
-  msgList.forEach( (msgListElement,msgListIndex) => {
-    msgListElement.data.payload.headers.forEach( (emailElement,emailIndex) => {
-      if (emailElement.name.toUpperCase() === "FROM") {
-        var email;
-        if (emailElement.value.includes("<")){
-          email = emailElement.value.substring(
-          emailElement.value.lastIndexOf("<") + 1,
-          emailElement.value.lastIndexOf(">"));
-        }else{
-          email = emailElement.value;
-        }
-        var query = {};
-        query['email'] = email;
-        var attIds = [];
-        if (msgListElement.data.payload.parts) {
-          msgListElement.data.payload.parts.forEach( (partsElement,partsIndex) => {
-            if (partsElement.body.attachmentId) {
-              attIds.push(partsElement.body.attachmentId)
+getEmailAttachmentId = async (msgList,gmail,callback) => {
+    var emailWithAttachment = [];
+    msgList.forEach( (message,index) => {
+      var msgId = message.data.id;
+      message.data.payload.headers.forEach( (email,msgDataIndex) => {
+        if (email.name.toUpperCase() == "FROM") {
+          var sendedEmail;
+          if (email.value.includes("<")){
+            sendedEmail = email.value.substring(
+            email.value.lastIndexOf("<") + 1,
+            email.value.lastIndexOf(">"));
+          }else{
+            sendedEmail = email.value;
+          }
+          var query = {};
+          query['email'] = sendedEmail;
+          query['messageId'] = msgId;
+          query['attachmentIds'] = [];
+          query['fileNames'] = [];
+          var attachmentIds = [];
+          var fileNames = [];
+          var check = false;
+          if (message.data.payload.parts) {
+            message.data.payload.parts.forEach( (part,partIndex) => {
+              if (part.body.attachmentId) {
+                attachmentIds.push(part.body.attachmentId)
+                fileNames.push(part.filename)
+                check = true;
+              }
+            })
+            if (check) {
+              query['attachmentIds'] = attachmentIds;
+              query['fileNames'] = fileNames;
+              emailWithAttachment.push(query);
             }
-            query['attachment'] = attIds;
-            emailWithAttachment.push(query)
+          }
+          else {
+            emailWithAttachment.push(query);
+          }
+        }
+      })
+    })
+    return await getAttachmentById(emailWithAttachment,gmail);
+}
+
+getAttachmentById = async (msgList,gmail) => {
+      // msgWithCloudUrl = [];
+      // const msgList1 = await Promise.all(msgList.map(async (msg) => {
+      //   var query = {};
+      //   query['email'] = msg.email;
+      //   if (msg.attachmentIds.length > 0) {
+      //     var arrayAttList = [];
+      //     const attachmentList = await Promise.all(msg.attachmentIds.map(async (att) => {
+      //       const attachment = gmail.users.messages.attachments.get({
+      //         id: att,
+      //         messageId: msg.messageId,
+      //         userId: 'me',
+      //       });
+      //       var a = await attachment;
+      //       arrayAttList.push(a.data.size,msg.fileNames)
+      //     }));
+      //     var attList = await attachmentList;
+      //     console.log(arrayAttList);
+      //   }
+      // }));
+      // await msgList1;
+      //
+
+      msgList.forEach( (messages,index) => {
+        if (messages.attachmentIds.length > 0) {
+          messages.attachmentIds.forEach( async(id,attIndex) => {
+              const attachment = gmail.users.messages.attachments.get({
+                id: id,
+                messageId: messages.messageId,
+                userId: 'me',
+              });
+              const a = await attachment;
+              console.log(a.data.size);
+              console.log("--------");
           })
         }
-      }
-    })
-  });
-  return emailWithAttachment;
+      })
+
+    return "YES"
 }
 
+uploadAttachmentToGoogleCloud = async (list) => {
+
+}
 
 sendMessage = async (auth, data, recipient) => {
-  const gmail = google.gmail({version: 'v1', auth})
+  // const gmail = google.gmail({version: 'v1', auth})
   var raw = makeBody(data, recipient);
 
   const sentMessage = await gmail.users.messages.send({
