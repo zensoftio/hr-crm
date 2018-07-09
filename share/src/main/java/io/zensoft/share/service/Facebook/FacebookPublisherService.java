@@ -50,45 +50,6 @@ public class FacebookPublisherService implements PublisherService {
         facebookPage = new FacebookTemplate(pageAccessToken, properties.getProperty("appNamespace"), properties.getProperty("appId"));
     }
 
-    public static void main(String[] args) {
-        FacebookPublisherService facebookPublisherService = new FacebookPublisherService();
-        facebookPublisherService.getUserAccessToken();
-
-    }
-
-    private String getUserAccessToken () {
-        String oauthRequestUrl = getOauthRequestUrl();
-        Connection.Response response = null;
-        Connection connection = Jsoup.connect(oauthRequestUrl).method(Connection.Method.GET).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36").followRedirects(true);
-        try {
-            response = connection.execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(response.body());
-        System.out.println(connection);
-
-        Map<String, String> uriVariables = new LinkedHashMap<>();
-        ResponseEntity<String> map = null;
-        try {
-            map = ((FacebookTemplate) facebookApp).getRestTemplate().exchange( oauthRequestUrl,
-                    HttpMethod.GET, (HttpEntity<?>) null, String.class, (Object) uriVariables);
-        } catch (Exception e) {
-
-        }
-
-        System.out.println(map.getBody());
-        return map.toString();
-    }
-
-    private String getOauthRequestUrl() {
-        String url = properties.getProperty("oauthUrlTemplate");
-        url = url.replace("{appId}", properties.getProperty("appId"));
-        url = url.replace("{redirectUrl}", properties.getProperty("redirectUrl"));
-        url = url.replace("{responseType}", "token");
-        return url;
-    }
-
     @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
     private String getTestUserAccessToken(){
         Map<String, String> uriVariables = new LinkedHashMap<>();
