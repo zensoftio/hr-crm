@@ -33,7 +33,7 @@ class RequirementCreateView(generics.ListCreateAPIView):
     """ Return list requirements and create requirement """
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
-    filter_fields = ('type',)
+    filter_fields = ('type', 'department')
 
 
 class RequirementRetrieve(generics.RetrieveAPIView):
