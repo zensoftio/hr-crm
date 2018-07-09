@@ -88,10 +88,8 @@ const authorize = async (callback, data, recipient) => {
 
 
 const getMessagesByDate = async (auth,date,callback) => {
-
   const gmail = google.gmail({version: 'v1', auth});
-  // date = new Date(date).getTime() / 1000;
-  date = 1530433785;
+  date = new Date(date).getTime() / 1000;
 
   const query = `is:inbox AND after: ${date}`;
 
@@ -137,22 +135,27 @@ const getEmailAttachmentId = async (msgList,gmail,callback) => {
           query['fileNames'] = [];
           var attachmentIds = [];
           var fileNames = [];
-          var check = false;
+          var checkParts = false;
+          var checkAtt = false;
           if (message.data.payload.parts) {
             message.data.payload.parts.forEach( (part,partIndex) => {
               if (part.body.attachmentId) {
                 attachmentIds.push(part.body.attachmentId)
                 fileNames.push(part.filename)
-                check = true;
+                checkParts = true;
               }
             })
-            if (check) {
+            if (checkParts) {
               query['attachmentIds'] = attachmentIds;
               query['fileNames'] = fileNames;
               emailWithAttachment.push(query);
             }
           }
           else {
+            checkAtt = true;
+            emailWithAttachment.push(query);
+          }
+          if (!checkParts && !checkAtt) {
             emailWithAttachment.push(query);
           }
         }
@@ -188,13 +191,11 @@ const getAttachmentById = async (msgList,gmail) => {
       resultData.push(query);
     }
   }));
-  await messageList;
   return resultData;
 }
 
 
 const sendMessage = async (auth, data, recipient) => {
-  // const gmail = google.gmail({version: 'v1', auth})
   var raw = makeBody(data, recipient);
 
   const sentMessage = await gmail.users.messages.send({

@@ -27,11 +27,8 @@ export class InboxListener {
 
     async updateInboxList = (message: any):any => {
       this.inboxService.getMessages(message)
-      .then( (messages)  => { console.log(messages) })
-      .catch( (err) => { console.log(err) })
-
-      // .then( (messages)  => { this.sendMessage(messages) })
-      // .catch( (err) => { this.sendMessage("CAN'T UPDATE INBOX LIST") })
+       .then( (messages)  => { this.sendMessage(messages) })
+      .catch( (err) => { this.sendMessage("CAN'T UPDATE INBOX LIST") })
     }
 
     async getOneMessage = (message: any):any => {
