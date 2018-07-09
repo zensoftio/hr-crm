@@ -3,8 +3,6 @@ package io.zensoft.share.service.Facebook;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.service.PublisherService;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,6 @@ import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
