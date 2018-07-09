@@ -17,6 +17,9 @@ export class Event {
   @Column('text')
   email: string[];
 
+  @Column('text')
+  phone: string[];
+
   @Column()
   description: string;
 
