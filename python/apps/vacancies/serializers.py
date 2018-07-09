@@ -11,7 +11,7 @@ class VacancyListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vacancy
-        fields = ('id', 'name', 'created', 'last_published', 'status')
+        fields = ('id', 'name', 'created', 'last_published')
 
 
 class VacancyCreateUpdateSerializer(serializers.ModelSerializer):

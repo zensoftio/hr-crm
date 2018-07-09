@@ -10,7 +10,6 @@ from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, V
 class VacancyListView(generics.ListCreateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
-    filter_fields = ('status',)
 
     def create(self, request, *args, **kwargs):
         write_serializer = VacancyCreateUpdateSerializer(data=request.data)
