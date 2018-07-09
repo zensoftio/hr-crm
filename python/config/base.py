@@ -47,7 +47,7 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
-    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
