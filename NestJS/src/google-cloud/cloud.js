@@ -1,33 +1,52 @@
 const Promise = require('bluebird');
 const GoogleCloudStorage = Promise.promisifyAll(require('@google-cloud/storage'));
-// const exports = module.exports = {};
 const BUCKET_NAME = 'candidate-cvs'
 const stream = require('stream');
 const storage = GoogleCloudStorage({
   projectId: 'hr-zensoft',
   keyFilename: '/home/belek/Desktop/nestJs/hr-crm/NestJS/service-account.json'
-})
+});
 const myBucket = storage.bucket(BUCKET_NAME)
 
-
-exports.uploadToStrage = async (fileInBase64,email) => {
-    const file = bucket.file(email);
-    var buff = Buffer.from(fileInBase64, 'binary').toString('utf-8');
+exports.uploadToStrage = async (data) => {
+  console.log(data.email);
+  console.log(data.base64.length);
+  var query = {
+    'email': data.email
+  };
+  query['url'];
+  var cloudUrl = [];
+  const allMsg = await Promise.all(data.base64.map(async (att,index) => {
+    console.log("IN");
+    const fileName = data.email + "-" + data.fileNames[index]
+    const file = myBucket.file(fileName);
+    var buff = Buffer.from(att, 'binary').toString('utf-8');
     const stream = file.createWriteStream({
       metadata: {
         contentType: 'Application/octet-stream',
       },
       public: true,
     });
+    console.log("BEFORE ERR");
     await stream.on('error', (err) => {
-      throw err;
+      console.log(err);
+      // throw err;
     });
+    console.log("END ERR");
+    console.log("BEFORE FINISH");
     await stream.on('finish', (finish) => {
       console.log(finish);
     });
-    await stream.end(new Buffer(buff, 'base64'));
+    console.log("END FINISH");
 
-    return `https://storage.googleapis.com/${BUCKET_NAME}/${email}`
+    console.log("BEFORE UPLOAD");
+    await stream.end(new Buffer(buff, 'base64'));
+    console.log("AFTER UPLOAD");
+    cloudUrl.push(`https://storage.googleapis.com/${BUCKET_NAME}/${fileName}`)
+  }));
+  query['url'] = cloudUrl;
+  console.log("BEFORE RETURN");
+  return query;
 }
 
 isExist = async (fileName) => {

@@ -31,7 +31,7 @@ exports.getAllMessages = async (date) => {
  * @param {function} callback The callback to call with the authorized client.
  */
 
-authorize = async (callback, data, recipient) => {
+const authorize = async (callback, data, recipient) => {
   const client_id = process.env['CLIENT_ID'];
   const client_secret = process.env['CLIENT_SECRET'];
   const redirect_uris = process.env['REDIRECT_URIS'];
@@ -54,7 +54,7 @@ authorize = async (callback, data, recipient) => {
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
 
- getNewToken = (oAuth2Client, callback, data, recipient) => {
+ const getNewToken = (oAuth2Client, callback, data, recipient) => {
    const authUrl = oAuth2Client.generateAuthUrl({
      access_type: 'offline',
      scope: SCOPES,
@@ -87,14 +87,11 @@ authorize = async (callback, data, recipient) => {
  */
 
 
-getMessagesByDate = async (auth,date,callback) => {
+const getMessagesByDate = async (auth,date,callback) => {
 
   const gmail = google.gmail({version: 'v1', auth});
   // date = new Date(date).getTime() / 1000;
-  // console.log("DATE IS: " + date);
-  // const query = 'is:inbox AND after: ${date}';
-  date = 1530748800;
-  // date = 1530579600;
+  date = 1530433785;
 
   const query = `is:inbox AND after: ${date}`;
 
@@ -103,11 +100,10 @@ getMessagesByDate = async (auth,date,callback) => {
     q: query,
   })
 
-  const messages = await getMessageById(getMail.data.messages,gmail);
-  return messages;
+  return await getMessageById(getMail.data.messages,gmail);
 }
 
-getMessageById = async (messages,gmail,callback) => {
+const getMessageById = async (messages,gmail,callback) => {
   var msgList = [];
   const results = await Promise.all(messages.map(async (msg) => {
     const getMessage = gmail.users.messages.get({
@@ -120,7 +116,7 @@ getMessageById = async (messages,gmail,callback) => {
   return await getEmailAttachmentId(msgList,gmail);
 }
 
-getEmailAttachmentId = async (msgList,gmail,callback) => {
+const getEmailAttachmentId = async (msgList,gmail,callback) => {
     var emailWithAttachment = [];
     msgList.forEach( (message,index) => {
       var msgId = message.data.id;
@@ -161,56 +157,43 @@ getEmailAttachmentId = async (msgList,gmail,callback) => {
           }
         }
       })
-    })
+    });
     return await getAttachmentById(emailWithAttachment,gmail);
 }
 
-getAttachmentById = async (msgList,gmail) => {
-      // msgWithCloudUrl = [];
-      // const msgList1 = await Promise.all(msgList.map(async (msg) => {
-      //   var query = {};
-      //   query['email'] = msg.email;
-      //   if (msg.attachmentIds.length > 0) {
-      //     var arrayAttList = [];
-      //     const attachmentList = await Promise.all(msg.attachmentIds.map(async (att) => {
-      //       const attachment = gmail.users.messages.attachments.get({
-      //         id: att,
-      //         messageId: msg.messageId,
-      //         userId: 'me',
-      //       });
-      //       var a = await attachment;
-      //       arrayAttList.push(a.data.size,msg.fileNames)
-      //     }));
-      //     var attList = await attachmentList;
-      //     console.log(arrayAttList);
-      //   }
-      // }));
-      // await msgList1;
-      //
-
-      msgList.forEach( (messages,index) => {
-        if (messages.attachmentIds.length > 0) {
-          messages.attachmentIds.forEach( async(id,attIndex) => {
-              const attachment = gmail.users.messages.attachments.get({
-                id: id,
-                messageId: messages.messageId,
-                userId: 'me',
-              });
-              const a = await attachment;
-              console.log(a.data.size);
-              console.log("--------");
-          })
-        }
-      })
-
-    return "YES"
+const getAttachmentById = async (msgList,gmail) => {
+  var resultData = [];
+  const  messageList = await Promise.all(msgList.map(async (message,index) => {
+    var query = {};
+    query['email'] = message.email;
+    if (message.attachmentIds.length > 0) {
+      var fileNames = [];
+      var base64 = [];
+      const attachments = await Promise.all(message.attachmentIds.map(async (id,idIndex) => {
+        const attachment = gmail.users.messages.attachments.get({
+          id: id,
+          messageId: message.messageId,
+          userId: 'me',
+        });
+        const waitAtt = await attachment;
+        base64.push(waitAtt.data.data);
+        fileNames.push(message.fileNames[idIndex]);
+      }));
+      query['base64'] = base64;
+      query['fileNames'] = fileNames;
+      const upload = await cloud.uploadToStrage(query);
+      resultData.push(upload);
+    }
+    else {
+      resultData.push(query);
+    }
+  }));
+  await messageList;
+  return resultData;
 }
 
-uploadAttachmentToGoogleCloud = async (list) => {
 
-}
-
-sendMessage = async (auth, data, recipient) => {
+const sendMessage = async (auth, data, recipient) => {
   // const gmail = google.gmail({version: 'v1', auth})
   var raw = makeBody(data, recipient);
 
@@ -224,7 +207,7 @@ sendMessage = async (auth, data, recipient) => {
   return sentMessage.status
 }
 
-makeBody = (data,recipient) => {
+const makeBody = (data,recipient) => {
   var boundary = "__myapp__";
   var nl = "\n";
   let fileToAttach = '/home/reedvl/Downloads/test.docx';
@@ -261,7 +244,7 @@ makeBody = (data,recipient) => {
 
 
 //function to send message to multiple recipients at once
-defineTypeOfRecipients = (data) => {
+const defineTypeOfRecipients = (data) => {
   let i;
   let to = [], cc = [], bcc = [];
   for(i = 0; i < data.recipients.length; i++){
