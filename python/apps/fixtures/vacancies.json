@@ -15,7 +15,7 @@
         "employment_type": 0,
         "salary_min": 200.0,
         "salary_max": 500.0,
-        "image": "media/photo_2018-06-19_10-53-28.jpg",
+        "image": "",
         "responsibilities": "qqweqweqweqweqweqweqwe",
         "created": "2018-07-09T08:05:58.278Z",
         "last_published": "2018-07-09T08:05:58.278Z",
@@ -38,11 +38,35 @@
         "employment_type": 0,
         "salary_min": 200.0,
         "salary_max": 2020.0,
-        "image": "media/photo_2018-06-19_10-53-23.jpg",
+        "image": "",
         "responsibilities": "ergklgjerklgjerklerjgklerjklerjlrgor",
         "created": "2018-07-09T08:08:01.196Z",
         "last_published": "2018-07-09T08:08:01.196Z",
         "status": 0
     }
-}
+},
+  {
+		"model": "vacancies.publication",
+		"pk": 1,
+		"fields": {
+			"vacancy": 1,
+			"created_by": 1,
+            "created": "2018-07-09T08:08:01.196Z",
+			"facebook": true,
+			"diesel": false,
+			"jobkg": true
+		}
+	},
+	{
+		"model": "vacancies.publication",
+		"pk": 2,
+		"fields": {
+			"vacancy": 2,
+			"created_by": 2,
+            "created": "2018-07-09T08:08:01.196Z",
+			"facebook": true,
+			"diesel": true,
+			"jobkg": true
+		}
+	}
 ]

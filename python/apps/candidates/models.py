@@ -45,7 +45,7 @@ class Candidate(models.Model):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
     def get_absolute_url(self):
-        return reverse('candidate-detail', kwargs={'pk': self.id})
+        return reverse('v1:candidate-detail', kwargs={'pk': self.id})
 
 
 post_save.connect(candidate_created, sender=Candidate)

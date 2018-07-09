@@ -55,7 +55,7 @@ class Vacancy(models.Model):
         verbose_name_plural = 'vacancies'
 
     def get_absolute_url(self):
-        return reverse('vacancy-detail', kwargs={'pk': self.id})
+        return reverse('v1:vacancy-detail', kwargs={'pk': self.id})
 
 
 class Publication(models.Model):
@@ -70,4 +70,4 @@ class Publication(models.Model):
         default_related_name = 'publications'
 
     def get_absolute_url(self):
-        return reverse('publication-detail', kwargs={'pk': self.id})
+        return reverse('v1:publication-detail', kwargs={'pk': self.id})

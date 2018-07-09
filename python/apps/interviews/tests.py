@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 
 from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
-from apps.departments.models import Department
 from .models import Criteria, Interview
 from .serializers import CriteriaSerializer, InterviewDetailSerializer, InterviewListSerializer, \
                                                                                             InterviewCreateSerializer
@@ -36,7 +35,7 @@ class InterviewCreateTestCase(CreateTestMixin, APITestCase):
                 'interviews.json']
 
     def test_creation(self):
-        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
         response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(4, self.model.objects.count())
