@@ -47,7 +47,7 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
-    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
@@ -67,6 +67,8 @@ class Base(Configuration):
         'social_core.pipeline.social_auth.social_uid',
         'social_core.pipeline.social_auth.auth_allowed',
         'social_core.pipeline.social_auth.social_user',
+        'social_core.pipeline.user.get_username',
+        'social_core.pipeline.social_auth.associate_by_email',
         'social_core.pipeline.social_auth.associate_user',
         'social_core.pipeline.social_auth.load_extra_data',
         'social_core.pipeline.user.user_details',

@@ -11,7 +11,7 @@ class VacancyListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vacancy
-        fields = ('id', 'name', 'created', 'last_published', 'status')
+        fields = ('id', 'name', 'created', 'last_published')
 
 
 class VacancyCreateUpdateSerializer(serializers.ModelSerializer):
@@ -61,5 +61,5 @@ class JavaVacancySerializer(serializers.ModelSerializer):
         model = Vacancy
         fields = ('uuid', 'title', 'requirements', 'city',
                   'address', 'name', 'count', 'work_conditions',
-                  'employment_type', 'salary_min', 'salary_max', 'image', 'responsibilities'
+                  'salary_min', 'salary_max', 'image', 'responsibilities'
                   )
