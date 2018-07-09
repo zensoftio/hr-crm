@@ -27,6 +27,7 @@ class Vacancy(models.Model):
     salary_max = models.FloatField()
     image = models.ImageField(upload_to='media', null=True)
     responsibilities = models.TextField(null=True)
+    comments = models.TextField(null=True)
     created = models.DateTimeField(auto_now_add=True)
     last_published = models.DateTimeField(auto_now=True)
 
