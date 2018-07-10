@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from apps.departments.models import Position
-from apps.utils.notifications import candidate_created
+from apps.notifications.notifications import candidate_created
 
 User = get_user_model()
 
