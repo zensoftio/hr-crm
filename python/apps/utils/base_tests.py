@@ -44,6 +44,15 @@ class CreateTestMixin(object):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(1, self.model.objects.count())
 
+        self.request_body = {
+            "none_exist_field_1": "some_data_1",
+            "none_exist_field_2": "some_data_2",
+            "none_exist_field_3": "some_data_3",
+        }
+
+        response = self.client.post(url, self.request_body, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
 class GetInstanceTestMixin(object):
     """
@@ -95,3 +104,14 @@ class UpdateTestMixin(object):
         response = self.client.patch(self.instance.get_absolute_url(), self.update_data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.update_data = {
+            "some_field_1": "some_name",
+            "some_field_2": "some_second_name",
+            "phone": "some_number",
+            "position": 10
+        }
+
+        response = self.client.patch(self.instance.get_absolute_url(), self.update_data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
