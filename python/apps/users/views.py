@@ -20,12 +20,3 @@ class UserListView(generics.ListAPIView):
 class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-class AuthenticationView(APIView):
-    pass
-
-@csrf_exempt
-@api_view(['POST'])
-def check_token(request, format=None):
-    token = Token.objects.filter(key=request.data['token']).exists()
-    return JsonResponse({"status": token})
