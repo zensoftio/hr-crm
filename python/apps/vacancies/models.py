@@ -14,6 +14,7 @@ WORKING_HOURS = ((0, 'Полный рабочий день'),
                  (2, 'Удаленная работа'),
                  )
 
+
 class Vacancy(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
