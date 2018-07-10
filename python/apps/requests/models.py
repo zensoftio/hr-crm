@@ -22,7 +22,7 @@ class Request(models.Model):
         return self.position.name
 
     def get_absolute_url(self):
-        return reverse('request-detail', kwargs={'pk': self.id})
+        return reverse('v1:request-detail', kwargs={'pk': self.id})
 
     class Meta:
         default_related_name = 'requests'

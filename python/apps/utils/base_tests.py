@@ -15,7 +15,7 @@ class ListTestMixin(object):
     serializer = None
 
     def test_get_list(self):
-        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
         response = self.client.get(url)
         queryset = self.model.objects.all()
         serializer = self.serializer(queryset, many=True)
@@ -39,7 +39,7 @@ class CreateTestMixin(object):
     request_body = {}
 
     def test_creation(self):
-        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
         response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(1, self.model.objects.count())
