@@ -15,7 +15,7 @@ class Request(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     modified = models.DateTimeField(auto_now=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
-    status = models.IntegerField()
+    status = models.SmallIntegerField(default=0, blank=False)
     requirements = models.ManyToManyField(Requirement)
 
     def __str__(self):
