@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 
 public interface ApiInterface {
 
-  @GET("")
+  @GET("candidates?status=&department=&vacancy=")
   Call<CandidatesResponse> getCandidates();
 
   @GET("")

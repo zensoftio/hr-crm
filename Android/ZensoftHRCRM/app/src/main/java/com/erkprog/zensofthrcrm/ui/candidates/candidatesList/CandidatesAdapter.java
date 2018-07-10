@@ -45,9 +45,13 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
 
     holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
     holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
-    holder.requestName.setText("");
+    String positionName = candidate.getPosition().getName();
+    holder.position.setText(positionName != null ? positionName : "");
     holder.status.setText(String.valueOf(candidate.getStatus()));
-
+    String createdDate = candidate.getCreated();
+    if (createdDate != null) {
+      holder.created.append(String.format(": %s", createdDate));
+    }
   }
 
   @Override
@@ -67,8 +71,9 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
   static class CandidateViewHolder extends RecyclerView.ViewHolder {
     TextView firstName;
     TextView lastName;
-    TextView requestName;
+    TextView position;
     TextView status;
+    TextView created;
 
     public CandidateViewHolder(View itemView, final OnItemClickListener listener) {
       super(itemView);
@@ -87,8 +92,9 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
 
       firstName = itemView.findViewById(R.id.citem_firstName);
       lastName = itemView.findViewById(R.id.citem_lastName);
-      requestName = itemView.findViewById(R.id.citem_request_name);
+      position = itemView.findViewById(R.id.citem_position);
       status = itemView.findViewById(R.id.citem_status);
+      created = itemView.findViewById(R.id.citem_created);
     }
   }
 

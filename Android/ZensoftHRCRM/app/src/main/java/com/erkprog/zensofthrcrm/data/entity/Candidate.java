@@ -24,6 +24,8 @@ public class Candidate {
   private Integer status;
   @SerializedName("phone")
   private String phone;
+  @SerializedName("created")
+  private String created;
   @SerializedName("cvs")
   private List<Cv> cvs = null;
   @SerializedName("interviews")
@@ -125,5 +127,13 @@ public class Candidate {
 
   public void setComments(List<Comment> comments) {
     this.comments = comments;
+  }
+
+  public String getCreated() {
+    return created;
+  }
+
+  public void setCreated(String created) {
+    this.created = created;
   }
 }

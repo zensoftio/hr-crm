@@ -33,7 +33,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   private void initPresenter() {
-    mPresenter = new CandidatesPresenter(this, CRMApplication.getInstance(requireContext()).getServiceTest());
+//    mPresenter = new CandidatesPresenter(this, CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter = new CandidatesPresenter(this, CRMApplication.getInstance(requireContext()).getApiService());
     mPresenter.bind(this);
   }
 

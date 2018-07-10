@@ -1,85 +1,52 @@
 {
   "count": 2,
-  "next": "next url",
-  "previous": "previous url",
+  "next": null,
+  "previous": null,
   "results": [
     {
-      "id": 3,
+      "id": 1,
       "first_name": "Almaz",
       "last_name": "Yusupov",
-      "status": 2
+      "position": {
+        "id": 1,
+        "name": "Java Junior Developer",
+        "department": {
+          "id": 3,
+          "name": "Java"
+        }
+      },
+      "status": 0,
+      "created": "2018-12-12T16:21"
     },
     {
-      "id": 4,
+      "id": 2,
       "first_name": "John",
       "last_name": "Sam",
-      "status": 3
+      "position": {
+        "id": 1,
+        "name": "Java Junior Developer",
+        "department": {
+          "id": 3,
+          "name": "Java"
+        }
+      },
+      "status": 0,
+      "created": "2018-12-12T16:21"
     },
     {
-      "id": 12,
+      "id": 3,
       "first_name": "Michael",
       "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 31,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 1,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 436,
-      "first_name": "John",
-      "last_name": "Sam",
-      "status": 3
-    },
-    {
-      "id": 53,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 12,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 44,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 22,
-      "first_name": "John",
-      "last_name": "Sam",
-      "status": 3
-    },
-    {
-      "id": 111,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 54,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
-    },
-    {
-      "id": 45,
-      "first_name": "Michael",
-      "last_name": "Dozen",
-      "status": 4
+      "position": {
+        "id": 1,
+        "name": "Java Junior Developer",
+        "department": {
+          "id": 3,
+          "name": "Java"
+        }
+      },
+      "status": 0,
+      "created": "2018-12-12T16:21"
     }
   ]
 }
