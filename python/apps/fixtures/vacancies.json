@@ -10,16 +10,14 @@
         "city": "Bishkek",
         "address": "Admin str. 123",
         "work_conditions": "[\"Test set of conditions\"]",
-        "experience": 0,
         "working_hours": 0,
-        "employment_type": 0,
         "salary_min": 200.0,
         "salary_max": 500.0,
         "image": "",
         "responsibilities": "qqweqweqweqweqweqweqwe",
+        "comments": "Comment 1",
         "created": "2018-07-09T08:05:58.278Z",
-        "last_published": "2018-07-09T08:05:58.278Z",
-        "status": 0
+        "last_published": "2018-07-09T08:05:58.278Z"
     }
 },
 {
@@ -30,19 +28,17 @@
         "title": "New",
         "request": 1,
         "created_by": 1,
-        "city": "sjkfhsjkfhsdfjkdhjk",
+        "city": "Bishkek",
         "address": "Admin str. 123",
         "work_conditions": "[\"Sjdfkgdfklgjkldfgjkl\"]",
-        "experience": 0,
         "working_hours": 0,
-        "employment_type": 0,
         "salary_min": 200.0,
         "salary_max": 2020.0,
         "image": "",
         "responsibilities": "ergklgjerklgjerklerjgklerjklerjlrgor",
+        "comments": "Comment 2",
         "created": "2018-07-09T08:08:01.196Z",
-        "last_published": "2018-07-09T08:08:01.196Z",
-        "status": 0
+        "last_published": "2018-07-09T08:08:01.196Z"
     }
 },
   {
