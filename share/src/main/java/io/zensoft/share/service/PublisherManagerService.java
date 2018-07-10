@@ -1,6 +1,7 @@
 package io.zensoft.share.service;
 
 import io.zensoft.share.dto.VacancyDto;
+import io.zensoft.share.model.PublisherServiceType;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,5 +35,5 @@ public interface PublisherManagerService {
      * <p>
      * @param vacancyDto the object given by listener
      */
-    void getInfo(VacancyDto vacancyDto);
+    void getInfo(VacancyDto vacancyDto, PublisherServiceType publisherServiceType);
 }
