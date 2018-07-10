@@ -102,11 +102,6 @@ public class FacebookPublisherService implements PublisherService {
         return null;
     }
 
-    @Override
-    public VacancyResponse getInfo(Vacancy vacancy) {
-        return null;
-    }
-
     public VacancyResponse publishPhoto(Vacancy vacancy) {
         String publishPhotoRequestUrl = getPublishPhotoRequestUrl(vacancy);
         Map<String, String> uriVariables = new LinkedHashMap<>();
