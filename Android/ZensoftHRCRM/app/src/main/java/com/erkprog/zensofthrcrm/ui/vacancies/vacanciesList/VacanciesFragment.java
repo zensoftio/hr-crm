@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 
 import java.util.ArrayList;
@@ -27,15 +27,30 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   private VacanciesContract.Presenter mPresenter;
   private VacanciesAdapter mAdapter;
 
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new VacanciesPresenter(this, CRMApplication.getInstance(requireContext())
+        .getServiceTest());
+    mPresenter.bind(this);
+  }
+
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_vacancies_list, container, false);
     initRecyclerView(v);
-    mPresenter = new VacanciesPresenter(this, DataRepository.getInstance(getActivity()
-        .getApplicationContext()));
-    mPresenter.loadData();
     return v;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mPresenter.loadData();
   }
 
   private void initRecyclerView(View v) {
@@ -48,11 +63,6 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
     mAdapter = new VacanciesAdapter(getActivity(), vacancies);
     mAdapter.setOnItemClickListener(this);
     recyclerView.setAdapter(mAdapter);
-  }
-
-  public static VacanciesFragment newInstance() {
-    VacanciesFragment fragment = new VacanciesFragment();
-    return fragment;
   }
 
   @Override
@@ -68,17 +78,23 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   @Override
-  public void showToast(String message) {
+  public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-  }
-
-  @Override
-  public boolean isActive() {
-    return isAdded();
   }
 
   @Override
   public void onItemClick(int position) {
     mPresenter.onVacancyItemClick(mAdapter.getVacancy(position));
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    mPresenter.unbind();
+  }
+
+  public static VacanciesFragment newInstance() {
+    VacanciesFragment fragment = new VacanciesFragment();
+    return fragment;
   }
 }

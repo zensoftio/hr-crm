@@ -14,7 +14,8 @@ public class RequestsPresenter implements RequestsContract.Presenter {
   private RestServiceTest mServiceTest;
   private RequestsContract.View mView;
 
-  public RequestsPresenter(RestServiceTest serviceTest) {
+  public RequestsPresenter(RequestsContract.View view, RestServiceTest serviceTest) {
+    mView = view;
     mServiceTest = serviceTest;
   }
 

@@ -1,32 +1,42 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
-import android.util.Log;
-
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
-import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
-import com.google.gson.GsonBuilder;
+import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
-import java.util.List;
-
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VacanciesPresenter implements VacanciesContract.Presenter, RemoteDataSource.OnVacanciesLoadFinishedListener {
+public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   private static final String TAG = "VACANCIES PRESENTER";
 
   private VacanciesContract.View mView;
-  private DataRepository mRepository;
+  private RestServiceTest mApiService;
 
-  VacanciesPresenter(VacanciesContract.View view, DataRepository repository) {
+  VacanciesPresenter(VacanciesContract.View view, RestServiceTest service) {
     mView = view;
-    mRepository = repository;
+    mApiService = service;
   }
 
   @Override
   public void loadData() {
-    mRepository.getVacanciesFromJson(this);
+    mApiService.getVacancies().enqueue(new Callback<VacanciesResponse>() {
+      @Override
+      public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
+        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
+          mView.showVacancies(response.body().getVacancyList());
+        } else {
+          mView.showMessage("Vacancies list in response is null");
+        }
+      }
+
+      @Override
+      public void onFailure(Call<VacanciesResponse> call, Throwable t) {
+        mView.showMessage(t.getMessage());
+      }
+    });
   }
 
   @Override
@@ -34,30 +44,17 @@ public class VacanciesPresenter implements VacanciesContract.Presenter, RemoteDa
 
   }
 
-  @Override
-  public void onFinished(Response<VacanciesResponse> response) {
-    if (!mView.isActive()) {
-      return;
-    }
-
-    if (response.isSuccessful()) {
-
-      Log.d(TAG, new GsonBuilder().setPrettyPrinting().create().toJson(response));
-      List<Vacancy> vacancies = response.body().getVacancyList();
-
-      if (vacancies != null) {
-        mView.showVacancies(vacancies);
-      } else {
-        Log.d(TAG, "onFinished: " + "vacancies list in response is null");
-      }
-
-    } else {
-      mView.showToast("Response is not successfull");
-    }
+  private boolean isViewAttached() {
+    return mView != null;
   }
 
   @Override
-  public void onFailure(Throwable t) {
+  public void bind(VacanciesContract.View view) {
+    this.mView = view;
+  }
 
+  @Override
+  public void unbind() {
+    this.mView = null;
   }
 }
