@@ -32,7 +32,7 @@ class RequestCreateTestCase(CreateTestMixin, APITestCase):
     }
 
     def test_creation(self):
-        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
+        url = '/api/v1/' + str(self.model._meta.verbose_name_plural)
         response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(4, self.model.objects.count())
