@@ -74,7 +74,7 @@ public class FacebookPublisherService implements PublisherService {
                     "https://graph.facebook.com/" + properties.getProperty("userId") + "/accounts",
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         Object object = map.getBody().get("data");
         ArrayList<Map<String, Object>> pageList = (ArrayList<Map<String, Object>>) object;
@@ -133,7 +133,7 @@ public class FacebookPublisherService implements PublisherService {
             map = ((FacebookTemplate) facebookPage).getRestTemplate().exchange( publishPhotoRequestUrl,
                     HttpMethod.POST, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
     }
