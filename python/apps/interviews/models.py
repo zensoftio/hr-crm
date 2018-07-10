@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from apps.candidates.models import Candidate
 from apps.departments.models import Department
-from apps.utils.notifications import interview_created
+from apps.notifications.notifications import interview_created
 
 User = get_user_model()
 

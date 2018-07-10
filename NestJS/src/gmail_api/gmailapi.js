@@ -37,15 +37,19 @@ const authorize = async (callback, data, recipient) => {
   const redirect_uris = process.env['REDIRECT_URIS'];
 
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
+  let token = null;
+  try{
+      token = fs.readFileSync(TOKEN_PATH)
+  }
+  catch(err){
+      return getNewToken(oAuth2Client, callback, data, recipient);
+  }
 
-  const token = fs.readFileSync(TOKEN_PATH)
-  if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
   oAuth2Client.setCredentials(JSON.parse(token));
 
   return callback(oAuth2Client, data, recipient)
 
 }
-
 
 
  const getNewToken = (oAuth2Client, callback, data, recipient) => {
@@ -201,7 +205,8 @@ const sendMessage = async (auth, data, recipient) => {
   return sentMessage.status
 }
 
-const makeBody = (data,recipient) => {
+
+function makeBody(data, recipient) {
   var boundary = "__myapp__";
   var nl = "\n";
   let filename = data.attachments[0].name;
@@ -219,27 +224,21 @@ const makeBody = (data,recipient) => {
 
   const body = data.content.replace(/NAME/g, recipient.name)
   var str = [
-        "MIME-Version: 1.0",
-        "Content-Transfer-Encoding: 7bit",
-        type,
-        "from: dasha.ree1@gmail.com",
-        "subject: " + data.subject,
-        "Content-Type: multipart/alternate; boundary=" + boundary + nl,
-        "--" + boundary,
-        "Content-Type: text/plain; charset=UTF-8",
-        "Content-Transfer-Encoding: 7bit" + nl,
-        body + nl,
-        "--" + boundary,
-        "--" + boundary,
-        "Content-Type: Application/docx; name=a.docx",
-        'Content-Disposition: attachment; filename=a.docx',
-        "Content-Transfer-Encoding: base64" + nl,
-        attach,
-        "--" + boundary + "--"
-    ].join("\n");
-
-    var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
-    return encodedMail;
+          "MIME-Version: 1.0",
+          "Content-Transfer-Encoding: 7bit",
+          type,
+          "from: shisyr2106@gmail.com",
+          "subject: " + data.subject,
+          "Content-Type: multipart/alternate; boundary=" + boundary + nl,
+          "--" + boundary,
+          "Content-Type: text/plain; charset=UTF-8",
+          "Content-Transfer-Encoding: 7bit" + nl,
+          body + nl,
+          "--" + boundary,
+          structure.join('\n')
+  ].join('\n')
+  var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+  return encodedMail;
 }
 
 
