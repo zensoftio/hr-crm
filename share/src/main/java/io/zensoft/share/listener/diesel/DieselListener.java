@@ -1,7 +1,8 @@
-package io.zensoft.share.listener;
+package io.zensoft.share.listener.diesel;
 
 import io.zensoft.share.config.rabbitmq.RabbitMqComponentDeclarationConfiguration;
 import io.zensoft.share.dto.VacancyDto;
+import io.zensoft.share.listener.VacancyListener;
 import io.zensoft.share.service.PublisherManagerService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -1,8 +1,7 @@
 package io.zensoft.share.service.diesel.login;
 
-import io.zensoft.share.model.diesel.LoginHeaders;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,34 +10,23 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.List;
 
-@Data
 @Service
 public class LoginPostRequestSender {
-    private String server;
+    @Value("${diesel.login.url}")
+    private String serverUrlPostRequestReceiver;
 
-    @Autowired
     private LoginHeaders loginHeaders;
-    @Autowired
     private LoginPostRequestsForm loginPostRequestsForm;
 
-    public LoginPostRequestSender() {
-        server = "https://diesel.elcat.kg/index.php?app=core&module=global&section=login&do=process";
+    public LoginPostRequestSender(){
+        loginHeaders = new LoginHeaders();
+        loginPostRequestsForm = new LoginPostRequestsForm();
     }
 
-    /**
-     * Sends POST requests to "server" with headers and body
-     * gets response with "Set-Cookie" section
-     *
-     * returns sessionId, got from response with method getSessionIdFromResponse()
-     *
-     * @param restTemplate
-     * @return
-     */
     public String sendPostRequestForLogin(RestTemplate restTemplate) {
-
         HttpEntity<?> request = new HttpEntity<>(loginPostRequestsForm.getCreatedBodyOfRequestInMap(), loginHeaders.getLoginHeaders());
 
-        ResponseEntity<String> response = restTemplate.postForEntity(server, request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(serverUrlPostRequestReceiver, request, String.class);
         response.getHeaders().get("Set-Cookie").stream().forEach(System.out::println);
 
         List<String> setCookie = Collections.singletonList(response.getHeaders().getFirst("Set-Cookie"));
