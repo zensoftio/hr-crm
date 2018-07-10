@@ -16,11 +16,11 @@ class ListTestMixin(object):
 
     def test_get_list(self):
         url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
-        response = self.client.get(url)
+        response = self.client.get(url, format='json')
         queryset = self.model.objects.all()
         serializer = self.serializer(queryset, many=True)
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['results'], serializer.data)
 
 
@@ -40,8 +40,8 @@ class CreateTestMixin(object):
 
     def test_creation(self):
         url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
-        response = self.client.post(url, self.request_body)
-        self.assertEqual(201, response.status_code)
+        response = self.client.post(url, self.request_body, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(1, self.model.objects.count())
 
 
@@ -62,7 +62,7 @@ class GetInstanceTestMixin(object):
     serializer = None
 
     def test_instance(self):
-        response = self.client.get(self.instance.get_absolute_url())
+        response = self.client.get(self.instance.get_absolute_url(), format='json')
         serializer = self.serializer(self.instance)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -92,6 +92,6 @@ class UpdateTestMixin(object):
     update_data = {}
 
     def test_update(self):
-        response = self.client.patch(self.instance.get_absolute_url(), self.update_data)
+        response = self.client.patch(self.instance.get_absolute_url(), self.update_data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
