@@ -44,24 +44,24 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     public void publish(VacancyDto vacancyDto) {
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = facebookPublisherService.publish(vacancy);
-        saveToDatabaseAndConvertToDtoAndRespond(vacancyResponse);
+        vacancyResponseModelService.save(vacancyResponse);
+        convertToDtoAndRespond(vacancyResponse);
     }
 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = vacancyRetriever.getInfo(vacancy);
-        saveToDatabaseAndConvertToDtoAndRespond(vacancyResponse);
+        convertToDtoAndRespond(vacancyResponse);
     }
 
-    public Vacancy convertToVacancyAndSaveToDatabase(VacancyDto vacancyDto) {
+    private Vacancy convertToVacancyAndSaveToDatabase(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
         vacancyModelService.save(vacancy);
         return  vacancy;
     }
 
-    public void saveToDatabaseAndConvertToDtoAndRespond (VacancyResponse vacancyResponse) {
-        vacancyResponseModelService.save(vacancyResponse);
+    private void convertToDtoAndRespond (VacancyResponse vacancyResponse) {
         VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
     }
