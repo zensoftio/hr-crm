@@ -23,7 +23,7 @@ class Department(models.Model):
 class Requirement(models.Model):
     name = models.CharField(max_length=200)
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name='requirements')
-    type = models.CharField(choices=REQUIREMENTS_STATUS, default=0)
+    type = models.CharField(choices=REQUIREMENTS_STATUS, max_length=100, default=0)
 
     def __str__(self):
         return self.name

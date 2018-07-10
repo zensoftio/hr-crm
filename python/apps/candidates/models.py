@@ -31,7 +31,7 @@ class Candidate(models.Model):
     phone = models.CharField(max_length=30, blank=True, null=True)
     experience = models.FloatField(blank=True, null=True)
     level = models.CharField(max_length=30, blank=True, null=True)
-    status = models.CharField(choices=CANDIDATE_STATUS, default=0)
+    status = models.CharField(choices=CANDIDATE_STATUS, max_length=100, default=0)
     skype = models.CharField(max_length=254, blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT, null=True)
     created = models.DateTimeField(default=timezone.now)
