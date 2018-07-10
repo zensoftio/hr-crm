@@ -10,9 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 
@@ -28,6 +29,12 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new CandidatesPresenter(this, CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter.bind(this);
   }
 
   @Nullable
@@ -35,9 +42,13 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
     initRecyclerView(v);
-    mPresenter = new CandidatesPresenter(this, DataRepository.getInstance(getActivity().getApplicationContext()));
-    mPresenter.loadCandidates();
     return v;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mPresenter.loadCandidates();
   }
 
   private void initRecyclerView(View v) {
@@ -64,27 +75,18 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   @Override
-  public void showLoadingCandidatesError() {
-
-  }
-
-  @Override
-  public void showNoCandidates() {
-
-  }
-
-  @Override
-  public void showToast(String message) {
-
-  }
-
-  @Override
-  public boolean isActive() {
-    return isAdded();
+  public void showMessage(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 
   @Override
   public void onItemClick(int position) {
     mPresenter.onCandidateItemClick(mAdapter.getCandidate(position));
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    mPresenter.unbind();
   }
 }

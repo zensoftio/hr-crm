@@ -1,39 +1,44 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
-import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
-import com.google.gson.GsonBuilder;
+import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
-import java.util.List;
-
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CandidatesPresenter implements CandidatesContract.Presenter, RemoteDataSource.OnCandidatesLoadFinishedListener {
-
-  private static final String TAG = "mylog:CandidatesPresenter";
+public class CandidatesPresenter implements CandidatesContract.Presenter {
 
   private CandidatesContract.View mView;
-  private DataRepository mRepository;
+  private RestServiceTest mApiService;
 
-
-  public CandidatesPresenter(CandidatesContract.View view, DataRepository repository) {
+  public CandidatesPresenter(CandidatesContract.View view, RestServiceTest service) {
     mView = view;
-    mRepository = repository;
+    mApiService = service;
   }
 
   @Override
   public void loadCandidates() {
-    mRepository.getCandidatesFromJson(this);
+    mApiService.getCandidates().enqueue(new Callback<CandidatesResponse>() {
+      @Override
+      public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
+        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
+          mView.showCandidates(response.body().getCandidateList());
+        } else {
+          mView.showMessage("Requests list in response is null");
+        }
+      }
+
+      @Override
+      public void onFailure(Call<CandidatesResponse> call, Throwable t) {
+        mView.showMessage(t.getMessage());
+      }
+    });
   }
 
-  @Override
-  public void openCandidateDetails(Candidate requestedCandidate) {
-
+  private boolean isViewAttached() {
+    return mView != null;
   }
 
   @Override
@@ -41,24 +46,13 @@ public class CandidatesPresenter implements CandidatesContract.Presenter, Remote
     mView.showCandidateDetailUi(candidate.getId());
   }
 
-  @SuppressLint("LongLogTag")
   @Override
-  public void onFinished(Response<CandidatesResponse> response) {
-    if (!mView.isActive()) {
-      return;
-    }
-    if (response.isSuccessful()) {
-      Log.d(" 2.0 getFeed > Full json res wrapped in pretty printed gson => ", new GsonBuilder().setPrettyPrinting().create().toJson(response));
-      List<Candidate> candidates = response.body().getCandidateList();
-      mView.showCandidates(candidates);
-
-    } else {
-      mView.showToast("Response is not successfull");
-    }
+  public void bind(CandidatesContract.View view) {
+    mView = view;
   }
 
   @Override
-  public void onFailure(Throwable t) {
-
+  public void unbind() {
+    mView = null;
   }
 }
