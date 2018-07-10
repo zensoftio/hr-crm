@@ -2,13 +2,13 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const request = require('request');
-const dotEnv = require('dotenv').config({path: '/Users/Mukhamed/Downloads/Zensoft/main/hr-crm/NestJS/.env'});
+const dotEnv = require('dotenv').config({path: '../../../../.env'});
 // If modifying these scopes, delete credentials.json.
-const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://mail.google.com/'];
 
 let auth = null;
 let calendar = null;
-const TOKEN_PATH = 'credentials.json';
+const TOKEN_PATH = '../NestJS/src/Event/calendar/calendar_credentials.json';
 
 var event = {
   'summary': 'Interview',
@@ -89,11 +89,11 @@ function create(json, callback){
     else{
       callback(undefined, response.data)
     }
-
   });
 }
 
 function update(json, callback){
+  console.log(event);
   calendar.events.update({
           auth: auth,
           calendarId: 'primary',
@@ -131,7 +131,6 @@ function authorize(callback) {
   let token = {};
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris);
-
   try {
     token = fs.readFileSync(TOKEN_PATH);
   } catch (err) {

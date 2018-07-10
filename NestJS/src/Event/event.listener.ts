@@ -1,19 +1,18 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
-import * as Amqp from "amqp-ts";
-
 import deasyncPromise from 'deasync-promise';
+import * as Amqp from 'amqp-ts'
 import * as connection from 'Rabbit';
-
+const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
+const queue = connection.default.declareQueue('event', {durable: true});
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-       this.queue = connection.default.declareQueue("event", {durable: true});
-       this.queue.activateConsumer(this._onMessage, {noAck: true});
+       this.initRabbitMQ();
   }
 
-  public async getActionFromMessage(message, callback) {
+  public async getDataFromService(message: any) {
     try{
       this.msg = {
         'title': message.title,
@@ -41,21 +40,34 @@ export class EventController {
     catch(err){
       this.msg.body = err;
     }
-    callback(this.msg);
+    this.sendResponse(this.msg);
+  }
+  private sendResponse(res) {
+    connection.default.declareQueue("event-response", {durable: false})
+    connection.default.completeConfiguration().then(() => {
+      var msg2 = new Amqp.Message(res);
+      exchange.send(msg2);
+      console.log(' [x] Sent event-response  \'' + msg2.getContent() + '\'');
+    });
+  }
+  private initRabbitMQ(callback){
+    queue.bind(exchange, 'black');
+      queue.activateConsumer((message) => {
+        var data = JSON.parse(message.getContent());
+        console.log("GET");
+        console.log(data);
+        console.log("GET");
+        this.getDataFromService(data);
+    }, {noAck: true})
   }
 
-   private _onMessage = (message) => {
-     const json = JSON.parse(message.getContent());
-     let answer;
-     let done = false;
-     
-     this.getActionFromMessage(json, function(result){
-       answer = result;
-       done = true;
-     });
+  private initRabbitMQ(callback){
+    queue.bind(exchange, 'event');
+      queue.activateConsumer((message) => {
+        var data = JSON.parse(message.getContent());
+        console.log(data)
+        this.getDataFromService(data);
+    }, {noAck: true})
+  }
 
-     require('deasync').loopWhile(function(){return !done});
-
-     return answer;
-   }
 }
