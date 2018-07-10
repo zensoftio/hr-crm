@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
@@ -27,8 +27,10 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     View.OnClickListener {
   private static final String TAG = "PROFILE DETAILS";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
+  private static final int NO_ID = -1;
 
   private CandidateDetailContract.Presenter mPresenter;
+  private int mCandidateId;
 
   private LinearLayout mLayout;
 
@@ -46,7 +48,12 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Log.d(TAG, "onCreate: starts");
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new CandidateDetailPresenter(this, CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter.bind(this);
   }
 
   @Nullable
@@ -55,12 +62,20 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
     initUI(v);
-    int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
-    showMessage(String.valueOf(candidateId));
-    mPresenter = new CandidateDetailPresenter(this, DataRepository.getInstance(getActivity()
-        .getApplicationContext()));
-    mPresenter.loadCandidateInfo(candidateId);
+    if (getArguments() != null) {
+      mCandidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
+    } else {
+      mCandidateId = NO_ID;
+    }
     return v;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if (mCandidateId != NO_ID) {
+      mPresenter.loadCandidateInfo(mCandidateId);
+    }
   }
 
   private void initUI(View v) {
@@ -227,19 +242,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   @Override
-  public boolean isActive() {
-    return isAdded();
-  }
-
-  @Override
-  public void showLoadingCandidateError() {
-
-  }
-
-  @Override
   public void showMessage(String message) {
-    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 
   @Override
@@ -251,14 +255,17 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
 
       case R.id.cd_delete_button:
+        //TODO: implemente profile deleting
         showMessage("Delete candidate profile");
         break;
 
       case R.id.cd_edit_button:
+        //TODO: implement profile editing
         showMessage("Edit profile");
         break;
 
       case R.id.cd_message_button:
+        //TODO: implement sending message
         showMessage("Send message");
         break;
 
@@ -270,6 +277,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public void onDestroy() {
     super.onDestroy();
-    Log.d(TAG, "onDestroy");
+    mPresenter.unbind();
   }
 }
