@@ -33,6 +33,7 @@ class Base(Configuration):
         'fcm_django',
 
         'apps.candidates',
+        'apps.authentication',
         'apps.departments',
         'apps.interviews',
         'apps.requests',

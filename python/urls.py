@@ -9,6 +9,7 @@ v1 = ([
           path('', include('apps.users.urls')),
           path('', include('apps.vacancies.urls')),
           path('', include('apps.templates.urls')),
+          path('', include('apps.authentication.urls')),
       ], 'v1')
 
 urlpatterns = [
