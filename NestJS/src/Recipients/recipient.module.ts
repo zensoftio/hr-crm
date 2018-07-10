@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Recipient } from './recepient.entity';
+import { Recipient } from './recipient.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Recipient])]
 })
-export class RecepientModule {}
+export class RecipientModule {}

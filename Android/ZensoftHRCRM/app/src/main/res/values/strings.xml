@@ -23,4 +23,9 @@
   <string name="candidate">Candidate</string>
   <string name="date">Date</string>
   <string name="sign_out">Sign out</string>
+  <string name="user_not_found">user not found</string>
+  <string name="date_not_found">date not found</string>
+  <string name="comment_not_found">comment not found</string>
+  <string name="interviewers">interviewers</string>
+  <string name="interviewers_not_found">interviewers not found</string>
 </resources>

@@ -8,8 +8,9 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The given email must be set")
 
-        if not str(email).endswith('zensoft.io'):
-            raise ValueError('Email must be at @zensoft.io domain only!')
+        # Don't touch until we resolve issue with email
+         #if not str(email).endswith('zensoft.io'):
+        #    raise ValueError('Email must be at @zensoft.io domain only!')
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
