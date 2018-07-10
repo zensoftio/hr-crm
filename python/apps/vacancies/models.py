@@ -14,6 +14,7 @@ WORKING_HOURS = ((0, 'Полный рабочий день'),
                  (2, 'Удаленная работа'),
                  )
 
+
 class Vacancy(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
@@ -36,7 +37,7 @@ class Vacancy(models.Model):
         verbose_name_plural = 'vacancies'
 
     def get_absolute_url(self):
-        return reverse('vacancy-detail', kwargs={'pk': self.id})
+        return reverse('v1:vacancy-detail', kwargs={'pk': self.id})
 
 
 class Publication(models.Model):
@@ -51,4 +52,4 @@ class Publication(models.Model):
         default_related_name = 'publications'
 
     def get_absolute_url(self):
-        return reverse('publication-detail', kwargs={'pk': self.id})
+        return reverse('v1:publication-detail', kwargs={'pk': self.id})

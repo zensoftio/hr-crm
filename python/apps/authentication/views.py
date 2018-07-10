@@ -25,10 +25,12 @@ class AndroidAuthenticationView(APIView):
                 raise ValueError
 
             user_email = id_token_info['email']
+
             try:
                 user = User.objects.get(email=user_email)
                 token = AccessToken.objects.filter(user=user).last()
                 return Response(data={'access_token': token.token})
+
             except ObjectDoesNotExist:
                 return Response(data={'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 

@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 
 from apps.departments.models import Position, Requirement
-from apps.utils.notifications import request_created
+from apps.notifications.notifications import request_created
 
 User = get_user_model()
 
@@ -22,7 +22,7 @@ class Request(models.Model):
         return self.position.name
 
     def get_absolute_url(self):
-        return reverse('request-detail', kwargs={'pk': self.id})
+        return reverse('v1:request-detail', kwargs={'pk': self.id})
 
     class Meta:
         default_related_name = 'requests'

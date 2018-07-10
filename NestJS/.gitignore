@@ -5,4 +5,6 @@ package-lock.json
 ormconfig.json
 src/Event/calendar/calendar_credentials.json
 .env
+credentials.json
+service-account.json
 src/gmail_api/gmail_credentials.json
