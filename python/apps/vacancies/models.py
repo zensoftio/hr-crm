@@ -23,7 +23,8 @@ class Vacancy(models.Model):
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
     work_conditions = ArrayField(base_field=models.CharField(max_length=200, blank=True))
-    working_hours = models.CharField(choices=WORKING_HOURS, max_length=10, default=0)
+    working_hours = models.CharField(choices=WORKING_HOURS, max_length=10, default="FULL_TIME")
+
     salary_min = models.FloatField()
     salary_max = models.FloatField()
     image = models.ImageField(upload_to='media', null=True)
