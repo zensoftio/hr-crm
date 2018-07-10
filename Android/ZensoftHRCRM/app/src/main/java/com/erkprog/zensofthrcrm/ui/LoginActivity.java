@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.erkprog.zensofthrcrm.MainActivity;
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.Defaults;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     setContentView(R.layout.activity_login);
 
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(Defaults.SERVER_CLIENT_ID)
         .requestEmail()
         .build();
 
@@ -77,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       Log.d(TAG, "handleSignInResult: " + account.getDisplayName()
           + " \n " + account.getEmail()
           + " \n " + account.getPhotoUrl()
-          + " \n " + account.getFamilyName());
+          + " \n " + account.getIdToken());
 
       startMainActivity();
 
@@ -85,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       // The ApiException status code indicates the detailed failure reason.
       // Please refer to the GoogleSignInStatusCodes class reference for more information.
       Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//      updateUI(null);
     }
 
   }
@@ -96,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     startActivity(intent);
     finish();
   }
-
 
   @Override
   protected void onStart() {
