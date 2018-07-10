@@ -56,7 +56,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
     initUI(v);
     int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
-    showToast(String.valueOf(candidateId));
+    showMessage(String.valueOf(candidateId));
     mPresenter = new CandidateDetailPresenter(this, DataRepository.getInstance(getActivity()
         .getApplicationContext()));
     mPresenter.loadCandidateInfo(candidateId);
@@ -237,7 +237,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   @Override
-  public void showToast(String message) {
+  public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
   }
@@ -251,15 +251,15 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
 
       case R.id.cd_delete_button:
-        showToast("Delete candidate profile");
+        showMessage("Delete candidate profile");
         break;
 
       case R.id.cd_edit_button:
-        showToast("Edit profile");
+        showMessage("Edit profile");
         break;
 
       case R.id.cd_message_button:
-        showToast("Send message");
+        showMessage("Send message");
         break;
 
       default:

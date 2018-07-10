@@ -4,6 +4,7 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
+import com.erkprog.zensofthrcrm.ui.ILifecycle;
 
 public interface CandidateDetailContract {
 
@@ -11,17 +12,13 @@ public interface CandidateDetailContract {
 
     void showCandidateDetails(Candidate candidate);
 
-    void showLoadingCandidateError();
-
-    void showToast(String message);
-
-    boolean isActive();
+    void showMessage(String message);
 
     void startCreateInterview(Candidate candidate);
 
   }
 
-  interface Presenter {
+  interface Presenter extends ILifecycle<View> {
 
     void onCreateInterviewClicked();
 

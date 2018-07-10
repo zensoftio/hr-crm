@@ -26,7 +26,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
         if (isViewAttached() && response.isSuccessful() && response.body() != null) {
           mView.showCandidates(response.body().getCandidateList());
         } else {
-          mView.showMessage("Requests list in response is null");
+          mView.showMessage("Candidates list in response is null");
         }
       }
 

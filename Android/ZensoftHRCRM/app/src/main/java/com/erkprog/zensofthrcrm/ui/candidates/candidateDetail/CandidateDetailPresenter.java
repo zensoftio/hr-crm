@@ -1,74 +1,81 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
+import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
-    RemoteDataSource.OnDetailCandidateLoadFinishedListener {
-
-  private static final String TAG = "PROFILE PRESENTER";
+public class CandidateDetailPresenter implements CandidateDetailContract.Presenter {
 
   private CandidateDetailContract.View mView;
-  private DataRepository mRepository;
   private Candidate mCandidate;
+  private RestServiceTest mApiService;
 
-  public CandidateDetailPresenter(CandidateDetailContract.View view, DataRepository repository) {
+  public CandidateDetailPresenter(CandidateDetailContract.View view, RestServiceTest service) {
     mView = view;
-    mRepository = repository;
+    mApiService = service;
   }
 
   @Override
   public void loadCandidateInfo(int candidateId) {
-    mRepository.getDetailCandidateFromJson(this);
+    mApiService.getDetailedCandidate().enqueue(new Callback<Candidate>() {
+      @Override
+      public void onResponse(Call<Candidate> call, Response<Candidate> response) {
+        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
+          mCandidate = response.body();
+          mView.showCandidateDetails(mCandidate);
+        } else {
+          mView.showMessage("Candidate response is null");
+        }
+      }
 
+      @Override
+      public void onFailure(Call<Candidate> call, Throwable t) {
+        mView.showMessage(t.getMessage());
+      }
+    });
   }
 
-  @SuppressLint("LongLogTag")
-  @Override
-  public void onFinished(Response<Candidate> response) {
-    if (!mView.isActive()) {
-      return;
-    }
-    Log.d(TAG, "onFinished: success");
-    mCandidate = response.body();
-    mView.showCandidateDetails(mCandidate);
-  }
-
-  @Override
-  public void onFailure(Throwable t) {
-    Log.d(TAG, "onFailure: starts");
+  private boolean isViewAttached() {
+    return mView != null;
   }
 
   @Override
   public void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
-    mView.showToast(interviewItem.getDate());
+    mView.showMessage(interviewItem.getDate());
   }
 
   @Override
   public void onCommentItemClicked(Comment commentItem) {
-    mView.showToast(commentItem.getText());
+    mView.showMessage(commentItem.getText());
   }
 
   @Override
   public void onCvItemClicked(Cv cvItem) {
-    mView.showToast(cvItem.getLink());
+    mView.showMessage(cvItem.getLink());
   }
 
   @Override
   public void onCreateInterviewClicked() {
-    if (!mView.isActive() || (mCandidate == null)){
+    if (!isViewAttached() || (mCandidate == null)) {
       return;
     }
 
     mView.startCreateInterview(mCandidate);
+  }
+
+  @Override
+  public void bind(CandidateDetailContract.View view) {
+    mView = view;
+  }
+
+  @Override
+  public void unbind() {
+    mView = null;
   }
 }
