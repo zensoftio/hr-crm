@@ -10,9 +10,9 @@ from apps.notifications.notifications import interview_created
 User = get_user_model()
 
 INTERVIEW_STATUS = (
-    ("0", 'ПРЕДСТОИТ'),
-    ("1", 'ПРОШЛО'),
-    ("2", 'ОТМЕНЕНО'),
+    ("TO_BE_CONDUCTED", 'Предстоит'),
+    ("CONDUCTED", 'Прошло'),
+    ("CANCELLED", 'Отменено'),
 )
 
 
