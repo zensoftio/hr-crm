@@ -5,6 +5,7 @@ var Base64 = require('js-base64').Base64;
 var exports = module.exports = {};
 const dotenv = require('dotenv').config();
 const stringify = require('json-stringify-safe')
+const cloud = require('../google-cloud/cloud.js')
 
 // If modifying these scopes, delete credentials.json.
 var SCOPES = [
@@ -16,12 +17,19 @@ var SCOPES = [
 const TOKEN_PATH = 'credentials.json';
 
 exports.sendMessageH = async (data, recipient) => {
-    return await authorize(sendMessage, data, recipient);
+    return authorize(sendMessage, data, recipient);
 }
 
 exports.getAllMessages = async (date) => {
-  return await authorize(getMessagesByDate,date);
+  return authorize(getMessagesByDate,date);
 }
+
+/**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
 
 const authorize = async (callback, data, recipient) => {
   const client_id = process.env['CLIENT_ID'];
@@ -34,8 +42,8 @@ const authorize = async (callback, data, recipient) => {
   if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
   oAuth2Client.setCredentials(JSON.parse(token));
 
-  const result = await callback(oAuth2Client, data, recipient)
-  return result
+  return callback(oAuth2Client, data, recipient)
+
 }
 
 
@@ -65,19 +73,25 @@ const authorize = async (callback, data, recipient) => {
    });
  }
 
-const getMessagesByDate = async (auth,date,callback) => {
+/**
+ * Lists the labels in the user's account.
+ *
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
 
+
+const getMessagesByDate = async (auth,date,callback) => {
   const gmail = google.gmail({version: 'v1', auth});
   date = new Date(date).getTime() / 1000;
-  const query = 'is:inbox AND after: ${date}';
 
-  const messageList = await gmail.users.messages.list({
+  const query = `is:inbox AND after: ${date}`;
+
+  const getMail = await gmail.users.messages.list({
     userId: 'me',
     q: query,
   })
 
-  const messages = await getMessageById(messageList.data.messages,gmail);
-  return messages;
+  return getMessageById(getMail.data.messages,gmail);
 }
 
 const getMessageById = async (messages,gmail,callback) => {
@@ -90,43 +104,91 @@ const getMessageById = async (messages,gmail,callback) => {
     const message = await singleMessage;
     msgList.push(message);
   }));
-  return getEmailAttachmentId(msgList);
+  return getEmailAttachmentId(msgList,gmail);
 }
 
-const getEmailAttachmentId = async (msgList) => {
-  var emailWithAttachment = [];
-  msgList.forEach( (msgListElement,msgListIndex) => {
-    msgListElement.data.payload.headers.forEach( (emailElement,emailIndex) => {
-      if (emailElement.name.toUpperCase() === "FROM") {
-        var email;
-        if (emailElement.value.includes("<")){
-          email = emailElement.value.substring(
-          emailElement.value.lastIndexOf("<") + 1,
-          emailElement.value.lastIndexOf(">"));
-        }else{
-          email = emailElement.value;
-        }
-        var query = {};
-        query['email'] = email;
-        var attIds = [];
-        if (msgListElement.data.payload.parts) {
-          msgListElement.data.payload.parts.forEach( (partsElement,partsIndex) => {
-            if (partsElement.body.attachmentId) {
-              attIds.push(partsElement.body.attachmentId)
+const getEmailAttachmentId = async (msgList,gmail,callback) => {
+    var emailWithAttachment = [];
+    msgList.forEach( (message,index) => {
+      var msgId = message.data.id;
+      message.data.payload.headers.forEach( (email,msgDataIndex) => {
+        if (email.name.toUpperCase() == "FROM") {
+          var sendedEmail;
+          if (email.value.includes("<")){
+            sendedEmail = email.value.substring(
+            email.value.lastIndexOf("<") + 1,
+            email.value.lastIndexOf(">"));
+          }else{
+            sendedEmail = email.value;
+          }
+          var query = {};
+          query['email'] = sendedEmail;
+          query['messageId'] = msgId;
+          query['attachmentIds'] = [];
+          query['fileNames'] = [];
+          var attachmentIds = [];
+          var fileNames = [];
+          var checkParts = false;
+          var checkAtt = false;
+          if (message.data.payload.parts) {
+            message.data.payload.parts.forEach( (part,partIndex) => {
+              if (part.body.attachmentId) {
+                attachmentIds.push(part.body.attachmentId)
+                fileNames.push(part.filename)
+                checkParts = true;
+              }
+            })
+            if (checkParts) {
+              query['attachmentIds'] = attachmentIds;
+              query['fileNames'] = fileNames;
+              emailWithAttachment.push(query);
             }
-            query['attachment'] = attIds;
-            emailWithAttachment.push(query)
-          })
+          }
+          else {
+            checkAtt = true;
+            emailWithAttachment.push(query);
+          }
+          if (!checkParts && !checkAtt) {
+            emailWithAttachment.push(query);
+          }
         }
-      }
-    })
-  });
-  return emailWithAttachment;
+      })
+    });
+    return getAttachmentById(emailWithAttachment,gmail);
+}
+
+const getAttachmentById = async (msgList,gmail) => {
+  var resultData = [];
+  const  messageList = await Promise.all(msgList.map(async (message,index) => {
+    var query = {};
+    query['email'] = message.email;
+    if (message.attachmentIds.length > 0) {
+      var fileNames = [];
+      var base64 = [];
+      const attachments = await Promise.all(message.attachmentIds.map(async (id,idIndex) => {
+        const attachment = gmail.users.messages.attachments.get({
+          id: id,
+          messageId: message.messageId,
+          userId: 'me',
+        });
+        const waitAtt = await attachment;
+        base64.push(waitAtt.data.data);
+        fileNames.push(message.fileNames[idIndex]);
+      }));
+      query['base64'] = base64;
+      query['fileNames'] = fileNames;
+      const upload = await cloud.uploadToStrage(query);
+      resultData.push(upload);
+    }
+    else {
+      resultData.push(query);
+    }
+  }));
+  return resultData;
 }
 
 
 const sendMessage = async (auth, data, recipient) => {
-  const gmail = google.gmail({version: 'v1', auth})
   var raw = makeBody(data, recipient);
 
   const sentMessage = await gmail.users.messages.send({
@@ -139,8 +201,7 @@ const sendMessage = async (auth, data, recipient) => {
   return sentMessage.status
 }
 
-
-function makeBody(data, recipient) {
+const makeBody = (data,recipient) => {
   var boundary = "__myapp__";
   var nl = "\n";
   let filename = data.attachments[0].name;
@@ -158,6 +219,52 @@ function makeBody(data, recipient) {
 
   const body = data.content.replace(/NAME/g, recipient.name)
   var str = [
+        "MIME-Version: 1.0",
+        "Content-Transfer-Encoding: 7bit",
+        type,
+        "from: dasha.ree1@gmail.com",
+        "subject: " + data.subject,
+        "Content-Type: multipart/alternate; boundary=" + boundary + nl,
+        "--" + boundary,
+        "Content-Type: text/plain; charset=UTF-8",
+        "Content-Transfer-Encoding: 7bit" + nl,
+        body + nl,
+        "--" + boundary,
+        "--" + boundary,
+        "Content-Type: Application/docx; name=a.docx",
+        'Content-Disposition: attachment; filename=a.docx',
+        "Content-Transfer-Encoding: base64" + nl,
+        attach,
+        "--" + boundary + "--"
+    ].join("\n");
+
+    var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+    return encodedMail;
+}
+
+
+//function to send message to multiple recipients at once
+const defineTypeOfRecipients = (data) => {
+  let i;
+  let to = [], cc = [], bcc = [];
+  for(i = 0; i < data.recipients.length; i++){
+    switch(data.recipients[i].type){
+      case "to":
+        to.push(data.recipients[i].email)
+        break;
+      case "cc":
+        cc.push(data.recipients[i].email)
+        break;
+      case "bcc":
+        bcc.push(data.recipients[i].email)
+        break;
+      default:
+        break;
+    }
+  }
+  //put arrays' content into strings
+  let listTos = to.join(', '), listBCCs = bcc.join(', '), listCCs = cc.join(', ');
+  return [listTos, listCCs, listBCCs];
           "MIME-Version: 1.0",
           "Content-Transfer-Encoding: 7bit",
           type,

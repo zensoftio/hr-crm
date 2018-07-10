@@ -17,6 +17,7 @@
     "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "@google-cloud/storage": "^1.7.0",
     "@nestjs/common": "^5.0.0",
     "@nestjs/core": "^5.0.0",
     "@nestjs/microservices": "^5.0.1",
@@ -31,10 +32,12 @@
     "googleapis": "^32.0.0",
     "js-base64": "^2.4.5",
     "json-stringify-safe": "^5.0.1",
+    "mimelib": "^0.3.1",
     "nexmo": "^2.3.2",
     "pg": "^7.4.3",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0",
+    "stream": "0.0.2",
     "typedi": "^0.8.0",
     "typeorm": "^0.2.7",
     "typescript": "^2.6.2"
