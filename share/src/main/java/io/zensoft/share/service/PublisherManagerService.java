@@ -35,5 +35,5 @@ public interface PublisherManagerService {
      * <p>
      * @param vacancyDto the object given by listener
      */
-    void getInfo(VacancyDto vacancyDto, PublisherServiceType publisherServiceType);
+    void getInfo(VacancyDto vacancyDto);
 }

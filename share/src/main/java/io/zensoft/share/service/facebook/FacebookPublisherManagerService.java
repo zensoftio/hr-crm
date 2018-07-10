@@ -50,9 +50,9 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     }
 
     @Override
-    public void getInfo(VacancyDto vacancyDto, PublisherServiceType publisherServiceType) {
+    public void getInfo(VacancyDto vacancyDto) {
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
-        VacancyResponse vacancyResponse = defaultVacancyRetrieverService.getInfo(vacancy, publisherServiceType);
+        VacancyResponse vacancyResponse = defaultVacancyRetrieverService.getInfo(vacancy, PublisherServiceType.FACEBOOK);
         convertToDtoAndRespond(vacancyResponse);
     }
 
