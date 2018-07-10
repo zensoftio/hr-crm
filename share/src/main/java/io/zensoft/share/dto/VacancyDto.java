@@ -28,4 +28,5 @@ public class VacancyDto {
     private int salaryMin;
     private int salaryMax;
     private String image;
+    private String facebookUserAccessToken;
 }
