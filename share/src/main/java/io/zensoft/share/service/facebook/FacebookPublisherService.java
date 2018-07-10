@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -47,23 +46,6 @@ public class FacebookPublisherService implements PublisherService {
 
     private void setPageAccessToken(String pageAccessToken) {
         this.pageAccessToken = pageAccessToken;
-    }
-
-    @Deprecated // Only for my Test User. Another method for getting access token of ANY user will be written later.
-    private String getTestUserAccessToken(){
-        Map<String, String> uriVariables = new LinkedHashMap<>();
-        ResponseEntity<Map> map = null;
-        try {
-            map = ((FacebookTemplate) facebookApp).getRestTemplate().exchange(
-                    "https://graph.facebook.com/" + properties.getProperty("appId") + "/accounts/test-users/",
-                    HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
-        } catch (Exception e) {
-
-        }
-        Object testUsers = map.getBody().get("data");
-        ArrayList<Map<String, Object>> testUsersList = (ArrayList<Map<String, Object>>)testUsers;
-        String access_token = testUsersList.get(0).get("access_token").toString();
-        return access_token;
     }
 
     private void setPageAccessToken () {

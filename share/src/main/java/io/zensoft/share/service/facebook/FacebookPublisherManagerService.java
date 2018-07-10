@@ -18,39 +18,51 @@ import org.springframework.stereotype.Service;
 @Service
 public class FacebookPublisherManagerService implements PublisherManagerService {
 
-    private final DefaultVacancyConverterService defaultVacancyConverterService;
-    private final DefaultVacancyResponseConverterService defaultVacancyResponseConverterService;
-    private final DefaultVacancyModelService defaultVacancyModelService;
-    private final DefaultVacancyResponseModelService defaultVacancyResponseModelService;
+    private final DefaultVacancyConverterService vacancyConverterService;
+    private final DefaultVacancyResponseConverterService vacancyResponseConverterService;
+    private final DefaultVacancyModelService vacancyModelService;
+    private final DefaultVacancyResponseModelService vacancyResponseModelService;
     private final PublisherService facebookPublisherService;
     private final VacancyResponseSenderService vacancyResponseSenderService;
 
     @Autowired
-    public FacebookPublisherManagerService(DefaultVacancyConverterService defaultVacancyConverterService,
-                                           DefaultVacancyResponseConverterService defaultVacancyResponseConverterService,
-                                           DefaultVacancyModelService defaultVacancyModelService,
-                                           DefaultVacancyResponseModelService defaultVacancyResponseModelService,
-                                           PublisherService facebookPublisherService, VacancyResponseModelService vacancyResponseModelService, VacancyResponseSenderService vacancyResponseSenderService) {
-        this.defaultVacancyConverterService = defaultVacancyConverterService;
-        this.defaultVacancyResponseConverterService = defaultVacancyResponseConverterService;
-        this.defaultVacancyModelService = defaultVacancyModelService;
-        this.defaultVacancyResponseModelService = defaultVacancyResponseModelService;
+    public FacebookPublisherManagerService(DefaultVacancyConverterService vacancyConverterService,
+                                           DefaultVacancyResponseConverterService vacancyResponseConverterService,
+                                           DefaultVacancyModelService vacancyModelService,
+                                           DefaultVacancyResponseModelService vacancyResponseModelService,
+                                           PublisherService facebookPublisherService,
+                                           VacancyResponseSenderService vacancyResponseSenderService) {
+        this.vacancyConverterService = vacancyConverterService;
+        this.vacancyResponseConverterService = vacancyResponseConverterService;
+        this.vacancyModelService = vacancyModelService;
+        this.vacancyResponseModelService = vacancyResponseModelService;
         this.facebookPublisherService = facebookPublisherService;
         this.vacancyResponseSenderService = vacancyResponseSenderService;
     }
 
     @Override
     public void publish(VacancyDto vacancyDto) {
-        Vacancy vacancy = defaultVacancyConverterService.fromDto(vacancyDto);
-        defaultVacancyModelService.save(vacancy);
+        Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = facebookPublisherService.publish(vacancy);
-        defaultVacancyResponseModelService.save(vacancyResponse);
-        VacancyResponseDto vacancyResponseDto = defaultVacancyResponseConverterService.toDto(vacancyResponse);
-        vacancyResponseSenderService.respond(vacancyResponseDto);
+        saveToDatabaseAndConvertToDtoAndRespond(vacancyResponse);
     }
 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
+        Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
+        VacancyResponse vacancyResponse = facebookPublisherService.getInfo(vacancy);
+        saveToDatabaseAndConvertToDtoAndRespond(vacancyResponse);
+    }
 
+    public Vacancy convertToVacancyAndSaveToDatabase(VacancyDto vacancyDto) {
+        Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
+        vacancyModelService.save(vacancy);
+        return  vacancy;
+    }
+
+    public void saveToDatabaseAndConvertToDtoAndRespond (VacancyResponse vacancyResponse) {
+        vacancyResponseModelService.save(vacancyResponse);
+        VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
+        vacancyResponseSenderService.respond(vacancyResponseDto);
     }
 }
