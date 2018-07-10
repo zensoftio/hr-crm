@@ -5,7 +5,7 @@ import { MessageService } from './message.service'
 import { Message } from './message.entity';
 import { MessageListener } from './message.listener';
 import { RecipientService } from 'Recipients/recipient.service';
-import { Recipient } from 'Recipients/recepient.entity';
+import { Recipient } from 'Recipients/recipient.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Message]), TypeOrmModule.forFeature([Recipient])],

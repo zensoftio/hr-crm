@@ -3,7 +3,6 @@ package-lock.json
 *.log
 *.gz
 ormconfig.json
-scr/Event/calendar/credentials.json
-scr/Event/calendar/something.js
+src/Event/calendar/calendar_credentials.json
 .env
-credentials.json
+src/gmail_api/gmail_credentials.json
