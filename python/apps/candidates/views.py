@@ -16,6 +16,7 @@ def test_func(request):
 class CandidateListView(generics.ListAPIView):
     queryset = Candidate.objects.all()
     serializer_class = AuxCandidateSerializer
+    filter_fields = ('status', 'position', 'position__department')
 
 
 class CandidateDetailView(generics.RetrieveUpdateDestroyAPIView):

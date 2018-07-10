@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils import timezone
+from django.urls import reverse
 
 from apps.departments.models import Position
 from apps.utils.notifications import candidate_created
@@ -42,6 +43,9 @@ class Candidate(models.Model):
 
     def __str__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse('v1:candidate-detail', kwargs={'pk': self.id})
 
 
 post_save.connect(candidate_created, sender=Candidate)

@@ -1,5 +1,6 @@
 package io.zensoft.share.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,25 +13,19 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class VacancyDto {
-    private Long id;
+    private int uid;
     private String title;
-    private String sphere;                          //"Интернет, IT, телеком, связь"
-    private String description;
-
-    private List<String> competencies;
-    private List<String> requirements;
-    private List<String> responsibilities;
-    private List<String> workingConditions;
-
-    private Long salaryMin;
-    private Long salaryMax;
-    private String additionalInfo;
-
-    private List<String> links;
-
-    private String imageUrl;
-    private String education;
-    private String schedule;
+    private List<RequirementDto> requirements;
     private String city;
-
+    private String address;
+    @JsonProperty("name")
+    private String position;
+    private int count;
+    private List<String> workingConditions;
+    private String experience;
+    private String workingHours;
+    private String employmentType;
+    private int salaryMin;
+    private int salaryMax;
+    private String image;
 }
