@@ -6,7 +6,6 @@ from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, V
 from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 
 
-
 class VacancyListTestCase(ListTestMixin, APITestCase):
     model = Vacancy
     serializer = VacancyListSerializer
@@ -17,7 +16,7 @@ class VacancyCreateTestCase(CreateTestMixin, APITestCase):
     serializer = VacancyCreateUpdateSerializer
 
     def test_creation(self):
-        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
         response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(3, self.model.objects.count())
@@ -25,24 +24,23 @@ class VacancyCreateTestCase(CreateTestMixin, APITestCase):
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json']
 
     request_body = {
-        "title": "Interns required",
-        "request": 1,
+        "uuid": "aada680d-c43b-413b-86db-b63da812832f",
+        "title": "Django Developer Needed",
+        "request": 2,
         "created_by": 1,
         "city": "Bishkek",
-        "address": "Bishkek",
-        "work_conditions": "Nice kitchen",
-        "experience": "0",
-        "working_hours": "FT",
-        "employment_type": "FT",
+        "address": "Admin str. 123",
+        "work_conditions": "[\"Test set of conditions\"]",
+        "experience": 0,
+        "working_hours": 0,
+        "employment_type": 0,
         "salary_min": 200.0,
-        "salary_max": 1000.0,
-        "created": "2018-05-21T10:35:18+0000",
-        "last_published": "2018-05-21T10:35:18+0000",
-        "status": 1,
-        "requirements": [
-            7,
-            8
-        ]
+        "salary_max": 500.0,
+        "image": "",
+        "responsibilities": "qqweqweqweqweqweqweqwe",
+        "created": "2018-07-09T08:05:58.278Z",
+        "last_published": "2018-07-09T08:05:58.278Z",
+        "status": 0
     }
 
 

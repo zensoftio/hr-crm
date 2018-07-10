@@ -11,7 +11,6 @@ class CandidatesListTest(APITestCase, ListTestMixin):
     serializer = AuxCandidateSerializer
 
 
-
 class CandidatesDetailTest(APITestCase, GetInstanceTestMixin):
     model = Candidate
     serializer = CandidateDetailSerializer

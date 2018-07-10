@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from apps.candidates.models import Candidate
 from apps.departments.models import Department
-from apps.utils.notifications import interview_created
+from apps.notifications.notifications import interview_created
 
 User = get_user_model()
 
@@ -25,7 +25,7 @@ class Interview(models.Model):
         return '{name} {date}'.format(date=self.date, name=self.candidate.first_name)
 
     def get_absolute_url(self):
-        return reverse('interview-detail', kwargs={'pk': self.id})
+        return reverse('v1:interview-detail', kwargs={'pk': self.id})
 
 
 post_save.connect(sender=Interview, receiver=interview_created)
