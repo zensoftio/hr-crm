@@ -44,10 +44,15 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   private Date mInterviewDate;
   private int mCandidateId;
 
-
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new CreateInterviewPresenter(this);
+    mPresenter.bind(this);
   }
 
   @Nullable
@@ -55,7 +60,6 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_create_interview, container, false);
 
-    mPresenter = new CreateInterviewPresenter(this);
     mInterviewDate = new Date();
     initUI(v);
     setFields();
@@ -131,7 +135,7 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   }
 
   @Override
-  public void showToast(String message) {
+  public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 
@@ -152,5 +156,11 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   private void updateInterviewDate(Date date) {
     mInterviewDate = date;
     mDate.setText(mInterviewDate.toString());
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    mPresenter.unbind();
   }
 }
