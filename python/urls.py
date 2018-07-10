@@ -9,10 +9,13 @@ v1 = ([
           path('', include('apps.users.urls')),
           path('', include('apps.vacancies.urls')),
           path('', include('apps.templates.urls')),
+          path('', include('apps.notifications.urls')),
       ], 'v1')
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+
     path('auth/', include('rest_framework_social_oauth2.urls')),
     path('api/v1/', include(v1)),
 ]
+
