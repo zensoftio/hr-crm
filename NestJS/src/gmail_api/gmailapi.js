@@ -17,11 +17,11 @@ var SCOPES = [
 const TOKEN_PATH = 'credentials.json';
 
 exports.sendMessageH = async (data, recipient) => {
-    return await authorize(sendMessage, data, recipient);
+    return authorize(sendMessage, data, recipient);
 }
 
 exports.getAllMessages = async (date) => {
-  return await authorize(getMessagesByDate,date);
+  return authorize(getMessagesByDate,date);
 }
 
 /**
@@ -42,8 +42,8 @@ const authorize = async (callback, data, recipient) => {
   if (!token) return getNewToken(oAuth2Client, callback, data, recipient);
   oAuth2Client.setCredentials(JSON.parse(token));
 
-  const result = await callback(oAuth2Client, data, recipient)
-  return result
+  return callback(oAuth2Client, data, recipient)
+
 }
 
 
@@ -98,7 +98,7 @@ const getMessagesByDate = async (auth,date,callback) => {
     q: query,
   })
 
-  return await getMessageById(getMail.data.messages,gmail);
+  return getMessageById(getMail.data.messages,gmail);
 }
 
 const getMessageById = async (messages,gmail,callback) => {
@@ -111,7 +111,7 @@ const getMessageById = async (messages,gmail,callback) => {
     const message = await getMessage;
     msgList.push(message);
   }));
-  return await getEmailAttachmentId(msgList,gmail);
+  return getEmailAttachmentId(msgList,gmail);
 }
 
 const getEmailAttachmentId = async (msgList,gmail,callback) => {
@@ -161,7 +161,7 @@ const getEmailAttachmentId = async (msgList,gmail,callback) => {
         }
       })
     });
-    return await getAttachmentById(emailWithAttachment,gmail);
+    return getAttachmentById(emailWithAttachment,gmail);
 }
 
 const getAttachmentById = async (msgList,gmail) => {
