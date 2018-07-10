@@ -39,10 +39,11 @@ class CreateTestMixin(object):
     request_body = {}
 
     def test_creation(self):
+        old_count = self.model.objects.count()
         url = '/api/v1/' + str(self.model._meta.verbose_name_plural)
-        response = self.client.post(url, self.request_body, format='json')
+        response = self.client.post(url, self.request_body)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(1, self.model.objects.count())
+        self.assertEqual(old_count + 1, self.model.objects.count())
 
         self.request_body = {
             "none_exist_field_1": "some_data_1",
