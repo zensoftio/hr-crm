@@ -28,7 +28,6 @@ class VacancyCreateTestCase(CreateTestMixin, APITestCase):
         "working_hours": 0,
         "salary_min": 200.0,
         "salary_max": 500.0,
-        "image": "",
         "responsibilities": "qqweqweqweqweqweqweqwe",
         "comments": "Comment 3",
         "created": "2018-07-09T08:05:58.278Z",

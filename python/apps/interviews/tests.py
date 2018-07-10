@@ -38,6 +38,7 @@ class InterviewCreateTestCase(CreateTestMixin, APITestCase):
     request_body = {
         "date": timezone.now(),
         "status": 1,
+        "interviewers": [1, 2],
         "candidate": 1
         }
 
