@@ -21,7 +21,7 @@ public class RequestStatus {
         return CRMApplication.resources.getString(R.string.rejected);
 
       default:
-        return null;
+        return CRMApplication.resources.getString(R.string.not_defined);
     }
 
   }

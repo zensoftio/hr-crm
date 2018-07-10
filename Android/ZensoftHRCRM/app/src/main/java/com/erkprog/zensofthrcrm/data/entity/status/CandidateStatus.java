@@ -53,7 +53,7 @@ public class CandidateStatus {
         return CRMApplication.resources.getString(R.string.interview_failed);
 
       default:
-        return null;
+        return CRMApplication.resources.getString(R.string.not_defined);
     }
   }
 

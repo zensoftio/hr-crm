@@ -25,7 +25,7 @@ public class RequirementStatus {
         return CRMApplication.resources.getString(R.string.competency);
 
       default:
-        return null;
+        return CRMApplication.resources.getString(R.string.not_defined);
     }
   }
 }

@@ -21,7 +21,7 @@ public class InterviewStatus {
         return CRMApplication.resources.getString(R.string.canceled);
 
       default:
-        return null;
+        return CRMApplication.resources.getString(R.string.not_defined);
     }
   }
 }
