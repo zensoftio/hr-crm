@@ -1,7 +1,8 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
+import deasyncPromise from 'deasync-promise';
+import * as Amqp from 'amqp-ts'
 import * as connection from 'Rabbit';
-import * as Amqp from "amqp-ts";
 const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
 const queue = connection.default.declareQueue('event', {durable: true});
 
@@ -46,7 +47,7 @@ export class EventController {
     connection.default.completeConfiguration().then(() => {
       var msg2 = new Amqp.Message(res);
       exchange.send(msg2);
-      console.log(' [x] Sent message-response  \'' + msg2.getContent() + '\'');
+      console.log(' [x] Sent event-response  \'' + msg2.getContent() + '\'');
     });
   }
   private initRabbitMQ(callback){
@@ -56,6 +57,15 @@ export class EventController {
         console.log("GET");
         console.log(data);
         console.log("GET");
+        this.getDataFromService(data);
+    }, {noAck: true})
+  }
+
+  private initRabbitMQ(callback){
+    queue.bind(exchange, 'event');
+      queue.activateConsumer((message) => {
+        var data = JSON.parse(message.getContent());
+        console.log(data)
         this.getDataFromService(data);
     }, {noAck: true})
   }

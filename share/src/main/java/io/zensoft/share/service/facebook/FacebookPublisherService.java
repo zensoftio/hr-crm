@@ -3,9 +3,6 @@ package io.zensoft.share.service.Facebook;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.service.PublisherService;
-import io.zensoft.share.service.model.VacancyResponseModelService;
-import io.zensoft.share.service.model.VacancyModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +10,6 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.PagePostData;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -82,8 +78,21 @@ public class FacebookPublisherService implements PublisherService {
 
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
-        return publishPhoto(vacancy);
+        if (vacancy.getImage() != null) {
+            return publishPhoto(vacancy);
+        } else {
+            return publishText(vacancy);
+        }
     }
+
+    private VacancyResponse publishText(Vacancy vacancy) {
+        PagePostData pagePostData = new PagePostData(properties.getProperty("pageId"));
+        pagePostData = pagePostData.message(vacancy.getTitle());
+        pagePostData.link(properties.getProperty("link"), null, null, null, null);
+        facebookPage.pageOperations().post(pagePostData);
+        return null;
+    }
+
 
     @Override
     public VacancyResponse getInfo(Vacancy vacancy) {
