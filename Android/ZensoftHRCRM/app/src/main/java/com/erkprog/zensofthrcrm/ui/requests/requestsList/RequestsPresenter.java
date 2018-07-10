@@ -1,55 +1,58 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
-import android.util.Log;
-
-import com.erkprog.zensofthrcrm.data.DataRepository;
+import android.support.annotation.NonNull;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
-import com.erkprog.zensofthrcrm.data.network.RemoteDataSource;
-import com.google.gson.GsonBuilder;
+import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
-import java.util.List;
-
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequestsPresenter implements RequestsContract.Presenter, RemoteDataSource.OnRequestsLoadFinishedListener {
+public class RequestsPresenter implements RequestsContract.Presenter {
 
-  private static final String TAG = "REQUESTS PRESENTER";
-
+  private RestServiceTest mServiceTest;
   private RequestsContract.View mView;
-  private DataRepository mRepository;
 
-  public RequestsPresenter (RequestsContract.View view, DataRepository repository) {
-    mView = view;
-    mRepository = repository;
+  public RequestsPresenter(RestServiceTest serviceTest) {
+    mServiceTest = serviceTest;
   }
 
   @Override
   public void loadData() {
-    mRepository.getRequestsFromJson(this);
-  }
+    mServiceTest.getRequests().enqueue(new Callback<RequestsResponse>() {
+      @Override
+      public void onResponse(@NonNull Call<RequestsResponse> call, @NonNull Response<RequestsResponse> response) {
+        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
+            mView.showRequests(response.body().getRequestList());
+          } else {
+            mView.showMessage("Requests list in response is null");
+          }
+        }
 
-  @Override
-  public void onFinished(Response<RequestsResponse> response) {
-    if (mView.isActive() && response.isSuccessful()){
-      Log.d(TAG, new GsonBuilder().setPrettyPrinting().create().toJson(response));
-      List<Request> requests = response.body().getRequestList();
-      if (requests != null) {
-        mView.showRequests(requests);
-      } else {
-        Log.d(TAG, "onFinished: requests list in response is null");
+      @Override
+      public void onFailure(@NonNull Call<RequestsResponse> call, @NonNull Throwable t) {
+        mView.showMessage(t.getMessage());
       }
-    }
+    });
   }
-
-  @Override
-  public void onFailure(Throwable t) {
-
-  }
-
 
   @Override
   public void onRequestItemClick(Request request) {
 
+  }
+
+  private boolean isViewAttached() {
+    return mView != null;
+  }
+
+  @Override
+  public void bind(RequestsContract.View view) {
+    this.mView = view;
+  }
+
+  @Override
+  public void unbind() {
+    this.mView = null;
   }
 }

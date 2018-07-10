@@ -1,6 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.DataRepository;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 
 import java.util.ArrayList;
@@ -23,15 +24,29 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   private RequestsContract.Presenter mPresenter;
   private RequestsAdapter mAdapter;
 
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new RequestsPresenter(CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter.bind(this);
+  }
+
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_requests_list, container, false);
     initRecyclerView(v);
-    mPresenter = new RequestsPresenter(this, DataRepository.getInstance(getActivity()
-        .getApplicationContext()));
-    mPresenter.loadData();
     return v;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mPresenter.loadData();
   }
 
   private void initRecyclerView(View v) {
@@ -55,17 +70,18 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   }
 
   @Override
-  public void showToast(String message) {
+  public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-  }
-
-  @Override
-  public boolean isActive() {
-    return isAdded();
   }
 
   @Override
   public void onItemClick(int position) {
     mPresenter.onRequestItemClick(mAdapter.getRequest(position));
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    mPresenter.unbind();
   }
 }
