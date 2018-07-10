@@ -10,17 +10,17 @@ from apps.notifications.notifications import candidate_created
 User = get_user_model()
 
 CANDIDATE_STATUS = (
-    (0, 'Не рассмотрено'),
-    (1, 'Рассмотрено'),
-    (2, 'Подходит'),
-    (3, 'Не подходит'),
-    (4, 'Отправлен тест'),
-    (5, 'Приглашен на интервью'),
-    (6, 'Интервью проведено'),
-    (7, 'Штат'),
-    (8, 'Резерв'),
-    (9, 'Стажёр'),
-    (10, 'Не прошел интервью'),
+    ("0", 'НЕ РАССМОТРЕНО'),
+    ("1", 'РАССМОТРЕНО'),
+    ("2", 'ПОДХОДИТ'),
+    ("3", 'НЕ ПОДХОДИТ'),
+    ("4", 'ОТПРАВЛЕН ТЕСТ'),
+    ("5", 'ПРИГЛАШЕН НА ИНТЕРВЬЮ'),
+    ("6", 'ИНТЕРВЬЮ ПРОВЕДЕНО'),
+    ("7", 'ШТАТ'),
+    ("8", 'РЕЗЕРВ'),
+    ("9", 'СТАЖЕР'),
+    ("10", 'НЕ ПРОШЕЛ ИНТЕРВЬЮ'),
 )
 
 
@@ -31,7 +31,7 @@ class Candidate(models.Model):
     phone = models.CharField(max_length=30, blank=True, null=True)
     experience = models.FloatField(blank=True, null=True)
     level = models.CharField(max_length=30, blank=True, null=True)
-    status = models.IntegerField(choices=CANDIDATE_STATUS, default=0)
+    status = models.CharField(choices=CANDIDATE_STATUS, default=0)
     skype = models.CharField(max_length=254, blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT, null=True)
     created = models.DateTimeField(default=timezone.now)

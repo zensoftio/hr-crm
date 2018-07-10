@@ -10,15 +10,15 @@ from apps.notifications.notifications import interview_created
 User = get_user_model()
 
 INTERVIEW_STATUS = (
-    (0, 'Предстоит'),
-    (1, 'Прошло'),
-    (2, 'Отменено'),
+    ("0", 'ПРЕДСТОИТ'),
+    ("1", 'ПРОШЛО'),
+    ("2", 'ОТМЕНЕНО'),
 )
 
 
 class Interview(models.Model):
     date = models.DateTimeField()
-    status = models.IntegerField(default=1, choices=INTERVIEW_STATUS)
+    status = models.CharField(default=1, choices=INTERVIEW_STATUS)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
 
     def __str__(self):

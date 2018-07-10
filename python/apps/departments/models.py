@@ -2,6 +2,14 @@ from django.db import models
 from django.urls import reverse
 
 
+REQUIREMENTS_STATUS = (
+    ("0", "ОБЯЗАТЕЛЬНЫЕ"),
+    ("1", "ОПЦИОНАЛЬНЫЕ"),
+    ("2", "ОБЩИЕ"),
+    ("3", "НАВЫКИ"),
+)
+
+
 class Department(models.Model):
     name = models.CharField(max_length=200)
 
@@ -15,7 +23,7 @@ class Department(models.Model):
 class Requirement(models.Model):
     name = models.CharField(max_length=200)
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name='requirements')
-    type = models.IntegerField()
+    type = models.CharField(choices=REQUIREMENTS_STATUS, default=0)
 
     def __str__(self):
         return self.name

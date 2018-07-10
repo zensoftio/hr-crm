@@ -8,6 +8,12 @@ from apps.notifications.notifications import request_created
 
 User = get_user_model()
 
+REQUEST_STATUS = (
+    ("0", "НЕ РАССМОТРЕНО"),
+    ("1", "УТВЕРЖДЕНО"),
+    ("2", "ОТКЛОНЕНО"),
+)
+
 
 class Request(models.Model):
     count = models.IntegerField()
@@ -15,7 +21,7 @@ class Request(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     modified = models.DateTimeField(auto_now=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
-    status = models.SmallIntegerField(default=0, blank=False)
+    status = models.CharField(choices=REQUEST_STATUS, default=0)
     requirements = models.ManyToManyField(Requirement)
 
     def __str__(self):
