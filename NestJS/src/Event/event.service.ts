@@ -67,7 +67,7 @@ export class EventService {
         resolve("whether invalid id_event or no such event!");
       }
       else{
-        let eventForSms = event.body;
+        const eventForSms = event.body;
         event.body = eventOfDatabase;
         google.run(event, function(err, response){
           getRepository(Event).delete(eventOfDatabase);

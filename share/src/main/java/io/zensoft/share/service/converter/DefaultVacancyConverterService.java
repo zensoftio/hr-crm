@@ -35,6 +35,7 @@ public class DefaultVacancyConverterService implements DtoConverterService<Vacan
         vacancy.setSalaryMin(vacancyDto.getSalaryMin());
         vacancy.setSalaryMax(vacancyDto.getSalaryMax());
         vacancy.setImage(vacancyDto.getImage());
+        vacancy.setFacebookUserAccessToken(vacancyDto.getFacebookUserAccessToken());
 
         List<Requirement> requirements = new ArrayList<>();
 
