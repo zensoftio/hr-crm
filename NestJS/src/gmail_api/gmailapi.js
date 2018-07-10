@@ -47,12 +47,6 @@ const authorize = async (callback, data, recipient) => {
 }
 
 
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback for the authorized client.
- */
 
  const getNewToken = (oAuth2Client, callback, data, recipient) => {
    const authUrl = oAuth2Client.generateAuthUrl({
@@ -79,7 +73,6 @@ const authorize = async (callback, data, recipient) => {
    });
  }
 
-
 /**
  * Lists the labels in the user's account.
  *
@@ -104,11 +97,11 @@ const getMessagesByDate = async (auth,date,callback) => {
 const getMessageById = async (messages,gmail,callback) => {
   var msgList = [];
   const results = await Promise.all(messages.map(async (msg) => {
-    const getMessage = gmail.users.messages.get({
+    const singleMessage = gmail.users.messages.get({
       userId: 'me',
       id: msg.id,
     });
-    const message = await getMessage;
+    const message = await singleMessage;
     msgList.push(message);
   }));
   return getEmailAttachmentId(msgList,gmail);
@@ -211,15 +204,21 @@ const sendMessage = async (auth, data, recipient) => {
 const makeBody = (data,recipient) => {
   var boundary = "__myapp__";
   var nl = "\n";
-  let fileToAttach = '/home/reedvl/Downloads/test.docx';
-  var attach = new Buffer(fs.readFileSync(fileToAttach)) .toString("base64");
-
+  let filename = data.attachments[0].name;
   let type = recipient.type + ": " + recipient.email
+  let structure = []
+  data.attachments.forEach((attachment) => {
+    structure.push(
+      "--" + boundary,
+      "Content-Type: Application/octet-stream; name=" + attachment.name,
+      "Content-Disposition: attachment; filename=" + attachment.name,
+      "Content-Transfer-Encoding: base64" + nl,
+      attachment.data,
+      "--" + boundary,)
+  });
 
   const body = data.content.replace(/NAME/g, recipient.name)
-
   var str = [
-
         "MIME-Version: 1.0",
         "Content-Transfer-Encoding: 7bit",
         type,
@@ -266,4 +265,19 @@ const defineTypeOfRecipients = (data) => {
   //put arrays' content into strings
   let listTos = to.join(', '), listBCCs = bcc.join(', '), listCCs = cc.join(', ');
   return [listTos, listCCs, listBCCs];
+          "MIME-Version: 1.0",
+          "Content-Transfer-Encoding: 7bit",
+          type,
+          "from: shisyr2106@gmail.com",
+          "subject: " + data.subject,
+          "Content-Type: multipart/alternate; boundary=" + boundary + nl,
+          "--" + boundary,
+          "Content-Type: text/plain; charset=UTF-8",
+          "Content-Transfer-Encoding: 7bit" + nl,
+          body + nl,
+          "--" + boundary,
+          structure.join('\n')
+  ].join('\n')
+  var encodedMail = new Buffer(str).toString("base64").replace(/\+/g, '-').replace(/\//g, '_');
+  return encodedMail;
 }

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+    image: nest
+    environment:
+      PORT: 3000
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DATABASE_URL: postgres://root:root@db:5432/test7 
+    ports:
+      - 9898:3000
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: /bin/sh -c "sleep 5 && npm start"
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test7

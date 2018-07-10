@@ -12,6 +12,7 @@ User = get_user_model()
 class RequestListCreateView(generics.ListCreateAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestListSerializer
+    filter_fields = ('position__department', 'status')
 
     def create(self, request, *args, **kwargs):
         write_serializer = RequestCreateOrUpdateSerializer(data=request.data)

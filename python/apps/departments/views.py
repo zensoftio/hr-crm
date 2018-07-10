@@ -1,4 +1,5 @@
 from rest_framework import generics
+
 from apps.departments.models import Department, Position, Requirement
 from apps.departments.serializers import DepartmentSerializer, PositionSerializer, RequirementSerializer
 
@@ -19,6 +20,7 @@ class PositionListCreateView(generics.ListCreateAPIView):
     """ Return all positions and create position """
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
+    filter_fields = ('department',)
 
 
 class PositionRetrieve(generics.RetrieveAPIView):
@@ -31,11 +33,10 @@ class RequirementCreateView(generics.ListCreateAPIView):
     """ Return list requirements and create requirement """
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
+    filter_fields = ('type', 'department')
 
 
 class RequirementRetrieve(generics.RetrieveAPIView):
     """ Return requirement by id """
     queryset = Requirement.objects.all()
     serializer_class = RequirementSerializer
-
-    

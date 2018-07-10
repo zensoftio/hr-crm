@@ -1,7 +1,6 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,23 +18,18 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
-
-import java.util.ArrayList;
+import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 import java.util.List;
 
-public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View {
-  private static final String TAG = "mylog:CandidateDetailFragment";
+public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
+    View.OnClickListener {
+  private static final String TAG = "PROFILE DETAILS";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
 
   private CandidateDetailContract.Presenter mPresenter;
 
   private LinearLayout mLayout;
-
-  private CvsAdapter mCvsAdapter;
-  private CommentsAdapter mCommentsAdapter;
-  private InterviewsAdapter mInterviewsAdapter;
 
   private TextView mFirstName;
   private TextView mLastName;
@@ -44,7 +37,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   private TextView mPhoneNumber;
   private TextView mDepartment;
   private TextView mYearsOfExp;
-
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +53,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
     mPresenter.loadCandidateInfo(candidateId);
     return v;
-
   }
 
   private void initUI(View v) {
@@ -72,87 +63,144 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPhoneNumber = v.findViewById(R.id.cd_phone);
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
-
-    mCvsAdapter = new CvsAdapter(getActivity(), new ArrayList<Cv>());
-    mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
-    mInterviewsAdapter = new InterviewsAdapter(getActivity(), new ArrayList<CandidateInterviewItem>());
   }
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-    mFirstName.setText(candidate.getFirstName());
-    mLastName.setText(candidate.getLastName());
-    mEmail.setText(candidate.getEmail());
-    mPhoneNumber.setText(candidate.getPhone());
-    mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
-    mYearsOfExp.setText(candidate.getExperience().toString());
-    mCvsAdapter.setData(candidate.getCvs());
-    mCommentsAdapter.setData(candidate.getComments());
-    mInterviewsAdapter.setData(candidate.getInterviews());
-    addViewsToLayout();
-
+    mFirstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
+    mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
+    mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
+    mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
+    String department = candidate.getPosition().getDepartmentModel().getName();
+    mDepartment.setText(department != null ? department : "");
+    mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
+    addExtraViews(candidate);
   }
 
-  private void addViewsToLayout() {
+  private void addExtraViews(Candidate candidate) {
     //add CV views to layout
-    addAdapterView(mCvsAdapter);
+    addCvsViews(candidate.getCvs());
 
     //add Comment views to layout
-    addAdapterView(mCommentsAdapter);
+    addCommentViews(candidate.getComments());
 
-    //add CV views to layout
-    addAdapterView(mInterviewsAdapter);
+    //add Interview views to layout
+    addInterviewViews(candidate.getInterviews());
 
+    //add Buttons
+    addActionButtons();
   }
 
+  private void addInterviewViews(List<CandidateInterviewItem> interviewList) {
+    if (interviewList == null) {
+      return;
+    }
 
-  @SuppressLint("LongLogTag")
-  private void addAdapterView(final BaseAdapter adapter) {
-    int itemsCount = adapter.getCount();
+    int itemsCount = interviewList.size();
 
     if (itemsCount > 0) {
+
+      // add description Textview
       TextView descriptionText = new TextView(getActivity());
-      descriptionText.setText(getTitleText(adapter));
+      descriptionText.setText(R.string.interviews);
       descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
       mLayout.addView(descriptionText);
 
-      for (int i = 0; i < adapter.getCount(); i++) {
-        View item = adapter.getView(i, null, null);
-        final int finalI = i;
-        item.setOnClickListener(new View.OnClickListener() {
+      // add interview views
+      for (final CandidateInterviewItem interviewItem : interviewList) {
+        View interviewView = ViewBuilder.createInterviewView(getActivity(), interviewItem);
+
+        interviewView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            if (adapter instanceof CvsAdapter) {
-              Cv cvItem = (Cv) adapter.getItem(finalI);
-              onCvItemClicked(cvItem);
-            } else if (adapter instanceof CommentsAdapter) {
-              Comment commentItem = (Comment) adapter.getItem(finalI);
-              onCommentItemClicked(commentItem);
-            } else if (adapter instanceof InterviewsAdapter) {
-              CandidateInterviewItem interviewItem = (CandidateInterviewItem) adapter.getItem(finalI);
-              onInterviewItemClicked(interviewItem);
-            }
+            mPresenter.onInterviewItemClicked(interviewItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(interviewView);
       }
     }
-
   }
 
-  private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
-    mPresenter.onInterviewItemClicked(interviewItem);
+  private void addCommentViews(List<Comment> commentList) {
+    if (commentList == null) {
+      return;
+    }
+
+    int itemsCount = commentList.size();
+
+    if (itemsCount > 0) {
+
+      // add description Textview
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(R.string.comments);
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      // add comment views
+      for (final Comment commentItem : commentList) {
+        View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
+
+        commentView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            mPresenter.onCommentItemClicked(commentItem);
+          }
+        });
+
+        mLayout.addView(commentView);
+      }
+    }
   }
 
-  private void onCommentItemClicked(Comment commentItem) {
-    mPresenter.onCommentItemClicked(commentItem);
+  private void addCvsViews(List<Cv> cvList) {
+    if (cvList == null) {
+      return;
+    }
+
+    int itemsCount = cvList.size();
+
+    if (itemsCount > 0) {
+
+      // add description Textview
+      TextView descriptionText = new TextView(getActivity());
+      descriptionText.setText(R.string.cvs);
+      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      mLayout.addView(descriptionText);
+
+      // add cvs views
+      for (final Cv cvItem : cvList) {
+        View cvView = ViewBuilder.createCvView(getActivity(), cvItem, cvList.indexOf(cvItem));
+
+        cvView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            mPresenter.onCvItemClicked(cvItem);
+          }
+        });
+
+        mLayout.addView(cvView);
+      }
+    }
   }
 
-  private void onCvItemClicked(Cv cvItem) {
-    mPresenter.onCvItemClicked(cvItem);
+  private void addActionButtons() {
+    View v = LayoutInflater.from(getActivity()).inflate(R.layout.cd_action_buttons, null, false);
+    v.findViewById(R.id.cd_interview_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_edit_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
+    v.findViewById(R.id.cd_message_button).setOnClickListener(this);
+    mLayout.addView(v);
   }
 
-  public static CandidateDetailFragment newInstance(@Nullable int candidateId) {
+  @Override
+  public void startCreateInterview(Candidate candidate) {
+    Log.d(TAG, "startCreateInterview: " + candidate.getId());
+    Intent intent = CreateInterview.newIntent(getActivity(), candidate);
+    startActivity(intent);
+  }
+
+  public static CandidateDetailFragment newInstance(int candidateId) {
     Bundle arguments = new Bundle();
     arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
     CandidateDetailFragment fragment = new CandidateDetailFragment();
@@ -163,17 +211,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public boolean isActive() {
     return isAdded();
-  }
-
-  private int getTitleText(BaseAdapter adapter) {
-    if (adapter instanceof CvsAdapter) {
-      return R.string.cvs;
-    } else if (adapter instanceof CommentsAdapter) {
-      return R.string.comments;
-    } else if (adapter instanceof InterviewsAdapter) {
-      return R.string.interviews;
-    }
-    return -1;
   }
 
   @Override
@@ -187,155 +224,31 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   }
 
-  class CvsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Cv> mCvsList;
+  @Override
+  public void onClick(View v) {
 
-    CvsAdapter(Context context, List<Cv> cvsList) {
-      mContext = context;
-      mCvsList = cvsList;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
+    switch (v.getId()) {
+      case R.id.cd_interview_button:
+        mPresenter.onCreateInterviewClicked();
+        break;
 
-    public void setData(List<Cv> newData) {
-      mCvsList = newData;
-      this.notifyDataSetChanged();
-    }
+      case R.id.cd_delete_button:
+        //TODO: implement profile deleting
+        showToast("Delete candidate profile");
+        break;
 
-    @Override
-    public int getCount() {
-      return mCvsList.size();
-    }
+      case R.id.cd_edit_button:
+        //TODO: implement profile editing
+        showToast("Edit profile");
+        break;
 
-    @Override
-    public Object getItem(int position) {
-      return mCvsList.get(position);
-    }
+      case R.id.cd_message_button:
+        //TODO: implement sending message
+        showToast("Send message");
+        break;
 
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_cvs_item, parent, false);
-      TextView attachment = v.findViewById(R.id.cv_item_attachment);
-      TextView createdDate = v.findViewById(R.id.cv_item_created_text);
-
-      Cv cvItem = (Cv) getItem(position);
-      attachment.setText("attachment" + String.valueOf(position + 1));
-      createdDate.setText(cvItem.getCreated().toString());
-
-      return v;
-    }
-  }
-
-
-  class CommentsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Comment> mCommentsList;
-
-    CommentsAdapter(Context context, List<Comment> data) {
-      mContext = context;
-      mCommentsList = data;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    public void setData(List<Comment> newData) {
-      mCommentsList = newData;
-      this.notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-      return mCommentsList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return mCommentsList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_comment_item, parent, false);
-      TextView createdBy = v.findViewById(R.id.cd_comment_username);
-      TextView date = v.findViewById(R.id.cd_comment_date);
-      TextView text = v.findViewById(R.id.cd_comment_text);
-
-      Comment comment = (Comment) getItem(position);
-      User user = comment.getCreatedBy();
-      createdBy.setText(user.getFirstName() + " " + user.getLastName());
-      date.setText(comment.getCreated().toString());
-      text.setText(comment.getText());
-
-      return v;
-    }
-  }
-
-
-  class InterviewsAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<CandidateInterviewItem> mInterviews;
-
-    InterviewsAdapter(Context context, List<CandidateInterviewItem> data) {
-      mContext = context;
-      mInterviews = data;
-      mLayoutInflater = LayoutInflater.from(mContext);
-    }
-
-    public void setData(List<CandidateInterviewItem> newData) {
-      mInterviews = newData;
-      this.notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-      return mInterviews.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return mInterviews.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View v = mLayoutInflater.inflate(R.layout.cd_interview_item, parent, false);
-      TextView status = v.findViewById(R.id.cd_interview_status);
-      TextView date = v.findViewById(R.id.cd_interview_date);
-      TextView interviewersText = v.findViewById(R.id.cd_interview_interviewers);
-
-      CandidateInterviewItem interview = (CandidateInterviewItem) getItem(position);
-      status.setText(interview.getStatus().toString());
-      date.setText(interview.getDate());
-      List<User> interviewers = interview.getInterviewers();
-      StringBuilder users = new StringBuilder();
-      users.append("interviewers:\n");
-      for (User interviewer : interviewers) {
-        String firstName =
-            interviewer.getFirstName() != null ? interviewer.getFirstName() : "";
-        String lastName =
-            interviewer.getLastName() != null ? interviewer.getLastName() : "";
-        users.append("-").append(firstName).append(" ").append(lastName).append("\n");
-      }
-      interviewersText.setText(users);
-
-      return v;
+      default:
+        break;
     }
   }
 }

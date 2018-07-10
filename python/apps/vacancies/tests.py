@@ -1,23 +1,24 @@
 from rest_framework.test import APITestCase
 
-from apps.base_tests import ListTestMixin, CreateTestMixin
-from .models import Vacancy
-from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer
+from .models import Vacancy, Publication
+from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
+                                                                                                PublicationSerializer
+from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
+
 
 
 class VacancyListTestCase(ListTestMixin, APITestCase):
-    url = '/vacancies/'
     model = Vacancy
     serializer = VacancyListSerializer
 
 
-class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
-    url = '/vacancies/'
+class VacancyCreateTestCase(CreateTestMixin, APITestCase):
     model = Vacancy
     serializer = VacancyCreateUpdateSerializer
 
     def test_creation(self):
-        response = self.client.post(self.url, self.request_body)
+        url = '/' + str(self.model._meta.verbose_name_plural) + '/'
+        response = self.client.post(url, self.request_body)
         self.assertEqual(201, response.status_code)
         self.assertEqual(3, self.model.objects.count())
 
@@ -43,3 +44,25 @@ class VacancyCreateListTestCase(CreateTestMixin, APITestCase):
             8
         ]
     }
+
+
+class VacancyDetailTestCase(GetInstanceTestMixin, APITestCase):
+    model = Vacancy
+    serializer = VacancyDetailSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
+
+    def setUp(self):
+        self.instance = Vacancy.objects.get(pk=1)
+
+
+class PublicationDetailTestCase(GetInstanceTestMixin, APITestCase):
+    model = Publication
+    serializer = PublicationSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
+
+    def setUp(self):
+        self.instance = Publication.objects.get(pk=1)
