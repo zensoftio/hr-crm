@@ -17,7 +17,7 @@ class AndroidAuthenticationView(APIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            ID_token = self.request.query_params.get('token')
+            ID_token = self.request.query_params.get('id_token')
             id_token_info = id_token.verify_oauth2_token(ID_token, requests.Request(), self.CLIENT_ID)
 
             if id_token_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
@@ -25,12 +25,9 @@ class AndroidAuthenticationView(APIView):
 
             user_email = id_token_info['email']
             user = User.objects.get(email=user_email)
-
             if user:
-                token = AccessToken.objects.get(user=user)
-
-                return Response(data={'access_token': token})
+                token = AccessToken.objects.filter(user=user).last()
+                return Response(data={'access_token': token.token})
 
         except ValueError:
-            # Invalid token
             return Response(data={'error': 'Token is invalid'}, status=status.HTTP_400_BAD_REQUEST)
