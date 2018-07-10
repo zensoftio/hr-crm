@@ -1,10 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
 
 from apps.users.serializers import UserSerializer
 

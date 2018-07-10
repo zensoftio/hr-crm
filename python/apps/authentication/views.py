@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
 from google.auth.transport import requests
 from google.oauth2 import id_token
@@ -17,20 +18,19 @@ class AndroidAuthenticationView(APIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            ID_token = self.request.query_params.get('token')
+            ID_token = self.request.query_params.get('id_token')
             id_token_info = id_token.verify_oauth2_token(ID_token, requests.Request(), self.CLIENT_ID)
 
             if id_token_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-                raise ValueError('Wrong issuer.')
+                raise ValueError
 
             user_email = id_token_info['email']
-            user = User.objects.get(email=user_email)
-
-            if user:
-                token = AccessToken.objects.get(user=user)
-
-                return Response(data={'access_token': token})
+            try:
+                user = User.objects.get(email=user_email)
+                token = AccessToken.objects.filter(user=user).last()
+                return Response(data={'access_token': token.token})
+            except ObjectDoesNotExist:
+                return Response(data={'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
         except ValueError:
-            # Invalid token
             return Response(data={'error': 'Token is invalid'}, status=status.HTTP_400_BAD_REQUEST)
