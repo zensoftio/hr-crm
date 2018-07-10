@@ -4,12 +4,9 @@ import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.dto.VacancyResponseDto;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
-import io.zensoft.share.service.PublisherManagerService;
-import io.zensoft.share.service.PublisherService;
-import io.zensoft.share.service.VacancyResponseSenderService;
+import io.zensoft.share.service.*;
 import io.zensoft.share.service.converter.DefaultVacancyConverterService;
 import io.zensoft.share.service.converter.DefaultVacancyResponseConverterService;
-import io.zensoft.share.service.model.VacancyResponseModelService;
 import io.zensoft.share.service.model.impl.DefaultVacancyModelService;
 import io.zensoft.share.service.model.impl.DefaultVacancyResponseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     private final DefaultVacancyModelService vacancyModelService;
     private final DefaultVacancyResponseModelService vacancyResponseModelService;
     private final PublisherService facebookPublisherService;
+    private final DefaultVacancyRetriever vacancyRetriever;
     private final VacancyResponseSenderService vacancyResponseSenderService;
 
     @Autowired
@@ -31,12 +29,14 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
                                            DefaultVacancyModelService vacancyModelService,
                                            DefaultVacancyResponseModelService vacancyResponseModelService,
                                            PublisherService facebookPublisherService,
+                                           DefaultVacancyRetriever vacancyRetriever,
                                            VacancyResponseSenderService vacancyResponseSenderService) {
         this.vacancyConverterService = vacancyConverterService;
         this.vacancyResponseConverterService = vacancyResponseConverterService;
         this.vacancyModelService = vacancyModelService;
         this.vacancyResponseModelService = vacancyResponseModelService;
         this.facebookPublisherService = facebookPublisherService;
+        this.vacancyRetriever = vacancyRetriever;
         this.vacancyResponseSenderService = vacancyResponseSenderService;
     }
 
@@ -50,7 +50,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
-        VacancyResponse vacancyResponse = facebookPublisherService.getInfo(vacancy);
+        VacancyResponse vacancyResponse = vacancyRetriever.getInfo(vacancy);
         saveToDatabaseAndConvertToDtoAndRespond(vacancyResponse);
     }
 
