@@ -172,7 +172,6 @@ class Base(Configuration):
         'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.AllowAny',
-            'apps.users.permissions.IsHR',
         ],
         'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.SearchFilter',
                                     'django_filters.rest_framework.DjangoFilterBackend',
