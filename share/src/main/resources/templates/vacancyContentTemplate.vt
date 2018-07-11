@@ -1,0 +1,72 @@
+<p>
+    <strong>
+        $vacancyTitle
+    </strong>
+</p>
+<p>&nbsp;</p>
+<p>
+    <strong>
+        $mainRequirementsTitle
+    </strong>
+    <br>
+        $mainRequirementsParsed
+    <br>
+    <strong>
+        $hardSkillsTitle
+    </strong>
+    <br>
+    $hardSkillsParsed
+</p>
+<p>&nbsp;</p>
+<p>
+    <strong>
+        $additionalRequirementsTitle
+    </strong>
+    <br>
+    $additionalSkillsParsed
+    &nbsp;
+    <br>
+    <strong>
+        $responsibilitiesTitle
+    </strong>
+    <br>
+    $responsibilitiesDescription
+</p>
+<p>&nbsp;</p>
+<p>
+    <strong>
+        $workingConditionsTitle
+    </strong>
+    <br>
+    $workingConditionsParsed
+    <br>
+    <span
+            style="color:#800000;">
+        <strong>
+            $salaryForkTitle $vacancySalaryMin $dollarSign $vacancySalaryMax
+        </strong>
+    </span>
+    <br>
+    <br>
+    <span
+            style="color:#0000cd;">
+        <strong>
+            $cvSendingTitle
+        </strong>
+    </span>
+    <br>
+    <br>
+        <strong>
+            $setPositionInEmailDisclaimerTitle
+        </strong>
+    <br>
+    <br>
+        <strong>
+            $informationAboutUs
+        </strong>
+    <br>
+    Website: <a href="$websiteLink" class='bbc_url' title='Ссылка' rel='nofollow external'>$websiteLink</a><br>
+    Facebook: <a href="$facebookLink" class='bbc_url' title='Ссылка' rel='nofollow external'>$facebookLink</a><br>
+    LinkedIn: <a href="$linkedinLink" class='bbc_url' title='Ссылка' rel='nofollow external'>$linkedinLink</a><br>
+    Instagram: <a href="$instagramLink" class='bbc_url' title='Ссылка' rel='nofollow external'>$instagramLink</a>
+</p>

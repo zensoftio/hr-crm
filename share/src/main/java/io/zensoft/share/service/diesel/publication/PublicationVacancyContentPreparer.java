@@ -3,133 +3,94 @@ package io.zensoft.share.service.diesel.publication;
 import io.zensoft.share.model.Requirement;
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.stereotype.Component;
+import java.io.StringWriter;
 
 @Data
 @Component
 public class PublicationVacancyContentPreparer {
-    /**
-     * following two fields should contain title and content of Vacancy parsed in html forman
-     */
     private String titleOfPost;
     private String contentOfPost;
 
-    /**
-     * following fields usually do not have to change, but not be sure
-     */
-    private final String mainRequirementsTitle = "<strong>Основные требования:</strong>";
-    private final String hardSkillsTitle = "<strong>Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):</strong>";
-    private final String additionalRequirementsTitle = "<strong>Будет плюсом:</strong>";
-    private final String responsibilitiesTitle = "<strong>Обязанности:</strong>";
-    private final String responsibilitiesDescription = "• Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.";
-    private final String workingConditionsTitle = "<strong>Условия работы:</strong>";
-    private final String salaryForkTitle = "<span style = \"color:#800000;\"><strong>Вилка заработной платы: $";
-    private final String cvSendingTitle = "<span style = \"color:#0000cd;\"><strong>Резюме присылать на почту: jobs@secondlab.kg</strong></span>";
-    private final String setPositionInEmailDisclaimerTitle = "<strong>!! В теме обязательно укажите позицию, на которую претендуете: \"Java Developer (Junior, Middle, Senior)\"</strong>";
-    private final String informationAboutUsTitle = "<strong>Информация о нас:</strong>";
-    private final String linksToWebsitesAndSocialNetworks = "Website: <a href='http://secondlab.io' class='bbc_url' title='Ссылка' rel='nofollow external'>http://<span class='searchlite'>seconlab</span>.io</a><br>\n" +
-            "Facebook: <a href='https://www.facebook.com/secondlab.io' class='bbc_url' title='Ссылка' rel='nofollow external'>https://www.facebook.com/secondlab</a><br>\n" +
-            "LinkedIn: <a href='https://www.linkedin.com/company-beta/226233/' class='bbc_url' title='Ссылка' rel='nofollow external'>https://www.linkedin.com/company-beta/226133/</a><br>\n" +
-            "Instagram: <a href='https://www.instagram.com/secondlab.kg/' class='bbc_url' title='Ссылка' rel='nofollow external'>https://www.instagram.com/secondlab.kg//</a></p>\n";
+    private final String MAIN_REQUIREMENTS_TITLE = "Основные требования:";
+    private final String HARD_SKILLS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):";
+    private final String ADDITIONAL_REQUIREMENTS_TITLE = "Будет плюсом:";
+    private final String RESPONSIBILITIES_TITLE = "Обязанности:";
+    private final String RESPONSIBILITIES_DESCRIPTION = "• Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.";
+    private final String WORKING_CONDITIONS_TITLE = "Условия работы:";
+    private final String SALARY_FORK_TITLE = "Вилка заработной платы: $";
+    private final String CV_SENDING_TITLE = "Резюме присылать на почту: jobs@secondlab.kg";
+    private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"Java Developer (Junior, Middle, Senior)\"";
+    private final String INFORMATION_ABOUT_US = "<strong>Информация о нас:";
+    private final String WEBSITE_LINK = "http://secondlab.io";
+    private final String FACEBOOK_LINK = "https://www.facebook.com/secodlab.io";
+    private final String LINKEDIN_LINK = "https://www.linkedin.com/company-beta/226233/";
+    private final String INSTAGRAM_LINK = "https://www.instagram.com/secondlab.kg/";
+    private final String DOT_SYMBOL = "• ";
+    private final String DOLLAR_SIGN = "- $";
 
-    /**
-     * simple html tags for farmatting text
-     */
-    private final String brTag = "<br>";
-    private final String pTagOpen = "<p>";
-    private final String pTagClose = "</p>";
-    private final String strongTagOpen = "<strong>";
-    private final String strongTagClose = "</strong>";
-    private final String dotSymbolForListing = "• ";
-    private final String spanTagClose = "</span>";
+    String mainRequirementsParsed;
+    String hardSkillsParsed;
+    String additionalSkillsParsed;
+    String workingConditionsParsed;
 
-    public PublicationVacancyContentPreparer() {
-
-    }
-
-    /**
-     * takes Vacancy as parameter and reformat information as html
-     *
-     * @param vacancy
-     */
-    public void prepareGivenVacancyToHtmlStyle(Vacancy vacancy) {
+    public void prepareGivenVacancyToHtmlStyle(Vacancy vacancy){
+        sortVacanyListsbyType(vacancy);
         setTitleOfPost(vacancy.getPosition());
 
-        String mainRequirementsParsed = "";
-        String hardSkillsParsed = "";
-        String additionalSkillsParsed = "";
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.init();
 
+        Template template = velocityEngine.getTemplate("/src/main/resources/html/vacancyContentTemplate.vt", "utf-8");
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("mainRequirementsTitle", MAIN_REQUIREMENTS_TITLE);
+        velocityContext.put("hardSkillsTitle", HARD_SKILLS_TITLE);
+        velocityContext.put("additionalRequirementsTitle", ADDITIONAL_REQUIREMENTS_TITLE);
+        velocityContext.put("responsibilitiesTitle", RESPONSIBILITIES_TITLE);
+        velocityContext.put("responsibilitiesDescription", RESPONSIBILITIES_DESCRIPTION);
+        velocityContext.put("workingConditionsTitle", WORKING_CONDITIONS_TITLE);
+        velocityContext.put("salaryForkTitle", SALARY_FORK_TITLE);
+        velocityContext.put("cvSendingTitle", CV_SENDING_TITLE);
+        velocityContext.put("setPositionInEmailDisclaimerTitle", SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE);
+        velocityContext.put("informationAboutUs", INFORMATION_ABOUT_US);
+        velocityContext.put("websiteLink", WEBSITE_LINK);
+        velocityContext.put("facebookLink", FACEBOOK_LINK);
+        velocityContext.put("linkedinLink", LINKEDIN_LINK);
+        velocityContext.put("instagramLink", INSTAGRAM_LINK);
+        velocityContext.put("dotSymbol", DOT_SYMBOL);
+        velocityContext.put("dollarSign", DOLLAR_SIGN);
+
+        velocityContext.put("mainRequirementsParsed", mainRequirementsParsed);
+        velocityContext.put("hardSkillsParsed", hardSkillsParsed);
+        velocityContext.put("additionalSkillsParsed", additionalSkillsParsed);
+        velocityContext.put("workingConditionsParsed", workingConditionsParsed);
+        velocityContext.put("vacancyTitle", vacancy.getTitle());
+        velocityContext.put("vacancySalaryMin", vacancy.getSalaryMin());
+        velocityContext.put("vacancySalaryMax", vacancy.getSalaryMax());
+
+        StringWriter writer = new StringWriter();
+        template.merge(velocityContext, writer);
+
+        setContentOfPost(writer.toString());
+    }
+
+    public void sortVacanyListsbyType(Vacancy vacancy) {
         for (Requirement requirementOrSkill : vacancy.getRequirements()) {
             if (requirementOrSkill.getType() == 0) {
-                mainRequirementsParsed = mainRequirementsParsed + dotSymbolForListing + requirementOrSkill.getName() + brTag;
+                mainRequirementsParsed = mainRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
-
             if (requirementOrSkill.getType() == 1) {
-                hardSkillsParsed = hardSkillsParsed + dotSymbolForListing + requirementOrSkill.getName() + brTag;
+                hardSkillsParsed = hardSkillsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
-
             if (requirementOrSkill.getType() == 2) {
-                additionalSkillsParsed = additionalSkillsParsed + dotSymbolForListing + requirementOrSkill.getName() + brTag;
+                additionalSkillsParsed = additionalSkillsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
         }
-
-        String workingConditionsParsed = "";
-
         for (String workingCondition : vacancy.getWorkingConditions()) {
-            workingConditionsParsed = workingConditionsParsed + dotSymbolForListing + workingCondition + brTag;
+            workingConditionsParsed = workingConditionsParsed + DOT_SYMBOL + workingCondition + "<br>";
         }
-
-        String fullContentInHtmlFormat = pTagOpen
-                + strongTagOpen
-                + vacancy.getTitle()
-                + strongTagClose
-                + pTagClose
-                + pTagOpen + " " + pTagClose
-                + brTag
-                + pTagOpen
-                + mainRequirementsTitle
-                + brTag
-                + mainRequirementsParsed
-                + brTag
-                + hardSkillsTitle
-                + brTag
-                + hardSkillsParsed
-                + pTagClose
-                + pTagOpen + " " + pTagClose
-                + brTag
-                + pTagOpen
-                + additionalRequirementsTitle
-                + brTag
-                + additionalSkillsParsed
-                + pTagOpen + " " + pTagClose
-                + brTag
-                + responsibilitiesTitle
-                + brTag
-                + responsibilitiesDescription
-                + pTagClose
-                + pTagOpen + " " + pTagClose
-                + brTag
-                + pTagOpen
-                + workingConditionsTitle
-                + brTag
-                + workingConditionsParsed
-                + brTag
-                + salaryForkTitle
-                + vacancy.getSalaryMin()
-                + " - $"
-                + vacancy.getSalaryMax()
-                + strongTagClose
-                + spanTagClose
-                + brTag + brTag
-                + cvSendingTitle
-                + brTag + brTag
-                + setPositionInEmailDisclaimerTitle
-                + brTag + brTag
-                + informationAboutUsTitle
-                + brTag
-                + linksToWebsitesAndSocialNetworks
-                + brTag;
-
-        setContentOfPost(fullContentInHtmlFormat);
     }
 }
