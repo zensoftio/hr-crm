@@ -18,10 +18,13 @@ public class PublicationPostRequestSender {
     private PublicationPostRequestsForm publicationPostRequestsForm;
     private PublicationVacancyContentPreparer publicationVacancyContentPreparer;
 
-    public PublicationPostRequestSender(){
-        publicationHeaders = new PublicationHeaders();
-        publicationPostRequestsForm = new PublicationPostRequestsForm();
-        publicationVacancyContentPreparer = new PublicationVacancyContentPreparer();
+    @Autowired
+    public PublicationPostRequestSender(PublicationHeaders publicationHeaders,
+                                        PublicationPostRequestsForm publicationPostRequestsForm,
+                                        PublicationVacancyContentPreparer publicationVacancyContentPreparer) {
+        this.publicationHeaders = publicationHeaders;
+        this.publicationPostRequestsForm = publicationPostRequestsForm;
+        this.publicationVacancyContentPreparer = publicationVacancyContentPreparer;
     }
 
     public void sendPostRequestForPublication(RestTemplate restTemplate, Vacancy vacancy, String sessionId, String authKey) {

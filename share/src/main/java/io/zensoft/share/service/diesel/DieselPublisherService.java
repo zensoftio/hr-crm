@@ -16,18 +16,21 @@ import java.nio.charset.Charset;
 @Service
 public class DieselPublisherService implements PublisherService {
     private RestTemplate restTemplate;
-    @Autowired
     private LoginPostRequestSender loginPostRequestSender;
-    @Autowired
     private PublicationPostRequestSender publicationPostRequestSender;
-    @Autowired
     private AuthKeyGetRequestSender authKeyGetRequestSender;
 
     private String sessionId;
     private String authKey;
 
-    public DieselPublisherService() {
+    @Autowired
+    public DieselPublisherService(LoginPostRequestSender loginPostRequestSender,
+                                  PublicationPostRequestSender publicationPostRequestSender,
+                                  AuthKeyGetRequestSender authKeyGetRequestSender) {
         restTemplate = new RestTemplate();
+        this.loginPostRequestSender = loginPostRequestSender;
+        this.publicationPostRequestSender = publicationPostRequestSender;
+        this.authKeyGetRequestSender = authKeyGetRequestSender;
     }
 
     @Override
@@ -37,19 +40,11 @@ public class DieselPublisherService implements PublisherService {
         vacancyResponse.setVacancy(vacancy);
 
         sessionId = loginPostRequestSender.sendPostRequestForLogin(restTemplate);
-
         authKeyGetRequestSender.addHeaderCookie(sessionId);
-
         authKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate);
-
         publicationPostRequestSender.addHeaderCookie(sessionId);
-
         publicationPostRequestSender.sendPostRequestForPublication(restTemplate, vacancy, sessionId, authKey);
-        return vacancyResponse;
-    }
 
-    @Override
-    public VacancyResponse getInfo(Vacancy vacancy) {
-        return null;
+        return vacancyResponse;
     }
 }

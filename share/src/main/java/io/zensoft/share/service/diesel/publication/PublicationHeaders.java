@@ -2,17 +2,23 @@ package io.zensoft.share.service.diesel.publication;
 
 import io.zensoft.share.model.diesel.DefaultHeadersValues;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+
+import javax.xml.ws.Action;
 
 @Data
+@Component
 public class PublicationHeaders {
 
     private HttpHeaders publicationHeaders;
     private DefaultHeadersValues defaultHeadersValues;
 
-    public PublicationHeaders(){
-        this.publicationHeaders = new HttpHeaders();
-
+    @Autowired
+    public PublicationHeaders(DefaultHeadersValues defaultHeadersValues){
+        publicationHeaders = new HttpHeaders();
+        this.defaultHeadersValues = defaultHeadersValues;
         publicationHeaders.add("Origin", defaultHeadersValues.getORIGIN());
         publicationHeaders.add("Upgrade-Insecure-Requests", defaultHeadersValues.getUPGRADE_INSECURE_REQUESTS());
         publicationHeaders.add("Content-Type", defaultHeadersValues.getCONTENT_TYPE());

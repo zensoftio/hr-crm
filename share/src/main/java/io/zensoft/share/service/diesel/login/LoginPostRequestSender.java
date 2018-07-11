@@ -1,6 +1,7 @@
 package io.zensoft.share.service.diesel.login;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,14 @@ import java.util.List;
 public class LoginPostRequestSender {
     @Value("${diesel.login.url}")
     private String serverUrlPostRequestReceiver;
-
     private LoginHeaders loginHeaders;
     private LoginPostRequestsForm loginPostRequestsForm;
 
-    public LoginPostRequestSender(){
-        loginHeaders = new LoginHeaders();
-        loginPostRequestsForm = new LoginPostRequestsForm();
+    @Autowired
+    public LoginPostRequestSender(LoginPostRequestsForm loginPostRequestsForm,
+                                  LoginHeaders loginHeaders){
+        this.loginPostRequestsForm = loginPostRequestsForm;
+        this.loginHeaders = loginHeaders;
     }
 
     public String sendPostRequestForLogin(RestTemplate restTemplate) {

@@ -1,5 +1,9 @@
 package io.zensoft.share.service.diesel.authkey;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -10,33 +14,28 @@ import org.springframework.web.client.RestTemplate;
 public class AuthKeyGetRequestSender {
     @Value("${diesel.authKey.url}")
     private String serverUrlPostRequestReceiver;
-    private AuthKeyGetterHeaders authKeyGetterHeaders;
+    private AuthKeyHeaders authKeyHeaders;
 
-    public AuthKeyGetRequestSender() {
-        authKeyGetterHeaders = new AuthKeyGetterHeaders();
+    @Autowired
+    public AuthKeyGetRequestSender(AuthKeyHeaders authKeyHeaders) {
+        this.authKeyHeaders = authKeyHeaders;
     }
 
     public String sendGetRequestToGetResponseWithAuthKey(RestTemplate restTemplate) {
-        HttpEntity<?> request = new HttpEntity<>(authKeyGetterHeaders.getAuthKeyGetterHeaders());
+        HttpEntity<?> request = new HttpEntity<>(authKeyHeaders.getAuthKeyGetterHeaders());
         ResponseEntity<String> response = restTemplate.postForEntity(serverUrlPostRequestReceiver, request, String.class);
-        return getAuthKeyFromStringResponse(response.getBody());
+        return getAuthKeyFromHtmlAsStringResponse(response.getBody());
     }
 
-    private String getAuthKeyFromStringResponse(String htmlBody) {
-        String auth_key = "auth_key' value='";
-        String closeTag = "' />";
-        String[] subStr1 = htmlBody.split(auth_key);
-        String[] strings = subStr1[1].split(closeTag);
-        String resultAuthKey = "";
-
-        for (int i = 0; i < 1; i++) {
-            resultAuthKey = resultAuthKey + strings[i];
-        }
-        return resultAuthKey;
+    private String getAuthKeyFromHtmlAsStringResponse(String htmlBody) {
+        Document document = Jsoup.parse(htmlBody);
+        Element authKeyInput = document.select("input[name=auth_key]").first();
+        String authKey = authKeyInput.attr("value");
+        return authKey;
     }
 
     public void addHeaderCookie(String sessionId) {
-        authKeyGetterHeaders.addCookieToHeaders(sessionId);
+        authKeyHeaders.addCookieToHeaders(sessionId);
     }
 
 }

@@ -3,9 +3,10 @@ package io.zensoft.share.service.diesel.publication;
 import io.zensoft.share.model.Requirement;
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class PublicationVacancyContentPreparer {
     /**
      * following two fields should contain title and content of Vacancy parsed in html forman

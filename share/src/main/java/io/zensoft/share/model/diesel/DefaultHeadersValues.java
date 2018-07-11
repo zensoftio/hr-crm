@@ -1,8 +1,10 @@
 package io.zensoft.share.model.diesel;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class DefaultHeadersValues {
     private final String UPGRADE_INSECURE_REQUESTS = "1";
     private final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";

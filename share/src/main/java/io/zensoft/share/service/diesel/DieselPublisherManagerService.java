@@ -11,44 +11,45 @@ import io.zensoft.share.service.converter.DefaultVacancyConverterService;
 import io.zensoft.share.service.converter.DefaultVacancyResponseConverterService;
 import io.zensoft.share.service.model.impl.DefaultVacancyModelService;
 import io.zensoft.share.service.model.impl.DefaultVacancyResponseModelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DieselPublisherManagerService implements PublisherManagerService {
 
-    private final DefaultVacancyConverterService defaultVacancyConverterService;
-    private final DefaultVacancyResponseConverterService defaultVacancyResponseConverterService;
-    private final DefaultVacancyModelService defaultVacancyModelService;
-    private final DefaultVacancyResponseModelService defaultVacancyResponseModelService;
+    private final DefaultVacancyConverterService vacancyConverterService;
+    private final DefaultVacancyResponseConverterService vacancyResponseConverterService;
+    private final DefaultVacancyModelService vacancyModelService;
+    private final DefaultVacancyResponseModelService vacancyResponseModelService;
     private final PublisherService dieselPublisherService;
     private final VacancyResponseSenderService vacancyResponseSenderService;
 
-    public DieselPublisherManagerService(DefaultVacancyConverterService defaultVacancyConverterService,
-                                         DefaultVacancyResponseConverterService defaultVacancyResponseConverterService,
-                                         DefaultVacancyModelService defaultVacancyModelService,
-                                         DefaultVacancyResponseModelService defaultVacancyResponseModelService,
+    @Autowired
+    public DieselPublisherManagerService(DefaultVacancyConverterService vacancyConverterService,
+                                         DefaultVacancyResponseConverterService vacancyResponseConverterService,
+                                         DefaultVacancyModelService vacancyModelService,
+                                         DefaultVacancyResponseModelService vacancyResponseModelService,
                                          PublisherService dieselPublisherService,
                                          VacancyResponseSenderService vacancyResponseSenderService) {
-        this.defaultVacancyConverterService = defaultVacancyConverterService;
-        this.defaultVacancyResponseConverterService = defaultVacancyResponseConverterService;
-        this.defaultVacancyModelService = defaultVacancyModelService;
-        this.defaultVacancyResponseModelService = defaultVacancyResponseModelService;
+        this.vacancyConverterService = vacancyConverterService;
+        this.vacancyResponseConverterService = vacancyResponseConverterService;
+        this.vacancyModelService = vacancyModelService;
+        this.vacancyResponseModelService = vacancyResponseModelService;
         this.dieselPublisherService = dieselPublisherService;
         this.vacancyResponseSenderService = vacancyResponseSenderService;
     }
 
     @Override
     public void publish(VacancyDto vacancyDto) {
-        Vacancy vacancy = defaultVacancyConverterService.fromDto(vacancyDto);
-        defaultVacancyModelService.save(vacancy);
+        Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
+        vacancyModelService.save(vacancy);
         VacancyResponse vacancyResponse = dieselPublisherService.publish(vacancy);
-        defaultVacancyResponseModelService.save(vacancyResponse);
-        VacancyResponseDto vacancyResponseDto = defaultVacancyResponseConverterService.toDto(vacancyResponse);
+        vacancyResponseModelService.save(vacancyResponse);
+        VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
     }
 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
-
     }
 }

@@ -3,21 +3,24 @@ package io.zensoft.share.service.diesel.publication;
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Data
+@Component
 public class PublicationPostRequestsForm {
     private String Post;
     private String TopicTitle;
     private String auth_key;
     private String s;
-    @Autowired
+
     private PublicationVacancyContentPreparer publicationVacancyContentPreparer;
 
-    public PublicationPostRequestsForm() {
-        publicationVacancyContentPreparer = new PublicationVacancyContentPreparer();
+    @Autowired
+    public PublicationPostRequestsForm(PublicationVacancyContentPreparer publicationVacancyContentPreparer) {
+        this.publicationVacancyContentPreparer = publicationVacancyContentPreparer;
     }
 
     public LinkedMultiValueMap createBodyOfRequestInMap(Vacancy vacancy, String sessionId, String auth_key) {

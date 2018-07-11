@@ -2,14 +2,13 @@ package io.zensoft.share.service.diesel.login;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Data
+@Component
 public class LoginPostRequestsForm {
-    /**
-     * names of fields are same with required fields in POST Request
-     */
     private final String fauth_key = "880ea6a14ea49e853634fbdc5015a024";
     private final String freferer = "http://diesel.elcat.kg/";
 

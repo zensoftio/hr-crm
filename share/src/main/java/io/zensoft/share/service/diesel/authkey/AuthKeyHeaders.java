@@ -2,17 +2,21 @@ package io.zensoft.share.service.diesel.authkey;
 
 import io.zensoft.share.model.diesel.DefaultHeadersValues;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 
 @Data
-public class AuthKeyGetterHeaders {
+@Component
+public class AuthKeyHeaders {
 
     private HttpHeaders authKeyGetterHeaders;
     private DefaultHeadersValues defaultHeadersValues;
 
-    public AuthKeyGetterHeaders() {
+    @Autowired
+    public AuthKeyHeaders(DefaultHeadersValues defaultHeadersValues) {
         authKeyGetterHeaders = new HttpHeaders();
-
+        this.defaultHeadersValues = defaultHeadersValues;
         authKeyGetterHeaders.add("Upgrade-Insecure-Requests", defaultHeadersValues.getUPGRADE_INSECURE_REQUESTS());
         authKeyGetterHeaders.add("User-Agent", defaultHeadersValues.getUSER_AGENT());
         authKeyGetterHeaders.add("Referer", defaultHeadersValues.getREFERER_AUTHKEY());
