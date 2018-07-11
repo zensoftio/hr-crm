@@ -3,6 +3,7 @@ import TableList from "../../ui/Table";
 import { Link } from 'react-router-dom';
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
 import { CANDIDATES_URL } from "../../../utils/urls";
+import DateConvert from '../../../utils/DateConvert';
 
 const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'СТАТУС', 'ДАТА', 'ПРОФИЛЬ'];
 
@@ -34,13 +35,13 @@ class ListOfCandidates extends Component {
     );
 
     // TODO: Перенести этот метод в utils
-    dateConvert = (date) => {
-        return new Date(date).toLocaleString('ru', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
+    // dateConvert = (date) => {
+    //     return new Date(date).toLocaleString('ru', {
+    //         year: 'numeric',
+    //         month: 'long',
+    //         day: 'numeric'
+    //     });
+    // };
 
     getStatus = (status) => {
         return CANDIDATE_STATUS[status]
@@ -73,7 +74,7 @@ class ListOfCandidates extends Component {
                 item.full_name,
                 item.language,
                 this.getStatus(item.status),
-                this.dateConvert(item.created_at),
+                DateConvert(item.created_at),
                 this.makeLinked('Открыть', this.getLink(item.id))
             ]
         );
