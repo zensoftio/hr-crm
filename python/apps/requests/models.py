@@ -9,9 +9,9 @@ from apps.notifications.notifications import request_created
 User = get_user_model()
 
 REQUEST_STATUS = (
-    ('NOT_REVIEWED', "Не рассмотрено"),
-    ('APPROVED', "Утверждено"),
-    ('DECLINED', "Отклонено"),
+    ('NOT_REVIEWED', 'Не рассмотрено'),
+    ('APPROVED', 'Утверждено'),
+    ('DECLINED', 'Отклонено'),
 )
 
 
