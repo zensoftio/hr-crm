@@ -9,7 +9,8 @@ const FailureHandle = () => {
     return <h1>Something went wrong</h1>
 }
 
-export default class App extends Component { 
+
+export default class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,13 +20,13 @@ export default class App extends Component {
 
     signIn = (googleUser) => {
         const userData = googleUser.getBasicProfile();
-				
+
         let tempStorage =  window.sessionStorage;
             tempStorage.setItem("user", userData.ig)
             tempStorage.setItem("photo", userData.Paa)
         this.setState({
             session: userData
-        })	
+        })
     }
 
     render() {
@@ -33,7 +34,7 @@ export default class App extends Component {
             return <User userRole="interviewer" />
         }
         return(
-            <div>                
+            <div>
                 <GoogleAPI clientId="485499920078-nm7ajq0j1spkul2jlnv9j1g579fbiqjo.apps.googleusercontent.com"
                     onInitFailure={FailureHandle} >
                     <div>
@@ -44,7 +45,7 @@ export default class App extends Component {
                             />
                          </div>
                         <div>
-                            <GoogleLogout 
+                            <GoogleLogout
                             onLogoutSuccess={this.signIn}
                             />
                         </div>
