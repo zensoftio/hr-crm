@@ -9,7 +9,7 @@
         "phone": "1413423423413",
         "experience": 4.0,
         "level": "Middle",
-        "status": 2,
+        "status": "NOT_REVIEWED",
         "skype": "skype.com",
         "position": 2,
         "created": "2018-07-03T04:02:02Z"
@@ -25,7 +25,7 @@
         "phone": "1413423423413",
         "experience": 1.0,
         "level": "Junior",
-        "status": 3,
+        "status": "REVIEWED",
         "skype": "skype.com",
         "position": 3,
         "created": "2018-07-03T04:02:38Z"
@@ -41,7 +41,7 @@
         "phone": "8880122123",
         "experience": 4.0,
         "level": "Senior",
-        "status": 2,
+        "status": "SATISFYING",
         "skype": "skype.com",
         "position": 1,
         "created": "2018-07-03T04:03:03Z"

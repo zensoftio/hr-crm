@@ -32,6 +32,6 @@ class CandidateUpdateTestCase(APITestCase, UpdateTestMixin):
     def setUp(self):
         self.instance = Candidate.objects.get(pk=1)
         self.update_data = {
-            "first_name": "Almaz",
-            "last_name": "Karat"
+            'first_name': 'Almaz',
+            'last_name': 'Karat'
         }
