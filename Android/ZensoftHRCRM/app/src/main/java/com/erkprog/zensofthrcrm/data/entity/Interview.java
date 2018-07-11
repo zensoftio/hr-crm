@@ -2,7 +2,6 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 public class Interview {
@@ -14,10 +13,16 @@ public class Interview {
   private Integer status;
   @SerializedName("candidate")
   private Candidate candidate;
-  @SerializedName("request")
-  private Request request;
-  @SerializedName("interviewEvaluations")
-  private List<InterviewEvaluation> interviewEvaluationsList;
+  @SerializedName("interviewers")
+  private List<Interviewer> interviewersList;
+
+  public List<Interviewer> getInterviewersList() {
+    return interviewersList;
+  }
+
+  public void setInterviewersList(List<Interviewer> interviewersList) {
+    this.interviewersList = interviewersList;
+  }
 
   public Integer getId() {
     return id;
@@ -51,19 +56,4 @@ public class Interview {
     this.candidate = candidate;
   }
 
-  public Request getRequest() {
-    return request;
-  }
-
-  public void setRequest(Request request) {
-    this.request = request;
-  }
-
-  public List<InterviewEvaluation> getInterviewEvaluationsList() {
-    return interviewEvaluationsList;
-  }
-
-  public void setInterviewEvaluationsList(List<InterviewEvaluation> interviewEvaluationsList) {
-    this.interviewEvaluationsList = interviewEvaluationsList;
-  }
 }

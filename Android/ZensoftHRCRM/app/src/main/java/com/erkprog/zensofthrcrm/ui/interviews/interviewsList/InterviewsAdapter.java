@@ -4,7 +4,6 @@ package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,15 +37,20 @@ public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.In
   }
 
   @Override
-  public void onBindViewHolder(@NonNull InterviewViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull InterviewViewHolder holder, final int position) {
 
     final Interview interview = mInterviews.get(position);
-    Department department = interview.getRequest().getDepartment();
-    Candidate candidate = interview.getCandidate();
 
-    holder.department.setText(department.getName() != null ? department.getName() : "No Department");
-    holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "No First Name");
-    holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "No Last Name");
+    if (interview.getCandidate() != null) {
+      if (interview.getCandidate().getPosition().getDepartment() != null) {
+        Department department = interview.getCandidate().getPosition().getDepartment();
+        Candidate candidate = interview.getCandidate();
+        holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "No First Name");
+        holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "No Last Name");
+        holder.department.setText(department.getName() != null ? department.getName() : "No Department");
+      }
+    }
+
     holder.date.setText(interview.getDate() != null ? interview.getDate() : "No Date");
     holder.status.setText(interview.getStatus() != null ? interview.getStatus().toString() : "No Status");
 
@@ -54,7 +58,7 @@ public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.In
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        recyclerItemClickListener.onItemClick();
+        recyclerItemClickListener.onItemClick(position);
       }
     });
 

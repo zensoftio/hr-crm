@@ -1,5 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
+import android.content.Context;
+
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 
 public interface InterviewDetailContract {
@@ -16,7 +18,22 @@ public interface InterviewDetailContract {
 
   public interface Presenter {
 
-    void loadInterviewInfo();
+    void onDestroy();
 
+    void getDetailedInterview(Context context, Integer interviewId);
+
+  }
+
+  interface Repository {
+
+    interface OnFinishedListener {
+      void onFinished(Interview interview);
+
+      void onFailure(Throwable t);
+    }
+
+    void getInterviewDetails(InterviewDetailContract.Repository.OnFinishedListener
+                                 onFinishedListener,
+                             Context mContext);
   }
 }

@@ -27,4 +27,8 @@
   <string name="comment_not_found">comment not found</string>
   <string name="interviewers">interviewers</string>
   <string name="interviewers_not_found">interviewers not found</string>
+  <string name="criteria">Criteria</string>
+  <string name="rate">Rate</string>
+  <string name="interviewer">Interviewer</string>
+
 </resources>

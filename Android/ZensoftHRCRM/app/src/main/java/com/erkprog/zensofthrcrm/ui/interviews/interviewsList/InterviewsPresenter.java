@@ -1,7 +1,6 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 

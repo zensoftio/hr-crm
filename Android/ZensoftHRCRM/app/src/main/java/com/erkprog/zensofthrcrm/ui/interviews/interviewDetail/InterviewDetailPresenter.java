@@ -1,18 +1,42 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
-import com.erkprog.zensofthrcrm.data.entity.Candidate;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
-import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailContract;
+import com.erkprog.zensofthrcrm.data.entity.Interview;
 
-import retrofit2.Response;
 
-public class InterviewDetailPresenter implements InterviewDetailContract.Presenter {
+public class InterviewDetailPresenter implements InterviewDetailContract.Presenter,
+    InterviewDetailContract.Repository.OnFinishedListener {
+
+  private InterviewDetailContract.View mView;
+  private InterviewDetailContract.Repository mRepository;
+
+  public InterviewDetailPresenter(InterviewDetailContract.View view, InterviewDetailContract
+      .Repository
+      repository) {
+    this.mView = view;
+    this.mRepository = repository;
+  }
 
   @Override
-  public void loadInterviewInfo() {
+  public void getDetailedInterview(Context mContext, Integer interviewId) {
+    mRepository.getInterviewDetails(this, mContext);
+  }
 
+  @Override
+  public void onDestroy() {
+
+  }
+
+  @Override
+  public void onFinished(Interview interview) {
+    mView.showInterviewDetails(interview);
+  }
+
+  @Override
+  public void onFailure(Throwable t) {
+    // something on failure
+    Log.d("me", "onFailure: " + t.getMessage());
   }
 }

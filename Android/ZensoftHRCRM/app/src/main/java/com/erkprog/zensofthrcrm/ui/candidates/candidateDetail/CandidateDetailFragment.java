@@ -15,11 +15,12 @@ import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
-import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
+import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
+
 import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
@@ -71,7 +72,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
     mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
     mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
-    String department = candidate.getPosition().getDepartmentModel().getName();
+    String department = candidate.getPosition().getDepartment().getName();
     mDepartment.setText(department != null ? department : "");
     mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
     addExtraViews(candidate);
@@ -91,7 +92,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     addActionButtons();
   }
 
-  private void addInterviewViews(List<CandidateInterviewItem> interviewList) {
+  private void addInterviewViews(List<Interview> interviewList) {
     if (interviewList == null) {
       return;
     }
@@ -107,7 +108,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       mLayout.addView(descriptionText);
 
       // add interview views
-      for (final CandidateInterviewItem interviewItem : interviewList) {
+      for (final Interview interviewItem : interviewList) {
         View interviewView = ViewBuilder.createInterviewView(getActivity(), interviewItem);
 
         interviewView.setOnClickListener(new View.OnClickListener() {

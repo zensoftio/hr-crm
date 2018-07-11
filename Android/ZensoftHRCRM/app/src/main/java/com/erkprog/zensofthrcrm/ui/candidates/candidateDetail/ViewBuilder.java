@@ -6,9 +6,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
+import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.data.entity.Interviewer;
 import com.erkprog.zensofthrcrm.data.entity.User;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class ViewBuilder {
     return v;
   }
 
-  public static View createInterviewView(Context context, CandidateInterviewItem interview) {
+  public static View createInterviewView(Context context, Interview interview) {
     View v = LayoutInflater.from(context).inflate(R.layout.cd_interview_item, null, false);
     TextView status = v.findViewById(R.id.cd_interview_status);
     TextView date = v.findViewById(R.id.cd_interview_date);
@@ -63,13 +64,13 @@ public class ViewBuilder {
         .string.date_not_found);
     date.setText(intrDate);
 
-    List<User> interviewers = interview.getInterviewers();
+    List<Interviewer> interviewers = interview.getInterviewersList();
     if (interviewers != null) {
       StringBuilder names = new StringBuilder();
       names.append(context.getString(R.string.interviewers)).append("\n");
-      for (User interviewer : interviewers) {
+      for (Interviewer interviewer : interviewers) {
         names.append("-")
-            .append(getDisplayName(interviewer))
+            .append(getDisplayName(interviewer.getUser()))
             .append("\n");
       }
       interviewersText.setText(names);

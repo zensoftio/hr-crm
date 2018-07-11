@@ -4,137 +4,60 @@
   "previous": null,
   "results": [
     {
-      "id": 0,
-      "date": "12-12-12 12:00",
+      "id": 1,
+      "date": "2018-07-03T04:40:16Z",
+      "status": 0,
+      "candidate": {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Beaver",
+        "position": {
+          "id": 2,
+          "name": "Senior Django Developer",
+          "department": {
+            "id": 2,
+            "name": "Python"
+          }
+        }
+      },
+      "interviewers": [
+        {
+          "id": 1,
+          "user": {
+            "id": 1,
+            "email": "admin@zensoft.io",
+            "first_name": "",
+            "last_name": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2018-07-03T09:33:48Z",
       "status": 1,
       "candidate": {
-        "id": 1,
-        "first_name": "name",
-        "last_name": "last_name",
-        "department": {
-          "id": 1,
-          "name": "DevOps"
-        }
-      },
-      "request": {
-        "department": {
-          "id": 2,
-          "name": "Python"
-        },
         "id": 2,
-        "name": "JS developer",
-        "status": "1",
-        "created": "22-12-21",
-        "last_published": "12-22-12"
-      },
-      "reviewers": [
-        {
-          "id": 1,
-          "first_name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
+        "first_name": "Julieth",
+        "last_name": "Reaver",
+        "position": {
+          "id": 3,
+          "name": "Middle Java Developer",
           "department": {
-            "id": 1,
+            "id": 3,
             "name": "Java"
           }
-        },
-        {
-          "id": 2,
-          "name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
-          "department": "HR",
-          "comments": "His soft skills not good enough"
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "date": "12-12-12 12:00",
-      "status": 2,
-      "candidate": {
-        "id": 1,
-        "first_name": "name",
-        "last_name": "last_name",
-        "department": {
-          "id": 1,
-          "name": "DevOps"
         }
       },
-      "request": {
-        "department": {
-          "id": 2,
-          "name": "Python"
-        },
-        "id": 2,
-        "name": "JS developer",
-        "status": "1",
-        "created": "22-12-21",
-        "last_published": "12-22-12"
-      },
-      "reviewers": [
+      "interviewers": [
         {
-          "id": 1,
-          "first_name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
-          "department": {
+          "id": 2,
+          "user": {
             "id": 1,
-            "name": "Java"
+            "email": "admin@zensoft.io",
+            "first_name": "",
+            "last_name": ""
           }
-        },
-        {
-          "id": 2,
-          "name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
-          "department": "HR",
-          "comments": "His soft skills not good enough"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "date": "12-12-12 12:00",
-      "status": 2,
-      "candidate": {
-        "id": 1,
-        "first_name": "name",
-        "last_name": "last_name",
-        "department": {
-          "id": 1,
-          "name": "DevOps"
-        }
-      },
-      "request": {
-        "department": {
-          "id": 2,
-          "name": "Python"
-        },
-        "id": 2,
-        "name": "JS developer",
-        "status": "1",
-        "created": "22-12-21",
-        "last_published": "12-22-12"
-      },
-      "reviewers": [
-        {
-          "id": 1,
-          "first_name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
-          "department": {
-            "id": 1,
-            "name": "Java"
-          }
-        },
-        {
-          "id": 2,
-          "name": "name",
-          "last_name": "last_name",
-          "email": "test@email.com",
-          "department": "HR",
-          "comments": "His soft skills not good enough"
         }
       ]
     }

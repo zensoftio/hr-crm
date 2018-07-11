@@ -7,8 +7,6 @@ public class Requirement {
   private Integer id;
   @SerializedName("name")
   private String name;
-  @SerializedName("status")
-  private Integer status;
   @SerializedName("department")
   private Department department;
 
@@ -26,14 +24,6 @@ public class Requirement {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Integer getStatus() {
-    return status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
   }
 
   public Department getDepartment() {

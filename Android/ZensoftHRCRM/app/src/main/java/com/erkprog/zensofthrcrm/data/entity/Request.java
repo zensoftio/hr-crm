@@ -1,16 +1,12 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 public class Request {
   @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
-  private String name;
   @SerializedName("created")
   private String created;
   @SerializedName("modified")
@@ -34,14 +30,6 @@ public class Request {
 
   public void setId(Integer id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getCreated() {
