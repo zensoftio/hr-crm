@@ -2,8 +2,16 @@ from django.db import models
 from django.urls import reverse
 
 
+REQUIREMENTS_STATUS = (
+    ('REQUIRED', 'Обязательные'),
+    ('OPTIONAL', 'Опциональные'),
+    ('GENERAL', 'Общие'),
+)
+
+
 class Department(models.Model):
     name = models.CharField(max_length=200)
+    protected = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -15,7 +23,7 @@ class Department(models.Model):
 class Requirement(models.Model):
     name = models.CharField(max_length=200)
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name='requirements')
-    type = models.IntegerField()
+    type = models.CharField(choices=REQUIREMENTS_STATUS, max_length=100, default=0)
 
     def __str__(self):
         return self.name
