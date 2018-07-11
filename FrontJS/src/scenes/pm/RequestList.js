@@ -2,32 +2,47 @@ import React from 'react';
 import Header from '../general/Header';
 import { Link } from 'react-router-dom';
 import TableList from '../../components/ui/Table';
+import { FetchDataAPI } from '../../services/FetchDataAPI';
 
-const RequestList = () => {
-	const openLink = <Link to="/edit_request">Открыть</Link>;
+class RequestList extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			data: []
+		}
 
-	const data = [
-		[
-			'Python', '12.12.2012', 2, 'Утвержден', openLink
-		],
-		[
-			'JS', '10.02.2015', 1, 'Отклонен', openLink
-		],
-		[
-			'iOS', '02.11.2016', 1, 'Утвержден', openLink
-		]
-	],
-	header = [
-		'#', 'Название', 'Дата создания', 'Количество', 'Статус', 'Действие'
-	];	
+	}
 
-	return (
-		<div>
-			<Header title="Список Запросов" />
-			
-			<TableList header={header} data={data}/>
-		</div>
-	);
+	componentDidMount() {
+		 const openLink = <Link to="/edit_request">Открыть</Link>;
+		const fetched = FetchDataAPI(`http://159.65.153.5/api/v1/requests`);
+		fetched
+		.then(response => response.results.map(res => 	
+			[
+					res.position.name,
+					res.created,
+					res.count,
+					res.status,
+					openLink
+			]	
+		))
+		.then(data => this.setState({ data }))		
+	}
+
+	render() {
+
+		const header = [
+			'#', 'Название', 'Дата создания', 'Количество', 'Статус', 'Действие'
+		];	
+		
+		return (
+			<div>
+				<Header title="Список Запросов" />
+				
+				<TableList header={header} data={this.state.data}/>
+			</div>
+		);
+	}
 }
 
 export default RequestList;
