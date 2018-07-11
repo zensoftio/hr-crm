@@ -3,35 +3,40 @@
     "model": "departments.department",
     "pk": 1,
     "fields": {
-        "name": "Project Management"
+        "name": "Project Management",
+        "protected": false
     }
 },
 {
     "model": "departments.department",
     "pk": 2,
     "fields": {
-        "name": "Python"
+        "name": "Python",
+        "protected": false
     }
 },
 {
     "model": "departments.department",
     "pk": 3,
     "fields": {
-        "name": "Java"
+        "name": "Java",
+        "protected": false
     }
 },
 {
     "model": "departments.department",
     "pk": 4,
     "fields": {
-        "name": "Human Resources"
+        "name": "Human Resources",
+        "protected": false
     }
 },
 {
     "model": "departments.department",
     "pk": 5,
     "fields": {
-        "name": "JS"
+        "name": "JS",
+        "protected": false
     }
 },
 {
