@@ -11,6 +11,7 @@ REQUIREMENTS_STATUS = (
 
 class Department(models.Model):
     name = models.CharField(max_length=200)
+    protected = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
