@@ -3,6 +3,7 @@ import Header from '../general/Header';
 import { Link } from 'react-router-dom';
 import TableList from '../../components/ui/Table';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
+import DateConvert from '../../utils/DateConvert';
 
 class RequestList extends React.Component {
 	constructor(props){
@@ -20,7 +21,7 @@ class RequestList extends React.Component {
 		.then(response => response.results.map(res => 	
 			[
 					res.position.name,
-					res.created,
+					DateConvert(res.created),
 					res.count,
 					res.status,
 					openLink
