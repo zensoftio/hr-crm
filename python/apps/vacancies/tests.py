@@ -25,7 +25,7 @@ class VacancyCreateTestCase(CreateTestMixin, APITestCase):
         'city': 'Bishkek',
         'address': 'Admin str. 2',
         'work_conditions': ['Test set of conditions', 'FFFFF'],
-        'working_hours': 0,
+        'working_hours': "FULL_TIME",
         'salary_min': 200.0,
         'salary_max': 500.0,
         'responsibilities': 'qqweqweqweqweqweqweqwe',
