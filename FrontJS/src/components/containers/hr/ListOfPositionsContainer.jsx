@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import { Button, CircularProgress} from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import {FetchDataAPI} from "../../../services/FetchDataAPI";
+import { REQUESTS_URL } from '../../../utils/urls'
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
@@ -15,7 +16,7 @@ const button = [
 class ListOfPositions extends Component {
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             data: [],
         };
@@ -42,9 +43,7 @@ class ListOfPositions extends Component {
     };
 
     componentDidMount() {
-        const URL_REQUESTS = "http://159.65.153.5/api/v1/requests";
-
-        const fetched = FetchDataAPI(URL_REQUESTS);
+        const fetched = FetchDataAPI(REQUESTS_URL);
         fetched.then(response => response.results.map(item => (
             {
                 request_id: item.id,
