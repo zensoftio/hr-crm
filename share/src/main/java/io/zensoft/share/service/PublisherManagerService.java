@@ -4,7 +4,6 @@ import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.model.PublisherServiceType;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface PublisherManagerService {
 
     /**
