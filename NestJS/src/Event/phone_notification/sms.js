@@ -28,7 +28,6 @@ async function run(phone, data){
         if (err) {
           reject(false);
         } else {
-          console.log(responseData)
           resolve(true)
         }
       }

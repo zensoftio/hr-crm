@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Created by temirlan on 6/29/18.
  */
-@Service
 public interface VacancyResponseModelService extends ModelRepositoryService<VacancyResponse, Long> {
     List<VacancyResponse> getAllByVacancy(Vacancy vacancy);
 
