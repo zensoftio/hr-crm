@@ -19,6 +19,11 @@ class TemplateListCreateView(generics.ListCreateAPIView):
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
 
+class TemplateDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Template.objects.all()
+    serializer_class = TemplateDetailSerializer
+
+
 class AttachmentListCreateView(generics.ListCreateAPIView):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
