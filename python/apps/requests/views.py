@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from rest_condition import Or
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -29,7 +30,7 @@ class RequestListCreateView(generics.ListCreateAPIView):
 class RequestDetail(generics.RetrieveUpdateAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestDetailSerializer
-    permission_classes = (IsHeadOfDepartment, IsPM)
+    permission_classes = (Or(IsHeadOfDepartment, IsPM),)
 
     def partial_update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
