@@ -21,14 +21,14 @@ class RequestCreateTestCase(CreateTestMixin, APITestCase):
                 'interviews.json']
 
     request_body = {
-        "count": 3,
-        "position": 2,
-        "requirements": [
+        'count': 3,
+        'position': 2,
+        'requirements': [
             1,
             3
         ],
-        "status": 1,
-        "created_by": 1
+        'status': 1,
+        'created_by': 1
     }
 
 
@@ -53,6 +53,6 @@ class RequestUpdateTestCase(UpdateTestMixin, APITestCase):
     def setUp(self):
         self.instance = Request.objects.get(pk=1)
         self.update_data = {
-            "count": 2,
-            "status": 1
+            'count': 2,
+            'status': 1
         }

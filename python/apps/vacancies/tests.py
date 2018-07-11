@@ -18,20 +18,20 @@ class VacancyCreateTestCase(CreateTestMixin, APITestCase):
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'interviews.json']
 
     request_body = {
-        "uuid": "aada680d-c43b-413b-86db-b63da812832fwedw",
-        "title": "Django Developer Needed",
-        "request": 1,
-        "created_by": 1,
-        "city": "Bishkek",
-        "address": "Admin str. 2",
-        "work_conditions": ["Test set of conditions", "FFFFF"],
-        "working_hours": 0,
-        "salary_min": 200.0,
-        "salary_max": 500.0,
-        "responsibilities": "qqweqweqweqweqweqweqwe",
-        "comments": "Comment 3",
-        "created": "2018-07-09T08:05:58.278Z",
-        "last_published": "2018-07-09T08:05:58.278Z"
+        'uuid': 'aada680d-c43b-413b-86db-b63da812832fwedw',
+        'title': 'Django Developer Needed',
+        'request': 1,
+        'created_by': 1,
+        'city': 'Bishkek',
+        'address': 'Admin str. 2',
+        'work_conditions': ['Test set of conditions', 'FFFFF'],
+        'working_hours': 0,
+        'salary_min': 200.0,
+        'salary_max': 500.0,
+        'responsibilities': 'qqweqweqweqweqweqweqwe',
+        'comments': 'Comment 3',
+        'created': '2018-07-09T08:05:58.278Z',
+        'last_published': '2018-07-09T08:05:58.278Z'
     }
 
 

@@ -41,14 +41,12 @@ class CreateTestMixin(object):
     def test_creation(self):
         old_count = self.model.objects.count()
         url = '/api/v1/' + str(self.model._meta.verbose_name_plural)
-        response = self.client.post(url, self.request_body, format="json")
+        response = self.client.post(url, self.request_body, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(old_count + 1, self.model.objects.count())
 
         self.request_body = {
-            "none_exist_field_1": "some_data_1",
-            "none_exist_field_2": "some_data_2",
-            "none_exist_field_3": "some_data_3",
+            'none_exist_field_1': 'some_data_1'
         }
 
         response = self.client.post(url, self.request_body, format='json')
@@ -92,8 +90,8 @@ class UpdateTestMixin(object):
             and get Model Instance e.g. Candidate.object.get(pk=1)
             and set data for fields of instance e.g
                                                     self.update_data = {
-                                                        "field_1": "data",
-                                                        "field_2": "data"
+                                                        'field_1': 'data',
+                                                        'field_2': 'data'
                                                         etc.
                                                     }
     """
@@ -107,10 +105,10 @@ class UpdateTestMixin(object):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         self.update_data = {
-            "some_field_1": "some_name",
-            "some_field_2": "some_second_name",
-            "phone": "some_number",
-            "position": 10
+            'some_field_1': 'some_name',
+            'some_field_2': 'some_second_name',
+            'phone': 'some_number',
+            'position': 10
         }
 
         response = self.client.patch(self.instance.get_absolute_url(), self.update_data, format='json')

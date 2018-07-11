@@ -15,8 +15,8 @@ class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
                 'interviews.json']
 
     request_body = {
-        "name": "OOP",
-        "department": 1
+        'name': 'OOP',
+        'department': 1
     }
 
 
@@ -36,10 +36,10 @@ class InterviewCreateTestCase(CreateTestMixin, APITestCase):
                 'interviews.json']
 
     request_body = {
-        "date": timezone.now(),
-        "status": 1,
-        "interviewers": [1, 2],
-        "candidate": 1
+        'date': timezone.now(),
+        'status': 1,
+        'interviewers': [1, 2],
+        'candidate': 1
         }
 
 
