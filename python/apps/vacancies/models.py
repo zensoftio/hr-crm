@@ -9,9 +9,9 @@ from apps.requests.models import Request
 
 User = get_user_model()
 
-WORKING_HOURS = ((0, 'Полный рабочий день'),
-                 (1, 'Гибкий график'),
-                 (2, 'Удаленная работа'),
+WORKING_HOURS = (("FULL_TIME", 'Полный рабочий день'),
+                 ("PART_TIME", 'Гибкий график'),
+                 ("REMOTE_JOB", 'Удаленная работа'),
                  )
 
 
@@ -23,7 +23,8 @@ class Vacancy(models.Model):
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=50)
     work_conditions = ArrayField(base_field=models.CharField(max_length=200, blank=True))
-    working_hours = models.IntegerField(choices=WORKING_HOURS, default=0)
+    working_hours = models.CharField(choices=WORKING_HOURS, max_length=10, default="FULL_TIME")
+
     salary_min = models.FloatField()
     salary_max = models.FloatField()
     image = models.ImageField(upload_to='media', null=True)
@@ -44,9 +45,12 @@ class Publication(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
-    facebook = models.BooleanField()
-    diesel = models.BooleanField()
-    jobkg = models.BooleanField()
+    facebook = models.BooleanField(default=False)
+    facebook_url = models.URLField(null=True)
+    diesel_exist = models.BooleanField(default=False)
+    diesel_url = models.URLField(default=True)
+    jobkg_exist = models.BooleanField(default=False)
+    jobkg_url = models.URLField(null=True)
 
     class Meta:
         default_related_name = 'publications'
