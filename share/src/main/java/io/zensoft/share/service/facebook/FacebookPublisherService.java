@@ -12,7 +12,7 @@ import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
