@@ -25,7 +25,6 @@ class InterviewListCreateView(generics.ListCreateAPIView):
 class InterviewDetailView(generics.RetrieveUpdateAPIView):
     queryset = Interview.objects.all()
     serializer_class = InterviewDetailSerializer
-    permission_classes = (IsInterviewer, )
 
     def partial_update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
