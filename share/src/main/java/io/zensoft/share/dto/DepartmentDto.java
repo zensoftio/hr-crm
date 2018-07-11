@@ -6,16 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Created by temirlan on 7/5/18.
+ * Created by temirlan on 7/11/18.
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RequirementDto {
-    private long id;
-    private DepartmentDto department;
+public class DepartmentDto {
+    private int id;
     private String name;
-    private String type;
 }

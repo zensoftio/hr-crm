@@ -1,16 +1,20 @@
 import React from 'react';
 
 const SelectList = (props) => {
-	let vals = props.vals;
+	const {optionValue, onChange} = props;
 	let instyle = {
 		display: 'inline-block'
 	}
-	console.log(props);
 	
 	return (
 			<div style={instyle}>
-				<select defaultValue={vals[0]}>
-					{vals.map((val, i) => <option key={i} value={val}>{val}</option>)}	
+				<select defaultValue="выбрать" 
+					onChange={onChange}>
+					<option disabled>выбрать</option>
+					{optionValue.map((val) =>
+						 <option key={val.id} value={val.id}>
+						 		{val.name}
+						 </option>)}	
 				</select>
 			</div>
 	)
