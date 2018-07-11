@@ -11,26 +11,22 @@ export class InboxService {
     private readonly inboxRepository: Repository<Inboxes>
     ){}
 
-  async update(date: Inboxes): Promise<Inboxes> {
+  async updateDate(date: Inboxes): Promise<Inboxes> {
     try {
-      const toDate = {
-        last_update: date
-      }
       const toUpdate = await this.inboxRepository.findOne();
-      await this.inboxRepository.update(toUpdate.id,toDate);
+      await this.inboxRepository.update(toUpdate.id, {last_update: date} );
       return toUpdate;
     }catch (e){
-      console.log(e)
+      throw e;
     }
-
   }
 
-  async getMessages(message){
-    const date = await this.update(message.date);
-    return date;
+  async getMessages(message: any):any{
+    const date = await this.updateDate(message.date);
+    return await gmail.getAllMessages(message.date);
   }
 
-  async getOneMessage(message){
+  async getOneMessage(message: any):any{
     return message;
   }
 

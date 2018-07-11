@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { InboxService } from './inbox.service';
+import { Inbox } from './inbox.interface';
 
 const connection = new Amqp.Connection("amqp://localhost");
 const exchange = connection.declareExchange("exchangeForTemplate", 'direct', { durable: false });
@@ -12,7 +13,7 @@ export class InboxListener {
       this.listenQueue();
     }
 
-    public distributionTasks(task){
+    public distributionTasks(task: any):void{
       const obj = {
         UPDATE: this.updateInboxList,
         GET_ONE: this.getOneMessage,
@@ -20,23 +21,31 @@ export class InboxListener {
       if (obj[task.title]) {
         obj[task.title](task);
       } else {
-        this.sendMessage("SOMETHING IS WRONG");
+        this.sendMessage("TASK NOT FOUND");
       }
     }
 
-    async updateInboxList = (message) => {
-      this.inboxService.getMessages(message)
-      .then( (messages)  => { this.sendMessage(messages) })
-      .catch( (err) => { this.sendMessage("SOMETHING IS WRONG") })
+     updateInboxList = async(message: any):any => {
+       try {
+         const result = await this.inboxService.getMessages(message)
+         this.sendMessage(result)
+       }catch(err) {
+         this.sendMessage("CAN'T GET ONE MESSAGE")
+         throw err;
+       }
     }
 
-    async getOneMessage = (message) => {
-      this.inboxService.getOneMessage(message)
-      .then( (message)  => { this.sendMessage(message) })
-      .catch( (err) => { this.sendMessage("SOMETHING IS WRONG") })
+     getOneMessage = async(message: any):any => {
+       try {
+         const result = await this.inboxService.getOneMessage(message)
+         this.sendMessage(result)
+       }catch(err) {
+         this.sendMessage("CAN'T GET ONE MESSAGE")
+         throw err;
+       }
     }
 
-    private async sendMessage(msg){
+    private async sendMessage(msg: any):any {
       var sendQueue = connection.declareQueue("inboxMessages2")
       connection.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
@@ -44,7 +53,7 @@ export class InboxListener {
       });
     }
 
-    private async listenQueue(){
+    private async listenQueue():void {
       queue.bind(exchange, 'inboxMessages');
       queue.activateConsumer((message) => {
         var msg = message.getContent()

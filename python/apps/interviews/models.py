@@ -1,27 +1,31 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
+from django.urls import reverse
 
 from apps.candidates.models import Candidate
 from apps.departments.models import Department
-from apps.utils.notifications import interview_created
+from apps.notifications.notifications import interview_created
 
 User = get_user_model()
 
 INTERVIEW_STATUS = (
-    (0, 'Предстоит'),
-    (1, 'Прошло'),
-    (2, 'Отменено'),
+    ('TO_BE_CONDUCTED', 'Предстоит'),
+    ('CONDUCTED', 'Прошло'),
+    ('CANCELLED', 'Отменено'),
 )
 
 
 class Interview(models.Model):
     date = models.DateTimeField()
-    status = models.IntegerField(default=1, choices=INTERVIEW_STATUS)
+    status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default=0)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
 
     def __str__(self):
         return '{name} {date}'.format(date=self.date, name=self.candidate.first_name)
+
+    def get_absolute_url(self):
+        return reverse('v1:interview-detail', kwargs={'pk': self.id})
 
 
 post_save.connect(sender=Interview, receiver=interview_created)
