@@ -21,7 +21,8 @@ public class Requirement {
     @GeneratedValue
     private Long id;
     private String name;
-    private Integer type;
+    @Enumerated(EnumType.STRING)
+    private RequirementType type;
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
     private Vacancy vacancy;
