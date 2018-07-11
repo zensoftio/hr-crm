@@ -26,34 +26,54 @@ export class TemplateListener {
       }
     }
 
-    async findAllTemplate = (template) => {
-      this.templateService.findAll()
-      .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("NOT FOUND") })
+    async findAllTemplate = async(template) => {
+      try {
+        const result = await this.templateService.findAll();
+        this.sendMessage(result);
+      }catch(err) {
+        this.sendMessage("NOT FOUND");
+        throw err;
+      }
     }
 
-    async findOneTemplate = (template) => {
-      this.templateService.findOne(template.id)
-      .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("NOT FOUND") })
+     findOneTemplate = async(template) => {
+      try {
+        const result = await this.templateService.findOne(template.id);
+        this.sendMessage(result);
+      }catch(err) {
+        this.sendMessage("NOT FOUND");
+        throw err;
+      }
     }
 
-    async deleteTemplate = (template) => {
-      this.templateService.deleteOne(template.id)
-      .then( (temp) => { this.sendMessage("DELETED") })
-      .catch( (err) => { this.sendMessage("NOT DELETED") })
+     deleteTemplate = async(template) => {
+      try {
+        const result = await this.templateService.deleteOne(template.id);
+        this.sendMessage(result);
+      }catch(err) {
+        this.sendMessage("NOT DELETED");
+        throw err;
+      }
     }
 
-    async updateTemplate = (template) => {
-      this.templateService.update(template.id,template)
-      .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("NOT UPDATED") })
+     updateTemplate = async(template) => {
+      try {
+        const result = await this.templateService.update(template.id,template);
+        this.sendMessage(result);
+      }catch(err) {
+        this.sendMessage("NOT UPDATED");
+        throw err;
+      }
     }
 
-    async createTemplate = (template) => {
-      this.templateService.create(template)
-      .then( (temp) => { this.sendMessage(temp) })
-      .catch( (err) => { this.sendMessage("NOT CREATED") })
+     createTemplate = async(template) => {
+      try {
+        const result = await this.templateService.update(template);
+        this.sendMessage(result);
+      }catch(err) {
+        this.sendMessage("NOT CREATED");
+        throw err;
+      }
     }
 
     private async sendMessage(msg){

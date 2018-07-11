@@ -65,6 +65,8 @@ public class DefaultVacancyConverterService implements DtoConverterService<Vacan
         vacancy.setResponsibilities(vacancyDto.getResponsibilities());
         vacancy.setComment(vacancyDto.getComment());
         vacancy.setWorkingHours(WorkingHours.getByString(vacancyDto.getWorkingHours()));
+        vacancy.setFacebookUserAccessToken(vacancyDto.getFacebookUserAccessToken());
+
         List<Requirement> requirements = new ArrayList<>();
         vacancyDto.getRequirements().forEach(requirementDto -> {
             Requirement requirement = requirementConverterService.fromDto(requirementDto);

@@ -34,4 +34,5 @@ public class Vacancy {
     private String image;
     private String responsibilities;
     private String comment;
+    private String facebookUserAccessToken;
 }
