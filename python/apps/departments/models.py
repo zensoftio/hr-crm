@@ -3,9 +3,9 @@ from django.urls import reverse
 
 
 REQUIREMENTS_STATUS = (
-    ("REQUIRED", "ОБЯЗАТЕЛЬНЫЕ"),
-    ("OPTIONAL", "ОПЦИОНАЛЬНЫЕ"),
-    ("GENERAL", "ОБЩИЕ"),
+    ('REQUIRED', 'Обязательные'),
+    ('OPTIONAL', 'Опциональные'),
+    ('GENERAL', 'Общие'),
 )
 
 

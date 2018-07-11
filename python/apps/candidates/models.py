@@ -10,17 +10,17 @@ from apps.notifications.notifications import candidate_created
 User = get_user_model()
 
 CANDIDATE_STATUS = (
-    ("NOT_REVIEWED", 'На рассмотрений'),
-    ("REVIEWED", 'Рассмотрено'),
-    ("SATISFYING", 'Подходит'),
-    ("NOT SATISFYING", 'Не подходит'),
-    ("TEST SENT", 'Отправлен на тест'),
-    ("INVITED_TO_INTERVIEW", 'Приглашен на интервью'),
-    ("INTERVIEWS_CONDUCTED", 'Интервью проведено'),
-    ("CURRENT_EMPLOYEE", 'Штат'),
-    ("IN_RESERVE", 'Резерв'),
-    ("INTERN", 'Стажер'),
-    ("FAILED_INTERVIEW", 'Не прошел интервью'),
+    ('NOT_REVIEWED', 'На рассмотрений'),
+    ('REVIEWED', 'Рассмотрено'),
+    ('SATISFYING', 'Подходит'),
+    ('NOT SATISFYING', 'Не подходит'),
+    ('TEST SENT', 'Отправлен на тест'),
+    ('INVITED_TO_INTERVIEW', 'Приглашен на интервью'),
+    ('INTERVIEWS_CONDUCTED', 'Интервью проведено'),
+    ('CURRENT_EMPLOYEE', 'Штат'),
+    ('IN_RESERVE', 'Резерв'),
+    ('INTERN', 'Стажер'),
+    ('FAILED_INTERVIEW', 'Не прошел интервью'),
 )
 
 
