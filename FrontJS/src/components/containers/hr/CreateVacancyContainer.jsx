@@ -45,7 +45,7 @@ import { PostDataAPI } from '../../../services/PostDataAPI';
 });
 
 class CreateVacancyContainer extends Component { 
-
+    
     constructor(props){
       super(props)
       this.state = {
@@ -83,7 +83,7 @@ class CreateVacancyContainer extends Component {
 
     handleSubmit = (event) => {
       event.preventDefault();
-      const URL = 'http://159.65.153.5/api/v1/vacancies/';
+      const URL = 'http://159.65.153.5/api/v1/vacancies';
 
       const data = this.state;
       PostDataAPI(URL, data);
@@ -108,6 +108,7 @@ class CreateVacancyContainer extends Component {
     }
 
     render() {
+      console.log(this.props.data)
       const { classes } = this.props;
       const { title,  
               city, 
@@ -118,8 +119,9 @@ class CreateVacancyContainer extends Component {
               comments,
               salary_min,
               salary_max } = this.state;
- 
+      
       return (
+
         <form onSubmit={this.handleSubmit} style={{ margin: " 0 1em"}}>
           <div className={classes.root}>
             Название вакансии: 

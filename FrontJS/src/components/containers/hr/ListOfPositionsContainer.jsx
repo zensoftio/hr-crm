@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import { Button, CircularProgress} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import CreateVacancy from '../../../scenes/hr/CreateVacancy';
+import { Link, Route } from 'react-router-dom';
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
-
-const button = [
-    <Button variant="fab" mini color="primary" aria-label="add">
-        <AddIcon />
-    </Button>
-];
 
 class ListOfPositions extends Component {
     
@@ -30,24 +27,26 @@ class ListOfPositions extends Component {
     }
 
     initStatus = (status) => {
-        if(status === 1){
+        if(status === "NOT_REVIEWED"){
             return "Не рассмотрено"
-        } else if(status === 2){
+        } else if(status === "APPROVED"){
             return "Утверждено"
-        } else if(status === 3){
+        } else if(status === "DECLINED"){
             return  "Отклонено"            
         } else {
             return null
         }
     }
 
+    addPath = (value) => {
+        <Route path="dgdfgfd" />
+    }
+
     componentDidMount() {
-        const URL_REQUESTS = "http://159.65.153.5/api/v1/requests/";
+        const URL_REQUESTS = "http://159.65.153.5/api/v1/requests";
    
-        fetch(URL_REQUESTS, {
-            method: "GET"
-        }).then(res => res.json())
-        .then(json => json.results.map(item => (
+        const fetched = FetchDataAPI(URL_REQUESTS);
+        fetched.then(res => res.results.map(item => (
           {
             requests_id: item.id,
             title: item.position.name,
@@ -62,10 +61,6 @@ class ListOfPositions extends Component {
         })
    
     }
-    
-    addPreloader = () => {
-        return  <CircularProgress />
-    }
 
     render() {
 
@@ -77,9 +72,13 @@ class ListOfPositions extends Component {
                 this.dateConvert(item.created), 
                 item.quantity,
                 this.initStatus(item.status),
-                button]
+                // <Route component={<CreateVacancy data={item.requests_id} />}>
+                    <Link to={`create_vacancy/${item.requests_id}`}>Создать</Link>
+                // </Route>
+            ]
         })
         
+
         return ( 
             <TableList header={header} data={array}/> 
         )
