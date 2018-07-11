@@ -4,8 +4,8 @@ import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { REQUESTS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
-import { Route, Link } from 'react-router-dom';
-import CreateVacancy from '../../containers/hr/CreateVacancyContainer';
+// import { Route, Link } from 'react-router-dom';
+// import CreateVacancy from '../../containers/hr/CreateVacancyContainer';
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
@@ -38,10 +38,6 @@ class ListOfPositions extends Component {
         }
     };
 
-    addPath = (value) => {
-        <Route path="dgdfgfd" />
-    }
-
     componentDidMount() {
         const fetched = FetchDataAPI(REQUESTS_URL);
         fetched.then(response => response.results.map(item => (
@@ -67,17 +63,17 @@ class ListOfPositions extends Component {
                 this.dateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
-                <Link to="jen">Создать</Link>
-                // <Route path="create_vacancy/:id" render={(props) => <CreateVacancy {...props} />}>
-                //     <Link to={`create_vacancy/${item.requests_id}`}>Создать</Link>
-                // </Route>
+                // <Button variant="fab" color="primary" mini aria-label="add" type="button" onClick={() => handleSubmit(item.request_id)}>
+                //     <AddIcon />
+                // </Button>
+                <button type="button" onClick={handleSubmit(item.request_id)}>Create</button>
             ]
         })
         
 
         return ( 
             <div>
-                <Route path="list_of_positions/:id" component={User}/>
+ 
                 <TableList header={header} data={array}/>
             </div>
              
@@ -85,8 +81,11 @@ class ListOfPositions extends Component {
     }
 }
 
-const User = ({ match }) => {
-    return <h1>ID: {match.params.id}</h1>
+const handleSubmit = (id) => {
+    // return(
+    //     <div>Request id is: { id }</div>
+    // )
+    console.log(id)
 }
 
 export default ListOfPositions;
