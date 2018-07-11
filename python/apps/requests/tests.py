@@ -27,7 +27,7 @@ class RequestCreateTestCase(CreateTestMixin, APITestCase):
             1,
             3
         ],
-        'status': 1,
+        'status': "NOT_REVIEWED",
         'created_by': 1
     }
 
@@ -54,5 +54,5 @@ class RequestUpdateTestCase(UpdateTestMixin, APITestCase):
         self.instance = Request.objects.get(pk=1)
         self.update_data = {
             'count': 2,
-            'status': 1
+            'status': "APPROVED"
         }
