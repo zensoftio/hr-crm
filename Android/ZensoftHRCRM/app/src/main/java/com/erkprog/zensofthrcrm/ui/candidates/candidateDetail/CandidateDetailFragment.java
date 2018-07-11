@@ -48,7 +48,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   private void initPresenter() {
-    mPresenter = new CandidateDetailPresenter(this, CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter = new CandidateDetailPresenter(CRMApplication.getInstance(requireContext()).getServiceTest());
     mPresenter.bind(this);
   }
 
@@ -86,12 +86,15 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-    mFirstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
-    mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
-    mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
-    mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
-    String department = candidate.getPosition().getDepartment().getName();
-    mDepartment.setText(department != null ? department : "");
+    mFirstName.setText(candidate.getFirstName());
+    mLastName.setText(candidate.getLastName());
+    mEmail.setText(candidate.getEmail());
+    mPhoneNumber.setText(candidate.getPhone());
+
+    if (candidate.getPosition() != null && candidate.getPosition().getDepartment() != null){
+      mDepartment.setText(candidate.getPosition().getDepartment().getName());
+    }
+
     mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
     addExtraViews(candidate);
   }
@@ -159,14 +162,6 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add comment views
       for (final Comment commentItem : commentList) {
         View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
-
-        commentView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            mPresenter.onCommentItemClicked(commentItem);
-          }
-        });
-
         mLayout.addView(commentView);
       }
     }
