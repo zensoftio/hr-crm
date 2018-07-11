@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.requests.models import Request
 from apps.requests.serializer import RequestListSerializer, RequestDetailSerializer, \
     RequestCreateOrUpdateSerializer
+from apps.users.permissions import IsHeadOfDepartment, IsPM
 
 User = get_user_model()
 
@@ -13,6 +14,7 @@ class RequestListCreateView(generics.ListCreateAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestListSerializer
     filter_fields = ('position__department', 'status')
+    permission_classes = (IsHeadOfDepartment,)
 
     def create(self, request, *args, **kwargs):
         write_serializer = RequestCreateOrUpdateSerializer(data=request.data)
@@ -27,6 +29,7 @@ class RequestListCreateView(generics.ListCreateAPIView):
 class RequestDetail(generics.RetrieveUpdateAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestDetailSerializer
+    permission_classes = (IsHeadOfDepartment, IsPM)
 
     def partial_update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)

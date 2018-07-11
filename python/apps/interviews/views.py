@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from apps.interviews.models import Interview, Criteria
 from apps.interviews.serializers import InterviewListSerializer, CriteriaSerializer, InterviewDetailSerializer, \
     InterviewCreateSerializer
+from apps.users.permissions import IsInterviewer
 
 
 class InterviewListCreateView(generics.ListCreateAPIView):
@@ -24,6 +25,7 @@ class InterviewListCreateView(generics.ListCreateAPIView):
 class InterviewDetailView(generics.RetrieveUpdateAPIView):
     queryset = Interview.objects.all()
     serializer_class = InterviewDetailSerializer
+    permission_classes = (IsInterviewer, )
 
     def partial_update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
