@@ -31,7 +31,7 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   }
 
   private void initPresenter() {
-    mPresenter = new RequestsPresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new RequestsPresenter(CRMApplication.getInstance(requireContext())
         .getServiceTest());
     mPresenter.bind(this);
   }

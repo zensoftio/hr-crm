@@ -34,7 +34,7 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   private void initPresenter() {
-    mPresenter = new VacanciesPresenter(this, CRMApplication.getInstance(requireContext())
+    mPresenter = new VacanciesPresenter(CRMApplication.getInstance(requireContext())
         .getServiceTest());
     mPresenter.bind(this);
   }
@@ -73,11 +73,6 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   @Override
-  public void showVacancyDetail(int vacancyId) {
-
-  }
-
-  @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
@@ -94,7 +89,6 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   public static VacanciesFragment newInstance() {
-    VacanciesFragment fragment = new VacanciesFragment();
-    return fragment;
+    return new VacanciesFragment();
   }
 }

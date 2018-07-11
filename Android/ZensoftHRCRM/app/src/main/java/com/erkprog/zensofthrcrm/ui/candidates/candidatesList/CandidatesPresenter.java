@@ -13,8 +13,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
   private CandidatesContract.View mView;
   private RestServiceTest mApiService;
 
-  public CandidatesPresenter(CandidatesContract.View view, RestServiceTest service) {
-    mView = view;
+  CandidatesPresenter(RestServiceTest service) {
     mApiService = service;
   }
 
@@ -23,16 +22,20 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
     mApiService.getCandidates().enqueue(new Callback<CandidatesResponse>() {
       @Override
       public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
-        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
-          mView.showCandidates(response.body().getCandidateList());
-        } else {
-          mView.showMessage("Candidates list in response is null");
+        if (isViewAttached()) {
+          if (response.isSuccessful() && response.body() != null) {
+            mView.showCandidates(response.body().getCandidateList());
+          } else {
+            mView.showMessage("Candidates list in response is null");
+          }
         }
       }
 
       @Override
       public void onFailure(Call<CandidatesResponse> call, Throwable t) {
-        mView.showMessage(t.getMessage());
+        if (isViewAttached()) {
+          mView.showMessage(t.getMessage());
+        }
       }
     });
   }

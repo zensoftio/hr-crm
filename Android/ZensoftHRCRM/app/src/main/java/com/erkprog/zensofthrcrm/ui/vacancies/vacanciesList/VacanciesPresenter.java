@@ -10,13 +10,10 @@ import retrofit2.Response;
 
 public class VacanciesPresenter implements VacanciesContract.Presenter {
 
-  private static final String TAG = "VACANCIES PRESENTER";
-
   private VacanciesContract.View mView;
   private RestServiceTest mApiService;
 
-  VacanciesPresenter(VacanciesContract.View view, RestServiceTest service) {
-    mView = view;
+  VacanciesPresenter(RestServiceTest service) {
     mApiService = service;
   }
 
@@ -25,23 +22,27 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
     mApiService.getVacancies().enqueue(new Callback<VacanciesResponse>() {
       @Override
       public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
-        if (isViewAttached() && response.isSuccessful() && response.body() != null) {
-          mView.showVacancies(response.body().getVacancyList());
-        } else {
-          mView.showMessage("Vacancies list in response is null");
+        if (isViewAttached()) {
+          if (response.isSuccessful() && response.body() != null) {
+            mView.showVacancies(response.body().getVacancyList());
+          } else {
+            mView.showMessage("Vacancies list in response is null");
+          }
         }
       }
 
       @Override
       public void onFailure(Call<VacanciesResponse> call, Throwable t) {
-        mView.showMessage(t.getMessage());
+        if (isViewAttached()) {
+          mView.showMessage(t.getMessage());
+        }
       }
     });
   }
 
   @Override
   public void onVacancyItemClick(Vacancy vacancy) {
-
+    // TODO: implement mView.startEditVacancy() here
   }
 
   private boolean isViewAttached() {
