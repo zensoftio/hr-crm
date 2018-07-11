@@ -4,6 +4,21 @@ import pika
 from rest_framework.renderers import JSONRenderer
 
 
+class CountCallback(object):
+    def __init__(self, count):
+        self.count = count
+        self.body = None
+
+    def __call__(self, ch, method, properties, body):
+        self.body = body
+        self.count -= 1
+
+        if not self.count:
+            ch.stop_consuming()
+
+        return self.body
+
+
 class RabbitMQ:
     """ Class for instantiating sending and receiving events """
 
@@ -17,6 +32,7 @@ class RabbitMQ:
         self.connection = pika.BlockingConnection(self.parameters)
         self.channel = self.connection.channel()
         self.queue = ''
+        self.response = None
 
     @staticmethod
     def message_to_server(query_set, serializer):
@@ -32,37 +48,37 @@ class RabbitMQ:
     def message_to_client(body):
         return body['status']
 
-    @staticmethod
-    def callback(ch, method, properties, body):
-        print(" [x] %r:%r" % (method.routing_key, body))
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+    def call(self, queryset=None, serializer=None, exchange_name='', exchange_type='',
+             queue_to_send='', routing_key_to_send='',
+             queue_to_receive='', routing_key_to_receive='',
+             message=''):
 
-    def call(self, queryset, serializer, exchange_name='', exchange_type='topic', queue='', routing_key=''):
-        self.queue = queue
-        self.routing_key = routing_key
-        self.channel.queue_declare(queue=self.queue, durable=True)
-        self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
-        message = self.message_to_server(queryset, serializer)
-        cor_id = json.loads(message)
+        self.queue_to_send = queue_to_send
+        self.routing_key_to_send = routing_key_to_send
+
+        if queryset and serializer:
+            message = self.message_to_server(queryset, serializer)
+            cor_id = json.loads(message)
+            uuid = cor_id['uuid']
+        else:
+            message = message
+            uuid = ''
+
+        self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=False)
+        self.channel.queue_declare(queue=self.queue, durable=False)
+
         self.channel.basic_publish(exchange=exchange_name,
-                                   routing_key=self.routing_key,
-                                   properties=pika.BasicProperties(
-                                       delivery_mode=2,  # make message persistent
-                                       correlation_id=cor_id['uuid'],
-                                   ),
+                                   routing_key=routing_key_to_send,
                                    body=message)
-        self.connection.close()
+        print(" [x] Sent %r" % message)
 
-    def consume(self, exchange_name='', exchange_type='topic', routing_key='', queue=''):
-        self.channel.queue_declare(queue=queue, durable=True)
-        self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
-        self.routing_key = routing_key
-        self.channel.queue_bind(exchange=exchange_name,
-                                queue=queue,
-                                routing_key=routing_key)
-        print(' [*] Waiting for Messages. To exit press CTRL+C')
+        self.channel.queue_declare(queue=queue_to_receive, durable=False)
+        callback = CountCallback(1)
+        self.channel.basic_consume(callback, no_ack=True,
+                                   queue=queue_to_receive)
 
-        self.channel.basic_consume(self.callback,
-                                   queue=queue,
-                                   )
         self.channel.start_consuming()
+        self.response = callback.body
+        print(" [.] Got %r" % self.response)
+
+        return self.response
