@@ -48,7 +48,7 @@ class Publication(models.Model):
     facebook = models.BooleanField(default=False)
     facebook_url = models.URLField(null=True)
     diesel_exist = models.BooleanField(default=False)
-    diesel_url = models.URLField(default=True)
+    diesel_url = models.URLField(null=True)
     jobkg_exist = models.BooleanField(default=False)
     jobkg_url = models.URLField(null=True)
 

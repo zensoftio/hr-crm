@@ -10,7 +10,7 @@
         "city": "Bishkek",
         "address": "Admin str. 123",
         "work_conditions": "[\"Test set of conditions\"]",
-        "working_hours": 0,
+        "working_hours": "FULL_TIME",
         "salary_min": 200.0,
         "salary_max": 500.0,
         "image": "",
@@ -31,7 +31,7 @@
         "city": "Bishkek",
         "address": "Admin str. 123",
         "work_conditions": "[\"Sjdfkgdfklgjkldfgjkl\"]",
-        "working_hours": 0,
+        "working_hours": "FULL_TIME",
         "salary_min": 200.0,
         "salary_max": 2020.0,
         "responsibilities": "ergklgjerklgjerklerjgklerjklerjlrgor",
@@ -47,9 +47,12 @@
 			"vacancy": 1,
 			"created_by": 1,
             "created": "2018-07-09T08:08:01.196Z",
-			"facebook": true,
-			"diesel": false,
-			"jobkg": true
+			"facebook": false,
+            "facebook_url": "http://some_url",
+            "diesel_exist": false,
+            "diesel_url": "http://some_url",
+			"jobkg_exist": true,
+            "jobkg_url": "http://some_url"
 		}
 	},
 	{
@@ -60,8 +63,11 @@
 			"created_by": 2,
             "created": "2018-07-09T08:08:01.196Z",
 			"facebook": true,
-			"diesel": true,
-			"jobkg": true
+            "facebook_url": "http://some_url",
+            "diesel_exist": true,
+            "diesel_url": "http://some_url",
+			"jobkg_exist": true,
+            "jobkg_url": "http://some_url"
 		}
 	}
 ]
