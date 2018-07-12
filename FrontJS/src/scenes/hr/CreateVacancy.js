@@ -7,10 +7,10 @@ class CreateVacancy extends Component {
         return (
           <div>
             <Header title="Создать Вакансию" />
-              <CreateVacancyContainer vacancyId={this.props.match.params.id}/>
+            <CreateVacancyContainer/>
           </div>
         );
     }
 }
 
-export default CreateVacancy;
+export default withStyles(styles) (CreateVacancy);
