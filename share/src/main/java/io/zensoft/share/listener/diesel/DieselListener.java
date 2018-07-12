@@ -4,12 +4,10 @@ import io.zensoft.share.config.rabbitmq.RabbitMqComponentDeclarationConfiguratio
 import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.listener.VacancyListener;
 import io.zensoft.share.service.PublisherManagerService;
-import lombok.extern.log4j.Log4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-@Log4j
 @Controller
 public class DieselListener implements VacancyListener {
 

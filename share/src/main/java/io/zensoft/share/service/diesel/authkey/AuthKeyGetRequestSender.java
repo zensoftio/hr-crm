@@ -1,7 +1,7 @@
 package io.zensoft.share.service.diesel.authkey;
 
-import io.zensoft.share.model.VacancyResponse;
-import io.zensoft.share.model.VacancyStatus;
+import io.zensoft.share.model.diesel.RequestStatus;
+import io.zensoft.share.model.diesel.RequestsResponse;
 import io.zensoft.share.service.diesel.RequestSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,16 +19,20 @@ public class AuthKeyGetRequestSender implements RequestSender {
     private String serverUrlPostRequestReceiver;
     private AuthKeyHeaders authKeyHeaders;
     private String statusCode;
+    private String authKey;
 
     @Autowired
     public AuthKeyGetRequestSender(AuthKeyHeaders authKeyHeaders) {
         this.authKeyHeaders = authKeyHeaders;
     }
 
-    public String sendGetRequestToGetResponseWithAuthKey(RestTemplate restTemplate) {
+    public RequestsResponse sendGetRequestToGetResponseWithAuthKey(RestTemplate restTemplate) {
         HttpEntity<?> request = new HttpEntity<>(authKeyHeaders.getAuthKeyGetterHeaders());
         ResponseEntity<String> response = restTemplate.postForEntity(serverUrlPostRequestReceiver, request, String.class);
-        return getAuthKeyFromHtmlAsStringResponse(response.getBody());
+        statusCode = response.getStatusCode().toString();
+        authKey = getAuthKeyFromHtmlAsStringResponse(response.getBody());
+        RequestsResponse requestsResponse = new RequestsResponse();
+        return getFilledResponseFromSender(requestsResponse);
     }
 
     private String getAuthKeyFromHtmlAsStringResponse(String htmlBody) {
@@ -43,15 +47,17 @@ public class AuthKeyGetRequestSender implements RequestSender {
     }
 
     @Override
-    public VacancyResponse getFilledResponseFromSender(VacancyResponse vacancyResponse) {
+    public RequestsResponse getFilledResponseFromSender(RequestsResponse requestsResponse) {
         if(!statusCode.equals("200")){
-            vacancyResponse.setMessage("Get request for authKey executing is failed, Status code: " + statusCode+".");
-            vacancyResponse.setStatus(VacancyStatus.FAILED);
+            requestsResponse.setStatus(RequestStatus.FAILED);
         }
         if(statusCode.equals("200")){
-            vacancyResponse.setMessage("Get request for authKey executing sent successfully, Status code: " + statusCode+".");
-            vacancyResponse.setStatus(VacancyStatus.SUCCESS);
+            requestsResponse.setStatus(RequestStatus.SUCCESS);
         }
-        return vacancyResponse;
+        return requestsResponse;
+    }
+
+    public String getAuthKey() {
+        return authKey;
     }
 }

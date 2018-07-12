@@ -1,7 +1,7 @@
 package io.zensoft.share.service.diesel.login;
 
-import io.zensoft.share.model.VacancyResponse;
-import io.zensoft.share.model.VacancyStatus;
+import io.zensoft.share.model.diesel.RequestStatus;
+import io.zensoft.share.model.diesel.RequestsResponse;
 import io.zensoft.share.service.diesel.RequestSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class LoginPostRequestSender implements RequestSender {
     private LoginHeaders loginHeaders;
     private LoginPostRequestsForm loginPostRequestsForm;
     private String statusCode;
+    private String sessionId;
 
     @Autowired
     public LoginPostRequestSender(LoginPostRequestsForm loginPostRequestsForm,
@@ -28,16 +28,15 @@ public class LoginPostRequestSender implements RequestSender {
         this.loginHeaders = loginHeaders;
     }
 
-    public String sendPostRequestForLogin(RestTemplate restTemplate) {
+    public RequestsResponse sendPostRequestForLogin(RestTemplate restTemplate) {
         HttpEntity<?> request = new HttpEntity<>(loginPostRequestsForm.getCreatedBodyOfRequestInMap(), loginHeaders.getLoginHeaders());
-
         ResponseEntity<String> response = restTemplate.postForEntity(serverUrlPostRequestReceiver, request, String.class);
         response.getHeaders().get("Set-Cookie").stream().forEach(System.out::println);
-
         List<String> setCookie = Collections.singletonList(response.getHeaders().getFirst("Set-Cookie"));
-        String sessionId = setCookie.get(0);
-
-        return getSessionIdFromResponse(sessionId);
+        String sessionIdContainer = setCookie.get(0);
+        sessionId = getSessionIdFromResponse(sessionIdContainer);
+        RequestsResponse requestsResponse = new RequestsResponse();
+        return getFilledResponseFromSender(requestsResponse);
     }
 
     private String getSessionIdFromResponse(String headers) {
@@ -54,15 +53,17 @@ public class LoginPostRequestSender implements RequestSender {
     }
 
     @Override
-    public VacancyResponse getFilledResponseFromSender(VacancyResponse vacancyResponse) {
+    public RequestsResponse getFilledResponseFromSender(RequestsResponse requestsResponse) {
         if(!statusCode.equals("302")){
-            vacancyResponse.setMessage("Post request for login is failed, Status code: " + statusCode+".");
-            vacancyResponse.setStatus(VacancyStatus.FAILED);
+            requestsResponse.setStatus(RequestStatus.FAILED);
         }
         if(statusCode.equals("302")){
-            vacancyResponse.setMessage("Post request for login sent successfully, Status code: " + statusCode+".");
-            vacancyResponse.setStatus(VacancyStatus.SUCCESS);
+            requestsResponse.setStatus(RequestStatus.SUCCESS);
         }
-        return vacancyResponse;
+        return requestsResponse;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 }

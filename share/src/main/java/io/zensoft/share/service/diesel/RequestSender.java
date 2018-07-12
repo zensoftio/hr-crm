@@ -1,7 +1,8 @@
 package io.zensoft.share.service.diesel;
 
 import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.model.diesel.RequestsResponse;
 
 public interface RequestSender {
-    VacancyResponse getFilledResponseFromSender(VacancyResponse vacancyResponse);
+    RequestsResponse getFilledResponseFromSender(RequestsResponse requestsResponse);
 }
