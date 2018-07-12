@@ -42,7 +42,7 @@ class Candidate(models.Model):
         ordering = ('last_name',)
 
     def __str__(self):
-        return '{0} {1}'.format(self.first_name, self.last_name)
+        return str(self.email)
 
     def get_absolute_url(self):
         return reverse('v1:candidate-detail', kwargs={'pk': self.id})
