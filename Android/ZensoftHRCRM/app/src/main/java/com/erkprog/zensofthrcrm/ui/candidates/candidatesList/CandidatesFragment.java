@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,12 +13,13 @@ import android.view.ViewGroup;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.ui.BaseFragment;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidatesFragment extends Fragment implements CandidatesContract.View,
+public class CandidatesFragment extends BaseFragment implements CandidatesContract.View,
     CandidatesAdapter.OnItemClickListener {
 
   private CandidatesContract.Presenter mPresenter;
@@ -86,5 +86,10 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public void onItemClick(int position) {
     mPresenter.onCandidateItemClick(mAdapter.getCandidate(position));
+  }
+
+  @Override
+  protected String setTitle() {
+    return getString(R.string.candidates);
   }
 }

@@ -19,10 +19,11 @@ import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.ui.BaseFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
 import java.util.List;
 
-public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
+public class CandidateDetailFragment extends BaseFragment implements CandidateDetailContract.View,
     View.OnClickListener {
   private static final String TAG = "PROFILE DETAILS";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
@@ -250,5 +251,10 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       default:
         break;
     }
+  }
+
+  @Override
+  protected String setTitle() {
+    return getString(R.string.candidate_profile);
   }
 }

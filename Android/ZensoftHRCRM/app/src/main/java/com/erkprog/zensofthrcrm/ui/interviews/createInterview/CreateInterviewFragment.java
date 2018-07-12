@@ -17,10 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.ui.BaseFragment;
 
 import java.util.Date;
 
-public class CreateInterviewFragment extends Fragment implements CreateInterviewContract.View, View
+public class CreateInterviewFragment extends BaseFragment implements CreateInterviewContract.View, View
     .OnClickListener {
   private static final String TAG = "CREATE INTRVW FRAGMENT";
 
@@ -152,5 +153,10 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   private void updateInterviewDate(Date date) {
     mInterviewDate = date;
     mDate.setText(mInterviewDate.toString());
+  }
+
+  @Override
+  protected String setTitle() {
+    return getString(R.string.create_interview);
   }
 }
