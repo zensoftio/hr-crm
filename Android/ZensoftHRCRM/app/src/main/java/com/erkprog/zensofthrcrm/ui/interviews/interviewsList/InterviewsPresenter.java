@@ -4,25 +4,26 @@ import android.content.Context;
 import android.util.Log;
 
 import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import java.util.List;
 
 public class InterviewsPresenter implements InterviewsContract.Presenter, InterviewsContract.Repository.OnFinishedListener {
 
   private InterviewsContract.View mView;
-  private InterviewsContract.Repository mRepository;
+  private ApiInterface mRepository;
   private Context mContext;
 
-  public InterviewsPresenter(InterviewsContract.View mView, InterviewsContract.Repository mRepository, Context mContext) {
+  public InterviewsPresenter(InterviewsContract.View mView, ApiInterface repository, Context mContext) {
     this.mView = mView;
-    this.mRepository = mRepository;
+    this.mRepository = repository;
     this.mContext = mContext;
   }
 
   @Override
   public void getInterviews(Context mContext) {
 
-    mRepository.getInterviewsList(this, mContext);
+//    mRepository.getInterviewsList(this, mContext);
 
   }
 
