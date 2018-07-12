@@ -2,31 +2,51 @@ import React from 'react';
 import Header from '../general/Header';
 import { Link } from 'react-router-dom';
 import TableList from '../../components/ui/Table';
+import CreatePosition from '../head/CreatePosition';
+import { FetchDataAPI } from '../../services/FetchDataAPI';
+import { INTERVIEWS_URL } from '../../utils/urls';
+import DateConvert from '../../utils/DateConvert';
 
-const ListInterview = () => {
-	const linkEvaluate = <Link to="/candidate_grade">открыть</Link>;
+class ListInterview extends React.Component{
+	constructor(props){
+		super(props)
+		this.state = {
+			data: []
+		}
+	}
 
-	const data = [
-		[
-			'Jason Born', '12.12.2012', 'first', 'Прошло', linkEvaluate
-		],
-		[
-			'James Bond', '10.02.2015', 'first', 'Отклонен', linkEvaluate
-		],
-		[
-			'Johnny Cage', '02.11.2016', 'first', 'Утвержден', linkEvaluate
-		]
-	],
-	header = [
-		'#', 'ФИО', 'Дата', 'Место', 'Статус', 'Оценка'
-	];	
-	return (
-		<div>
-			<Header title="Список Интервью" />
+	componentDidMount() {
+		const linkEvaluate = <Link to="/candidate_grade">открыть</Link>;
+
+		FetchDataAPI( INTERVIEWS_URL )
+			.then(resp => resp.results.map(result => 
+				[
+					result.candidate.first_name + ' ' + result.candidate.last_name,
+					DateConvert(result.date),
+					result.status,
+					linkEvaluate
+				]
+			))
+			.then(data => this.setState({
+				data
+			}))
 			
-			<TableList header={header} data={data}/>
-		</div>
-	);
+	}
+	render(){
+	
+		const header = [
+			'#', 'ФИО', 'Дата', 'Статус', 'Оценка'
+		];	
+
+
+		return (
+			<div>
+				<Header title="Список Интервью" />
+				
+				<TableList header={header} data={this.state.data}/>
+			</div>
+		);
+	}
 }
 
 export default ListInterview;
