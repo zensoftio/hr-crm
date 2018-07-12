@@ -1,7 +1,9 @@
 package io.zensoft.share.service.diesel;
 
+import io.zensoft.share.model.PublisherServiceType;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.model.VacancyStatus;
 import io.zensoft.share.service.PublisherService;
 import io.zensoft.share.service.diesel.authkey.AuthKeyGetRequestSender;
 import io.zensoft.share.service.diesel.login.LoginPostRequestSender;
@@ -40,13 +42,28 @@ public class DieselPublisherService implements PublisherService {
     public VacancyResponse publish(Vacancy vacancy) {
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);
+        vacancyResponse.setPublisherServiceType(PublisherServiceType.DIESEL_ELCAT_KG);
 
         sessionId = loginPostRequestSender.sendPostRequestForLogin(restTemplate);
+        if(loginPostRequestSender.getFilledResponseFromSender(vacancyResponse).getStatus().equals(VacancyStatus.FAILED)){
+            return vacancyResponse;
+        }
+
         authKeyGetRequestSender.addHeaderCookie(sessionId);
         authKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate);
+        if(authKeyGetRequestSender.getFilledResponseFromSender(vacancyResponse).getStatus().equals(VacancyStatus.FAILED)){
+            return vacancyResponse;
+        }
+
         publicationPostRequestSender.addHeaderCookie(sessionId);
         publicationPostRequestSender.sendPostRequestForPublication(restTemplate, vacancy, sessionId, authKey);
-
+        if(publicationPostRequestSender.getFilledResponseFromSender(vacancyResponse).getStatus().equals(VacancyStatus.FAILED)){
+            return vacancyResponse;
+        }
+        if(vacancyResponse.getStatus().equals(VacancyStatus.SUCCESS)){
+            vacancyResponse.setMessage("Vacancy posted successfully, everything is ok.");
+            vacancyResponse.setStatus(VacancyStatus.SUCCESS);
+        }
         return vacancyResponse;
     }
 }

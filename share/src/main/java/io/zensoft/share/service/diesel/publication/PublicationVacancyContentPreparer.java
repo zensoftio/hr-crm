@@ -33,10 +33,10 @@ public class PublicationVacancyContentPreparer {
     private final String DOT_SYMBOL = "• ";
     private final String DOLLAR_SIGN = "- $";
 
-    String requiredRequirementsParsed;
-    String generalRequirementsParsed;
-    String optionalRequirementsParsed;
-    String workConditionsParsed;
+    String requiredRequirementsParsed = "";
+    String generalRequirementsParsed = "";
+    String optionalRequirementsParsed = "";
+    String workConditionsParsed = "";
 
     public void prepareGivenVacancyToHtmlStyle(Vacancy vacancy){
         sortVacanyListsbyType(vacancy);

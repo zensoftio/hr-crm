@@ -1,5 +1,8 @@
 package io.zensoft.share.service.diesel.authkey;
 
+import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.model.VacancyStatus;
+import io.zensoft.share.service.diesel.RequestSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,10 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class AuthKeyGetRequestSender {
+public class AuthKeyGetRequestSender implements RequestSender {
     @Value("${diesel.authKey.url}")
     private String serverUrlPostRequestReceiver;
     private AuthKeyHeaders authKeyHeaders;
+    private String statusCode;
 
     @Autowired
     public AuthKeyGetRequestSender(AuthKeyHeaders authKeyHeaders) {
@@ -38,4 +42,16 @@ public class AuthKeyGetRequestSender {
         authKeyHeaders.addCookieToHeaders(sessionId);
     }
 
+    @Override
+    public VacancyResponse getFilledResponseFromSender(VacancyResponse vacancyResponse) {
+        if(!statusCode.equals("200")){
+            vacancyResponse.setMessage("Get request for authKey executing is failed, Status code: " + statusCode+".");
+            vacancyResponse.setStatus(VacancyStatus.FAILED);
+        }
+        if(statusCode.equals("200")){
+            vacancyResponse.setMessage("Get request for authKey executing sent successfully, Status code: " + statusCode+".");
+            vacancyResponse.setStatus(VacancyStatus.SUCCESS);
+        }
+        return vacancyResponse;
+    }
 }

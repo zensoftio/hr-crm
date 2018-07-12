@@ -1,5 +1,8 @@
 package io.zensoft.share.service.diesel.login;
 
+import io.zensoft.share.model.VacancyResponse;
+import io.zensoft.share.model.VacancyStatus;
+import io.zensoft.share.service.diesel.RequestSender;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,11 +15,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class LoginPostRequestSender {
+public class LoginPostRequestSender implements RequestSender {
     @Value("${diesel.login.url}")
     private String serverUrlPostRequestReceiver;
     private LoginHeaders loginHeaders;
     private LoginPostRequestsForm loginPostRequestsForm;
+    private String statusCode;
 
     @Autowired
     public LoginPostRequestSender(LoginPostRequestsForm loginPostRequestsForm,
@@ -37,27 +41,29 @@ public class LoginPostRequestSender {
         return getSessionIdFromResponse(sessionId);
     }
 
-    /**
-     * returns parsed sessionId
-     * yes, it's a hardcode
-     *
-     * @param headers
-     * @return
-     */
     private String getSessionIdFromResponse(String headers) {
-        String delimeter = ";";
+        String delimiter = ";";
         String equalsSymbol = "=";
-        String[] subString = headers.split(equalsSymbol);
+        String[] partOfHeaders = headers.split(equalsSymbol);
 
-        String[] strings = subString[1].split(delimeter);
-
+        String[] sessionIdContainer = partOfHeaders[1].split(delimiter);
         String resultSessionId = "";
-
         for (int i = 0; i < 1; i++) {
-            resultSessionId = resultSessionId + strings[i];
+            resultSessionId = resultSessionId + sessionIdContainer[i];
         }
-
         return resultSessionId;
     }
 
+    @Override
+    public VacancyResponse getFilledResponseFromSender(VacancyResponse vacancyResponse) {
+        if(!statusCode.equals("302")){
+            vacancyResponse.setMessage("Post request for login is failed, Status code: " + statusCode+".");
+            vacancyResponse.setStatus(VacancyStatus.FAILED);
+        }
+        if(statusCode.equals("302")){
+            vacancyResponse.setMessage("Post request for login sent successfully, Status code: " + statusCode+".");
+            vacancyResponse.setStatus(VacancyStatus.SUCCESS);
+        }
+        return vacancyResponse;
+    }
 }
