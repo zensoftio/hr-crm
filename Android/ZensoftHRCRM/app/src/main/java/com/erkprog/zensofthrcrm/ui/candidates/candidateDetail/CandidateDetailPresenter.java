@@ -13,7 +13,6 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   private static final String TAG = "CandidateDetailPresente";
   private CandidateDetailContract.View mView;
   private Candidate mCandidate;
-  //  private RestServiceTest mApiService;
   private ApiInterface mApiService;
 
   CandidateDetailPresenter(ApiInterface service) {

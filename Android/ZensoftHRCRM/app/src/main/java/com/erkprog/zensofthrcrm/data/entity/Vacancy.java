@@ -5,7 +5,7 @@ public class Vacancy {
   private String name;
   private String created;
   private String last_published;
-  private Integer status;
+  private String status;
 
   public Integer getId() {
     return id;
@@ -39,11 +39,11 @@ public class Vacancy {
     this.last_published = last_published;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 }

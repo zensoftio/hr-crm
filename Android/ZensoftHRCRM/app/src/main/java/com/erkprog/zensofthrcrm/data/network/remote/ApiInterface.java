@@ -25,9 +25,9 @@ public interface ApiInterface {
   @GET("")
   Call<InterviewsResponse> getInterviews();
 
-  @GET("")
+  @GET("vacancies")
   Call<VacanciesResponse> getVacancies();
 
-  @GET("")
+  @GET("requests")
   Call<RequestsResponse> getRequests();
 }

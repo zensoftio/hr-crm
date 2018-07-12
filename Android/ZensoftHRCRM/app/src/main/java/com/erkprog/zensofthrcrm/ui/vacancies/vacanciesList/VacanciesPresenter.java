@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
 import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
 import retrofit2.Call;
@@ -11,9 +12,9 @@ import retrofit2.Response;
 public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   private VacanciesContract.View mView;
-  private RestServiceTest mApiService;
+  private ApiInterface mApiService;
 
-  VacanciesPresenter(RestServiceTest service) {
+  VacanciesPresenter(ApiInterface service) {
     mApiService = service;
   }
 

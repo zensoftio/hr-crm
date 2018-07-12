@@ -33,7 +33,7 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
 
   private void initPresenter() {
     mPresenter = new RequestsPresenter(CRMApplication.getInstance(requireContext())
-        .getServiceTest());
+        .getApiService());
     mPresenter.bind(this);
   }
 

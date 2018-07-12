@@ -43,9 +43,8 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
 
     if (vacancy != null) {
       holder.name.setText(vacancy.getName());
-      holder.status.setText(String.valueOf(vacancy.getStatus()));
-      holder.created.setText(vacancy.getCreated());
-      holder.lastPublish.setText(vacancy.getLast_published());
+      holder.created.setText(String.format("created: %s", vacancy.getCreated()));
+      holder.lastPublish.setText(String.format("last published: %s", vacancy.getLast_published()));
     }
   }
 
@@ -60,7 +59,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
 
   static class VacancyViewHolder extends RecyclerView.ViewHolder {
     TextView name;
-    TextView status;
     TextView created;
     TextView lastPublish;
 
@@ -68,7 +66,6 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
       super(itemView);
 
       name = itemView.findViewById(R.id.vitem_name);
-      status = itemView.findViewById(R.id.vitem_status);
       created = itemView.findViewById(R.id.vitem_created);
       lastPublish = itemView.findViewById(R.id.vitem_last_published);
 

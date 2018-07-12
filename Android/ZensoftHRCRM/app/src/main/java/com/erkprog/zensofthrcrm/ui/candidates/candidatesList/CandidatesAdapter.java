@@ -43,8 +43,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
         holder.position.setText(candidate.getPosition().getName());
       }
 
-      String createdDate = candidate.getCreated();
-      holder.created.append(String.format(": %s", candidate.getCreated()));
+      holder.created.setText(String.format("created: %s", candidate.getCreated()));
     }
 
   }

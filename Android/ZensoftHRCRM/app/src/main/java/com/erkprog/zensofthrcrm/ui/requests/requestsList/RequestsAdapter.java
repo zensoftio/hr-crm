@@ -43,11 +43,10 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
       }
 
       holder.status.setText(String.valueOf(request.getStatus()));
-      holder.count.append(": ");
-      holder.count.append(String.valueOf(request.getCount()));
 
-      holder.created.append(": ");
-      holder.created.append(request.getCreated());
+      holder.count.setText(String.format("count: %s", String.valueOf(request.getCount())));
+
+      holder.created.setText(String.format("created: %s", request.getCreated()));
     }
   }
 

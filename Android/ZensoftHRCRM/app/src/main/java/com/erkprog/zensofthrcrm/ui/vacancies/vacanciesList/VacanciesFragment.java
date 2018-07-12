@@ -35,7 +35,7 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   private void initPresenter() {
     mPresenter = new VacanciesPresenter(CRMApplication.getInstance(requireContext())
-        .getServiceTest());
+        .getApiService());
     mPresenter.bind(this);
   }
 

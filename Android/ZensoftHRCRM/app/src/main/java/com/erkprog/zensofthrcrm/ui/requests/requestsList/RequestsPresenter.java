@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
+import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
 import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
 import retrofit2.Call;
@@ -12,16 +13,16 @@ import retrofit2.Response;
 
 public class RequestsPresenter implements RequestsContract.Presenter {
 
-  private RestServiceTest mServiceTest;
+  private ApiInterface mApiService;
   private RequestsContract.View mView;
 
-  RequestsPresenter(RestServiceTest serviceTest) {
-    mServiceTest = serviceTest;
+  RequestsPresenter(ApiInterface service) {
+    mApiService = service;
   }
 
   @Override
   public void loadData() {
-    mServiceTest.getRequests().enqueue(new Callback<RequestsResponse>() {
+    mApiService.getRequests().enqueue(new Callback<RequestsResponse>() {
       @Override
       public void onResponse(@NonNull Call<RequestsResponse> call, @NonNull Response<RequestsResponse> response) {
         if (isViewAttached()) {
