@@ -9,10 +9,9 @@ const ListOfCandidates = () => {
     }
 
     const data = [
-        ['Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-
+        ['Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'profile')],
+        ['Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'profile')],
+        ['Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'profile')],
     ];
 
     const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'СТАТУС', 'ДАТА', 'КОММЕНТАРИЙ', 'ВЛОЖЕНИЕ', 'ПРОФИЛЬ'];
