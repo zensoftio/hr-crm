@@ -1,6 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,17 +9,17 @@ import android.widget.TextView;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.List;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.RequestViewHolder> {
   private List<Request> mRequests;
-  private Context mContext;
-  private OnItemClickListener mListener;
+  private ItemClickListener mListener;
 
-  public RequestsAdapter(Context context, List<Request> requests) {
+  RequestsAdapter(List<Request> requests, ItemClickListener listener) {
     mRequests = requests;
-    mContext = context;
+    mListener = listener;
   }
 
   @NonNull
@@ -33,21 +32,23 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
   @Override
   public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
     Request request = mRequests.get(position);
+    if (request != null) {
 
-    String name = request.getPosition().getName();
-    holder.name.setText(name != null ? name : mContext.getString(R.string.not_defined));
+      if (request.getPosition() != null) {
+        holder.name.setText(request.getPosition().getName());
+      }
 
-    String deparment = request.getPosition().getDepartment().getName();
-    holder.department.setText(deparment != null ? deparment : mContext.getString(R.string
-        .not_defined));
+      if (request.getPosition().getDepartment() != null) {
+        holder.department.setText(request.getPosition().getDepartment().getName());
+      }
 
-    holder.status.setText(String.valueOf(request.getStatus()));
-    holder.count.append(": ");
-    holder.count.append(String.valueOf(request.getCount()));
+      holder.status.setText(String.valueOf(request.getStatus()));
+      holder.count.append(": ");
+      holder.count.append(String.valueOf(request.getCount()));
 
-    String created = request.getCreated();
-    holder.created.append(": ");
-    holder.created.append(created != null ? created : mContext.getString(R.string.not_defined));
+      holder.created.append(": ");
+      holder.created.append(request.getCreated());
+    }
   }
 
   @Override
@@ -64,14 +65,6 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
     return mRequests.get(position);
   }
 
-  public void setOnItemClickListener(OnItemClickListener listener) {
-    mListener = listener;
-  }
-
-  public interface OnItemClickListener {
-    void onItemClick(int position);
-  }
-
   static class RequestViewHolder extends RecyclerView.ViewHolder {
     TextView name;
     TextView department;
@@ -79,24 +72,21 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
     TextView count;
     TextView created;
 
-    public RequestViewHolder(View itemView, final OnItemClickListener listener) {
+    RequestViewHolder(View itemView, final ItemClickListener listener) {
       super(itemView);
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          int position = getAdapterPosition();
-          if (position != RecyclerView.NO_POSITION) {
-            listener.onItemClick(position);
-          }
-        }
-      });
 
       name = itemView.findViewById(R.id.ritem_name);
       department = itemView.findViewById(R.id.ritem_department);
       status = itemView.findViewById(R.id.ritem_status);
       count = itemView.findViewById(R.id.ritem_count);
       created = itemView.findViewById(R.id.ritem_created);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          listener.onItemClick(getAdapterPosition());
+        }
+      });
     }
   }
 }

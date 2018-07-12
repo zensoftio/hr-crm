@@ -25,7 +25,7 @@ public class RequestsPresenter implements RequestsContract.Presenter {
       @Override
       public void onResponse(@NonNull Call<RequestsResponse> call, @NonNull Response<RequestsResponse> response) {
         if (isViewAttached()) {
-          if (response.isSuccessful() && response.body() != null) {
+          if (response.isSuccessful() && response.body().getRequestList() != null) {
             mView.showRequests(response.body().getRequestList());
           } else {
             mView.showMessage("Requests list in response is null");

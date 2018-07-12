@@ -14,11 +14,12 @@ import android.widget.Toast;
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestsFragment extends Fragment implements RequestsContract.View, RequestsAdapter.OnItemClickListener {
+public class RequestsFragment extends Fragment implements RequestsContract.View, ItemClickListener{
   private static final String TAG = "REQUESTS FRAGMENT";
 
   private RequestsContract.Presenter mPresenter;
@@ -56,8 +57,7 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
     recyclerView.setLayoutManager(layoutManager);
 
     List<Request> requests = new ArrayList<>();
-    mAdapter = new RequestsAdapter(getActivity(), requests);
-    mAdapter.setOnItemClickListener(this);
+    mAdapter = new RequestsAdapter(requests, this);
     recyclerView.setAdapter(mAdapter);
   }
 

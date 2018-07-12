@@ -23,7 +23,7 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
       @Override
       public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
         if (isViewAttached()) {
-          if (response.isSuccessful() && response.body() != null) {
+          if (response.isSuccessful() && response.body().getVacancyList() != null) {
             mView.showVacancies(response.body().getVacancyList());
           } else {
             mView.showMessage("Vacancies list in response is null");

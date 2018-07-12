@@ -1,6 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,22 +9,19 @@ import android.widget.TextView;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.List;
 
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder> {
 
   private List<Vacancy> mVacancies;
-  private Context mContext;
-  private OnItemClickListener mListener;
+  private ItemClickListener mListener;
 
-  public void setOnItemClickListener(OnItemClickListener listener) {
-    mListener = listener;
-  }
 
-  public VacanciesAdapter(Context context, List<Vacancy> vacancies) {
+  public VacanciesAdapter(List<Vacancy> vacancies, ItemClickListener listener) {
     mVacancies = vacancies;
-    mContext = context;
+    mListener = listener;
   }
 
   public void loadNewData(List<Vacancy> data) {
@@ -45,11 +41,12 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
   public void onBindViewHolder(@NonNull VacancyViewHolder holder, int position) {
     Vacancy vacancy = mVacancies.get(position);
 
-    holder.name.setText(vacancy.getName() != null ? vacancy.getName() : "");
-    holder.status.setText(String.valueOf(vacancy.getStatus()));
-    holder.created.setText(vacancy.getCreated() != null ? vacancy.getCreated() : "");
-    holder.lastPublish.setText(vacancy.getLast_published() != null ? vacancy.getLast_published()
-        : "");
+    if (vacancy != null) {
+      holder.name.setText(vacancy.getName());
+      holder.status.setText(String.valueOf(vacancy.getStatus()));
+      holder.created.setText(vacancy.getCreated());
+      holder.lastPublish.setText(vacancy.getLast_published());
+    }
   }
 
   @Override
@@ -61,35 +58,26 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
     return mVacancies.get(position);
   }
 
-  public interface OnItemClickListener {
-    void onItemClick(int position);
-  }
-
   static class VacancyViewHolder extends RecyclerView.ViewHolder {
     TextView name;
     TextView status;
     TextView created;
     TextView lastPublish;
 
-    VacancyViewHolder(View itemView, final OnItemClickListener listener) {
+    VacancyViewHolder(View itemView, final ItemClickListener listener) {
       super(itemView);
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          if (listener != null) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-              listener.onItemClick(position);
-            }
-          }
-        }
-      });
 
       name = itemView.findViewById(R.id.vitem_name);
       status = itemView.findViewById(R.id.vitem_status);
       created = itemView.findViewById(R.id.vitem_created);
       lastPublish = itemView.findViewById(R.id.vitem_last_published);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          listener.onItemClick(getAdapterPosition());
+        }
+      });
     }
   }
 }

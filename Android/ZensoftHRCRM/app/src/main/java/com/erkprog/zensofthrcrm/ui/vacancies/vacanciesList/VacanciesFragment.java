@@ -15,12 +15,12 @@ import android.widget.Toast;
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VacanciesFragment extends Fragment implements VacanciesContract.View,
-    VacanciesAdapter.OnItemClickListener {
+public class VacanciesFragment extends Fragment implements VacanciesContract.View, ItemClickListener {
 
   private static final String TAG = "VACANCIES FRAGMENT";
 
@@ -60,16 +60,13 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
     recyclerView.setLayoutManager(layoutManager);
 
     List<Vacancy> vacancies = new ArrayList<>();
-    mAdapter = new VacanciesAdapter(getActivity(), vacancies);
-    mAdapter.setOnItemClickListener(this);
+    mAdapter = new VacanciesAdapter(vacancies, this);
     recyclerView.setAdapter(mAdapter);
   }
 
   @Override
   public void showVacancies(List<Vacancy> vacancies) {
-    Log.d(TAG, "showVacancies: start");
     mAdapter.loadNewData(vacancies);
-    Log.d(TAG, "showVacancies: " + mAdapter.getItemCount());
   }
 
   @Override

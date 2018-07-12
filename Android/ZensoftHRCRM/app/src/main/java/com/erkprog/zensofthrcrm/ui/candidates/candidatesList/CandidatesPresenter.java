@@ -23,7 +23,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
       @Override
       public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
         if (isViewAttached()) {
-          if (response.isSuccessful() && response.body() != null) {
+          if (response.isSuccessful() && response.body().getCandidateList() != null) {
             mView.showCandidates(response.body().getCandidateList());
           } else {
             mView.showMessage("Candidates list in response is null");

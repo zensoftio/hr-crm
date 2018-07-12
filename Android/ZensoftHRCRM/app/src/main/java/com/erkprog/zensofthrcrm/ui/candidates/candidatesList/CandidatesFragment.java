@@ -15,13 +15,13 @@ import android.widget.Toast;
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidatesFragment extends Fragment implements CandidatesContract.View,
-    CandidatesAdapter.OnItemClickListener {
+public class CandidatesFragment extends Fragment implements CandidatesContract.View, ItemClickListener{
 
   private CandidatesContract.Presenter mPresenter;
   private CandidatesAdapter mAdapter;
@@ -58,8 +58,7 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
     recyclerView.setLayoutManager(layoutManager);
 
     List<Candidate> candidates = new ArrayList<>();
-    mAdapter = new CandidatesAdapter(getActivity(), candidates);
-    mAdapter.setOnItemClickListener(this);
+    mAdapter = new CandidatesAdapter(candidates, this);
     recyclerView.setAdapter(mAdapter);
   }
 
