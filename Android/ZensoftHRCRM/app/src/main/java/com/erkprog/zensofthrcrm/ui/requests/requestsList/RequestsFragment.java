@@ -1,6 +1,5 @@
-package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
+package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,18 +14,17 @@ import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
-import com.erkprog.zensofthrcrm.data.entity.Candidate;
+import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
-import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CandidatesFragment extends Fragment implements CandidatesContract.View,
-    ItemClickListener<Candidate> {
+public class RequestsFragment extends Fragment implements RequestsContract.View,
+    ItemClickListener<Request> {
+  private static final String TAG = "REQUESTS FRAGMENT";
 
-  private CandidatesContract.Presenter mPresenter;
-  private CandidatesAdapter mAdapter;
+  private RequestsContract.Presenter mPresenter;
+  private RequestsAdapter mAdapter;
   private RecyclerView mRecyclerView;
   private ProgressBar mProgressBar;
 
@@ -37,43 +35,41 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   private void initPresenter() {
-    mPresenter = new CandidatesPresenter(requireContext(),
+    mPresenter = new RequestsPresenter(requireContext(),
         CRMApplication.getInstance(requireContext()).getApiService());
     mPresenter.bind(this);
   }
 
   @Nullable
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
-    initRecyclerView(v);
-    mProgressBar = v.findViewById(R.id.candidates_progress_bar);
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    View v = inflater.inflate(R.layout.fragment_requests_list, container, false);
+    mProgressBar = v.findViewById(R.id.requests_progress_bar);
     dismissProgress();
+    initRecyclerView(v);
     return v;
   }
 
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    mPresenter.loadCandidates();
-  }
-
   private void initRecyclerView(View v) {
-    mRecyclerView = v.findViewById(R.id.recycler_view_all_candidates);
+    mRecyclerView = v.findViewById(R.id.recycler_view_all_requests);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setLayoutManager(layoutManager);
   }
 
   @Override
-  public void showCandidates(List<Candidate> candidates) {
-    mAdapter = new CandidatesAdapter(candidates, this);
-    mRecyclerView.setAdapter(mAdapter);
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mPresenter.loadData();
+  }
+
+  public static RequestsFragment newInstance() {
+    return new RequestsFragment();
   }
 
   @Override
-  public void showCandidateDetailUi(int candidateId) {
-    Intent intent = CandidateDetail.getIntent(getActivity(), candidateId);
-    startActivity(intent);
+  public void showRequests(List<Request> requests) {
+    mAdapter = new RequestsAdapter(requests, this);
+    mRecyclerView.setAdapter(mAdapter);
   }
 
   @Override
@@ -92,8 +88,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   @Override
-  public void onItemClick(Candidate item) {
-    mPresenter.onCandidateItemClick(item);
+  public void onItemClick(Request item) {
+    mPresenter.onRequestItemClick(item);
   }
 
   @Override
