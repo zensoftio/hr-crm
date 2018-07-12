@@ -4,6 +4,7 @@ import MultiSelection from '../../ui/MultiSelection';
 import TextArea from '../../ui/TextArea';
 import PlusMinus from '../../ui/PlusMinus';
 import { DEPARTMENTS_URL, REQUESTS_URL, POSITIONS_URL,REQUIREMENTS_URL } from '../../../utils/urls';
+import { FetchDataAPI } from '../../../services/FetchDataAPI';
 
 class CreatePositionContainer extends React.Component {
 	constructor(props){
@@ -19,11 +20,10 @@ class CreatePositionContainer extends React.Component {
 		};
 	}
 	
-	componentDidMount() {
+	componentDidMount() {		
 		
-		fetch( DEPARTMENTS_URL )
-			.then(res => res.json())
-			.then(json => json.results.map(result => (
+		FetchDataAPI( DEPARTMENTS_URL )
+			.then(response => response.results.map(result => (
 				{
 					id: result.id,//id will be used when we make POST request
 					name: result.name
@@ -32,8 +32,6 @@ class CreatePositionContainer extends React.Component {
 			.then(department => this.setState({
 				department
 			}))
-			.catch(err => console.log('FAILED: ',err));
-
 	}
 	
 	handleSubmit = (e) => {
@@ -62,19 +60,18 @@ class CreatePositionContainer extends React.Component {
 	handleChangeDepartment = (e) => {
 		this.setState({departmentVal:parseInt(e.target.value)},
 		() => {
-			fetch(`${ POSITIONS_URL }?department=${this.state.departmentVal}`)
-			.then(res => res.json())
-			.then(json => json.results.map(result => (
+		
+			FetchDataAPI(`${ POSITIONS_URL }?department=${this.state.departmentVal}`)
+			.then(resp => resp.results.map(result => (
 				{
 					id: result.id,
 					name: result.name
 				}
 			)))
-			//.then(req => console.log(req))
-			.then(position => this.setState({
-				position
+			.then(position => this.setState({ 
+				position 
 			}))
-			.catch(err => console.log('FAILED: ',err));
+
 		}
 	);
 	
@@ -83,21 +80,20 @@ class CreatePositionContainer extends React.Component {
 	handlePosition = (e) => {
 		this.setState({positionVal: parseInt(e.target.value)},
 		() => {
-			fetch(`${ REQUIREMENTS_URL }?department=${this.state.positionVal}`)
-			.then(res => res.json())
-			.then(json => json.results.map(result => (
+			
+			FetchDataAPI(`${ REQUIREMENTS_URL }?department=${this.state.positionVal}`)
+			.then(resp => resp.results.map(result => (
 				{
 					id: result.id,
 					name: result.name
 				}
-			)))			
+			)))
 			.then(requirements => this.setState({
 				requirements
-			}))				
-			.catch(err => console.log('FAILED: ',err));
+			}))
+
 		}	
-	);
-	console.log(this.state.requirements);
+		);	
 	
 	}
 
