@@ -68,7 +68,7 @@ const HRNav = [
     },
     {
         name: "",
-        path: "/profile",
+        path: "/profile/:id",
         component: Profile
     },
 ];
