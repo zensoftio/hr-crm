@@ -3,7 +3,6 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
-import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,7 +13,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
   private CandidatesContract.View mView;
   private ApiInterface mApiService;
 
-  public CandidatesPresenter(CandidatesContract.View view, ApiInterface service) {
+  CandidatesPresenter(CandidatesContract.View view, ApiInterface service) {
     mView = view;
     mApiService = service;
   }

@@ -9,17 +9,18 @@ import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
-  @GET("candidates?status=&department=&vacancy=")
+  @GET("candidates")
   Call<CandidatesResponse> getCandidates();
 
   @GET("")
   Call<CriteriasResponse> getCriteries();
 
-  @GET("")
-  Call<Candidate> getDetailedCandidate();
+  @GET("candidates/{id}")
+  Call<Candidate> getDetailedCandidate(@Path("id") int id);
 
   @GET("")
   Call<InterviewsResponse> getInterviews();
