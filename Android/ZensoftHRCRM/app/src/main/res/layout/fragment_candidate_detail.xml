@@ -23,7 +23,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/main_attributes"
-      android:textColor="@color/mainAttributes"
+      android:textColor="@color/colorBlack"
       tools:text="Candidate's first name"/>
 
   <TextView
@@ -37,7 +37,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/main_attributes"
-      android:textColor="@color/mainAttributes"
+      android:textColor="@color/colorBlack"
       tools:text="Candidate's last name"/>
 
     <LinearLayout
@@ -59,7 +59,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="9"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           android:textSize="@dimen/main_attributes"
           tools:text="candidate@mail.com"/>
 
@@ -82,7 +82,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="9"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           android:textSize="@dimen/main_attributes"
           tools:text="candidate's phone"/>
     </LinearLayout>
@@ -98,7 +98,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/main_attributes"
-      android:textColor="@color/mainAttributes"
+      android:textColor="@color/colorBlack"
       tools:text="Android dep"/>
 
   <TextView
@@ -112,7 +112,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/main_attributes"
-      android:textColor="@color/mainAttributes"
+      android:textColor="@color/colorBlack"
       tools:text="5"/>
 
 </LinearLayout>

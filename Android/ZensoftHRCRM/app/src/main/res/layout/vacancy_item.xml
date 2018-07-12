@@ -19,7 +19,7 @@
       app:layout_constraintTop_toTopOf="parent">
 
     <android.support.constraint.ConstraintLayout
-        android:background="@color/vacancyItemBackground"
+        android:background="@color/colorLightBlue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,7 +29,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
           android:layout_marginTop="8dp"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           android:textStyle="bold"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
           android:layout_marginStart="8dp"
           android:layout_marginTop="8dp"
           android:text="@string/status"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/view"/>
 
@@ -65,7 +65,7 @@
           android:layout_marginStart="8dp"
           android:layout_marginTop="8dp"
           android:text="@string/created"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/vitem_status"/>
 
@@ -76,7 +76,7 @@
           android:layout_marginStart="8dp"
           android:layout_marginTop="8dp"
           android:text="@string/last_published"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/vitem_created"/>
     </android.support.constraint.ConstraintLayout>

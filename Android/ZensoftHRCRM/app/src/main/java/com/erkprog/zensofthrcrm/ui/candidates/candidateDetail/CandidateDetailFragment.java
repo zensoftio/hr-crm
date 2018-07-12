@@ -125,7 +125,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.interviews);
-      descriptionText.setTextColor(getResources().getColor(R.color.mainAttributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add interview views
@@ -156,7 +156,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.comments);
-      descriptionText.setTextColor(getResources().getColor(R.color.mainAttributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add comment views
@@ -179,7 +179,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.cvs);
-      descriptionText.setTextColor(getResources().getColor(R.color.mainAttributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add cvs views

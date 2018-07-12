@@ -28,7 +28,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
           android:layout_marginTop="8dp"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           tools:text="Junior Python developer"/>
@@ -38,7 +38,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="@+id/ritem_name"
           app:layout_constraintTop_toBottomOf="@+id/ritem_name"
           tools:text="Python"/>
@@ -48,7 +48,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="@+id/ritem_department"
           app:layout_constraintTop_toBottomOf="@+id/ritem_department"
           tools:text="status"/>
@@ -59,7 +59,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
           android:text="count"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="@+id/ritem_status"
           app:layout_constraintTop_toBottomOf="@+id/ritem_status"/>
 
@@ -69,7 +69,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
           android:text="@string/created"
-          android:textColor="@color/mainAttributes"
+          android:textColor="@color/colorBlack"
           app:layout_constraintStart_toStartOf="@+id/ritem_count"
           app:layout_constraintTop_toBottomOf="@+id/ritem_count"/>
     </android.support.constraint.ConstraintLayout>
