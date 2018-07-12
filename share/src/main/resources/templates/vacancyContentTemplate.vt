@@ -6,24 +6,24 @@
 <p>&nbsp;</p>
 <p>
     <strong>
-        $mainRequirementsTitle
+        $requiredRequirementsTitle
     </strong>
     <br>
-        $mainRequirementsParsed
+        $requiredRequirementsParsed
     <br>
     <strong>
-        $hardSkillsTitle
+        $generalRequirementsTitle
     </strong>
     <br>
-    $hardSkillsParsed
+        $generalRequirementsParsed
 </p>
 <p>&nbsp;</p>
 <p>
     <strong>
-        $additionalRequirementsTitle
+        $optionalRequirementsTitle
     </strong>
     <br>
-    $additionalSkillsParsed
+        $optionalRequirementsParsed
     &nbsp;
     <br>
     <strong>
@@ -35,10 +35,10 @@
 <p>&nbsp;</p>
 <p>
     <strong>
-        $workingConditionsTitle
+        $workConditionsTitle
     </strong>
     <br>
-    $workingConditionsParsed
+        $workConditionsParsed
     <br>
     <span
             style="color:#800000;">

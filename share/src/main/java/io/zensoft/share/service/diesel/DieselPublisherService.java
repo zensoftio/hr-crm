@@ -9,6 +9,7 @@ import io.zensoft.share.service.diesel.publication.PublicationPostRequestSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
@@ -31,11 +32,12 @@ public class DieselPublisherService implements PublisherService {
         this.loginPostRequestSender = loginPostRequestSender;
         this.publicationPostRequestSender = publicationPostRequestSender;
         this.authKeyGetRequestSender = authKeyGetRequestSender;
+        restTemplate.getMessageConverters().add(0,new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 
     @Override
+    @Transactional
     public VacancyResponse publish(Vacancy vacancy) {
-        restTemplate.getMessageConverters().add(0,new StringHttpMessageConverter(Charset.forName("UTF-8")));
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);
 

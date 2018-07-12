@@ -1,6 +1,7 @@
 package io.zensoft.share.service.diesel.publication;
 
 import io.zensoft.share.model.Requirement;
+import io.zensoft.share.model.RequirementType;
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
 import org.apache.velocity.Template;
@@ -15,12 +16,12 @@ public class PublicationVacancyContentPreparer {
     private String titleOfPost;
     private String contentOfPost;
 
-    private final String MAIN_REQUIREMENTS_TITLE = "Основные требования:";
-    private final String HARD_SKILLS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):";
-    private final String ADDITIONAL_REQUIREMENTS_TITLE = "Будет плюсом:";
+    private final String REQUIRED_REQUIREMENTS_TITLE = "Основные требования:";
+    private final String GENERAL_REQUIREMENTS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):";
+    private final String OPTIONAL_REQUIREMENTS_TITLE = "Будет плюсом:";
     private final String RESPONSIBILITIES_TITLE = "Обязанности:";
     private final String RESPONSIBILITIES_DESCRIPTION = "• Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.";
-    private final String WORKING_CONDITIONS_TITLE = "Условия работы:";
+    private final String WORK_CONDITIONS_TITLE = "Условия работы:";
     private final String SALARY_FORK_TITLE = "Вилка заработной платы: $";
     private final String CV_SENDING_TITLE = "Резюме присылать на почту: jobs@secondlab.kg";
     private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"Java Developer (Junior, Middle, Senior)\"";
@@ -32,10 +33,10 @@ public class PublicationVacancyContentPreparer {
     private final String DOT_SYMBOL = "• ";
     private final String DOLLAR_SIGN = "- $";
 
-    String mainRequirementsParsed;
-    String hardSkillsParsed;
-    String additionalSkillsParsed;
-    String workingConditionsParsed;
+    String requiredRequirementsParsed;
+    String generalRequirementsParsed;
+    String optionalRequirementsParsed;
+    String workConditionsParsed;
 
     public void prepareGivenVacancyToHtmlStyle(Vacancy vacancy){
         sortVacanyListsbyType(vacancy);
@@ -46,12 +47,12 @@ public class PublicationVacancyContentPreparer {
 
         Template template = velocityEngine.getTemplate("/src/main/resources/html/vacancyContentTemplate.vt", "utf-8");
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("mainRequirementsTitle", MAIN_REQUIREMENTS_TITLE);
-        velocityContext.put("hardSkillsTitle", HARD_SKILLS_TITLE);
-        velocityContext.put("additionalRequirementsTitle", ADDITIONAL_REQUIREMENTS_TITLE);
+        velocityContext.put("requiredRequirementsTitle", REQUIRED_REQUIREMENTS_TITLE);
+        velocityContext.put("generalRequirementsTitle", GENERAL_REQUIREMENTS_TITLE);
+        velocityContext.put("optionalRequirementsTitle", OPTIONAL_REQUIREMENTS_TITLE);
         velocityContext.put("responsibilitiesTitle", RESPONSIBILITIES_TITLE);
         velocityContext.put("responsibilitiesDescription", RESPONSIBILITIES_DESCRIPTION);
-        velocityContext.put("workingConditionsTitle", WORKING_CONDITIONS_TITLE);
+        velocityContext.put("workConditionsTitle", WORK_CONDITIONS_TITLE);
         velocityContext.put("salaryForkTitle", SALARY_FORK_TITLE);
         velocityContext.put("cvSendingTitle", CV_SENDING_TITLE);
         velocityContext.put("setPositionInEmailDisclaimerTitle", SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE);
@@ -63,10 +64,10 @@ public class PublicationVacancyContentPreparer {
         velocityContext.put("dotSymbol", DOT_SYMBOL);
         velocityContext.put("dollarSign", DOLLAR_SIGN);
 
-        velocityContext.put("mainRequirementsParsed", mainRequirementsParsed);
-        velocityContext.put("hardSkillsParsed", hardSkillsParsed);
-        velocityContext.put("additionalSkillsParsed", additionalSkillsParsed);
-        velocityContext.put("workingConditionsParsed", workingConditionsParsed);
+        velocityContext.put("requiredRequirementsParsed", requiredRequirementsParsed);
+        velocityContext.put("generalRequirementsParsed", generalRequirementsParsed);
+        velocityContext.put("optionalRequirementsParsed", optionalRequirementsParsed);
+        velocityContext.put("workConditionsParsed", workConditionsParsed);
         velocityContext.put("vacancyTitle", vacancy.getTitle());
         velocityContext.put("vacancySalaryMin", vacancy.getSalaryMin());
         velocityContext.put("vacancySalaryMax", vacancy.getSalaryMax());
@@ -79,18 +80,18 @@ public class PublicationVacancyContentPreparer {
 
     public void sortVacanyListsbyType(Vacancy vacancy) {
         for (Requirement requirementOrSkill : vacancy.getRequirements()) {
-            if (requirementOrSkill.getType() == 0) {
-                mainRequirementsParsed = mainRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
+            if (requirementOrSkill.getType() == RequirementType.REQUIRED) {
+                requiredRequirementsParsed = requiredRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
-            if (requirementOrSkill.getType() == 1) {
-                hardSkillsParsed = hardSkillsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
+            if (requirementOrSkill.getType() == RequirementType.GENERAL) {
+                generalRequirementsParsed = generalRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
-            if (requirementOrSkill.getType() == 2) {
-                additionalSkillsParsed = additionalSkillsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
+            if (requirementOrSkill.getType() == RequirementType.OPTIONAL) {
+                optionalRequirementsParsed = optionalRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
             }
         }
-        for (String workingCondition : vacancy.getWorkingConditions()) {
-            workingConditionsParsed = workingConditionsParsed + DOT_SYMBOL + workingCondition + "<br>";
+        for (String workingCondition : vacancy.getWorkConditions()) {
+            workConditionsParsed = workConditionsParsed + DOT_SYMBOL + workingCondition + "<br>";
         }
     }
 }
