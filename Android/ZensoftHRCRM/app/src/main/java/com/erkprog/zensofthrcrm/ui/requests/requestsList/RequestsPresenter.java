@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
-import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
-import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import retrofit2.Call;
 import retrofit2.Callback;

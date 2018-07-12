@@ -3,8 +3,8 @@ package com.erkprog.zensofthrcrm;
 import android.app.Application;
 import android.content.Context;
 
-import com.erkprog.zensofthrcrm.data.network.remote.ApiClient;
-import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
+import com.erkprog.zensofthrcrm.data.network.ApiClient;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
 import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
 

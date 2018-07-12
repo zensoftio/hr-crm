@@ -1,14 +1,14 @@
-package com.erkprog.zensofthrcrm.data.network.remote;
+package com.erkprog.zensofthrcrm.data.network;
 
 import android.content.Context;
+
+import com.erkprog.zensofthrcrm.BuildConfig;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ApiClient {
-
-  private static final String BASE_URL = "http://159.65.153.5/api/v1/";
 
   private static ApiInterface mApiService = null;
 
@@ -20,7 +20,7 @@ public final class ApiClient {
 
       final Retrofit retrofit = new Retrofit.Builder()
           .addConverterFactory(GsonConverterFactory.create())
-          .baseUrl(BASE_URL)
+          .baseUrl(BuildConfig.BASE_URL)
           .client(client)
           .build();
 

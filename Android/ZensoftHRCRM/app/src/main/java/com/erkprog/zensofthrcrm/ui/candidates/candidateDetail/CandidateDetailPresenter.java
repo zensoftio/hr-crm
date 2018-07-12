@@ -3,7 +3,7 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.network.remote.ApiInterface;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.erkprog.zensofthrcrm.data.network.remote;
+package com.erkprog.zensofthrcrm.data.network;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
@@ -15,9 +15,6 @@ public interface ApiInterface {
 
   @GET("candidates")
   Call<CandidatesResponse> getCandidates();
-
-  @GET("")
-  Call<CriteriasResponse> getCriteries();
 
   @GET("candidates/{id}")
   Call<Candidate> getDetailedCandidate(@Path("id") int id);
