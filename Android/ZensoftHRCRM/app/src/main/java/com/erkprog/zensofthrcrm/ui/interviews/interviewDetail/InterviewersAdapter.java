@@ -55,7 +55,8 @@ public class InterviewersAdapter extends ExpandableRecyclerViewAdapter<Interview
 
   }
 
-  public class CriteriaViewHolder extends ChildViewHolder {
+
+  class CriteriaViewHolder extends ChildViewHolder {
 
     private TextView criteriaName;
     private TextView rate;
@@ -103,4 +104,6 @@ public class InterviewersAdapter extends ExpandableRecyclerViewAdapter<Interview
       this.interviewerMail.setText(interviewerMail);
     }
   }
+
 }
+

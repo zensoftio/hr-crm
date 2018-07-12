@@ -61,15 +61,12 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
   @Override
   public void getInterviewsLocal() {
     List<Interview> interviews = mSQLiteHelper.getInterviews();
-    if (interviews != null)
+    if (interviews != null){
       mView.showInterviews(interviews);
-    else
+    }
+    else {
       mView.showNoInterviews();
-  }
-
-  @Override
-  public void onDestroy() {
-    unbind();
+    }
   }
 
   @Override

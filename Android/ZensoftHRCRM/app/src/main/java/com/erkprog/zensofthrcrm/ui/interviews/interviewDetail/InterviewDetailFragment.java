@@ -82,8 +82,9 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
 
       if (candidate.getPosition() != null) {
         Position position = candidate.getPosition();
-        if (position.getDepartment() != null)
+        if (position.getDepartment() != null) {
           mDepartment.setText(interview.getCandidate().getPosition().getDepartment().getName());
+        }
       }
     }
 
@@ -99,12 +100,18 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
 
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mPresenter.unbind();
+  }
+
   private List<Title> getList(List<Interviewer> interviewers) {
     List<Title> list = new ArrayList<>();
     for (int i = 0; i < interviewers.size(); i++) {
       List<SubTitle> subTitles = new ArrayList<>();
       SubTitle subTitle;
-      if (interviewers.get(i).getEvaluaionList() != null)
+      if (interviewers.get(i).getEvaluaionList() != null) {
         for (int j = 0; j < interviewers.get(i).getEvaluaionList().size(); j++) {
           Evaluation evaluation = interviewers.get(i).getEvaluaionList().get(j);
           subTitle = new SubTitle(evaluation.getCriteria().getName(), evaluation.getRate());
@@ -112,6 +119,7 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
             subTitle.setComment(interviewers.get(i).getComment());
           subTitles.add(subTitle);
         }
+      }
       Title model = new Title(interviewers.get(i).getUser().getEmail(),
           subTitles);
       list.add(model);

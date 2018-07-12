@@ -27,7 +27,6 @@ public interface InterviewsContract {
 
   interface Presenter extends ILifecycle<View> {
 
-    void onDestroy();
 
     // ?? void onRefreshData();
 

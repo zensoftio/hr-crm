@@ -22,8 +22,6 @@ public interface InterviewDetailContract {
 
   public interface Presenter extends ILifecycle<View> {
 
-    void onDestroy();
-
     void getDetailedInterview();
 
   }

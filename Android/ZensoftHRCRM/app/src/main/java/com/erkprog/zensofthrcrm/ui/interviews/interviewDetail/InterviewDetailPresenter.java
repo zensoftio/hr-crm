@@ -45,11 +45,6 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   }
 
   @Override
-  public void onDestroy() {
-    unbind();
-  }
-
-  @Override
   public void bind(InterviewDetailContract.View view) {
     mView = view;
   }

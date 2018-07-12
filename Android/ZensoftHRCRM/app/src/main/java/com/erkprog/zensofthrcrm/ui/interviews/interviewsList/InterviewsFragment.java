@@ -35,6 +35,12 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   }
 
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mPresenter.unbind();
+  }
+
   private RecyclerItemClickListener recyclerItemClickListener = new RecyclerItemClickListener() {
     @Override
     public void onItemClick(Integer position) {
@@ -53,11 +59,12 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
     mRecyclerView.setLayoutManager(layoutManager);
 
-    if (hasInternetConnection(v.getContext()))
+    if (hasInternetConnection(v.getContext())) {
       mPresenter.getInterviewsInternet();
-    else
+    }
+    else {
       mPresenter.getInterviewsLocal();
-
+    }
     return v;
   }
 

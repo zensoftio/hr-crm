@@ -19,8 +19,9 @@ public class InterviewDetail extends AppCompatActivity {
 
     Bundle args = new Bundle();
 
-    if (getIntent().getExtras() != null)
+    if (getIntent().getExtras() != null) {
       args.putInt(EXTRA_INTERVIEW_ID, getIntent().getExtras().getInt(EXTRA_INTERVIEW_ID));
+    }
 
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment = fm.findFragmentById(R.id.interview_detail_container);
@@ -33,9 +34,10 @@ public class InterviewDetail extends AppCompatActivity {
           .commit();
     }
 
-    if (getSupportActionBar() != null)
+    if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-  }
+    }
+    }
 
 
   @Override
