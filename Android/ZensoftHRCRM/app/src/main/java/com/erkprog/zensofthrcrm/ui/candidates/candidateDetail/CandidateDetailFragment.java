@@ -48,7 +48,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   private void initPresenter() {
-    mPresenter = new CandidateDetailPresenter(CRMApplication.getInstance(requireContext()).getServiceTest());
+    mPresenter = new CandidateDetailPresenter(CRMApplication.getInstance(requireContext())
+        .getApiService());
     mPresenter.bind(this);
   }
 
@@ -91,7 +92,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mEmail.setText(candidate.getEmail());
     mPhoneNumber.setText(candidate.getPhone());
 
-    if (candidate.getPosition() != null && candidate.getPosition().getDepartment() != null){
+    if (candidate.getPosition() != null && candidate.getPosition().getDepartment() != null) {
       mDepartment.setText(candidate.getPosition().getDepartment().getName());
     }
 

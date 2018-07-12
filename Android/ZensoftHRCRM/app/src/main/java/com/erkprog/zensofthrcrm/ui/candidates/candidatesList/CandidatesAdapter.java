@@ -18,7 +18,6 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
   private List<Candidate> mCandidates;
   private ItemClickListener mlistener;
 
-
   CandidatesAdapter(List<Candidate> candidates, ItemClickListener listener) {
     mCandidates = candidates;
     mlistener = listener;
@@ -39,6 +38,13 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
       holder.firstName.setText(candidate.getFirstName());
       holder.lastName.setText(candidate.getLastName());
       holder.status.setText(String.valueOf(candidate.getStatus()));
+
+      if (candidate.getPosition() != null) {
+        holder.position.setText(candidate.getPosition().getName());
+      }
+
+      String createdDate = candidate.getCreated();
+      holder.created.append(String.format(": %s", candidate.getCreated()));
     }
 
   }
@@ -60,16 +66,18 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
   static class CandidateViewHolder extends RecyclerView.ViewHolder {
     TextView firstName;
     TextView lastName;
-    TextView requestName;
+    TextView position;
     TextView status;
+    TextView created;
 
     CandidateViewHolder(View itemView, final ItemClickListener listener) {
       super(itemView);
 
       firstName = itemView.findViewById(R.id.citem_firstName);
       lastName = itemView.findViewById(R.id.citem_lastName);
-      requestName = itemView.findViewById(R.id.citem_request_name);
       status = itemView.findViewById(R.id.citem_status);
+      position = itemView.findViewById(R.id.citem_position);
+      created = itemView.findViewById(R.id.citem_created);
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
