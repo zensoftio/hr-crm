@@ -82,3 +82,73 @@ class RabbitMQ:
         print(" [.] Got %r" % self.response)
 
         return self.response
+
+    def on_response(self, ch, method, properties, body):
+        print('I have got the messsage from server')
+        self.response = body
+
+
+
+    def call_java(self, queryset=None, serializer=None, exchange_name='', exchange_type='topic', q_receiving='',
+             q_sending='', message=''):
+
+        self.response = None
+        self.q_sending = q_sending
+        self.q_receiving = q_receiving
+
+        self.channel.queue_declare(queue=self.q_receiving, durable=True)
+        self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
+        if queryset and serializer:
+            message = self.message_to_server(queryset, serializer)
+            cor_id = json.loads(message)
+            uuid = cor_id['uuid']
+        else:
+            message = message
+            uuid = ''
+
+        self.channel.basic_consume(self.on_response, no_ack=True,
+                                   queue=self.q_receiving)
+
+        self.channel.basic_publish(exchange=exchange_name,
+                                   routing_key=self.q_sending,
+                                   properties=pika.BasicProperties(
+                                       delivery_mode=2,  # make message persistent
+                                       correlation_id=uuid,
+                                       content_type='json'
+                                   ),
+                                   body=message)
+
+        while self.response is None:
+            self.connection.process_data_events()
+        
+        self.connection.close()
+        return self.response
+
+        
+
+    def on_request(self, ch, method, properties, body):
+        print("Have message from the client")
+        response = body
+
+        ch.basic_publish(exchange='',
+                         routing_key=self.q_sending,
+                         body=response)
+
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+
+
+    def consume(self, exchange_name='', exchange_type='topic', q_receiving='', q_sending=''):
+        self.q_receiving = q_receiving
+        self.q_sending = q_sending
+
+        self.channel.queue_declare(queue=self.q_receiving, durable=True)
+        self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
+        self.channel.queue_bind(exchange=exchange_name,
+                                queue=self.q_receiving,
+                                routing_key=self.q_sending)
+        print(' [*] Waiting for Messages. To exit press CTRL+C')
+
+        self.channel.basic_consume(self.on_request,
+                                   queue=self.q_receiving,
+                                   )
+        self.channel.start_consuming()

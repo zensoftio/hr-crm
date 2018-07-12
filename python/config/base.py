@@ -39,8 +39,14 @@ class Base(Configuration):
         'apps.requests',
         'apps.users',
         'apps.vacancies',
-        'apps.templates'
+        'apps.templates',
+
+        'djcelery',
     ]
+    import djcelery
+    djcelery.setup_loader()
+
+    BROKER_URL = "amqp://guest:guest@localhost:5672//"
 
     SOCIAL_AUTH_RAISE_EXCEPTIONS = True
     SOCIAL_AUTH_URL_NAMESPACE = 'social'
