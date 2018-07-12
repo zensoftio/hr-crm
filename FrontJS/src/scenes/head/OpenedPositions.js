@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../general/Header';
+import DateConvert from '../../utils/DateConvert';
 
 class OpenedPositions extends React.Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ class OpenedPositions extends React.Component {
 			.then(json => json.results.map(result => (
 				{
 					position: result.position.name,
-					created: result.created
+					created: DateConvert(result.created)
 				}
 			)))
 			.then(positionList => this.setState({
