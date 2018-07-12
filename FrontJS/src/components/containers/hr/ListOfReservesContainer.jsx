@@ -1,22 +1,59 @@
-import React from "react";
+import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import {Link} from "react-router-dom";
+import { CANDIDATES_URL } from "../../../utils/urls";
+import { Link } from "react-router-dom";
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
 
-const ListOfReserves = (props) => {
 
-    function MakeLinked(element, link) {
-        return <Link to={link}>{element} </Link>;
+const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'ПРОФИЛЬ'];
+
+const QUERY_URL = CANDIDATES_URL + '?status=IN_RESERVE';
+
+
+class ListOfReserves extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        }
     }
 
-    const data = [
-        ['Islam Akylbek uulu', 'JavaScript', 'asdf@gmail.com', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Name surname', 'Python', 'asdf@gmail.com', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Human human', 'Java', 'asdf@gmail.com', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-    ];
+    makeLinked = (element, link) => (
+        <Link to={link}>{element} </Link>
+    );
 
-    const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'EMAIL', 'КОММЕНТАРИЙ', 'ВЛОЖЕНИЕ', 'ПРОФИЛЬ'];
+    getLink = (id) => {
+        return CANDIDATES_URL + '/' + id;
+    };
 
-    return (<TableList header={header} data={data}/>);
+
+    componentWillMount = () => {
+        FetchDataAPI(QUERY_URL)
+            .then(response => response.results.map(
+                item => (
+                    {
+                        id: item.id,
+                        full_name: item.first_name + ' ' + item.last_name,
+                        language: item.position.department.name,
+                    }
+                )
+            ))
+            .then(data => this.setState({data}))
+    };
+
+    render() {
+        const { data } = this.state;
+        const reservedCandidates = data.map(
+            item => [
+                item.full_name,
+                item.language,
+                this.makeLinked('Открыть', this.getLink(item.id))
+            ]
+        );
+
+        return (<TableList header={header} data={reservedCandidates}/>);
+    }
 }
 
 export default ListOfReserves;

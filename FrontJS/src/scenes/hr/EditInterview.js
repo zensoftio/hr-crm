@@ -7,7 +7,6 @@ class EditInterview extends Component {
         return (
             <div>
                 <Header title="Изменить интервью"/>
-
                 <EditInterviewContainer/>
             </div>
 

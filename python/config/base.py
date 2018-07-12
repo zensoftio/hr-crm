@@ -136,7 +136,7 @@ class Base(Configuration):
         },
     ]
 
-    LOGIN_REDIRECT_URL='/api/v1/devices/'
+    LOGIN_REDIRECT_URL = '/api/v1/devices/'
 
     for config in TEMPLATES:
         config['OPTIONS']['debug'] = DEBUG

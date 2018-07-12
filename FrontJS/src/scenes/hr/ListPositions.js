@@ -4,6 +4,7 @@ import Header from '../../scenes/general/Header';
 
 class PositionList extends Component {
     render() {
+
         return (
             <div>
                 <Header title="Список заявок на подбор персонала"/>

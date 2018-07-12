@@ -22,8 +22,8 @@ const HRNav = [
         component: PositionList
     },
     {
-        name: "Создать вакансию",
-        path: "/create_vacancy",
+        name: "",
+        path: "/create_vacancy/:id",
         component: CreateVacancy
     },
     {
@@ -83,7 +83,7 @@ export default class HRScene extends Component {
 
                     <div className="content">
                         <Switch>
-                            <Route path="/" component={OpenedVacancies} exact/>
+                            <Route path="/" component={PositionList} exact/>
                             <SpecifyTheRoute route={HRNav}/>
                             <Route component={Error}/>
                         </Switch>

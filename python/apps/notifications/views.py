@@ -10,7 +10,6 @@ from apps.notifications.serializers import DeviceSerializer
 class CreateDeviceView(CreateAPIView):
     serializer_class = DeviceSerializer
     queryset = FCMDevice.objects.all()
-    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         device = FCMDevice(**request.data)
