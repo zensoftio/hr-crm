@@ -38,7 +38,6 @@ public class DieselPublisherService implements PublisherService {
     }
 
     @Override
-    @Transactional
     public VacancyResponse publish(Vacancy vacancy) {
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);

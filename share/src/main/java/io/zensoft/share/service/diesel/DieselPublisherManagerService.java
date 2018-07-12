@@ -13,6 +13,7 @@ import io.zensoft.share.service.model.impl.DefaultVacancyModelService;
 import io.zensoft.share.service.model.impl.DefaultVacancyResponseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DieselPublisherManagerService implements PublisherManagerService {
@@ -40,6 +41,7 @@ public class DieselPublisherManagerService implements PublisherManagerService {
     }
 
     @Override
+    @Transactional
     public void publish(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
         vacancyModelService.save(vacancy);
