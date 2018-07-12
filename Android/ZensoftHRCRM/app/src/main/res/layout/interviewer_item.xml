@@ -25,6 +25,7 @@
           android:layout_width="match_parent"
           android:gravity="center|left"
           android:layout_height="wrap_content"
+          android:layout_margin="5dp"
           android:layout_marginLeft="10dp"
           tools:text="@string/interviewer"/>
 
@@ -32,6 +33,7 @@
           android:id="@+id/arrow"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_margin="5dp"
           android:layout_alignParentRight="true"
           android:src="@drawable/ic_arrow_down"/>
 

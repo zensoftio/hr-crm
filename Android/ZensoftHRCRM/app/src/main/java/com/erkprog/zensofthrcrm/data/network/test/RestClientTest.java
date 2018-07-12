@@ -2,7 +2,7 @@ package com.erkprog.zensofthrcrm.data.network.test;
 
 import android.content.Context;
 
-import com.tientun.mockresponse.FakeInterceptor;
+import com.erkprog.zensofthrcrm.BuildConfig;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -16,12 +16,11 @@ public final class RestClientTest {
     if (mRestService == null) {
       final OkHttpClient client = new OkHttpClient
           .Builder()
-          .addInterceptor(new FakeInterceptor(context))
           .build();
 
       final Retrofit retrofit = new Retrofit.Builder()
           .addConverterFactory(GsonConverterFactory.create())
-          .baseUrl("http://mock.api")
+          .baseUrl(BuildConfig.BASE_URL)
           .client(client)
           .build();
 

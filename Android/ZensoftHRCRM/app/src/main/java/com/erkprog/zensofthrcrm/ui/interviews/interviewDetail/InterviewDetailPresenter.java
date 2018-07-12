@@ -1,42 +1,65 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
-public class InterviewDetailPresenter implements InterviewDetailContract.Presenter,
-    InterviewDetailContract.Repository.OnFinishedListener {
+public class InterviewDetailPresenter implements InterviewDetailContract.Presenter {
 
   private InterviewDetailContract.View mView;
-  private InterviewDetailContract.Repository mRepository;
+  private RestServiceTest mService;
 
-  public InterviewDetailPresenter(InterviewDetailContract.View view, InterviewDetailContract
-      .Repository
-      repository) {
-    this.mView = view;
-    this.mRepository = repository;
+  InterviewDetailPresenter(InterviewDetailContract.View view, RestServiceTest service) {
+    mView = view;
+    mService = service;
   }
 
   @Override
-  public void getDetailedInterview(Context mContext, Integer interviewId) {
-    mRepository.getInterviewDetails(this, mContext);
+  public void getDetailedInterview() {
+
+    mService.getDetailedInterview().enqueue(new Callback<Interview>() {
+      @Override
+      public void onResponse(Call<Interview> call, Response<Interview> response) {
+        if (isViewAttached()) {
+          if (response.isSuccessful() && response.body() != null) {
+            mView.showInterviewDetails(response.body());
+          } else {
+            mView.showNoInterviewDetails();
+          }
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Interview> call, Throwable t) {
+        if (isViewAttached()) {
+          mView.showMessage(t.getMessage());
+        }
+      }
+    });
+
+
   }
 
   @Override
   public void onDestroy() {
-
+    unbind();
   }
 
   @Override
-  public void onFinished(Interview interview) {
-    mView.showInterviewDetails(interview);
+  public void bind(InterviewDetailContract.View view) {
+    mView = view;
+  }
+
+  private boolean isViewAttached() {
+    return mView != null;
   }
 
   @Override
-  public void onFailure(Throwable t) {
-    // something on failure
-    Log.d("me", "onFailure: " + t.getMessage());
+  public void unbind() {
+    mView = null;
   }
 }

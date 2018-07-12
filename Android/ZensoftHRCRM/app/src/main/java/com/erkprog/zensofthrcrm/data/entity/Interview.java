@@ -10,7 +10,7 @@ public class Interview {
   @SerializedName("date")
   private String date;
   @SerializedName("status")
-  private Integer status;
+  private String status;
   @SerializedName("candidate")
   private Candidate candidate;
   @SerializedName("interviewers")
@@ -40,11 +40,11 @@ public class Interview {
     this.date = date;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

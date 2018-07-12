@@ -12,11 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Evaluation;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.Interviewer;
-import com.erkprog.zensofthrcrm.data.network.interviews.InterviewsRepository;
+import com.erkprog.zensofthrcrm.data.entity.Position;
+import com.erkprog.zensofthrcrm.data.entity.SubTitle;
+import com.erkprog.zensofthrcrm.data.entity.Title;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +30,8 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   private static final String EXTRA_INTERVIEW_ID = "interview_id";
 
   private InterviewDetailContract.Presenter mPresenter;
-  private Context mContext;
 
-  private RecyclerView recyclerView;
-  private RecyclerView.LayoutManager layoutManager;
+  private RecyclerView mRecyclerView;
 
   private TextView mInitial;
   private TextView mDepartment;
@@ -38,6 +40,9 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    mPresenter = new InterviewDetailPresenter(this, CRMApplication.getInstance(requireContext())
+        .getServiceTest());
+    mPresenter.bind(this);
   }
 
 
@@ -48,10 +53,10 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
 
     initUI(v);
 
-    mPresenter = new InterviewDetailPresenter(this, new InterviewsRepository());
-    mPresenter.getDetailedInterview(mContext, getArguments().getInt(EXTRA_INTERVIEW_ID));
+//    mPresenter.getDetailedInterview(mContext, getArguments().getInt(EXTRA_INTERVIEW_ID));
+    mPresenter.getDetailedInterview();
 
-    recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviewers);
+    mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviewers);
 
     return v;
   }
@@ -68,19 +73,27 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   public void showInterviewDetails(Interview interview) {
 
     if (interview.getCandidate() != null) {
-      if (interview.getCandidate().getPosition().getDepartment() != null)
-        mDepartment.setText(interview.getCandidate().getPosition().getDepartment().getName());
+      Candidate candidate = interview.getCandidate();
 
-      String name = String.format("%1s 2%s", interview.getCandidate().getFirstName(), interview
-          .getCandidate().getLastName());
-      mInitial.setText(name);
+      String candidateName = String.format("%1s %2s", interview.getCandidate().getFirstName(),
+          interview
+              .getCandidate().getLastName());
+      mInitial.setText(candidateName);
+
+      if (candidate.getPosition() != null) {
+        Position position = candidate.getPosition();
+        if (position.getDepartment() != null)
+          mDepartment.setText(interview.getCandidate().getPosition().getDepartment().getName());
+      }
     }
+
     mDate.setText(interview.getDate());
+
     if (interview.getInterviewersList() != null) {
       List<Title> list = getList(interview.getInterviewersList());
-      InterviewersAdapter adapter = new InterviewersAdapter(mContext, list);
-      recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-      recyclerView.setAdapter(adapter);
+      InterviewersAdapter adapter = new InterviewersAdapter(list);
+      mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      mRecyclerView.setAdapter(adapter);
     }
 
 
@@ -106,15 +119,25 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
     return list;
   }
 
+
+  @Override
+  public void showNoInterviewDetails() {
+
+  }
+
   @Override
   public void showLoadingInterviewError() {
 
   }
 
   @Override
-  public void showToast(String message) {
+  public void showMessage(String message) {
 
   }
 
+  @Override
+  public boolean hasInternetConnection(Context context) {
+    return false;
+  }
 }
 

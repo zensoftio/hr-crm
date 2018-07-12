@@ -20,7 +20,7 @@ public class Request {
   @SerializedName("position")
   private Position position;
   @SerializedName("status")
-  private Integer status;
+  private String status;
   @SerializedName("requirements")
   private List<Requirement> requirementList = null;
 
@@ -80,11 +80,11 @@ public class Request {
     this.position = position;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

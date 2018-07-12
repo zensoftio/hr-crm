@@ -9,7 +9,7 @@ public class CandidateInterviewItem {
   @SerializedName("id")
   private Integer id;
   @SerializedName("status")
-  private Integer status;
+  private String status;
   //  @SerializedName("date")
 //  private Date date;
   @SerializedName("date")
@@ -25,11 +25,11 @@ public class CandidateInterviewItem {
     this.id = id;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

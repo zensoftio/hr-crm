@@ -7,8 +7,20 @@ public class Requirement {
   private Integer id;
   @SerializedName("name")
   private String name;
+
   @SerializedName("department")
   private Department department;
+
+  @SerializedName("type")
+  private Integer type;
+
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
 
   public Integer getId() {
     return id;

@@ -52,6 +52,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter, Candid
       List<Candidate> candidates = response.body().getCandidateList();
       mView.showCandidates(candidates);
 
+
     } else {
       mView.showToast("Response is not successfull");
     }

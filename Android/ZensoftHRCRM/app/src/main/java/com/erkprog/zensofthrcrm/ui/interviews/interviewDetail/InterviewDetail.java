@@ -18,7 +18,9 @@ public class InterviewDetail extends AppCompatActivity {
     setContentView(R.layout.activity_interview_detail);
 
     Bundle args = new Bundle();
-    args.putInt(EXTRA_INTERVIEW_ID, getIntent().getExtras().getInt(EXTRA_INTERVIEW_ID));
+
+    if (getIntent().getExtras() != null)
+      args.putInt(EXTRA_INTERVIEW_ID, getIntent().getExtras().getInt(EXTRA_INTERVIEW_ID));
 
     FragmentManager fm = getSupportFragmentManager();
     Fragment fragment = fm.findFragmentById(R.id.interview_detail_container);
