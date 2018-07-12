@@ -3,7 +3,6 @@ package io.zensoft.share.service.model;
 import io.zensoft.share.model.PublisherServiceType;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

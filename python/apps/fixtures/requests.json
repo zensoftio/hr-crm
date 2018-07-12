@@ -8,7 +8,7 @@
         "created_by": 1,
         "modified": "2018-07-03T04:06:35.096Z",
         "position": 1,
-        "status": 2,
+        "status": "NOT_REVIEWED",
         "requirements": [
             7,
             8
@@ -24,7 +24,7 @@
         "created_by": 2,
         "modified": "2018-07-03T04:06:49.141Z",
         "position": 2,
-        "status": 3,
+        "status": "NOT_REVIEWED",
         "requirements": [
             1,
             2
@@ -40,7 +40,7 @@
         "created_by": 1,
         "modified": "2018-07-03T04:07:26.327Z",
         "position": 4,
-        "status": 1,
+        "status": "APPROVED",
         "requirements": [
             7
         ]

@@ -14,6 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class RequirementDto {
+    private long id;
+    private DepartmentDto department;
     private String name;
-    private int type;
+    private String type;
 }

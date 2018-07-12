@@ -4,10 +4,12 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
-    PublicationSerializer, VacancyPartialUpdateSerializer, JavaVacancySerializer
+                  PublicationSerializer, VacancyPartialUpdateSerializer, JavaVacancySerializer
 
 from .tasks import send_message_to_java
 from django.contrib import messages
+
+
 class VacancyListView(generics.ListCreateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
@@ -40,4 +42,3 @@ class PublicationList(generics.ListCreateAPIView):
 class PublicationDetail(generics.RetrieveAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
-

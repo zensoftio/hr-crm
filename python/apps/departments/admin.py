@@ -1,5 +1,8 @@
 from django.contrib import admin
+
 from apps.departments.models import Position, Requirement, Department
 
-admin.site.register([Department, Requirement, Position])
 
+admin.site.register(Department)
+admin.site.register(Requirement)
+admin.site.register(Position)

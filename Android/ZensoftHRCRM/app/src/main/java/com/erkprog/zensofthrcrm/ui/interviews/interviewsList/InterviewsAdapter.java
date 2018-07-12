@@ -41,22 +41,22 @@ public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.In
   public void onBindViewHolder(@NonNull InterviewViewHolder holder, int position) {
 
     final Interview interview = mInterviews.get(position);
-    Department department = interview.getRequest().getDepartment();
-    Candidate candidate = interview.getCandidate();
-
-    holder.department.setText(department.getName() != null ? department.getName() : "No Department");
-    holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "No First Name");
-    holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "No Last Name");
-    holder.date.setText(interview.getDate() != null ? interview.getDate() : "No Date");
-    holder.status.setText(interview.getStatus() != null ? interview.getStatus().toString() : "No Status");
-
-
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        recyclerItemClickListener.onItemClick();
-      }
-    });
+////    Department department = interview.getRequest().getDepartment();
+//    Candidate candidate = interview.getCandidate();
+//
+//    holder.department.setText(department.getName() != null ? department.getName() : "No Department");
+//    holder.firstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "No First Name");
+//    holder.lastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "No Last Name");
+//    holder.date.setText(interview.getDate() != null ? interview.getDate() : "No Date");
+//    holder.status.setText(interview.getStatus() != null ? interview.getStatus().toString() : "No Status");
+//
+//
+//    holder.itemView.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        recyclerItemClickListener.onItemClick();
+//      }
+//    });
 
   }
 

@@ -7,7 +7,6 @@ from .models import Vacancy, Publication
 from apps.departments.models import Requirement, Department
 
 
-
 class VacancyDepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
@@ -20,7 +19,6 @@ class VacancyRequirementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement
         fields = ('department', 'name', 'type')
-
 
 class VacancyListSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='request.position.name')

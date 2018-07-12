@@ -1,12 +1,9 @@
 package io.zensoft.share.listener.Facebook;
 
 import io.zensoft.share.config.rabbitmq.RabbitMqComponentDeclarationConfiguration;
-import io.zensoft.share.config.rabbitmq.RabbitMqExchangeBindingConfiguration;
 import io.zensoft.share.dto.VacancyDto;
 import io.zensoft.share.listener.VacancyListener;
 import io.zensoft.share.service.PublisherManagerService;
-import io.zensoft.share.service.converter.DefaultVacancyConverterService;
-import io.zensoft.share.service.converter.DefaultVacancyResponseConverterService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
