@@ -4,6 +4,7 @@ import { Button, CircularProgress } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { REQUESTS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import DateConvert from "../../../utils/DateConvert";
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
@@ -21,14 +22,6 @@ class ListOfPositions extends Component {
             data: [],
         };
     }
-
-    dateConvert = (date) => {
-        return new Date(date).toLocaleString('ru', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
 
     initStatus = (status) => {
         if(status === 'NOT_REVIEWED'){
@@ -68,7 +61,7 @@ class ListOfPositions extends Component {
         const array = data.map(item => {
             return [
                 item.title,
-                this.dateConvert(item.created),
+                DateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
                 button]
