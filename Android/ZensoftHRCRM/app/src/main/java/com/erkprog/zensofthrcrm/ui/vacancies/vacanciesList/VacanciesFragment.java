@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
@@ -26,6 +27,8 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
 
   private VacanciesContract.Presenter mPresenter;
   private VacanciesAdapter mAdapter;
+  private RecyclerView mRecyclerView;
+  private ProgressBar mProgressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_vacancies_list, container, false);
+    mProgressBar = v.findViewById(R.id.vacancies_progress_bar);
+    dismissProgress();
     initRecyclerView(v);
     return v;
   }
@@ -54,24 +59,30 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   private void initRecyclerView(View v) {
-
-    final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_vacancies);
+    mRecyclerView = v.findViewById(R.id.recycler_view_all_vacancies);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-    recyclerView.setLayoutManager(layoutManager);
-
-    List<Vacancy> vacancies = new ArrayList<>();
-    mAdapter = new VacanciesAdapter(vacancies, this);
-    recyclerView.setAdapter(mAdapter);
+    mRecyclerView.setLayoutManager(layoutManager);
   }
 
   @Override
   public void showVacancies(List<Vacancy> vacancies) {
-    mAdapter.loadNewData(vacancies);
+    mAdapter = new VacanciesAdapter(vacancies, this);
+    mRecyclerView.setAdapter(mAdapter);
   }
 
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void dismissProgress() {
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override

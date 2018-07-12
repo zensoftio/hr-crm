@@ -52,7 +52,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
 
   @Override
   public int getItemCount() {
-    return mRequests != null ? mRequests.size() : 0;
+    return mRequests.size();
   }
 
   public void loadNewData(List<Request> data) {

@@ -4,4 +4,8 @@ public interface BaseView {
 
   void showMessage(String message);
 
+  void showProgress();
+
+  void dismissProgress();
+
 }

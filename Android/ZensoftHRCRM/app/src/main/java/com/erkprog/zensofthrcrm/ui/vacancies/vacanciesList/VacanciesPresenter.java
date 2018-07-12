@@ -20,10 +20,12 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   @Override
   public void loadData() {
+    mView.showProgress();
     mApiService.getVacancies().enqueue(new Callback<VacanciesResponse>() {
       @Override
       public void onResponse(Call<VacanciesResponse> call, Response<VacanciesResponse> response) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           if (response.isSuccessful() && response.body().getVacancyList() != null) {
             mView.showVacancies(response.body().getVacancyList());
           } else {
@@ -35,6 +37,7 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
       @Override
       public void onFailure(Call<VacanciesResponse> call, Throwable t) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           mView.showMessage(t.getMessage());
         }
       }

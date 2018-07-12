@@ -22,10 +22,12 @@ public class RequestsPresenter implements RequestsContract.Presenter {
 
   @Override
   public void loadData() {
+    mView.showProgress();
     mApiService.getRequests().enqueue(new Callback<RequestsResponse>() {
       @Override
       public void onResponse(@NonNull Call<RequestsResponse> call, @NonNull Response<RequestsResponse> response) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           if (response.isSuccessful() && response.body().getRequestList() != null) {
             mView.showRequests(response.body().getRequestList());
           } else {
@@ -37,6 +39,7 @@ public class RequestsPresenter implements RequestsContract.Presenter {
       @Override
       public void onFailure(@NonNull Call<RequestsResponse> call, @NonNull Throwable t) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           mView.showMessage(t.getMessage());
         }
       }

@@ -140,6 +140,16 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   }
 
   @Override
+  public void showProgress() {
+
+  }
+
+  @Override
+  public void dismissProgress() {
+
+  }
+
+  @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode != Activity.RESULT_OK) {
       return;

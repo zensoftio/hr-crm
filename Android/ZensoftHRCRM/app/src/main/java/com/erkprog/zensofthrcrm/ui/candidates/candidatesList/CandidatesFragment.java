@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
@@ -21,10 +22,12 @@ import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidatesFragment extends Fragment implements CandidatesContract.View, ItemClickListener{
+public class CandidatesFragment extends Fragment implements CandidatesContract.View, ItemClickListener {
 
   private CandidatesContract.Presenter mPresenter;
   private CandidatesAdapter mAdapter;
+  private RecyclerView mRecyclerView;
+  private ProgressBar mProgressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
     initRecyclerView(v);
+    mProgressBar = v.findViewById(R.id.candidates_progress_bar);
+    dismissProgress();
     return v;
   }
 
@@ -52,19 +57,15 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   private void initRecyclerView(View v) {
-
-    final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_candidates);
+    mRecyclerView = v.findViewById(R.id.recycler_view_all_candidates);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-    recyclerView.setLayoutManager(layoutManager);
-
-    List<Candidate> candidates = new ArrayList<>();
-    mAdapter = new CandidatesAdapter(candidates, this);
-    recyclerView.setAdapter(mAdapter);
+    mRecyclerView.setLayoutManager(layoutManager);
   }
 
   @Override
   public void showCandidates(List<Candidate> candidates) {
-    mAdapter.loadNewData(candidates);
+    mAdapter = new CandidatesAdapter(candidates, this);
+    mRecyclerView.setAdapter(mAdapter);
   }
 
   @Override
@@ -76,6 +77,16 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void dismissProgress() {
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override

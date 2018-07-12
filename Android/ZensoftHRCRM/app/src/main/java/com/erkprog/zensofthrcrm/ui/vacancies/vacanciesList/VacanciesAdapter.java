@@ -50,7 +50,7 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
 
   @Override
   public int getItemCount() {
-    return (mVacancies != null ? mVacancies.size() : 0);
+    return mVacancies.size();
   }
 
   public Vacancy getVacancy(int position) {

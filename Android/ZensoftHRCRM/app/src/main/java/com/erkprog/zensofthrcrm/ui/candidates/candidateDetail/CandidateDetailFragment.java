@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   private int mCandidateId;
 
   private LinearLayout mLayout;
+  private ProgressBar mProgressBar;
 
   private TextView mFirstName;
   private TextView mLastName;
@@ -83,6 +85,8 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPhoneNumber = v.findViewById(R.id.cd_phone);
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
+    mProgressBar = v.findViewById(R.id.cd_progress_bar);
+    dismissProgress();
   }
 
   @Override
@@ -226,6 +230,16 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void dismissProgress() {
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override

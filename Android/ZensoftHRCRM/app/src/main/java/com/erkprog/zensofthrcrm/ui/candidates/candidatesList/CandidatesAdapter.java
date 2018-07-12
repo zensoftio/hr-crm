@@ -50,7 +50,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
 
   @Override
   public int getItemCount() {
-    return (mCandidates != null ? mCandidates.size() : 0);
+    return mCandidates.size();
   }
 
   public void loadNewData(List<Candidate> candidates) {

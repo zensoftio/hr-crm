@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
@@ -16,14 +17,15 @@ import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RequestsFragment extends Fragment implements RequestsContract.View, ItemClickListener{
+public class RequestsFragment extends Fragment implements RequestsContract.View, ItemClickListener {
   private static final String TAG = "REQUESTS FRAGMENT";
 
   private RequestsContract.Presenter mPresenter;
   private RequestsAdapter mAdapter;
+  private RecyclerView mRecyclerView;
+  private ProgressBar mProgressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +43,16 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_requests_list, container, false);
+    mProgressBar = v.findViewById(R.id.requests_progress_bar);
+    dismissProgress();
     initRecyclerView(v);
     return v;
+  }
+
+  private void initRecyclerView(View v) {
+    mRecyclerView = v.findViewById(R.id.recycler_view_all_requests);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    mRecyclerView.setLayoutManager(layoutManager);
   }
 
   @Override
@@ -51,28 +61,29 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
     mPresenter.loadData();
   }
 
-  private void initRecyclerView(View v) {
-    final RecyclerView recyclerView = v.findViewById(R.id.recycler_view_all_requests);
-    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-    recyclerView.setLayoutManager(layoutManager);
-
-    List<Request> requests = new ArrayList<>();
-    mAdapter = new RequestsAdapter(requests, this);
-    recyclerView.setAdapter(mAdapter);
-  }
-
   public static RequestsFragment newInstance() {
     return new RequestsFragment();
   }
 
   @Override
   public void showRequests(List<Request> requests) {
-    mAdapter.loadNewData(requests);
+    mAdapter = new RequestsAdapter(requests, this);
+    mRecyclerView.setAdapter(mAdapter);
   }
 
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void dismissProgress() {
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override

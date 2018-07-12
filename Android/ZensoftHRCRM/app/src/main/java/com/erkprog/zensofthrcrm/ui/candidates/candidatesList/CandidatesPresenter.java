@@ -19,10 +19,12 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
 
   @Override
   public void loadCandidates() {
+    mView.showProgress();
     mApiService.getCandidates().enqueue(new Callback<CandidatesResponse>() {
       @Override
       public void onResponse(Call<CandidatesResponse> call, Response<CandidatesResponse> response) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           if (response.isSuccessful() && response.body().getCandidateList() != null) {
             mView.showCandidates(response.body().getCandidateList());
           } else {
@@ -34,6 +36,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
       @Override
       public void onFailure(Call<CandidatesResponse> call, Throwable t) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           mView.showMessage(t.getMessage());
         }
       }

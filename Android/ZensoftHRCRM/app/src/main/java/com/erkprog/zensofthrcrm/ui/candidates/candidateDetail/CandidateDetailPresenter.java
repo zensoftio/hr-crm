@@ -10,7 +10,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter {
-  private static final String TAG = "CandidateDetailPresente";
   private CandidateDetailContract.View mView;
   private Candidate mCandidate;
   private ApiInterface mApiService;
@@ -21,10 +20,12 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
 
   @Override
   public void loadCandidateInfo(int candidateId) {
+    mView.showProgress();
     mApiService.getDetailedCandidate(candidateId).enqueue(new Callback<Candidate>() {
       @Override
       public void onResponse(Call<Candidate> call, Response<Candidate> response) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           if (response.isSuccessful() && response.body() != null) {
             mCandidate = response.body();
             mView.showCandidateDetails(mCandidate);
@@ -37,6 +38,7 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
       @Override
       public void onFailure(Call<Candidate> call, Throwable t) {
         if (isViewAttached()) {
+          mView.dismissProgress();
           mView.showMessage(t.getMessage());
         }
       }
