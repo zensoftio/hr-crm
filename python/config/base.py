@@ -26,14 +26,14 @@ class Base(Configuration):
         'django_filters',
         'corsheaders',
 
-        'rest_framework.authtoken',
         'social_django',
-        'rest_social_auth',
         'oauth2_provider',
+        'rest_framework.authtoken',
         'rest_framework_social_oauth2',
         'fcm_django',
 
         'apps.candidates',
+        'apps.authentication',
         'apps.departments',
         'apps.interviews',
         'apps.requests',
@@ -48,7 +48,7 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
-    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
     CORS_ORIGIN_ALLOW_ALL = True
 
     FCM_SERVER_KEY = values.SecretValue().to_python(os.environ.get('DJANGO_FCM_SERVER_KEY'))
@@ -58,10 +58,22 @@ class Base(Configuration):
     }
 
     AUTHENTICATION_BACKENDS = (
-        'social_core.backends.facebook.FacebookOAuth2',
         'social_core.backends.google.GoogleOAuth2',
+        'social_core.backends.google.GooglePlusAuth',
         'rest_framework_social_oauth2.backends.DjangoOAuth2',
         'django.contrib.auth.backends.ModelBackend',)
+
+    SOCIAL_AUTH_PIPELINE = (
+        'social_core.pipeline.social_auth.social_details',
+        'social_core.pipeline.social_auth.social_uid',
+        'social_core.pipeline.social_auth.auth_allowed',
+        'social_core.pipeline.social_auth.social_user',
+        'social_core.pipeline.user.get_username',
+        'social_core.pipeline.social_auth.associate_by_email',
+        'social_core.pipeline.social_auth.associate_user',
+        'social_core.pipeline.social_auth.load_extra_data',
+        'social_core.pipeline.user.user_details',
+    )
 
     MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
@@ -124,6 +136,8 @@ class Base(Configuration):
         },
     ]
 
+    LOGIN_REDIRECT_URL = '/api/v1/devices/'
+
     for config in TEMPLATES:
         config['OPTIONS']['debug'] = DEBUG
 
@@ -153,8 +167,9 @@ class Base(Configuration):
     ]
 
     REST_FRAMEWORK = {
-        'DEFAULT_PAGINATION_CLASS': 'config.pagination.SizedPageNumberPagination',
+        'DEFAULT_PAGINATION_CLASS': 'apps.utils.pagination.SizedPageNumberPagination',
         'PAGE_SIZE': 10,
+        'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.AllowAny',
         ],
@@ -164,6 +179,8 @@ class Base(Configuration):
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
             'rest_framework_social_oauth2.authentication.SocialAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
         ),
     }
 

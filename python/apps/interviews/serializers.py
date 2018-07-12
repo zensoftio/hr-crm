@@ -26,7 +26,7 @@ class AuxCandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         depth = 3
-        fields = ('id', 'first_name', 'last_name', 'position', 'status')
+        fields = ('id', 'first_name', 'last_name', 'position', 'status','created')
 
 
 class EvaluationSerializer(serializers.ModelSerializer):
@@ -58,6 +58,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
     """Serializer for Interviews List Endpoint"""
     interviewers = InterviewerSerializer(many=True)
     candidate = AuxCandidateSerializer()
+    filter_fields = ('status',)
 
     class Meta:
         model = Interview

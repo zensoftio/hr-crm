@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
+from rest_condition import Or
 from rest_framework import generics, status
 from rest_framework.response import Response
 
 from apps.requests.models import Request
 from apps.requests.serializer import RequestListSerializer, RequestDetailSerializer, \
     RequestCreateOrUpdateSerializer
+from apps.users.permissions import IsHeadOfDepartment, IsPM
 
 User = get_user_model()
 
@@ -12,6 +14,8 @@ User = get_user_model()
 class RequestListCreateView(generics.ListCreateAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestListSerializer
+    filter_fields = ('position__department', 'status')
+
 
     def create(self, request, *args, **kwargs):
         write_serializer = RequestCreateOrUpdateSerializer(data=request.data)

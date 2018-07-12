@@ -1,61 +1,65 @@
 import { EventService } from './event.service';
 import { Controller } from '@nestjs/common';
-import * as Amqp from "amqp-ts";
-
 import deasyncPromise from 'deasync-promise';
+import * as Amqp from 'amqp-ts'
 import * as connection from 'Rabbit';
-
+const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
+const queue = connection.default.declareQueue('event', {durable: false});
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {
-       this.queue = connection.default.declareQueue("event", {durable: true});
-       this.queue.activateConsumer(this._onMessage, {noAck: true});
+       this.initRabbitMQ();
   }
 
-  public async getActionFromMessage(message, callback) {
+  public async getDataFromService(message: any) {
+    let msg = {
+      'title': message.title,
+      'body': message.body
+    }
     try{
-      this.msg = {
-        'title': message.title,
-        'body': message.body
+      if(msg.title === 'create'){
+        msg.body = await this.eventService.createEvent(msg);
       }
-      if(this.msg.title === 'create'){
-        this.msg.body = await this.eventService.createEvent(this.msg);
+      else if(msg.title === 'update'){
+         msg.body = await this.eventService.updateEvent(msg);
       }
-      else if(this.msg.title === 'update'){
-         this.msg.body = await this.eventService.updateEvent(this.msg);
+      else if(msg.title === 'getone'){
+        msg.body = await this.eventService.getOne(msg);
       }
-      else if(this.msg.title === 'getone'){
-        this.msg.body = await this.eventService.getOne(this.msg);
+      else if(msg.title === 'getlist'){
+         msg.body = await this.eventService.getList();
       }
-      else if(this.msg.title === 'getlist'){
-         this.msg.body = await this.eventService.getList();
-      }
-      else if(this.msg.title === 'remove'){
-         this.msg.body = await this.eventService.removeEvent(this.msg);
+      else if(msg.title === 'remove'){
+         msg.body = await this.eventService.removeEvent(msg);
       }
       else{
-         this.msg.body = await 'Incorrect title';
+         msg.body = await 'Incorrect title';
       }
     }
     catch(err){
-      this.msg.body = err;
+      msg.body = err;
     }
-    callback(this.msg);
+    this.sendResponse(msg);
+  }
+  private async sendResponse(res) {
+    connection.default.declareQueue("event-response", {durable: false})
+    connection.default.completeConfiguration().then(() => {
+      const msg2 = new Amqp.Message(JSON.stringify(res));
+      exchange.send(msg2, 'event-response');
+      console.log(' [x] Sent event-response  \'' + msg2.getContent() + '\'');
+    });
   }
 
-   private _onMessage = (message) => {
-     const json = JSON.parse(message.getContent());
-     let answer;
-     let done = false;
-     
-     this.getActionFromMessage(json, function(result){
-       answer = result;
-       done = true;
-     });
+  private initRabbitMQ(){
+    queue.bind(exchange, 'event');
+    queue.activateConsumer((message) => {
+        const data = JSON.parse(message.getContent());
+        console.log("GET");
+        console.log(data)
+        console.log("GET");
+        this.getDataFromService(data);
+    }, {noAck: true})
+  }
 
-     require('deasync').loopWhile(function(){return !done});
-
-     return answer;
-   }
 }

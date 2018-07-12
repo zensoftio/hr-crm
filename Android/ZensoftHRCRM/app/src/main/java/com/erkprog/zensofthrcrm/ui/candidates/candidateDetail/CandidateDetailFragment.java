@@ -21,8 +21,7 @@ import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.BaseFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class CandidateDetailFragment extends BaseFragment implements CandidateDetailContract.View,
     View.OnClickListener {
@@ -32,10 +31,6 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
   private CandidateDetailContract.Presenter mPresenter;
 
   private LinearLayout mLayout;
-
-  private CvsAdapter mCvsAdapter;
-  private CommentsAdapter mCommentsAdapter;
-  private InterviewsAdapter mInterviewsAdapter;
 
   private TextView mFirstName;
   private TextView mLastName;
@@ -69,43 +64,40 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
     mPhoneNumber = v.findViewById(R.id.cd_phone);
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
-
-    mCvsAdapter = new CvsAdapter(getActivity(), new ArrayList<Cv>());
-    mCommentsAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
-    mInterviewsAdapter = new InterviewsAdapter(getActivity(), new ArrayList<CandidateInterviewItem>());
   }
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-    mFirstName.setText(candidate.getFirstName());
-    mLastName.setText(candidate.getLastName());
-    mEmail.setText(candidate.getEmail());
-    mPhoneNumber.setText(candidate.getPhone());
-    mDepartment.setText(candidate.getPosition().getDepartmentModel().getName());
-    mYearsOfExp.setText(candidate.getExperience().toString());
-    mCvsAdapter.setData(candidate.getCvs());
-    mCommentsAdapter.setData(candidate.getComments());
-    mInterviewsAdapter.setData(candidate.getInterviews());
-    addViewsToLayout();
+    mFirstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
+    mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
+    mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
+    mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
+    String department = candidate.getPosition().getDepartmentModel().getName();
+    mDepartment.setText(department != null ? department : "");
+    mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
+    addExtraViews(candidate);
   }
 
-  private void addViewsToLayout() {
+  private void addExtraViews(Candidate candidate) {
     //add CV views to layout
-    addCvsViews(mCvsAdapter);
+    addCvsViews(candidate.getCvs());
 
     //add Comment views to layout
-    addCommentViews(mCommentsAdapter);
+    addCommentViews(candidate.getComments());
 
     //add Interview views to layout
-    addInterviewViews(mInterviewsAdapter);
+    addInterviewViews(candidate.getInterviews());
 
     //add Buttons
     addActionButtons();
-
   }
 
-  private void addInterviewViews(final InterviewsAdapter interviewsAdapter) {
-    int itemsCount = interviewsAdapter.getCount();
+  private void addInterviewViews(List<CandidateInterviewItem> interviewList) {
+    if (interviewList == null) {
+      return;
+    }
+
+    int itemsCount = interviewList.size();
 
     if (itemsCount > 0) {
 
@@ -116,24 +108,27 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
       mLayout.addView(descriptionText);
 
       // add interview views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = interviewsAdapter.getView(i, null, null);
-        final int finalI = i;
+      for (final CandidateInterviewItem interviewItem : interviewList) {
+        View interviewView = ViewBuilder.createInterviewView(getActivity(), interviewItem);
 
-        item.setOnClickListener(new View.OnClickListener() {
+        interviewView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            CandidateInterviewItem interviewItem = (CandidateInterviewItem) interviewsAdapter.getItem(finalI);
-            onInterviewItemClicked(interviewItem);
+            mPresenter.onInterviewItemClicked(interviewItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(interviewView);
       }
     }
   }
 
-  private void addCommentViews(final CommentsAdapter commentsAdapter) {
-    int itemsCount = commentsAdapter.getCount();
+  private void addCommentViews(List<Comment> commentList) {
+    if (commentList == null) {
+      return;
+    }
+
+    int itemsCount = commentList.size();
 
     if (itemsCount > 0) {
 
@@ -144,24 +139,27 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
       mLayout.addView(descriptionText);
 
       // add comment views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = commentsAdapter.getView(i, null, null);
-        final int finalI = i;
+      for (final Comment commentItem : commentList) {
+        View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
 
-        item.setOnClickListener(new View.OnClickListener() {
+        commentView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Comment commentItem = (Comment) commentsAdapter.getItem(finalI);
-            onCommentItemClicked(commentItem);
+            mPresenter.onCommentItemClicked(commentItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(commentView);
       }
     }
   }
 
-  private void addCvsViews(final CvsAdapter cvsAdapter) {
-    int itemsCount = cvsAdapter.getCount();
+  private void addCvsViews(List<Cv> cvList) {
+    if (cvList == null) {
+      return;
+    }
+
+    int itemsCount = cvList.size();
 
     if (itemsCount > 0) {
 
@@ -172,18 +170,17 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
       mLayout.addView(descriptionText);
 
       // add cvs views
-      for (int i = 0; i < itemsCount; i++) {
-        View item = cvsAdapter.getView(i, null, null);
-        final int finalI = i;
+      for (final Cv cvItem : cvList) {
+        View cvView = ViewBuilder.createCvView(getActivity(), cvItem, cvList.indexOf(cvItem));
 
-        item.setOnClickListener(new View.OnClickListener() {
+        cvView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Cv cvItem = (Cv) cvsAdapter.getItem(finalI);
-              onCvItemClicked(cvItem);
+            mPresenter.onCvItemClicked(cvItem);
           }
         });
-        mLayout.addView(item);
+
+        mLayout.addView(cvView);
       }
     }
   }
@@ -195,18 +192,6 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
     v.findViewById(R.id.cd_delete_button).setOnClickListener(this);
     v.findViewById(R.id.cd_message_button).setOnClickListener(this);
     mLayout.addView(v);
-  }
-
-  private void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
-    mPresenter.onInterviewItemClicked(interviewItem);
-  }
-
-  private void onCommentItemClicked(Comment commentItem) {
-    mPresenter.onCommentItemClicked(commentItem);
-  }
-
-  private void onCvItemClicked(Cv cvItem) {
-    mPresenter.onCvItemClicked(cvItem);
   }
 
   @Override
@@ -249,14 +234,17 @@ public class CandidateDetailFragment extends BaseFragment implements CandidateDe
         break;
 
       case R.id.cd_delete_button:
+        //TODO: implement profile deleting
         showToast("Delete candidate profile");
         break;
 
       case R.id.cd_edit_button:
+        //TODO: implement profile editing
         showToast("Edit profile");
         break;
 
       case R.id.cd_message_button:
+        //TODO: implement sending message
         showToast("Send message");
         break;
 

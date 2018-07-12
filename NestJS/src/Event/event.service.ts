@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getManager, getRepository } from 'typeorm';
 import { Event } from './event.entity';
 import * as google from './calendar/google.calendar';
-
+import * as channel from 'Rabbit';
+import * as sms from './phone_notification/sms';
 @Injectable()
 export class EventService {
   constructor(
@@ -18,6 +19,7 @@ export class EventService {
         if(!err){
           eventOfDatabase.id_event = response.id;
           getRepository(Event).insert(eventOfDatabase);
+          (sms.send(eventOfDatabase, 'create')) ? true : reject('Cannot send for all phone_numbers');
         }
         err ? reject(err) : resolve(eventOfDatabase);
       });
@@ -50,6 +52,7 @@ export class EventService {
           google.run(event, function(err, response){
             if(!err){
               getRepository(Event).save(event.body);
+              (sms.send(event.body, 'update')) ? true : reject('Cannot send for all phone_numbers');
             }
             err ? reject(err) : resolve(event.body);
           });
@@ -58,14 +61,17 @@ export class EventService {
   }
   async removeEvent(event: Event): string{
     return new Promise(async (resolve, reject) =>{
+
       const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
       if(!eventOfDatabase){
         resolve("whether invalid id_event or no such event!");
       }
       else{
+        const eventForSms = event.body;
         event.body = eventOfDatabase;
         google.run(event, function(err, response){
           getRepository(Event).delete(eventOfDatabase);
+          (sms.send(eventForSms, 'delete')) ? true : reject('Cannot send for all phone_numbers');
           err ? reject(err) : resolve(response);
         });
       }
