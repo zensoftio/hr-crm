@@ -4,7 +4,6 @@ import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.model.VacancyStatus;
 import io.zensoft.share.service.diesel.RequestSender;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
