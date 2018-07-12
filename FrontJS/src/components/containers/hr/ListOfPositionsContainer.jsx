@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import { Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { REQUESTS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
-// import { Route, Link } from 'react-router-dom';
-// import CreateVacancy from '../../containers/hr/CreateVacancyContainer';
+import DateConvert from '../../../utils/DateConvert';
+import { Link } from "react-router-dom";
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
@@ -15,28 +13,27 @@ class ListOfPositions extends Component {
         super(props);
         this.state = {
             data: [],
-        };
-    }
+            };
+        }
 
-    dateConvert = (date) => {
-        return new Date(date).toLocaleString('ru', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
-
-    initStatus = (status) => {
-        if(status === 'NOT_REVIEWED'){
-            return "Не рассмотрено"
-        } else if(status === 'APPROVED'){
-            return "Утверждено"
+        initStatus = (status) => {
+            if(status === 'NOT_REVIEWED'){
+                return "Не рассмотрено"
+            } else if(status === 'APPROVED'){
+                return "Утверждено"
         } else if(status === 'DECLINED'){
             return  "Отклонено"
         } else {
             return null
         }
     };
+
+    handleSubmit = (id) => {
+        console.log(id)
+        return (
+            <Link to={`create_vacancy/${id}`}/>
+        )
+    }
 
     componentDidMount() {
         const fetched = FetchDataAPI(REQUESTS_URL);
@@ -60,32 +57,23 @@ class ListOfPositions extends Component {
         const array = data.map(item => {
             return [
                 item.title,
-                this.dateConvert(item.created),
+                DateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
                 // <Button variant="fab" color="primary" mini aria-label="add" type="button" onClick={() => handleSubmit(item.request_id)}>
                 //     <AddIcon />
                 // </Button>
-                <button type="button" onClick={handleSubmit(item.request_id)}>Create</button>
+                <Link to={`/create_vacancy/${item.request_id}`}>Создать</Link>
             ]
         })
         
 
         return ( 
             <div>
- 
                 <TableList header={header} data={array}/>
             </div>
-             
         )
     }
-}
-
-const handleSubmit = (id) => {
-    // return(
-    //     <div>Request id is: { id }</div>
-    // )
-    console.log(id)
 }
 
 export default ListOfPositions;

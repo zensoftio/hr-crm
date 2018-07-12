@@ -10,3 +10,4 @@ export const REQUIREMENTS_URL = BASE_URL + 'requirements';
 export const TEMPLATES_URL = BASE_URL + 'templates';
 export const USERS_URL = BASE_URL + 'users';
 export const VACANCIES_URL = BASE_URL + 'vacancies';
+export const POSITIONS_URL = BASE_URL + 'positions';

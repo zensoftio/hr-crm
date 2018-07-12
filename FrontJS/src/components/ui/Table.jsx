@@ -22,7 +22,7 @@ const CustomTableCell = withStyles(theme => ({
 const styles = theme => ({
     root: {
         width: '100%',
-        marginTop: theme.spacing.unit * 3,
+        margin: theme.spacing.unit * 2,
         overflowX: 'auto',
     },
     table: {
