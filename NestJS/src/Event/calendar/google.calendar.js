@@ -2,7 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const request = require('request');
-const dotEnv = require('dotenv').config({path: '../../../../.env'});
+const dotenv = require('dotenv').config({path: '../../../../.env'});
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://mail.google.com/'];
 
@@ -41,7 +41,7 @@ module.exports = {
     try {
       authorize(function(auth){
         calendar = google.calendar({version: 'v3', auth});
-        let jsonObj = json.body;
+        const jsonObj = json.body;
         if(json.title === "create" && hasAllObjects(jsonObj)){
             create(jsonObj, function(err, data){
               callback(err, data);
@@ -54,10 +54,7 @@ module.exports = {
         }
         else if(json.title === "remove" && hasAllObjects(jsonObj)){
             remove(jsonObj, function(err, data){
-              if(err){
-                callback(err, "");
-              }
-              callback("", data);
+              (err) ? callback(err, "") : callback("", data);
             })
         }
       });
@@ -82,55 +79,50 @@ function hasAllObjects(jsonObj){
   return false;
 }
 function create(json, callback){
-  calendar.events.insert({auth: auth, calendarId: 'primary', resource: event}, function(err, response) {
-    if (err) {
-      callback("Cannot create because of invalid email, begin_time, or end_time!", '');
-    }
-    else{
-      callback(undefined, response.data)
-    }
+  calendar.events.insert({
+     auth: auth,
+     calendarId: 'primary',
+     resource: event
+   }, function(err, response){
+       let res = (err) ? '' : response.data;
+       let error = (err) ? "Cannot create because of invalid email, begin_time, or end_time!" : '';
+       callback(error, res);
   });
 }
 
 function update(json, callback){
-  console.log(event);
   calendar.events.update({
-          auth: auth,
-          calendarId: 'primary',
-          eventId: json.id_event,
-          resource: event
+     auth: auth,
+     calendarId: 'primary',
+     eventId: json.id_event,
+     resource: event
   }, function(err, response){
-    if(err) {
-      callback('Cannot update because of invalid email, begin_time, or end_time!', '');
-    }
-    else{
-      callback('', response.data);
-    }
+      let res = (err) ? '' : response.data;
+      let error = (err) ? 'Cannot update because of invalid email, begin_time, or end_time!' : '';
+      callback(error, res);
   });
 }
+
 function remove(json, callback){
-  calendar.events.delete(
-    {
+  calendar.events.delete({
       auth: auth,
       calendarId: 'primary',
       eventId: json.id_event
-    },function(err, response){
-      if(err){
-        callback("There is no such event in the google calendar!", "");
-      }
-      else{
-        callback("", "Deleted!");
-      }
-    });
+  }, function(err, response){
+      let error = (err) ? "There is no such event in the google calendar!" : "";
+      let res = (err) ? "" : "Deleted!";
+      callback(error, res);
+  });
 }
 
 function authorize(callback) {
-  const client_secret = process.env.client_secret;
-  const client_id = process.env.client_id;
-  const redirect_uris = process.env.redirect_uris;
+  const client_secret = process.env['CLIENT_SECRET'];
+  const client_id = process.env['CLIENT_ID'];
+  const redirect_uris = process.env['REDIRECT_URIS'];
   let token = {};
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris);
+
   try {
     token = fs.readFileSync(TOKEN_PATH);
   } catch (err) {

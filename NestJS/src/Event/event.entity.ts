@@ -25,7 +25,4 @@ export class Event {
 
   @Column()
   location: string;
-
-  @Column()
-  summary: string;
 }

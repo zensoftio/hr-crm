@@ -25,16 +25,24 @@ export class InboxListener {
       }
     }
 
-    async updateInboxList = (message: any):any => {
-      this.inboxService.getMessages(message)
-      .then( (messages)  => { this.sendMessage(messages) })
-      .catch( (err) => { this.sendMessage("CAN'T UPDATE INBOX LIST") })
+     updateInboxList = async(message: any):any => {
+       try {
+         const result = await this.inboxService.getMessages(message)
+         this.sendMessage(result)
+       }catch(err) {
+         this.sendMessage("CAN'T GET ONE MESSAGE")
+         throw err;
+       }
     }
 
-    async getOneMessage = (message: any):any => {
-      this.inboxService.getOneMessage(message)
-      .then( (message)  => { this.sendMessage(message) })
-      .catch( (err) => { this.sendMessage("CAN'T GET ONE MESSAGE") })
+     getOneMessage = async(message: any):any => {
+       try {
+         const result = await this.inboxService.getOneMessage(message)
+         this.sendMessage(result)
+       }catch(err) {
+         this.sendMessage("CAN'T GET ONE MESSAGE")
+         throw err;
+       }
     }
 
     private async sendMessage(msg: any):any {

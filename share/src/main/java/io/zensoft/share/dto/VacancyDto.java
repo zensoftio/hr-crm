@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class VacancyDto {
-    private int uid;
+    private String uuid;
     private String title;
     private List<RequirementDto> requirements;
     private String city;
@@ -21,11 +21,12 @@ public class VacancyDto {
     @JsonProperty("name")
     private String position;
     private int count;
-    private List<String> workingConditions;
-    private String experience;
+    private List<String> workConditions;
     private String workingHours;
-    private String employmentType;
     private int salaryMin;
     private int salaryMax;
     private String image;
+    private String responsibilities;
+    private String comment;
+    private String facebookUserAccessToken;
 }
