@@ -28,13 +28,6 @@ class ListOfPositions extends Component {
         }
     };
 
-    handleSubmit = (id) => {
-        console.log(id)
-        return (
-            <Link to={`create_vacancy/${id}`}/>
-        )
-    }
-
     componentDidMount() {
         const fetched = FetchDataAPI(REQUESTS_URL);
         fetched.then(response => response.results.map(item => (
@@ -60,13 +53,9 @@ class ListOfPositions extends Component {
                 DateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
-                // <Button variant="fab" color="primary" mini aria-label="add" type="button" onClick={() => handleSubmit(item.request_id)}>
-                //     <AddIcon />
-                // </Button>
                 <Link to={`/create_vacancy/${item.request_id}`}>Создать</Link>
             ]
         })
-        
 
         return ( 
             <div>

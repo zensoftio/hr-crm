@@ -113,7 +113,7 @@ class CreatePositionContainer extends React.Component {
 		};
 		let divstyle = {
 			margin: 20
-		}
+		}	
 		
       return (
 				<form onSubmit={this.handleSubmit}>

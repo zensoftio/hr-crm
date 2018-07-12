@@ -7,6 +7,7 @@ import { TextField,
          MenuItem } from '@material-ui/core';
 import { PostDataAPI } from '../../../services/PostDataAPI';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
+import { VACANCIES_URL } from '../../../utils/urls'
 
   const CityList = [
     "Бишкек",
@@ -84,10 +85,9 @@ class CreateVacancyContainer extends Component {
 
     handleSubmit = (event) => {
       event.preventDefault();
-      const URL = 'http://159.65.153.5/api/v1/vacancies';
 
       const data = this.state;
-      PostDataAPI(URL, data);
+      PostDataAPI(VACANCIES_URL, data);
     }
 
     onFileUpload = event => {
