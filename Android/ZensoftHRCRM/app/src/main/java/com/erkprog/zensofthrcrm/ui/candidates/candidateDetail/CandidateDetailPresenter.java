@@ -1,5 +1,8 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
+import android.content.Context;
+
+import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
@@ -11,11 +14,13 @@ import retrofit2.Response;
 
 public class CandidateDetailPresenter implements CandidateDetailContract.Presenter {
   private CandidateDetailContract.View mView;
+  private Context mContext;
   private Candidate mCandidate;
   private ApiInterface mApiService;
 
-  CandidateDetailPresenter(ApiInterface service) {
+  CandidateDetailPresenter(Context context, ApiInterface service) {
     mApiService = service;
+    mContext = context;
   }
 
   @Override
@@ -30,7 +35,7 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
             mCandidate = response.body();
             mView.showCandidateDetails(mCandidate);
           } else {
-            mView.showMessage("Candidate response is null");
+            mView.showMessage(mContext.getString(R.string.cd_response_null));
           }
         }
       }

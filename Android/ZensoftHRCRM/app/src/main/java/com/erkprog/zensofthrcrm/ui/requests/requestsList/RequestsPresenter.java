@@ -1,7 +1,9 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Request;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
@@ -14,8 +16,10 @@ public class RequestsPresenter implements RequestsContract.Presenter {
 
   private ApiInterface mApiService;
   private RequestsContract.View mView;
+  private Context mContext;
 
-  RequestsPresenter(ApiInterface service) {
+  RequestsPresenter(Context context, ApiInterface service) {
+    mContext = context;
     mApiService = service;
   }
 
@@ -30,7 +34,7 @@ public class RequestsPresenter implements RequestsContract.Presenter {
           if (response.isSuccessful() && response.body().getRequestList() != null) {
             mView.showRequests(response.body().getRequestList());
           } else {
-            mView.showMessage("Requests list in response is null");
+            mView.showMessage(mContext.getString(R.string.requests_null));
           }
         }
       }

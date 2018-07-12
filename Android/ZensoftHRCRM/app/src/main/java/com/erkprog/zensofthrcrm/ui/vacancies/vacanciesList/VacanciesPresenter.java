@@ -1,5 +1,8 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
+import android.content.Context;
+
+import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
@@ -12,8 +15,10 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
 
   private VacanciesContract.View mView;
   private ApiInterface mApiService;
+  private Context mContext;
 
-  VacanciesPresenter(ApiInterface service) {
+  VacanciesPresenter(Context context, ApiInterface service) {
+    mContext = context;
     mApiService = service;
   }
 
@@ -28,7 +33,7 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
           if (response.isSuccessful() && response.body().getVacancyList() != null) {
             mView.showVacancies(response.body().getVacancyList());
           } else {
-            mView.showMessage("Vacancies list in response is null");
+            mView.showMessage(mContext.getString(R.string.vacancies_null));
           }
         }
       }

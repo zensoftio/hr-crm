@@ -50,7 +50,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   private void initPresenter() {
-    mPresenter = new CandidateDetailPresenter(CRMApplication.getInstance(requireContext())
+    mPresenter = new CandidateDetailPresenter(requireContext(), CRMApplication.getInstance(requireContext())
         .getApiService());
     mPresenter.bind(this);
   }

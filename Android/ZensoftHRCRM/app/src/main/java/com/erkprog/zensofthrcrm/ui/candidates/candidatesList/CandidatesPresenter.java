@@ -1,5 +1,8 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 
+import android.content.Context;
+
+import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
@@ -12,9 +15,11 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
 
   private CandidatesContract.View mView;
   private ApiInterface mApiService;
+  private Context mContext;
 
-  CandidatesPresenter(ApiInterface service) {
+  CandidatesPresenter(Context context, ApiInterface service) {
     mApiService = service;
+    mContext = context;
   }
 
   @Override
@@ -28,7 +33,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
           if (response.isSuccessful() && response.body().getCandidateList() != null) {
             mView.showCandidates(response.body().getCandidateList());
           } else {
-            mView.showMessage("Candidates list in response is null");
+            mView.showMessage(mContext.getString(R.string.candidates_response_null));
           }
         }
       }
