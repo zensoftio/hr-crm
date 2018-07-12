@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from apps.templates.models import Attachment
 from apps.templates.serializers import AttachmentSerializer
 from apps.utils.rabbitmq import RabbitMQ
-from config.base import Base
+from django.conf import settings
 
 
 class TemplateListCreateView(APIView):
@@ -17,7 +17,7 @@ class TemplateListCreateView(APIView):
         data = json.dumps(data)
         print(type(data), data)
 
-        rabbitmq_sender = RabbitMQ(user=Base.RABBITMQ_USERNAME, password=Base.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='exchangeForTemplate', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template3',
@@ -32,7 +32,7 @@ class TemplateListCreateView(APIView):
         data = json.dumps(data)
         print(type(data), data)
 
-        rabbitmq_sender = RabbitMQ(user=Base.RABBITMQ_USERNAME, password=Base.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='exchangeForTemplate', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template3',
@@ -52,7 +52,7 @@ class TemplateDetailView(APIView):
         data = json.dumps(data)
         print(type(data), data)
 
-        rabbitmq_sender = RabbitMQ(user=Base.RABBITMQ_USERNAME, password=Base.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='exchangeForTemplate', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template3',
@@ -68,7 +68,7 @@ class TemplateDetailView(APIView):
         data = json.dumps(data)
         print(type(data), data)
 
-        rabbitmq_sender = RabbitMQ(user=Base.RABBITMQ_USERNAME, password=Base.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='exchangeForTemplate', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template3',
@@ -85,7 +85,7 @@ class TemplateDetailView(APIView):
         data = json.dumps(data)
         print(type(data), data)
 
-        rabbitmq_sender = RabbitMQ(user=Base.RABBITMQ_USERNAME, password=Base.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='exchangeForTemplate', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template3',
