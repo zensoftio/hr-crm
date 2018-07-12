@@ -11,13 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
+
+  CircleImageView userImage;
+  TextView userName;
+  TextView userEmail;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,11 @@ public class MainActivity extends AppCompatActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+
+    View navHeader = navigationView.getHeaderView(0);
+    userName = navHeader.findViewById(R.id.user_name);
+    userEmail = navHeader.findViewById(R.id.user_email);
+    userImage = navHeader.findViewById(R.id.user_profile_image);
   }
 
   @Override
@@ -97,5 +112,19 @@ public class MainActivity extends AppCompatActivity
         .beginTransaction()
         .replace(R.id.main_fragment_container, fragment)
         .commit();
+  }
+
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    //TODO: set header with google account data here
+    userName.setText("Zensoft Hr");
+    userEmail.setText("hr@zensoft.io");
+    Picasso.get()
+        .load("https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg")
+        .placeholder(R.drawable.base_account)
+        .error(R.drawable.base_account)
+        .into(userImage);
   }
 }

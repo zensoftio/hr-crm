@@ -1,23 +1,86 @@
-import React from "react";
+import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import { CANDIDATES_URL } from "../../../utils/urls";
+import DateConvert from '../../../utils/DateConvert';
 
-const ListOfCandidates = () => {
+const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'СТАТУС', 'ДАТА', 'ПРОФИЛЬ'];
 
-    function MakeLinked(element, link) {
-        return <Link to={link}>{element} </Link>;
+const CANDIDATE_STATUS = {
+    'NOT_REVIEWED': 'Не рассмотрено',
+    'REVIEWED': 'Рассмотрено',
+    'SATISFYING': 'Подходит',
+    'NOT_SATISFYING': 'Не подходит',
+    'TEST_SENT': 'Отправлен тест',
+    'INVITED_TO_INTERVIEW': 'Приглашен на интервью',
+    'INTERVIEWS_CONDUCTED': 'Интервью проведено',
+    'CURRENT_EMPLOYEE': 'Штат',
+    'IN_RESERVE': 'Резерв',
+    'INTERN': 'Стажёр',
+    'FAILED_INTERVIEW': 'Не прошел интервью',
+};
+
+class ListOfCandidates extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        }
     }
 
-    const data = [
-        ['Islam Akylbek uulu', 'JavaScript', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Name surname', 'Python', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
-        ['Human human', 'Java', 'Aктивный', '24/07/18', 'Comments is here...', MakeLinked('CV', 'CVLink'), MakeLinked('Открыть', 'ProfileLink')],
+    makeLinked = (element, link) => (
+        <Link to={link}>{element} </Link>
+    );
 
-    ];
+    // TODO: Перенести этот метод в utils
+    // dateConvert = (date) => {
+    //     return new Date(date).toLocaleString('ru', {
+    //         year: 'numeric',
+    //         month: 'long',
+    //         day: 'numeric'
+    //     });
+    // };
 
-    const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'СТАТУС', 'ДАТА', 'КОММЕНТАРИЙ', 'ВЛОЖЕНИЕ', 'ПРОФИЛЬ'];
+    getStatus = (status) => {
+        return CANDIDATE_STATUS[status]
+    };
 
-    return (<TableList header={header} data={data}/>);
+    getLink = (id) => {
+        return CANDIDATES_URL + '/' + id;
+    };
+
+    componentWillMount = () => {
+        FetchDataAPI(CANDIDATES_URL)
+            .then(response => response.results.map(
+                item => (
+                    {
+                        id: item.id,
+                        full_name: item.first_name + ' ' + item.last_name,
+                        created_at: item.created,
+                        status: item.status,
+                        language: item.position.department.name,
+                    }
+                )
+            ))
+            .then(data => this.setState({data}))
+    };
+
+    render() {
+        const { data } = this.state;
+        const candidates = data.map(
+            item => [
+                item.full_name,
+                item.language,
+                this.getStatus(item.status),
+                DateConvert(item.created_at),
+                this.makeLinked('Открыть', this.getLink(item.id))
+            ]
+        );
+
+        return (<TableList header={header} data={candidates}/>);
+    }
 }
 
 

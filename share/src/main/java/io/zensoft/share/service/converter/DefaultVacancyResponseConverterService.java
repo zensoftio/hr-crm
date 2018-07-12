@@ -12,7 +12,6 @@ public class DefaultVacancyResponseConverterService implements DtoConverterServi
     @Override
     public VacancyResponseDto toDto(VacancyResponse vacancyResponse) {
         VacancyResponseDto vacancyResponseDto = new VacancyResponseDto();
-        vacancyResponseDto.setUid(vacancyResponse.getVacancy().getUid());
         vacancyResponseDto.setMessage(vacancyResponse.getMessage());
         vacancyResponseDto.setUrl(vacancyResponse.getUrl());
         vacancyResponseDto.setStatus(vacancyResponse.getStatus().name());
