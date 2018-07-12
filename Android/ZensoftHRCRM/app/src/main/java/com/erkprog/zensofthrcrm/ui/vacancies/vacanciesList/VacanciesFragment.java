@@ -21,7 +21,8 @@ import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VacanciesFragment extends Fragment implements VacanciesContract.View, ItemClickListener {
+public class VacanciesFragment extends Fragment implements VacanciesContract.View,
+    ItemClickListener<Vacancy> {
 
   private static final String TAG = "VACANCIES FRAGMENT";
 
@@ -86,8 +87,8 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
   }
 
   @Override
-  public void onItemClick(int position) {
-    mPresenter.onVacancyItemClick(mAdapter.getVacancy(position));
+  public void onItemClick(Vacancy item) {
+    mPresenter.onVacancyItemClick(item);
   }
 
   @Override

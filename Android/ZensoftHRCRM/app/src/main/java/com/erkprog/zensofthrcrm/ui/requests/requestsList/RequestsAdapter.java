@@ -15,9 +15,9 @@ import java.util.List;
 
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.RequestViewHolder> {
   private List<Request> mRequests;
-  private ItemClickListener mListener;
+  private ItemClickListener<Request> mListener;
 
-  RequestsAdapter(List<Request> requests, ItemClickListener listener) {
+  RequestsAdapter(List<Request> requests, ItemClickListener<Request> listener) {
     mRequests = requests;
     mListener = listener;
   }
@@ -26,12 +26,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
   @Override
   public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_item, parent, false);
-    return new RequestViewHolder(v, mListener);
+    return new RequestViewHolder(v);
   }
 
   @Override
   public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-    Request request = mRequests.get(position);
+    final Request request = mRequests.get(position);
     if (request != null) {
 
       if (request.getPosition() != null) {
@@ -47,21 +47,19 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
       holder.count.setText(String.format("count: %s", String.valueOf(request.getCount())));
 
       holder.created.setText(String.format("created: %s", request.getCreated()));
+
+      holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          mListener.onItemClick(request);
+        }
+      });
     }
   }
 
   @Override
   public int getItemCount() {
     return mRequests.size();
-  }
-
-  public void loadNewData(List<Request> data) {
-    mRequests = data;
-    notifyDataSetChanged();
-  }
-
-  public Request getRequest(int position) {
-    return mRequests.get(position);
   }
 
   static class RequestViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +69,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
     TextView count;
     TextView created;
 
-    RequestViewHolder(View itemView, final ItemClickListener listener) {
+    RequestViewHolder(View itemView) {
       super(itemView);
 
       name = itemView.findViewById(R.id.ritem_name);
@@ -79,13 +77,6 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
       status = itemView.findViewById(R.id.ritem_status);
       count = itemView.findViewById(R.id.ritem_count);
       created = itemView.findViewById(R.id.ritem_created);
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          listener.onItemClick(getAdapterPosition());
-        }
-      });
     }
   }
 }

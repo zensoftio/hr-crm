@@ -19,7 +19,8 @@ import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.List;
 
-public class RequestsFragment extends Fragment implements RequestsContract.View, ItemClickListener {
+public class RequestsFragment extends Fragment implements RequestsContract.View,
+    ItemClickListener<Request> {
   private static final String TAG = "REQUESTS FRAGMENT";
 
   private RequestsContract.Presenter mPresenter;
@@ -87,8 +88,8 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   }
 
   @Override
-  public void onItemClick(int position) {
-    mPresenter.onRequestItemClick(mAdapter.getRequest(position));
+  public void onItemClick(Request item) {
+    mPresenter.onRequestItemClick(item);
   }
 
   @Override

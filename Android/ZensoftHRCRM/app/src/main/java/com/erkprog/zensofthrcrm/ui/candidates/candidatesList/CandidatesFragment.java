@@ -22,7 +22,8 @@ import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidatesFragment extends Fragment implements CandidatesContract.View, ItemClickListener {
+public class CandidatesFragment extends Fragment implements CandidatesContract.View,
+    ItemClickListener<Candidate> {
 
   private CandidatesContract.Presenter mPresenter;
   private CandidatesAdapter mAdapter;
@@ -91,8 +92,8 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   @Override
-  public void onItemClick(int position) {
-    mPresenter.onCandidateItemClick(mAdapter.getCandidate(position));
+  public void onItemClick(Candidate item) {
+    mPresenter.onCandidateItemClick(item);
   }
 
   @Override

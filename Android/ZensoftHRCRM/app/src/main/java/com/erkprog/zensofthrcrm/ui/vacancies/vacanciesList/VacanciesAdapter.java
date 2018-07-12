@@ -16,17 +16,12 @@ import java.util.List;
 public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder> {
 
   private List<Vacancy> mVacancies;
-  private ItemClickListener mListener;
+  private ItemClickListener<Vacancy> mListener;
 
 
-  public VacanciesAdapter(List<Vacancy> vacancies, ItemClickListener listener) {
+  VacanciesAdapter(List<Vacancy> vacancies, ItemClickListener<Vacancy> listener) {
     mVacancies = vacancies;
     mListener = listener;
-  }
-
-  public void loadNewData(List<Vacancy> data) {
-    mVacancies = data;
-    this.notifyDataSetChanged();
   }
 
   @NonNull
@@ -34,17 +29,24 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
   public VacancyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.vacancy_item, parent,
         false);
-    return new VacancyViewHolder(view, mListener);
+    return new VacancyViewHolder(view);
   }
 
   @Override
   public void onBindViewHolder(@NonNull VacancyViewHolder holder, int position) {
-    Vacancy vacancy = mVacancies.get(position);
+    final Vacancy vacancy = mVacancies.get(position);
 
     if (vacancy != null) {
       holder.name.setText(vacancy.getName());
       holder.created.setText(String.format("created: %s", vacancy.getCreated()));
       holder.lastPublish.setText(String.format("last published: %s", vacancy.getLast_published()));
+
+      holder.itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          mListener.onItemClick(vacancy);
+        }
+      });
     }
   }
 
@@ -53,28 +55,17 @@ public class VacanciesAdapter extends RecyclerView.Adapter<VacanciesAdapter.Vaca
     return mVacancies.size();
   }
 
-  public Vacancy getVacancy(int position) {
-    return mVacancies.get(position);
-  }
-
   static class VacancyViewHolder extends RecyclerView.ViewHolder {
     TextView name;
     TextView created;
     TextView lastPublish;
 
-    VacancyViewHolder(View itemView, final ItemClickListener listener) {
+    VacancyViewHolder(View itemView) {
       super(itemView);
 
       name = itemView.findViewById(R.id.vitem_name);
       created = itemView.findViewById(R.id.vitem_created);
       lastPublish = itemView.findViewById(R.id.vitem_last_published);
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          listener.onItemClick(getAdapterPosition());
-        }
-      });
     }
   }
 }

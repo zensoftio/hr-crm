@@ -1,5 +1,5 @@
 package com.erkprog.zensofthrcrm.ui;
 
-public interface ItemClickListener {
-  void onItemClick(int position);
+public interface ItemClickListener<O> {
+  void onItemClick(O item);
 }
