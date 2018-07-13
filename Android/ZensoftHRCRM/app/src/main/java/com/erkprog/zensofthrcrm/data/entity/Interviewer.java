@@ -10,7 +10,7 @@ public class Interviewer {
   private String comment;
 
   @SerializedName("evaluations")
-  private List<Evaluation> EvaluaionList;
+  private List<Evaluation> evaluaionList;
 
   public Integer getId() {
     return id;
@@ -37,11 +37,11 @@ public class Interviewer {
   }
 
   public List<Evaluation> getEvaluaionList() {
-    return EvaluaionList;
+    return evaluaionList;
   }
 
   public void setEvaluaionList(List<Evaluation> evaluaionList) {
-    EvaluaionList = evaluaionList;
+    evaluaionList = evaluaionList;
   }
 
 }

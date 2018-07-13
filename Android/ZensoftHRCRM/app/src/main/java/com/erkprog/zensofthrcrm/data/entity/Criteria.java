@@ -5,15 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class Criteria {
   private Integer id;
   private String name;
-  private Department department;
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
-  }
 
   public Integer getId() {
     return id;

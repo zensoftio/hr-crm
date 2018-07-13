@@ -106,8 +106,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_REQUIREMENTS = "CREATE TABLE IF NOT EXISTS " +
       REQUIREMENTS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      DEPARTMENT + ID + " TEXT, " +
-      TYPE + " INTEGER, " +
+      DEPARTMENT + ID + " INTEGER, " +
+      TYPE + " TEXT, " +
       NAME + " TEXT);";
 
   private static final String CREATE_TABLE_CVC = "CREATE TABLE IF NOT EXISTS " +
@@ -178,13 +178,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_CRITERIAS = "CREATE TABLE IF NOT EXISTS " +
       CRITERIAS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      DEPARTMENT + ID + " TEXT, " +
       NAME + " TEXT);";
 
   private static final String CREATE_TABLE_COMMENTS = "CREATE TABLE IF NOT EXISTS " +
       COMMENTS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      CANDIDATE + ID + " TEXT, " +
       CREATED_BY + ID + " TEXT, " +
       TEXT + " TEXT);";
 
@@ -342,8 +340,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(ID, requirement.getId());
       cv.put(NAME, requirement.getName());
       cv.put(TYPE, requirement.getType());
-      if (requirement.getDepartment() != null)
-        cv.put(DEPARTMENT + ID, requirement.getDepartment().getName());
+      cv.put(DEPARTMENT + ID, requirement.getId());
 
 
       Cursor cursor = db.rawQuery("SELECT * FROM " + REQUIREMENTS + " WHERE " + ID + " =?", new
@@ -737,8 +734,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         criteria.setId(criteriaCursor.getInt(criteriaCursor.getColumnIndex(ID)));
         criteria.setName(criteriaCursor.getString(criteriaCursor.getColumnIndex(NAME)));
-        criteria.setDepartment(getDepartment(criteriaCursor.getString(criteriaCursor
-            .getColumnIndex(DEPARTMENT + ID))));
+
       } while (criteriaCursor.moveToNext());
     }
 
@@ -811,9 +807,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         requirement.setId(requirementCursor.getInt(requirementCursor.getColumnIndex(ID)));
         requirement.setName(requirementCursor.getString(requirementCursor.getColumnIndex(NAME)));
-        requirement.setDepartment(getDepartment(requirementCursor.getString(requirementCursor
-            .getColumnIndex(DEPARTMENT + ID))));
-        requirement.setType(requirementCursor.getInt(requirementCursor.getColumnIndex(TYPE)));
+        requirement.setDepartment(requirementCursor.getInt(requirementCursor
+            .getColumnIndex(DEPARTMENT + ID)));
+        requirement.setType(requirementCursor.getString(requirementCursor.getColumnIndex(TYPE)));
       } while (requirementCursor.moveToNext());
     }
 
@@ -984,8 +980,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         comment.setId(commentCursor.getInt(commentCursor.getColumnIndex(ID)));
         comment.setText(commentCursor.getString(commentCursor.getColumnIndex(TEXT)));
-        comment.setCandidate(getCandidate(commentCursor.getString(commentCursor.getColumnIndex
-            (CANDIDATE + ID))));
         comment.setCreatedBy(getUser(commentCursor.getString(commentCursor
             .getColumnIndex(CREATED_BY + ID))));
       } while (commentCursor.moveToNext());
@@ -1267,15 +1261,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Requirement requirement = new Requirement();
 
         int id = cursor.getInt(idIndex);
-        String departmentId = cursor.getString(departmentIdIndex);
+        int departmentId = cursor.getInt(departmentIdIndex);
         String name = cursor.getString(nameIndex);
-        int type = cursor.getInt(typeIndex);
+        String type = cursor.getString(typeIndex);
 
-        if (departmentId != null)
-          requirement.setDepartment(getDepartment(departmentId));
+        requirement.setDepartment(departmentId);
         requirement.setId(id);
         requirement.setName(name);
-        requirement.setType(typeIndex);
+        requirement.setType(type);
 
         requirements.add(requirement);
 
@@ -1630,7 +1623,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     if (cursor.moveToFirst()) {
       int idIndex = cursor.getColumnIndex(ID);
-      int candidateIdIndex = cursor.getColumnIndex(CANDIDATE + ID);
       int createdByIdIndex = cursor.getColumnIndex(CREATED_BY + ID);
       int textIndex = cursor.getColumnIndex(TEXT);
 
@@ -1638,7 +1630,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Comment comment = new Comment();
 
         int id = cursor.getInt(idIndex);
-        String candidateId = cursor.getString(candidateIdIndex);
         String createdById = cursor.getString(createdByIdIndex);
         String text = cursor.getString(textIndex);
 
@@ -1646,8 +1637,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         comment.setText(text);
         if (createdById != null)
           comment.setCreatedBy(getUser(createdById));
-        if (candidateId != null)
-          comment.setCandidate(getCandidate(candidateId));
 
         comments.add(comment);
 

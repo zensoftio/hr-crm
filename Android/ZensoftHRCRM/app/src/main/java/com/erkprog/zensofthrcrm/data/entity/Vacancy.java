@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 public class Vacancy {
   private Integer id;
   private String name;
-  @SerializedName("date_created")
+  @SerializedName("created")
   private String dateCreated;
-  @SerializedName("date_last_published")
+  @SerializedName("last_published")
   private String dateLastPublished;
   private String status;
 

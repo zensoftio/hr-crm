@@ -8,8 +8,8 @@ public class Request {
   private Integer id;
   private String created;
   private String modified;
-  private User userCreatedBy;
-  private Department department;
+  @SerializedName("created_by")
+  private User createdBy;
   private Integer count;
   private Position position;
   private String status;
@@ -41,19 +41,11 @@ public class Request {
   }
 
   public User getUserCreatedBy() {
-    return userCreatedBy;
+    return createdBy;
   }
 
-  public void setUserCreatedBy(User userCreatedBy) {
-    this.userCreatedBy = userCreatedBy;
-  }
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
+  public void setUserCreatedBy(User createdBy) {
+    this.createdBy = createdBy;
   }
 
   public Integer getCount() {
