@@ -63,6 +63,9 @@ const style = {
     modal: {
         display: "flex",
         flexDirection: "row",
+    },
+    commentBox: {
+        width: '100%'
     }
 }
 
@@ -230,7 +233,7 @@ class UserProfile extends Component {
                     <span className={classes.box}><a href={cv}> Ссылка на резюме </a></span>
                 </div>
                 <div className={classes.root}>
-                    <Paper>
+                    <Paper className={classes.commentBox}>
                         {
                             comments.map((item, index) => {
                                 return (

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import { Link } from 'react-router-dom';
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
 import { CANDIDATES_URL } from "../../../utils/urls";
 import DateConvert from '../../../utils/DateConvert';
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
 
 const header = ['№', 'Ф.И.О', 'ЯЗЫК', 'СТАТУС', 'ДАТА', 'ПРОФИЛЬ'];
 
@@ -30,16 +31,8 @@ class ListOfCandidates extends Component {
         }
     }
 
-    makeLinked = (element, link) => (
-        <Link to={link}>{element} </Link>
-    );
-
     getStatus = (status) => {
         return CANDIDATE_STATUS[status]
-    };
-
-    getLink = (id) => {
-        return 'profile/' + id;
     };
 
     componentWillMount = () => {
@@ -66,7 +59,7 @@ class ListOfCandidates extends Component {
                 item.language,
                 this.getStatus(item.status),
                 DateConvert(item.created_at),
-                this.makeLinked('Открыть', this.getLink(item.id))
+                makeLinked('Открыть', getLink("profile", item.id))
             ]
         );
 
