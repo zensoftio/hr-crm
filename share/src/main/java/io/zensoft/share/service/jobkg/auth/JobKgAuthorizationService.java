@@ -1,6 +1,6 @@
 package io.zensoft.share.service.jobkg.auth;
 
-import io.zensoft.share.model.jobkg.JobKgUser;
+import io.zensoft.share.config.jobkg.JobKgUserProperties;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface JobKgAuthorizationService {
     //returns cookie
-    String authorize(JobKgUser user) throws AuthorizationFailedException;
+    String authorize(JobKgUserProperties user) throws AuthorizationFailedException;
 
     //returns cookie
     String authorize() throws AuthorizationFailedException;
