@@ -1,6 +1,6 @@
 package io.zensoft.share.service.diesel.authkey;
 
-import io.zensoft.share.model.diesel.DefaultHeadersValues;
+import io.zensoft.share.model.diesel.HeaderValue;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-public class AuthKeyHeaders {
+public class AuthKeyHeader {
 
     private HttpHeaders authKeyGetterHeaders;
-    private DefaultHeadersValues defaultHeadersValues;
+    private HeaderValue headerValue;
 
     @Autowired
-    public AuthKeyHeaders(DefaultHeadersValues defaultHeadersValues) {
+    public AuthKeyHeader(HeaderValue headerValue) {
         authKeyGetterHeaders = new HttpHeaders();
-        this.defaultHeadersValues = defaultHeadersValues;
-        authKeyGetterHeaders.add("Upgrade-Insecure-Requests", defaultHeadersValues.getUPGRADE_INSECURE_REQUESTS());
-        authKeyGetterHeaders.add("User-Agent", defaultHeadersValues.getUSER_AGENT());
-        authKeyGetterHeaders.add("Referer", defaultHeadersValues.getREFERER_AUTHKEY());
-        authKeyGetterHeaders.add("Accept-Language", defaultHeadersValues.getACCEPT_LANGUAGE());
+        this.headerValue = headerValue;
+        authKeyGetterHeaders.add("Upgrade-Insecure-Requests", headerValue.getUPGRADE_INSECURE_REQUESTS());
+        authKeyGetterHeaders.add("User-Agent", headerValue.getUSER_AGENT());
+        authKeyGetterHeaders.add("Referer", headerValue.getREFERER_AUTHKEY());
+        authKeyGetterHeaders.add("Accept-Language", headerValue.getACCEPT_LANGUAGE());
     }
 
     public void addCookieToHeaders(String sessionId){

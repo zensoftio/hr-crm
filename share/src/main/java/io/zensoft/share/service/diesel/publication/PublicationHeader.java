@@ -1,6 +1,6 @@
 package io.zensoft.share.service.diesel.publication;
 
-import io.zensoft.share.model.diesel.DefaultHeadersValues;
+import io.zensoft.share.model.diesel.HeaderValue;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -8,22 +8,22 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-public class PublicationHeaders {
+public class PublicationHeader {
 
     private HttpHeaders publicationHeaders;
-    private DefaultHeadersValues defaultHeadersValues;
+    private HeaderValue headerValue;
 
     @Autowired
-    public PublicationHeaders(DefaultHeadersValues defaultHeadersValues){
+    public PublicationHeader(HeaderValue headerValue){
         publicationHeaders = new HttpHeaders();
-        this.defaultHeadersValues = defaultHeadersValues;
-        publicationHeaders.add("Origin", defaultHeadersValues.getORIGIN());
-        publicationHeaders.add("Upgrade-Insecure-Requests", defaultHeadersValues.getUPGRADE_INSECURE_REQUESTS());
-        publicationHeaders.add("Content-Type", defaultHeadersValues.getCONTENT_TYPE());
-        publicationHeaders.add("User-Agent", defaultHeadersValues.getUSER_AGENT());
-        publicationHeaders.add("Accept", defaultHeadersValues.getACCEPT());
-        publicationHeaders.add("Referer", defaultHeadersValues.getREFERER_PUBLICATION());
-        publicationHeaders.add("Accept-Language", defaultHeadersValues.getACCEPT_LANGUAGE());
+        this.headerValue = headerValue;
+        publicationHeaders.add("Origin", headerValue.getORIGIN());
+        publicationHeaders.add("Upgrade-Insecure-Requests", headerValue.getUPGRADE_INSECURE_REQUESTS());
+        publicationHeaders.add("Content-Type", headerValue.getCONTENT_TYPE());
+        publicationHeaders.add("User-Agent", headerValue.getUSER_AGENT());
+        publicationHeaders.add("Accept", headerValue.getACCEPT());
+        publicationHeaders.add("Referer", headerValue.getREFERER_PUBLICATION());
+        publicationHeaders.add("Accept-Language", headerValue.getACCEPT_LANGUAGE());
     }
 
     public void addCookieToHeaders(String sessionId){
