@@ -1,17 +1,16 @@
 package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 
-import java.util.Date;
+import com.erkprog.zensofthrcrm.ui.BaseView;
+import com.erkprog.zensofthrcrm.ui.ILifecycle;
 
-public class CreateInterviewContract {
+public interface CreateInterviewContract {
 
-  interface View {
-
-    void showToast(String message);
+  interface View extends BaseView {
 
     void startDatePicker();
   }
 
-  interface Presenter {
+  interface Presenter extends ILifecycle<View> {
 
     void onSetDateButtonClick();
 

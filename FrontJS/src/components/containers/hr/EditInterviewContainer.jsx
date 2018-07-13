@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Input from "../../ui/Input";
+import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles/index";
 import { Link } from "react-router-dom";
 import Select from '../../ui/SelectList';
@@ -26,11 +26,11 @@ class EditInterviewContainer extends Component {
             <div>
                 <div className={classes.label}>
                     <span className={classes.span}>Ф.И.О:</span>
-                    <Input placeholder="Имя Фамилия"/>
+                    <TextField placeholder="Имя Фамилия"/>
                 </div>
                 <div className={classes.label}>
                     <span className={classes.span}>МЕСТО:</span>
-                    <Input placeholder="Place"/>
+                    <TextField placeholder="Place"/>
                 </div>
                 <div className={classes.label}>
                     <span className={classes.span}>ДАТА:</span>
@@ -42,7 +42,7 @@ class EditInterviewContainer extends Component {
                 </div>
                 <div className={classes.label}>
                     <span className={classes.span}>ИНТЕРВЬЮЕР:</span>
-                    <Input placeholder="Имя Фамилия" value="Name Surname"/>
+                    <TextField placeholder="Имя Фамилия" value="Name Surname"/>
                     <button>Remove</button>
                     <br/>
                     <button>ДОБАВИТЬ ИНТЕРВЬЮЕР</button>

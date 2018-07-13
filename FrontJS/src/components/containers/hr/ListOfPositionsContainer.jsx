@@ -13,8 +13,8 @@ class ListOfPositions extends Component {
         super(props);
         this.state = {
             data: [],
-            };
-        }
+        };
+    }
 
         initStatus = (status) => {
             if(status === 'NOT_REVIEWED'){

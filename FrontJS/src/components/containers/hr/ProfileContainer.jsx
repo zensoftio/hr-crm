@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {Input, TextField, Button, Divider } from '@material-ui/core';
-import { Checkbox, ListItemText, Select, MenuItem } from '@material-ui/core';
+import { Checkbox, ListItem, ListItemText,Paper, Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import ModalButton from '../../ui/ModalWindow';
 import { PostDataAPI } from '../../../services/PostDataAPI';
 import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
+import { FetchDataAPI } from '../../../services/FetchDataAPI';
+import { CANDIDATES_URL } from '../../../utils/urls';
+import DateConvert from '../../../utils/DateConvert';
+import RenderSelectItem from '../../../utils/RenderSelectItem';
 
 let error = "";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -19,20 +24,24 @@ const MenuProps = {
     },
   },
 }
-
-const Department = [
-    "Developer",
-],
-    Experience = [
-        "2 года"
-    ],
-    Level = [
-        "Junior",
-    ],
-    Status = [
-        "активен",
-    ],
-    Interviewers = [
+function isPossibleToSend(json){
+  let isOk = true;
+  for(let i = 0;i < json.phone.length;i++){
+    if(json.phone[i].length !== 16){
+      isOk = false;
+      break;
+    }
+  }
+  const begin_time = Date.parse(json.begin_time);
+  isOk = (!isNaN(begin_time)) ? true : false;
+  error = (isOk) ? "" : "Please, fill all fields.";
+  isOk = (json.candidate !== 0) ? true : false;
+  isOk = (json.description.length > 0 && isOk) ? true : false;
+  isOk = (json.location.length > 0 && isOk) ? true : false;
+  isOk = (json.interviewers.length > 0 && isOk) ? true : false;
+  return isOk
+}
+const Interviewers = [
         'Имя Фамилия1',
         'Имя Фамилия2',
         'Имя Фамилия3'
@@ -88,28 +97,87 @@ TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
 
+const now = yyyy + '-' + mm + '-' + dd;
+let error = "";
 
 class UserProfile extends Component {
 
     constructor(props){
         super(props)
-        console.log(this.props)
         this.state = {
-          begin_time: "",
-          end_time: "",
-          description: "",
-          location: "",
-          email_heads: [],
-          email_interviewer: "",
-          phone: []
+            first_name: "",
+            last_name: "",
+            email: "",
+            candidate_phone: "",
+            skype: "",
+            department: "",
+            position: "",
+            experience: 0,
+            level: "",
+            status: "",
+            cv: "",
+            comments: [],
+            candidate: 0,
+            begin_time: "",
+            description: "",
+            location: "",
+            interviewers: [],
+            phone: [],
+            status: "TO_BE_CONDUCTED"
         }
+    }
+
+    componentDidMount() {
+        FetchDataAPI(CANDIDATES_URL + "/" + this.props.profileId)
+            .then(candidate => this.setState({
+                first_name: candidate.first_name,
+                last_name: candidate.last_name,
+                email: candidate.email,
+                candidate_phone: candidate.phone,
+                experience: candidate.experience,
+                level: candidate.level,
+                cv: candidate.CVs[0].url,
+                status: candidate.status,
+                skype: candidate.skype,
+                position: candidate.position.name,
+                department: candidate.position.department.name,
+                interviews: candidate.interviews,
+                comments: candidate.comments
+            }))
     }
 
     handleChange = (event) => {
       this.setState({
         [event.target.name]: event.target.value
+      });
+    }
+
+    handleChangeForTime = (event) => {
+      const begin_time = event.target.value + ":00+06:00";
+      this.setState({
+        begin_time: begin_time,
+        candidate: this.props.profileId
       })
     }
+
+    handleSubmit = (event) => {
+      let jsonObj = {
+        'candidate': this.state.candidate,
+        'begin_time': this.state.begin_time,
+        'interviewers': this.state.interviewers,
+        'description': this.state.description,
+        'location': this.state.location,
+        'phone': this.state.phone,
+        'status': 'TO_BE_CONDUCTED'
+      }
+      const isOk = isPossibleToSend(jsonObj);
+      if(isOk){
+        const URL = 'http://159.65.153.5/api/v1/interviews';
+        PostDataAPI(URL, this.state);
+      }
+      return isOk;
+    }
+
     handleChangePhoneNumber = (event) => {
       this.state.phone[event.target.name] = event.target.value;
       console.log(this.state);
@@ -132,6 +200,7 @@ class UserProfile extends Component {
       // const URL = 'http://159.65.153.5/api/v1/interviews';
       // PostDataAPI(URL, this.state);
     }
+
     handleAddInputForPhoneNumber = () => {
       let phone = this.state.phone.concat([''])
       this.setState({
@@ -147,63 +216,92 @@ class UserProfile extends Component {
         </MenuItem>
       ))
     }
-    RenderSelectItem = (props) => {
-      return props.map((item, index) => (
-          <MenuItem key={index} value={item}>{item}</MenuItem>
-      ))
-    }
-
-
 
     render() {
         const { classes } = this.props;
-        const { comments } = this.state;
+        const { first_name,
+                last_name,
+                email,
+                candidate_phone,
+                skype,
+                department,
+                position,
+                experience,
+                level,
+                status,
+                cv,
+                comments,
+                candidate,
+                begin_time,
+                interviewers,
+                location,
+                description } = this.state;
+
         return (
             <div style={{ margin: " 0 1em"}}>
                 <div className={classes.root}>
                     Фамилия:
-                    <span className={classes.box}><TextField defaultValue="Пупкин" placeholder="введите фамилию" /></span>
+                    <span className={classes.box}><TextField value={first_name} placeholder="введите фамилию" /></span>
                 </div>
                 <div className={classes.root}>
                     Имя:
-                    <span className={classes.box}><TextField defaultValue="Вася" placeholder="введите имя" /></span>
+                    <span className={classes.box}><TextField value={last_name} placeholder="введите имя" /></span>
                 </div>
                 <div className={classes.root}>
                     Email:
-                    <span className={classes.box}><TextField defaultValue="example@gmail.com" placeholder="введите email" /></span>
+                    <span className={classes.box}><TextField value={email} placeholder="введите email" /></span>
                 </div>
                 <div className={classes.root}>
                     Номер:
-                    <span className={classes.box}><TextField defaultValue="+996555000000" placeholder="введите номер" /></span>
+                    <span className={classes.box}><TextField value={candidate_phone} placeholder="введите номер" /></span>
                 </div>
                 <div className={classes.root}>
                     Skype:
-                    <span className={classes.box}><TextField defaultValue="vasya.pupkin" placeholder="введите адрес" /></span>
+                    <span className={classes.box}><TextField value={skype} placeholder="введите адрес" /></span>
                 </div>
                 <div className={classes.root}>
                     Отдел:
-                    <span className={classes.box}><TextField defaultValue={Department}/></span>
+                    <span className={classes.box}><TextField value={department}/></span>
+                </div>
+                <div className={classes.root}>
+                    Позиция:
+                    <span className={classes.box}><TextField value={position}/></span>
                 </div>
                 <div className={classes.root}>
                     Опыт:
-                    <span className={classes.box}><TextField defaultValue={Experience}/></span>
+                    <span className={classes.box}><TextField type="number" value={experience}/></span>
                 </div>
                 <div className={classes.root}>
                     Уровень:
-                    <span className={classes.box}><TextField defaultValue={Level}/></span>
+                    <span className={classes.box}><TextField value={level}/></span>
                 </div>
                 <div className={classes.root}>
                     Статус:
-                    <span className={classes.box}><TextField defaultValue={Status}/></span>
+                    <span className={classes.box}><TextField value={status}/></span>
                 </div>
                 <div className={classes.root}>
                     Резюме:
-                    <span className={classes.box}><a href=""> CV.pdf </a></span>
+                    <span className={classes.box}><a href={cv}> Ссылка на резюме </a></span>
                 </div>
-
                 <div className={classes.root}>
-                    <TextField multiline onChange={this.handleComment} placeholder="комментарий..." />
-                    <span className={classes.box }><Button variant="contained" onClick={this.createComment} >комментировать</Button></span>
+                    <Paper>
+                        {
+                            comments.map((item, index) => {
+                                return (
+                                    <ListItem key={index}>
+                                        <ListItemText>автор: {item.created_by.first_name + " " + item.created_by.last_name} <br/>
+                                            текст: {item.text} <br/>
+                                            создан: {DateConvert(item.created)}
+                                         </ListItemText>
+                                    </ListItem>
+                                )
+                            })
+                        }
+                    </Paper>
+                </div>
+                <div className={classes.root}>
+                    <TextField multiline name="newComment" onChange={this.handleChange} placeholder="комментарий..." />
+                    <span className={classes.box }><Button variant="contained" onClick={() => alert("It will be soon...")} >комментировать</Button></span>
                 </div>
                 <div className={classes.root}>
                     <Divider />
@@ -227,7 +325,7 @@ class UserProfile extends Component {
                             <div className={classes.root}>
                                 HoD:
                                 <span className={classes.box}>
-                                 <Select multiple name="email_heads" value={this.state.email_heads} onChange={this.handleChange} renderValue={selected => selected.join(', ')} MenuProps={MenuProps} required>
+                                 <Select multiple name="interviewers" value={interviewers} onChange={this.handleChange} renderValue={selected => selected.join(', ')} MenuProps={MenuProps} required>
                                    {this.RenderMultipleSelectItem(Heads)}
                                  </Select>
                                 </span>
@@ -243,11 +341,11 @@ class UserProfile extends Component {
                             </div>
                             <div className={classes.root}>
                                 Место:
-                                <span className={classes.box}><TextField onChange={this.handleChange} name="location" placeholder="место проведения" required/></span>
+                                <span className={classes.box}><TextField onChange={this.handleChange} name="location" value={location} placeholder="место проведения" required/></span>
                             </div>
                             <div className={classes.root}>
                                 Сообщение:
-                                <span className={classes.box}><TextField onChange={this.handleChange} name="description" multiline placeholder="введите сообщение" required/></span>
+                                <span className={classes.box}><TextField onChange={this.handleChange} name="description" value={description} multiline placeholder="введите сообщение" required/></span>
                             </div>
                         </div>
                     }
@@ -268,7 +366,7 @@ class UserProfile extends Component {
                         text={
                             <div>
                                 <div className={classes.root}>Тема:
-                                    <span className={classes.box}><Select defaultValue={TopicTemp}/></span>
+                                    <span className={classes.box}><Select value={TopicTemp}/></span>
                                 </div>
                                 <div className={classes.root}>Сообщение:
                                     <span className={classes.box}><TextField multiline value={MsgTemp}/></span>

@@ -1,6 +1,6 @@
 import React from "react";
 import TableList from "../../ui/Table";
-import Button from '../../ui/ButtonSubmit';
+import Button from '@material-ui/core/Button';
 
 
 const ListOfVacancies = (props) => {

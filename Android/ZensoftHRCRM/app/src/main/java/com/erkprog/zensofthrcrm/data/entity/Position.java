@@ -8,7 +8,7 @@ public class Position {
   @SerializedName("name")
   private String name;
   @SerializedName("department")
-  private Department departmentModel;
+  private Department department;
 
   public Integer getId() {
     return id;
@@ -26,11 +26,11 @@ public class Position {
     this.name = name;
   }
 
-  public Department getDepartmentModel() {
-    return departmentModel;
+  public Department getDepartment() {
+    return department;
   }
 
-  public void setDepartmentModel(Department departmentModel) {
-    this.departmentModel = departmentModel;
+  public void setDepartment(Department department) {
+    this.department = department;
   }
 }
