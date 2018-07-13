@@ -19,7 +19,7 @@ def interview_created(sender, **kwargs):
         interview = kwargs['instance']
         candidate = interview.candidate
         message = {
-            'title': 'Interview with: ' + candidate.first_name + " " + candidate.last_name,
+            'title': 'Interview with: ' + str(candidate.email),
             'body': 'at - ' + interview.date.strftime("%A, %d. %B %Y %I:%M%p")
         }
         device.send_message(**message)
