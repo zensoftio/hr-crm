@@ -9,7 +9,7 @@ public class PositionsResponse {
   private String next;
   private String previous;
   @SerializedName("results")
-  private List<Position> positionList = null;
+  private List<Position> positionList;
 
   public Integer getCount() {
     return count;

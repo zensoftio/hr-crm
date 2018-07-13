@@ -12,16 +12,16 @@ public class Candidate {
   @SerializedName("last_name")
   private String lastName;
   private String email;
-  private Position position = null;
+  private Position position;
   private Float experience;
   private String level;
   private String created;
   private String skype;
   private String status;
   private String phone;
-  private List<Cv> cvs = null;
-  private List<Interview> interviews = null;
-  private List<Comment> comments = null;
+  private List<Cv> cvs;
+  private List<Interview> interviews;
+  private List<Comment> comments;
 
   public String getCreated() {
     return created;

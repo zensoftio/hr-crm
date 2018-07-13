@@ -9,7 +9,7 @@ public class InterviewsResponse {
   private String next;
   private String previous;
   @SerializedName("results")
-  private List<Interview> interviewList = null;
+  private List<Interview> interviewList;
 
   public Integer getCount() {
     return count;

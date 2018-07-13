@@ -14,7 +14,7 @@ public class Request {
   private Position position;
   private String status;
   @SerializedName("requirements")
-  private List<Requirement> requirementList = null;
+  private List<Requirement> requirementList;
 
   public Integer getId() {
     return id;

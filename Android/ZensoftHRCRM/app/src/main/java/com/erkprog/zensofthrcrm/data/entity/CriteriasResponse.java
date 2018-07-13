@@ -10,7 +10,7 @@ public class CriteriasResponse {
   private Object next;
   private Object previous;
   @SerializedName("results")
-  private List<Criteria> criteriaList = null;
+  private List<Criteria> criteriaList;
 
   public Integer getCount() {
     return count;
