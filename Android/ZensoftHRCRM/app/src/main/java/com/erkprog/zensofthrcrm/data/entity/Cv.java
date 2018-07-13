@@ -7,7 +7,7 @@ public class Cv {
   @SerializedName("url")
   private String link;
 
-//    @SerializedName("created")
+  //    @SerializedName("created")
 //    private Date created;
   private String created;
 
