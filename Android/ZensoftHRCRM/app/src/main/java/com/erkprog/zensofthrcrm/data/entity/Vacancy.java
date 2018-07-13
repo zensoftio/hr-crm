@@ -3,15 +3,12 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class Vacancy {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
   private String name;
   @SerializedName("date_created")
   private String dateCreated;
   @SerializedName("date_last_published")
   private String dateLastPublished;
-  @SerializedName("status")
   private String status;
 
   public Integer getId() {

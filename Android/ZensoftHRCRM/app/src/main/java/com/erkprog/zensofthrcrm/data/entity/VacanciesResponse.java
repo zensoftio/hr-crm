@@ -5,11 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class VacanciesResponse {
-  @SerializedName("count")
   private Integer count;
-  @SerializedName("next")
   private String next;
-  @SerializedName("previous")
   private String previous;
   @SerializedName("results")
   private List<Vacancy> vacancyList = null;

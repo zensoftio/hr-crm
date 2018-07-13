@@ -3,15 +3,9 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class Requirement {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
   private String name;
-
-  @SerializedName("department")
   private Department department;
-
-  @SerializedName("type")
   private Integer type;
 
   public Integer getType() {

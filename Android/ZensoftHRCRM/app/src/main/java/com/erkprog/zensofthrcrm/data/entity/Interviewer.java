@@ -5,11 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Interviewer {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("user")
   private User user;
-  @SerializedName("comment")
   private String comment;
 
   @SerializedName("evaluations")

@@ -6,11 +6,8 @@ import java.util.List;
 
 public class CriteriasResponse {
 
-  @SerializedName("count")
   private Integer count;
-  @SerializedName("next")
   private Object next;
-  @SerializedName("previous")
   private Object previous;
   @SerializedName("results")
   private List<Criteria> criteriaList = null;

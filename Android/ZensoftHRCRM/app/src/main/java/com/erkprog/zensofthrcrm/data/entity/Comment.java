@@ -5,19 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public class Comment {
-  @SerializedName("id")
   private Integer id;
-
-  @SerializedName("text")
   private String text;
-
   @SerializedName("created_by")
   private User createdBy;
-
-  @SerializedName("created")
   private String created;
-
-
   @SerializedName("candidate")
   private Candidate candidate;
 
