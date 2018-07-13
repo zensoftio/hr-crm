@@ -1,4 +1,4 @@
-package io.zensoft.share.listener.Facebook;
+package io.zensoft.share.listener.facebook;
 
 import io.zensoft.share.config.rabbitmq.RabbitMqComponentDeclarationConfiguration;
 import io.zensoft.share.dto.VacancyDto;
