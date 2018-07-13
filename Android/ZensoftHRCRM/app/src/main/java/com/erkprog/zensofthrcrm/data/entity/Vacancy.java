@@ -1,10 +1,17 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Vacancy {
+  @SerializedName("id")
   private Integer id;
+  @SerializedName("name")
   private String name;
-  private String created;
-  private String last_published;
+  @SerializedName("date_created")
+  private String dateCreated;
+  @SerializedName("date_last_published")
+  private String dateLastPublished;
+  @SerializedName("status")
   private String status;
 
   public Integer getId() {
@@ -23,20 +30,20 @@ public class Vacancy {
     this.name = name;
   }
 
-  public String getCreated() {
-    return created;
+  public String getDateCreated() {
+    return dateCreated;
   }
 
-  public void setCreated(String created) {
-    this.created = created;
+  public void setDateCreated(String dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public String getLast_published() {
-    return last_published;
+  public String getDateLastPublished() {
+    return dateLastPublished;
   }
 
-  public void setLast_published(String last_published) {
-    this.last_published = last_published;
+  public void setDateLastPublished(String dateLastPublished) {
+    this.dateLastPublished = dateLastPublished;
   }
 
   public String getStatus() {

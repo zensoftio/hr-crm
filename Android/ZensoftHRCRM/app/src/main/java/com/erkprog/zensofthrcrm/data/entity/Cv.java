@@ -2,14 +2,15 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 public class Cv {
   @SerializedName("id")
   private Integer id;
 
   @SerializedName("url")
   private String link;
+
+//    @SerializedName("created")
+//    private Date created;
 
   @SerializedName("created")
   private String created;
@@ -38,4 +39,11 @@ public class Cv {
     this.created = created;
   }
 
+  //    public Date getCreated() {
+//        return created;
+//    }
+//
+//    public void setCreated(Date created) {
+//        this.created = created;
+//    }
 }

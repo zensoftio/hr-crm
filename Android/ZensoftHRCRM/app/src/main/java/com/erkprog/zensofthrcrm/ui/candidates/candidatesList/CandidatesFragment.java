@@ -1,5 +1,6 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidatesList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -79,6 +80,11 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public boolean hasInternetConnection(Context context) {
+    return false;
   }
 
   @Override

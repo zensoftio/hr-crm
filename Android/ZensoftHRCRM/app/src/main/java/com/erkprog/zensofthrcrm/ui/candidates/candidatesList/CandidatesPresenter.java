@@ -58,6 +58,7 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
   }
 
   @Override
+
   public void bind(CandidatesContract.View view) {
     mView = view;
   }

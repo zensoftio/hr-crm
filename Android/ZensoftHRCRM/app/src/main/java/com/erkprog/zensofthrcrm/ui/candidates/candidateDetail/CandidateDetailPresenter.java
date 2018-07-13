@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
-import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
+import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 import retrofit2.Call;
@@ -50,12 +50,13 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
     });
   }
 
+
   private boolean isViewAttached() {
     return mView != null;
   }
 
   @Override
-  public void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
+  public void onInterviewItemClicked(Interview interviewItem) {
     //TODO: mView.showDetailedInterview() here, showMessage just for test
     mView.showMessage(interviewItem.getDate());
   }

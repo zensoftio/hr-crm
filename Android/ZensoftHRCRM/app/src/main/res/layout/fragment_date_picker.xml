@@ -10,10 +10,12 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center_horizontal"
       android:orientation="vertical">
+
     <DatePicker
         android:id="@+id/crint_date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TimePicker
         android:id="@+id/crint_time_picker"
         android:layout_width="wrap_content"
