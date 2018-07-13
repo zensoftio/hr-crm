@@ -27,13 +27,17 @@ public class FacebookPublisherService implements PublisherService {
     private FacebookConfigs facebookConfigs;
     private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
     private FacebookRequestSender facebookRequestSender;
+    private FacebookUrlBuilder facebookUrlBuilder;
+
     @Autowired
     public FacebookPublisherService(FacebookConfigs facebookConfigs,
                                     FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever,
-                                    FacebookRequestSender facebookRequestSender){
+                                    FacebookRequestSender facebookRequestSender,
+                                    FacebookUrlBuilder facebookUrlBuilder){
         this.facebookConfigs = facebookConfigs;
         this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
         this.facebookRequestSender = facebookRequestSender;
+        this.facebookUrlBuilder = facebookUrlBuilder;
     }
 
     @Override
@@ -64,14 +68,14 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse publishText(Vacancy vacancy) {
-        String url = getPublishTextRequestUrl(vacancy);
+        String url = facebookUrlBuilder.getPublishTextRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
         return vacancyResponse;
     }
 
     private VacancyResponse publishPhoto(Vacancy vacancy) {
-        String url = getPublishPhotoRequestUrl(vacancy);
+        String url = facebookUrlBuilder.getPublishPhotoRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
         return vacancyResponse;
@@ -94,29 +98,4 @@ public class FacebookPublisherService implements PublisherService {
         }
     }
 
-    private String getPublishTextRequestUrl(Vacancy vacancy) {
-        String url = facebookConfigs.getPublishTextRequestUrlTemplate();
-        url = url.replace("{pageId}", facebookConfigs.getPageId());
-        url = url.replace("{message}", vacancy.getTitle());
-        url = url.replace("{access_token}", pageAccessToken);
-        return url;
-    }
-
-    private String getPublishPhotoRequestUrl(Vacancy vacancy) {
-        String url = facebookConfigs.getPublishPhotoRequestUrlTemplate();
-        url = url.replace("{pageId}", facebookConfigs.getPageId());
-        url = url.replace("{photoUrl}", getPhotoUrl(vacancy));
-        url = url.replace("{caption}", getText(vacancy));
-        url = url.replace("{isPublished}", "true");
-        url = url.replace("{access_token}", pageAccessToken);
-        return url;
-    }
-
-    private String getPhotoUrl(Vacancy vacancy) {
-        return vacancy.getImage();
-    }
-
-    private String getText(Vacancy vacancy) {
-        return vacancy.getTitle();
-    }
 }
