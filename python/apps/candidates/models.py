@@ -42,7 +42,7 @@ class Candidate(models.Model):
         ordering = ('last_name',)
 
     def __str__(self):
-        return str(self.email)
+        return self.email
 
     def get_absolute_url(self):
         return reverse('v1:candidate-detail', kwargs={'pk': self.id})
@@ -52,7 +52,7 @@ post_save.connect(candidate_created, sender=Candidate)
 
 
 class CV(models.Model):
-    url = models.CharField(max_length=50, blank=True, null=True)
+    url = models.URLField(null=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='CV')
     created = models.DateTimeField(auto_now_add=True)
 
