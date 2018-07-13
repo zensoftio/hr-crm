@@ -1,7 +1,9 @@
 package io.zensoft.share.service.facebook;
 
 import io.zensoft.share.model.Vacancy;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FacebookUrlBuilder {
     private FacebookConfigs facebookConfigs;
 
@@ -9,7 +11,7 @@ public class FacebookUrlBuilder {
         this.facebookConfigs = facebookConfigs;
     }
 
-    private String getPublishPhotoRequestUrl(Vacancy vacancy, String pageAccessToken) {
+    public String getPublishPhotoRequestUrl(Vacancy vacancy, String pageAccessToken) {
         String url = facebookConfigs.getPublishPhotoRequestUrlTemplate();
         url = url.replace("{pageId}", facebookConfigs.getPageId());
         url = url.replace("{photoUrl}", vacancy.getImage());
@@ -19,7 +21,7 @@ public class FacebookUrlBuilder {
         return url;
     }
 
-    private String getPublishTextRequestUrl(Vacancy vacancy, String pageAccessToken) {
+    public String getPublishTextRequestUrl(Vacancy vacancy, String pageAccessToken) {
         String url = facebookConfigs.getPublishTextRequestUrlTemplate();
         url = url.replace("{pageId}", facebookConfigs.getPageId());
         url = url.replace("{message}", vacancy.getTitle());
