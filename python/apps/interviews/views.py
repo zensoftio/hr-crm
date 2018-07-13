@@ -8,6 +8,7 @@ from apps.interviews.serializers import InterviewListSerializer, CriteriaListSer
 from apps.users.permissions import IsInterviewer
 
 
+
 class InterviewListCreateView(generics.ListCreateAPIView):
     queryset = Interview.objects.all()
     serializer_class = InterviewListSerializer
