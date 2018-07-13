@@ -3,13 +3,13 @@ from django.utils import timezone
 
 from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 from .models import Criteria, Interview
-from .serializers import CriteriaSerializer, InterviewDetailSerializer, InterviewListSerializer, \
-                                                                                            InterviewCreateSerializer
+from .serializers import CriteriaCreateSerializer, InterviewDetailSerializer, InterviewListSerializer, \
+    CriteriaListSerializer, InterviewCreateSerializer
 
 
-class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
+class CriteriaCreateTestCase(CreateTestMixin, APITestCase):
     model = Criteria
-    serializer = CriteriaSerializer
+    serializer = CriteriaCreateSerializer
 
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
                 'interviews.json']
@@ -18,6 +18,14 @@ class CriteriaCreateListTestCase(ListTestMixin, CreateTestMixin, APITestCase):
         "name": "OOP",
         "department": 1
     }
+
+
+class CriteriaListTestCase(ListTestMixin, APITestCase):
+    model = Criteria
+    serializer = CriteriaListSerializer
+
+    fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
+                'interviews.json']
 
 
 class InterviewListTestCase(ListTestMixin, APITestCase):

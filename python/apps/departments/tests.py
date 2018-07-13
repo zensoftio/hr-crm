@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from apps.utils.base_tests import CreateTestMixin, ListTestMixin, GetInstanceTestMixin
 from .models import Department, Requirement, Position
 from .serializers import DepartmentSerializer, RequirementSerializer, \
-                                                            PositionSerializer
+                                                            PositionListSerializer, PositionCreateSerializer
 
 
 class DepartmentListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
@@ -47,9 +47,14 @@ class RequirementDetailTestCase(GetInstanceTestMixin, APITestCase):
         self.instance = Requirement.objects.get(pk=1)
 
 
-class PositionListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
+class PositionListTestCase(ListTestMixin, APITestCase):
     model = Position
-    serializer = PositionSerializer
+    serializer = PositionListSerializer
+
+
+class PositionCreateTestCase(CreateTestMixin, APITestCase):
+    model = Position
+    serializer = PositionCreateSerializer
 
     def setUp(self):
         department = Department.objects.create(name='Python')
@@ -61,7 +66,7 @@ class PositionListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase):
 
 class PositionDetailTestCase(GetInstanceTestMixin, APITestCase):
     model = Position
-    serializer = PositionSerializer
+    serializer = PositionListSerializer
 
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
                 'interviews.json']
