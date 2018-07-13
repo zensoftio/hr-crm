@@ -6,7 +6,7 @@ import { Inbox } from './inbox.interface';
 import * as moment from 'moment';
 import * as connection from 'Rabbit';
 
-const exchange = connection.default.declareExchange('candidates', 'direct', { durable: false });
+const exchange = connection.default.declareExchange('js-backend', 'direct', { durable: false });
 const queue = connection.default.declareQueue('candidate_queue',{durable: false});
 
 @Controller('inbox')
@@ -34,7 +34,7 @@ export class InboxListener {
         const result = await this.inboxService.getMessages(message)
         this.sendMessage(result)
       }catch(err) {
-        this.sendMessage("CAN'T GET ONE MESSAGE")
+        this.sendMessage(err)
         throw err;
       }
    }
@@ -44,21 +44,20 @@ export class InboxListener {
          const result = await this.inboxService.getOneMessage(message)
          this.sendMessage(result)
        }catch(err) {
-         this.sendMessage("CAN'T GET ONE MESSAGE")
+         this.sendMessage(err)
          throw err;
        }
     }
 
     private async sendMessage(msg: any):any {
-      var sendQueue = connection.declareQueue("inboxMessages2")
       connection.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
-          exchange.send(msg2);
+          exchange.send(msg2,queue);
       });
     }
 
     private async listenQueue():void {
-      queue.bind(exchange, 'inboxMessages');
+      queue.bind(exchange, 'candidate-listen');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
         msg = JSON.parse(msg)

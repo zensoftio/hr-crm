@@ -29,7 +29,7 @@ export class TemplateService {
         await this.TemplateRepository.delete({id: int});
         return toDelete;
     } catch (e) {
-        console.log(e);
+        throw e;
     }
   }
 
@@ -39,7 +39,7 @@ export class TemplateService {
           console.log(Template)
           return Template;
       } catch (e) {
-          console.log(e)
+          throw e;
       }
 }
 }

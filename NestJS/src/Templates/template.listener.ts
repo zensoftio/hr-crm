@@ -1,10 +1,11 @@
 import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { TemplateService } from './template.service';
+import * as connection from 'Rabbit';
 
-const connection = new Amqp.Connection("amqp://localhost");
-const exchange = connection.declareExchange("exchangeForTemplate", 'direct', { durable: false });
-const queue = connection.declareQueue('template');
+const exchange = connection.default.declareExchange("js-backend", 'direct', { durable: false });
+const queue = connection.default.declareQueue('template',{durable: false});
+
 @Controller('template')
 export class TemplateListener {
     constructor(private readonly templateService: TemplateService){
@@ -31,7 +32,7 @@ export class TemplateListener {
         const result = await this.templateService.findAll();
         this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("NOT FOUND");
+        this.sendMessage(err);
         throw err;
       }
     }
@@ -41,7 +42,7 @@ export class TemplateListener {
         const result = await this.templateService.findOne(template.id);
         this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("NOT FOUND");
+        this.sendMessage(err);
         throw err;
       }
     }
@@ -51,7 +52,7 @@ export class TemplateListener {
         const result = await this.templateService.deleteOne(template.id);
         this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("NOT DELETED");
+        this.sendMessage(err);
         throw err;
       }
     }
@@ -61,7 +62,7 @@ export class TemplateListener {
         const result = await this.templateService.update(template.id,template);
         this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("NOT UPDATED");
+        this.sendMessage(err);
         throw err;
       }
     }
@@ -71,21 +72,20 @@ export class TemplateListener {
         const result = await this.templateService.update(template);
         this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("NOT CREATED");
+        this.sendMessage(err);
         throw err;
       }
     }
 
     private async sendMessage(msg){
-      var sendQueue = connection.declareQueue("template2")
-      connection.completeConfiguration().then(() => {
+      connection.default.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
-          exchange.send(msg2);
+          exchange.send(msg2,'template2',{durable:false});
       });
     }
 
     private async listenQueue(){
-      queue.bind(exchange, 'template');
+      queue.bind(exchange, queue);
       queue.activateConsumer((message) => {
         var msg = message.getContent()
 
