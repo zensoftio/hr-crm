@@ -1,4 +1,4 @@
-package io.zensoft.share.model.diesel;
+package io.zensoft.share.service.diesel.header;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

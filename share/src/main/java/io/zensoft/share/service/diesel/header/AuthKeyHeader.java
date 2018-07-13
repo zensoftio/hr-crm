@@ -1,6 +1,5 @@
-package io.zensoft.share.service.diesel.authkey;
+package io.zensoft.share.service.diesel.header;
 
-import io.zensoft.share.model.diesel.HeaderValue;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
