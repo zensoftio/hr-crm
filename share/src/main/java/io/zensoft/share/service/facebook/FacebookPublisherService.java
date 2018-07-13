@@ -26,11 +26,14 @@ public class FacebookPublisherService implements PublisherService {
     private Facebook facebookPage;
     private FacebookConfigs facebookConfigs;
     private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
-
+    private FacebookRequestSender facebookRequestSender;
     @Autowired
-    public FacebookPublisherService(FacebookConfigs facebookConfigs, FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever){
+    public FacebookPublisherService(FacebookConfigs facebookConfigs,
+                                    FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever,
+                                    FacebookRequestSender facebookRequestSender){
         this.facebookConfigs = facebookConfigs;
         this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
+        this.facebookRequestSender = facebookRequestSender;
     }
 
     @Override
@@ -78,7 +81,7 @@ public class FacebookPublisherService implements PublisherService {
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setPublisherServiceType(PublisherServiceType.FACEBOOK);
         try {
-            ResponseEntity<Map> map = FacebookRequestSender.postRequest(url);
+            ResponseEntity<Map> map = facebookRequestSender.post(url);
             vacancyResponse.setStatus(VacancyStatus.SUCCESS);
             vacancyResponse.setUrl("https://www.facebook.com/" + map.getBody().get("id"));
             vacancyResponse.setPublishDate(new Date());
