@@ -11,8 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class FacebookUser {
-    private String accessToken;
+public class FacebookPageAccessTokenRetriever {
+    private String userAccessToken;
     private String pageAccessToken;
 
     public String getZensoftPageAccessToken (){
@@ -20,7 +20,7 @@ public class FacebookUser {
         ResponseEntity<Map> map = null;
         try {
             map = new RestTemplate().exchange(
-                    "https://graph.facebook.com/me/accounts?access_token=" + accessToken,
+                    "https://graph.facebook.com/me/accounts?access_token=" + userAccessToken,
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,8 +35,8 @@ public class FacebookUser {
         return pageAccessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setUserAccessToken(String userAccessToken) {
+        this.userAccessToken = userAccessToken;
     }
 
     private void setPageAccessToken(String pageAccessToken) {

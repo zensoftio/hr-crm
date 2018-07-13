@@ -26,12 +26,12 @@ public class FacebookPublisherService implements PublisherService {
 
     private Facebook facebookPage;
     private FacebookConfigs facebookConfigs;
-    private FacebookUser facebookUser;
+    private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
 
     @Autowired
-    public FacebookPublisherService(FacebookConfigs facebookConfigs, FacebookUser facebookUser){
+    public FacebookPublisherService(FacebookConfigs facebookConfigs, FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever){
         this.facebookConfigs = facebookConfigs;
-        this.facebookUser = facebookUser;
+        this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class FacebookPublisherService implements PublisherService {
 
     private void init(Vacancy vacancy) {
         userAccessToken = vacancy.getFacebookUserAccessToken();
-        facebookUser.setAccessToken(userAccessToken);
-        pageAccessToken = facebookUser.getZensoftPageAccessToken();
+        facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
+        pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
         facebookPage = new FacebookTemplate(pageAccessToken, facebookConfigs.getAppNamespace(), facebookConfigs.getAppId());
     }
 
