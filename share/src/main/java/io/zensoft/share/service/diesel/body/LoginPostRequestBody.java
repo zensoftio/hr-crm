@@ -9,8 +9,8 @@ import org.springframework.util.MultiValueMap;
 @Data
 @Component
 public class LoginPostRequestBody {
-    private final String fauth_key = "880ea6a14ea49e853634fbdc5015a024";
-    private final String freferer = "http://diesel.elcat.kg/";
+    private final String AUTHKEY = "880ea6a14ea49e853634fbdc5015a024";
+    private final String REFERER = "http://diesel.elcat.kg/";
 
     @Value( "${diesel.password}" )
     private String ips_password;
@@ -19,10 +19,10 @@ public class LoginPostRequestBody {
     
     public LinkedMultiValueMap getCreatedBodyOfRequestInMap() {
         MultiValueMap<String, String> bodyOfRequest = new LinkedMultiValueMap<>();
-        bodyOfRequest.add("auth_key", getFauth_key());
+        bodyOfRequest.add("auth_key", getAUTHKEY());
         bodyOfRequest.add("ips_password", getIps_password());
         bodyOfRequest.add("ips_username", getIps_username());
-        bodyOfRequest.add("referer", getFreferer());
+        bodyOfRequest.add("referer", getREFERER());
 
         return (LinkedMultiValueMap) bodyOfRequest;
     }
