@@ -5,6 +5,7 @@ import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
 import com.erkprog.zensofthrcrm.data.entity.CriteriasResponse;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
+import com.erkprog.zensofthrcrm.data.entity.UsersResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
 import retrofit2.Call;
@@ -27,4 +28,7 @@ public interface ApiInterface {
 
   @GET("requests")
   Call<RequestsResponse> getRequests();
+
+  @GET("users")
+  Call<UsersResponse> getUsers();
 }
