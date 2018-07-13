@@ -37,7 +37,7 @@ public class InterviewDetail extends AppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    }
+  }
 
 
   @Override

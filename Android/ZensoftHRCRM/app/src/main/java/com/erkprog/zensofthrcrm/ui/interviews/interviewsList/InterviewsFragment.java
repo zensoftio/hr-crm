@@ -61,8 +61,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
 
     if (hasInternetConnection(v.getContext())) {
       mPresenter.getInterviewsInternet();
-    }
-    else {
+    } else {
       mPresenter.getInterviewsLocal();
     }
     return v;

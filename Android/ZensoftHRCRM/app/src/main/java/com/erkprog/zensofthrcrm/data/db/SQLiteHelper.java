@@ -391,9 +391,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
           .getDepartment())));
       savePositions(new ArrayList<Position>(Arrays.asList(interviews.get(i)
           .getCandidate().getPosition())));
-
       saveCandidates(new ArrayList<Candidate>(Arrays.asList(interviews.get(i)
           .getCandidate())));
+      for (int j = 0; j < interviews.get(i).getInterviewersList().size(); j++) {
+        saveEvaluations(interviews.get(i)
+            .getInterviewersList().get(j).getEvaluaionList());
+      }
+      saveInterviewers(interviews.get(i).getInterviewersList());
     }
 
     SQLiteDatabase db = this.getWritableDatabase();
