@@ -1,6 +1,6 @@
 package io.zensoft.share.service.jobkg.auth;
 
-import io.zensoft.share.model.jobkg.JobKgUser;
+import io.zensoft.share.config.jobkg.JobKgUserProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,17 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class DefaultJobKgAuthorizationService implements JobKgAuthorizationService {
 
-    private final JobKgUser jobKgUser;
+    private final JobKgUserProperties jobKgUserProperties;
     private final String authorizationUrl = "http://www.job.kg/login";
 
 
     @Autowired
-    public DefaultJobKgAuthorizationService(JobKgUser jobKgUser) {
-        this.jobKgUser = jobKgUser;
+    public DefaultJobKgAuthorizationService(JobKgUserProperties jobKgUserProperties) {
+        this.jobKgUserProperties = jobKgUserProperties;
     }
 
     @Override
-    public String authorize(JobKgUser user) throws AuthorizationFailedException {
+    public String authorize(JobKgUserProperties user) throws AuthorizationFailedException {
         try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -37,6 +37,9 @@ public class DefaultJobKgAuthorizationService implements JobKgAuthorizationServi
             ResponseEntity<String> response = restTemplate.exchange(authorizationUrl, HttpMethod.POST, entity, String.class);
             String cookie = response.getHeaders().get("Set-Cookie").get(1);
             cookie = cookie.split(";")[0];
+            if (response.getStatusCode() != HttpStatus.FOUND) {
+                throw new Exception();
+            }
             return cookie;
         } catch (Exception e) {
             throw new AuthorizationFailedException("Failed to authorize! Message : " + e.getMessage());
@@ -45,6 +48,6 @@ public class DefaultJobKgAuthorizationService implements JobKgAuthorizationServi
 
     @Override
     public String authorize() throws AuthorizationFailedException {
-        return authorize(jobKgUser);
+        return authorize(jobKgUserProperties);
     }
 }
