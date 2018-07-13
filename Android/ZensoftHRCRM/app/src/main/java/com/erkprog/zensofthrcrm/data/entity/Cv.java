@@ -11,9 +11,6 @@ public class Cv {
   @SerializedName("url")
   private String link;
 
-//    @SerializedName("created")
-//    private Date created;
-
   @SerializedName("created")
   private String created;
 
@@ -41,11 +38,4 @@ public class Cv {
     this.created = created;
   }
 
-  //    public Date getCreated() {
-//        return created;
-//    }
-//
-//    public void setCreated(Date created) {
-//        this.created = created;
-//    }
 }

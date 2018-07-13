@@ -10,26 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
+
 import java.util.List;
 
 public class CandidateDetailFragment extends Fragment implements CandidateDetailContract.View,
     View.OnClickListener {
   private static final String TAG = "PROFILE DETAILS";
   public static final String ARGUMENT_CANDIDATE_ID = "argument candidate id";
+  private static final int NO_ID = -1;
 
   private CandidateDetailContract.Presenter mPresenter;
+  private int mCandidateId;
 
   private LinearLayout mLayout;
+  private ProgressBar mProgressBar;
 
   private TextView mFirstName;
   private TextView mLastName;
@@ -41,18 +46,35 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    initPresenter();
+  }
+
+  private void initPresenter() {
+    mPresenter = new CandidateDetailPresenter(requireContext(), CRMApplication.getInstance(requireContext())
+        .getApiService());
+    mPresenter.bind(this);
   }
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
     View v = inflater.inflate(R.layout.fragment_candidate_detail, container, false);
     initUI(v);
-    int candidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
-    showToast(String.valueOf(candidateId));
-    mPresenter = new CandidateDetailPresenter(this, new CandidatesRepository(getActivity()));
-    mPresenter.loadCandidateInfo(candidateId);
+    if (getArguments() != null) {
+      mCandidateId = getArguments().getInt(ARGUMENT_CANDIDATE_ID);
+    } else {
+      mCandidateId = NO_ID;
+    }
     return v;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if (mCandidateId != NO_ID) {
+      mPresenter.loadCandidateInfo(mCandidateId);
+    }
   }
 
   private void initUI(View v) {
@@ -63,16 +85,21 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mPhoneNumber = v.findViewById(R.id.cd_phone);
     mDepartment = v.findViewById(R.id.cd_department);
     mYearsOfExp = v.findViewById(R.id.cd_years_xp);
+    mProgressBar = v.findViewById(R.id.cd_progress_bar);
+    dismissProgress();
   }
 
   @Override
   public void showCandidateDetails(Candidate candidate) {
-    mFirstName.setText(candidate.getFirstName() != null ? candidate.getFirstName() : "");
-    mLastName.setText(candidate.getLastName() != null ? candidate.getLastName() : "");
-    mEmail.setText(candidate.getEmail() != null ? candidate.getEmail() : "");
-    mPhoneNumber.setText(candidate.getPhone() != null ? candidate.getPhone() : "");
-    String department = candidate.getPosition().getDepartmentModel().getName();
-    mDepartment.setText(department != null ? department : "");
+    mFirstName.setText(candidate.getFirstName());
+    mLastName.setText(candidate.getLastName());
+    mEmail.setText(candidate.getEmail());
+    mPhoneNumber.setText(candidate.getPhone());
+
+    if (candidate.getPosition() != null && candidate.getPosition().getDepartment() != null) {
+      mDepartment.setText(candidate.getPosition().getDepartment().getName());
+    }
+
     mYearsOfExp.setText(String.valueOf(candidate.getExperience()));
     addExtraViews(candidate);
   }
@@ -103,7 +130,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.interviews);
-      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add interview views
@@ -134,20 +161,12 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.comments);
-      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add comment views
       for (final Comment commentItem : commentList) {
         View commentView = ViewBuilder.createCommentView(getActivity(), commentItem);
-
-        commentView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            mPresenter.onCommentItemClicked(commentItem);
-          }
-        });
-
         mLayout.addView(commentView);
       }
     }
@@ -165,7 +184,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
       // add description Textview
       TextView descriptionText = new TextView(getActivity());
       descriptionText.setText(R.string.cvs);
-      descriptionText.setTextColor(getResources().getColor(R.color.main_attributes));
+      descriptionText.setTextColor(getResources().getColor(R.color.colorBlack));
       mLayout.addView(descriptionText);
 
       // add cvs views
@@ -209,19 +228,18 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
   }
 
   @Override
-  public boolean isActive() {
-    return isAdded();
+  public void showMessage(String message) {
+    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
   }
 
   @Override
-  public void showLoadingCandidateError() {
-
+  public void showProgress() {
+    mProgressBar.setVisibility(View.VISIBLE);
   }
 
   @Override
-  public void showToast(String message) {
-    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
+  public void dismissProgress() {
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override
@@ -234,21 +252,27 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
 
       case R.id.cd_delete_button:
         //TODO: implement profile deleting
-        showToast("Delete candidate profile");
+        showMessage("Delete candidate profile");
         break;
 
       case R.id.cd_edit_button:
         //TODO: implement profile editing
-        showToast("Edit profile");
+        showMessage("Edit profile");
         break;
 
       case R.id.cd_message_button:
         //TODO: implement sending message
-        showToast("Send message");
+        showMessage("Send message");
         break;
 
       default:
         break;
     }
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mPresenter.unbind();
   }
 }

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Input from "../../ui/Input";
-import {withStyles} from "@material-ui/core/styles/index";
-import {Link} from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles/index";
+import { Link } from "react-router-dom";
 import Select from '../../ui/SelectList';
 
 const styles = theme => ({
@@ -38,7 +38,7 @@ class EditInterviewContainer extends Component {
                 </div>
                 <div className={classes.label}>
                     <span className={classes.span}>ВАКАНСИЯ:</span>
-                    <Select vals={VacancyList}/>
+                    <Select optionValue={VacancyList}/>
                 </div>
                 <div className={classes.label}>
                     <span className={classes.span}>ИНТЕРВЬЮЕР:</span>
