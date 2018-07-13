@@ -28,7 +28,6 @@ public class DefaultJobKgAuthorizationService implements JobKgAuthorizationServi
     @Override
     public String authorize(JobKgUserProperties user) throws AuthorizationFailedException {
         try {
-            log.info("authorize method called");
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -46,6 +45,7 @@ public class DefaultJobKgAuthorizationService implements JobKgAuthorizationServi
             if (response.getStatusCode() != HttpStatus.FOUND) {
                 throw new Exception(response.getStatusCode().toString());
             }
+            log.info("Successfully authorized");
             return cookie;
         } catch (Exception e) {
             log.error("Could not authorize to job.kg ");

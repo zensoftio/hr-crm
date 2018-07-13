@@ -36,7 +36,6 @@ public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublishe
         try {
             log.info("Calling authorize() method");
             String cookie = authorizationService.authorize();
-            log.info("Successfully authorized");
             log.info("Preparing content for publication");
             MultiValueMap<String, String> content = contentBuilderService.build(vacancy);
             log.info("Content for publication was prepared");
