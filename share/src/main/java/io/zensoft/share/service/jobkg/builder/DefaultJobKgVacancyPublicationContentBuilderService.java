@@ -3,6 +3,7 @@ package io.zensoft.share.service.jobkg.builder;
 import io.zensoft.share.model.Requirement;
 import io.zensoft.share.model.RequirementType;
 import io.zensoft.share.model.Vacancy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,9 +14,11 @@ import java.util.List;
  * Created by temirlan on 7/12/18.
  */
 @Service
+@Slf4j
 public class DefaultJobKgVacancyPublicationContentBuilderService implements JobKgVacancyPublicationContentBuilderService {
     @Override
     public MultiValueMap<String, String> build(Vacancy vacancy) {
+        log.info("Preparing content with Vacancy body " + vacancy);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("Vacancy[name]", vacancy.getPosition());
         //programming category
