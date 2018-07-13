@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.ui.interviews.createInterview.interviewers.InterviewersFragment;
 
 import java.util.Date;
 
@@ -28,8 +29,10 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   public static final String CANDIDATE_LASTNAME = "candidate last name";
   public static final String CANDIDATE_FIRSTNAME = "candidate first name";
   public static final String CANDIDATE_DEPARTMENT = "candidate department";
-  private static final String DIALOG = "Date and time dialog";
+  private static final String DATE_AND_TIME_DIALOG = "Date and time dialog";
+  private static final String INTERVIEWERS_DIALOG = "add interviewers";
   public static final int REQUEST_DATE_CODE = 7;
+  public static final int REQUEST_ADD_INTERVIEWERS = 1;
 
   private CreateInterviewContract.Presenter mPresenter;
 
@@ -111,7 +114,14 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     FragmentManager fm = getFragmentManager();
     DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mInterviewDate);
     datePickerFragment.setTargetFragment(CreateInterviewFragment.this, REQUEST_DATE_CODE);
-    datePickerFragment.show(fm, DIALOG);
+    datePickerFragment.show(fm, DATE_AND_TIME_DIALOG);
+  }
+
+  public void startAddInterviewers() {
+    FragmentManager fm = getFragmentManager();
+    InterviewersFragment interviewersFragment = InterviewersFragment.newInstance();
+    interviewersFragment.setTargetFragment(CreateInterviewFragment.this, REQUEST_ADD_INTERVIEWERS);
+    interviewersFragment.show(fm, INTERVIEWERS_DIALOG);
   }
 
   @Override
@@ -122,7 +132,7 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
         break;
 
       case R.id.crint_add_image:
-        //TODO: display list of available interviewers here
+        startAddInterviewers();
         break;
 
       case R.id.crint_create_button:
