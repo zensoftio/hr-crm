@@ -26,6 +26,10 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
   }
 
 
+  @Override
+  public void onInterviewItemClick(Interview interview) {
+    mView.showInterviewDetailUi(interview.getId());
+  }
 
   @Override
   public void getInterviewsInternet() {

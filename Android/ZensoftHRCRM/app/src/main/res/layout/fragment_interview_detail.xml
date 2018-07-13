@@ -26,17 +26,21 @@
           android:id="@+id/i_root_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:background="@color/colorLightBlue"
           android:orientation="vertical">
 
         <TextView
             android:id="@+id/i_initial_label"
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             android:text="ФИО"/>
 
         <TextView
             android:id="@+id/i_initial"
             android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
             android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +50,7 @@
             android:id="@+id/i_department_label"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             android:text="Department"/>
 
@@ -54,6 +59,7 @@
             android:textSize="@dimen/main_attributes"
             android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             tools:text="@string/department"/>
 
@@ -61,12 +67,14 @@
             android:id="@+id/i_date_label"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             android:text="Date"/>
 
         <TextView
             android:id="@+id/i_date"
             android:textSize="@dimen/main_attributes"
+            android:layout_marginStart="8dp"
             android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

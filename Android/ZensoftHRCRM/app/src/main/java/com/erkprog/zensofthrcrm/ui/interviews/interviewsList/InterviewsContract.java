@@ -16,6 +16,8 @@ public interface InterviewsContract {
 
     void showMessage(String t);
 
+    void showInterviewDetailUi(int interviewId);
+
     void showNoInterviews();
 
     void showProgress();
@@ -29,6 +31,7 @@ public interface InterviewsContract {
 
 
     // ?? void onRefreshData();
+    void onInterviewItemClick(Interview interview);
 
     void getInterviewsInternet();
 

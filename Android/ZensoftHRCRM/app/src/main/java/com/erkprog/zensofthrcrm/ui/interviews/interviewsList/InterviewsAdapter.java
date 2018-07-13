@@ -12,16 +12,17 @@ import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Department;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.List;
 
 public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.InterviewViewHolder> {
 
   private List<Interview> mInterviews;
-  private RecyclerItemClickListener mRecyclerItemClickListener;
+  private ItemClickListener<Interview> mRecyclerItemClickListener;
 
 
-  InterviewsAdapter(List<Interview> interviews, RecyclerItemClickListener
+  InterviewsAdapter(List<Interview> interviews, ItemClickListener<Interview>
       recyclerItemClickListener) {
     mInterviews = interviews;
     mRecyclerItemClickListener = recyclerItemClickListener;
@@ -55,7 +56,7 @@ public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.In
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        mRecyclerItemClickListener.onItemClick(holder.getAdapterPosition());
+        mRecyclerItemClickListener.onItemClick(interview);
       }
     });
 

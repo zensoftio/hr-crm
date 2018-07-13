@@ -17,11 +17,14 @@ import android.view.ViewGroup;
 import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.ui.ItemClickListener;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewDetail.InterviewDetail;
 
 import java.util.List;
 
-public class InterviewsFragment extends Fragment implements InterviewsContract.View {
+public class InterviewsFragment extends Fragment implements InterviewsContract.View,
+    ItemClickListener<Interview> {
 
   private InterviewsContract.Presenter mPresenter;
   private RecyclerView mRecyclerView;
@@ -40,15 +43,6 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
     super.onDestroy();
     mPresenter.unbind();
   }
-
-  private RecyclerItemClickListener recyclerItemClickListener = new RecyclerItemClickListener() {
-    @Override
-    public void onItemClick(Integer position) {
-      Intent intent = new Intent(getActivity(), InterviewDetail.class);
-      intent.putExtra("interviewId", position);
-      startActivity(intent);
-    }
-  };
 
   @Nullable
   @Override
@@ -87,7 +81,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   @Override
   public void showInterviews(List<Interview> interviews) {
 
-    InterviewsAdapter adapter = new InterviewsAdapter(interviews, recyclerItemClickListener);
+    InterviewsAdapter adapter = new InterviewsAdapter(interviews, this);
     mRecyclerView.setAdapter(adapter);
 
   }
@@ -95,6 +89,13 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   @Override
   public void showMessage(String t) {
 
+  }
+
+  @Override
+  public void showInterviewDetailUi(int interviewId) {
+    Intent intent = new Intent(getActivity(), InterviewDetail.class);
+    intent.putExtra("interview_id", interviewId);
+    startActivity(intent);
   }
 
   @Override
@@ -113,4 +114,8 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
 
   }
 
+  @Override
+  public void onItemClick(Interview item) {
+    mPresenter.onInterviewItemClick(item);
+  }
 }
