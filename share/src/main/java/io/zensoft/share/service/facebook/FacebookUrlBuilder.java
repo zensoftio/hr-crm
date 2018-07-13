@@ -1,12 +1,14 @@
 package io.zensoft.share.service.facebook;
 
 import io.zensoft.share.model.Vacancy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FacebookUrlBuilder {
     private FacebookConfigs facebookConfigs;
 
+    @Autowired
     public FacebookUrlBuilder(FacebookConfigs facebookConfigs) {
         this.facebookConfigs = facebookConfigs;
     }
