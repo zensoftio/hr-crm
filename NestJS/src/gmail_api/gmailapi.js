@@ -21,7 +21,6 @@ exports.sendMessageH = async (data, recipient) => {
 }
 
 exports.getAllMessages = async (date) => {
-  console.log("IN GET ALL")
   return authorize(getMessagesByDate,date);
 }
 

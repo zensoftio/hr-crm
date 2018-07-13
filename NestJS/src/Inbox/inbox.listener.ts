@@ -17,13 +17,6 @@ export class InboxListener {
       this.listenQueue();
     }
 
-    async testService(){
-      var data = {
-        date: "2018-07-13T10:15:00",
-      }
-      const a = await this.updateInboxList(data);
-    }
-
     public distributionTasks(task: any):void{
       const obj = {
         UPDATE: this.updateInboxList,
