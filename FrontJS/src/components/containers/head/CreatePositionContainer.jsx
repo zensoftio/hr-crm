@@ -1,7 +1,6 @@
 import React from 'react';
 import SelectList from '../../ui/SelectList';
 import MultiSelection from '../../ui/MultiSelection';
-import TextArea from '../../ui/TextArea';
 import PlusMinus from '../../ui/PlusMinus';
 import { DEPARTMENTS_URL, 
 		 REQUESTS_URL, 
@@ -9,6 +8,7 @@ import { DEPARTMENTS_URL,
 		 REQUIREMENTS_URL } from '../../../utils/urls';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PostDataAPI } from '../../../services/PostDataAPI';
+import { TextField } from '@material-ui/core';
 
 class CreatePositionContainer extends React.Component {
 	constructor(props){
@@ -163,7 +163,7 @@ class CreatePositionContainer extends React.Component {
 						<div style={divstyle}>
 							<label>
 								<span style={instyle}>ОБЩИЕ ТРЕБОВАНИЯ:</span>
-								<TextArea />
+								<TextField multiline placeholder="введите текст" />
 							</label>
 						</div>
 						

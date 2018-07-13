@@ -11,8 +11,8 @@ const SelectList = (props) => {
 				<select defaultValue="выбрать" 
 					onChange={onChange}>
 					<option disabled>выбрать</option>
-					{optionValue.map((val) =>
-						 <option key={val.id} value={val.id}>
+					{optionValue.map((val, index) =>
+						 <option key={index} value={val.id}>
 						 		{val.name}
 						 </option>)}	
 				</select>
