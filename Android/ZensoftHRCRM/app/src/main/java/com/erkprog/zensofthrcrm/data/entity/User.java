@@ -3,17 +3,13 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("email")
   private String email;
   @SerializedName("first_name")
   private String firstName;
   @SerializedName("last_name")
   private String lastName;
-  @SerializedName("created")
   private String created;
-  @SerializedName("department")
   private Department department;
 
   public Integer getId() {

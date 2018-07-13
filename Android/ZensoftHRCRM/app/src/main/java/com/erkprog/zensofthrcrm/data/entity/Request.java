@@ -5,24 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Request {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("created")
   private String created;
-  @SerializedName("modified")
   private String modified;
-  @SerializedName("userCreatedBy")
-  private User userCreatedBy;
-  @SerializedName("department")
-  private Department department;
-  @SerializedName("count")
+  @SerializedName("created_by")
+  private User createdBy;
   private Integer count;
-  @SerializedName("position")
   private Position position;
-  @SerializedName("status")
   private String status;
   @SerializedName("requirements")
-  private List<Requirement> requirementList = null;
+  private List<Requirement> requirementList;
 
   public Integer getId() {
     return id;
@@ -49,19 +41,11 @@ public class Request {
   }
 
   public User getUserCreatedBy() {
-    return userCreatedBy;
+    return createdBy;
   }
 
-  public void setUserCreatedBy(User userCreatedBy) {
-    this.userCreatedBy = userCreatedBy;
-  }
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
+  public void setUserCreatedBy(User createdBy) {
+    this.createdBy = createdBy;
   }
 
   public Integer getCount() {
