@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Input, 
-         TextField, 
-         Button, 
-         Divider, 
+import { Input,
+         TextField,
+         Button,
+         Divider,
          ListItem,
-         Checkbox, 
-         ListItemText, 
-         Select, 
+         Checkbox,
+         ListItemText,
+         Select,
          MenuItem,
          Paper } from '@material-ui/core';
 import ModalButton from '../../ui/ModalWindow';
@@ -16,6 +16,9 @@ import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
+import MaskedInput from 'react-text-mask';
+import PropTypes from 'prop-types';
+import AddIcon from '@material-ui/icons/Add'
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,7 +30,23 @@ const MenuProps = {
     },
   },
 }
-
+function isPossibleToSend(json){
+  let isOk = true;
+  for(let i = 0;i < json.phone.length;i++){
+    if(json.phone[i].length !== 16){
+      isOk = false;
+      break;
+    }
+  }
+  const begin_time = Date.parse(json.begin_time);
+  isOk = (!isNaN(begin_time)) ? true : false;
+  error = (isOk) ? "" : "Please, fill all fields.";
+  isOk = (json.candidate !== 0) ? true : false;
+  isOk = (json.description.length > 0 && isOk) ? true : false;
+  isOk = (json.location.length > 0 && isOk) ? true : false;
+  isOk = (json.interviewers.length > 0 && isOk) ? true : false;
+  return isOk
+}
 const Interviewers = [
         'Имя Фамилия1',
         'Имя Фамилия2',
@@ -66,6 +85,23 @@ const style = {
         flexDirection: "row",
     }
 }
+function TextMaskCustom(props){
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={inputRef}
+      mask={['(', /[9]/, /[9]/, /[6]/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      showMask
+    />
+  );
+}
+
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
 
 let today = new Date();
 let dd = today.getDate();
@@ -81,12 +117,11 @@ let yyyy = today.getFullYear();
     }
 
 const now = yyyy + '-' + mm + '-' + dd;
-
+let error = "";
 class UserProfile extends Component {
 
     constructor(props){
         super(props)
-        console.log(this.props)
         this.state = {
             first_name: "",
             last_name: "",
@@ -98,15 +133,15 @@ class UserProfile extends Component {
             experience: 0,
             level: "",
             status: "",
-            cv: "", 
+            cv: "",
             comments: [],
+            candidate: 0,
             begin_time: "",
-            end_time: "",
             description: "",
             location: "",
-            email_heads: [],
-            email_interviewer: "",
-            phone: []
+            interviewers: [],
+            phone: [],
+            status: "TO_BE_CONDUCTED"
         }
     }
 
@@ -127,24 +162,45 @@ class UserProfile extends Component {
                 interviews: candidate.interviews,
                 comments: candidate.comments
             }))
+    }
 
     handleChange = (event) => {
       this.setState({
         [event.target.name]: event.target.value
+      });
+    }
+
+    handleChangeForTime = (event) => {
+      const begin_time = event.target.value + ":00+06:00";
+      this.setState({
+        begin_time: begin_time,
+        candidate: this.props.profileId
       })
     }
 
     handleSubmit = (event) => {
-      this.state.begin_time += "T" + this.state.end_time + ":00+06:00"
-      this.state.end_time = this.state.begin_time;
-
-      console.log("STATE")
-      console.log(this.state)
-      console.log("STATE")
-      const URL = 'http://159.65.153.5/api/v1/interviews';
-      PostDataAPI(URL, this.state);
+      let jsonObj = {
+        'candidate': this.state.candidate,
+        'begin_time': this.state.begin_time,
+        'interviewers': this.state.interviewers,
+        'description': this.state.description,
+        'location': this.state.location,
+        'phone': this.state.phone,
+        'status': 'TO_BE_CONDUCTED'
+      }
+      const isOk = isPossibleToSend(jsonObj);
+      if(isOk){
+        const URL = 'http://159.65.153.5/api/v1/interviews';
+        PostDataAPI(URL, this.state);
+      }
+      return isOk;
     }
-    
+
+    handleChangePhoneNumber = (event) => {
+      this.state.phone[event.target.name] = event.target.value;
+      console.log(this.state);
+    }
+
     handleAddInputForPhoneNumber = () => {
 
       let phone = this.state.phone.concat([''])
@@ -157,7 +213,7 @@ class UserProfile extends Component {
     RenderMultipleSelectItem = (props) => {
       return props.map((item, index) => (
         <MenuItem key={index} value={item}>
-            <Checkbox/>
+            <Checkbox checked={this.state.interviewers.indexOf(item) > -1}/>
             <ListItemText primary={item} />
         </MenuItem>
       ))
@@ -177,11 +233,10 @@ class UserProfile extends Component {
                 status,
                 cv,
                 comments,
+                candidate,
                 begin_time,
-                end_time,
-                email_heads,
-                email_interviewer,
-                location,   
+                interviewers,
+                location,
                 description } = this.state;
 
         return (
@@ -258,26 +313,17 @@ class UserProfile extends Component {
                     title="Заполните все поля"
                     text={
                         <div>
+                        {console.log("HELLO")}
                             <div className={classes.root}>
-                               Дата:
-                               <span className={classes.box}>
-                                    <Input type="date" onChange={this.handleChange} name="begin_time" value={begin_time} placeholder={now.toString()} required/>
-                               </span>
-                            </div>
-                            <div className={classes.root}>
-                                Время:
-                                <span className={classes.box}>
-                                    <TextField type="time" name="end_time" onChange={this.handleChange} value={end_time} placeholder="07:30" required/>
-                                </span>
-                            </div>
-                            <div className={classes.root}>
-                                Интервьювер:
-                                <span className={classes.box}><Select onChange={this.handleChange} name="email_interviewer" value={email_interviewer} required>{RenderSelectItem(Interviewers)}</Select> </span>
+                              Дата:
+                              <span className={classes.box}>
+                                <TextField  onChange={this.handleChangeForTime} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
+                              </span>
                             </div>
                             <div className={classes.root}>
                                 HoD:
                                 <span className={classes.box}>
-                                 <Select multiple name="email_heads" value={email_heads} onChange={this.handleChange} renderValue={selected => selected.join(', ')} MenuProps={MenuProps} required>
+                                 <Select multiple name="interviewers" value={interviewers} onChange={this.handleChange} renderValue={selected => selected.join(', ')} MenuProps={MenuProps} required>
                                    {this.RenderMultipleSelectItem(Heads)}
                                  </Select>
                                 </span>
@@ -286,10 +332,10 @@ class UserProfile extends Component {
                                 Номер телефона:
                                 {this.state.phone.map((phone, index) => (
                                   <span key={index}>
-                                    <TextField onChange={this.handleChangePhoneNumber} name={index} placeholder="996*********" required />
+                                    <Input onChange={this.handleChangePhoneNumber} defaultValue={'996 5'} name={index} id="formatted-text-mask-input" inputComponent={TextMaskCustom} required />
                                   </span>
                                 ))}
-                                <span className={classes.box}><Button type="button" onClick={this.handleAddInputForPhoneNumber} variant="contained">+</Button></span>
+                                <span className={classes.box}><Button type="button" onClick={this.handleAddInputForPhoneNumber} variant="fab" aria-label="add" mini><AddIcon/></Button></span>
                             </div>
                             <div className={classes.root}>
                                 Место:
