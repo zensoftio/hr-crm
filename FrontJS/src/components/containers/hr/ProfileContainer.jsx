@@ -12,8 +12,6 @@ import { CANDIDATES_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
 
-let error = "";
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -99,6 +97,19 @@ function TextMaskCustom(props){
 TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
+
+let today = new Date();	
+let dd = today.getDate();	
+let mm = today.getMonth() + 1; //January is 0!	
+	
+let yyyy = today.getFullYear();	
+	
+    if(dd<10){	
+        dd='0'+dd;	
+    }	
+    if(mm<10){	
+        mm='0'+mm;	
+    }
 
 const now = yyyy + '-' + mm + '-' + dd;
 let error = "";
@@ -214,7 +225,7 @@ class UserProfile extends Component {
     RenderMultipleSelectItem = (props) => {
       return props.map((item, index) => (
         <MenuItem key={index} value={item}>
-            <Checkbox checked={this.state.email_heads.indexOf(item) > -1}/>
+            <Checkbox checked={this.state.email_heads}/>
             <ListItemText primary={item} />
         </MenuItem>
       ))
@@ -323,7 +334,7 @@ class UserProfile extends Component {
                             </div>
                             <div className={classes.root}>
                                 Интервьювер:
-                                <span className={classes.box}><Select onChange={this.handleChange} name="email_interviewer" value={this.state.email_interviewer} required>{this.RenderSelectItem(Interviewers)}</Select> </span>
+                                <span className={classes.box}><Select onChange={this.handleChange} name="email_interviewer" value={this.state.email_interviewer} required>{RenderSelectItem(Interviewers)}</Select></span>
                             </div>
                             <div className={classes.root}>
                                 HoD:
