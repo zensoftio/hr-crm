@@ -3,20 +3,21 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
 
 from apps.utils.serializers import MethodSerializerView
-
-from apps.utils.serializers import MethodSerializerView
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
     PublicationListSerializer, PublicationCreateSerializer
 
 
-class VacancyListView(MethodSerializerView, generics.ListCreateAPIView):
+class VacancyListView(generics.ListCreateAPIView):
     queryset = Vacancy.objects.all()
+    serializer_class = VacancyListSerializer
 
-    method_serializer_classes = {
-        ('GET',): VacancyListSerializer,
-        ('POST',): VacancyCreateUpdateSerializer
-    }
+    def create(self, request, *args, **kwargs):
+        write_serializer = VacancyCreateUpdateSerializer(data=request.data)
+        write_serializer.is_valid(raise_exception=True)
+        self.perform_create(write_serializer)
+        read_serializer = VacancyDetailSerializer(write_serializer.instance)
+        return Response(read_serializer.data, status=HTTP_201_CREATED)
 
 
 class VacancyDetailView(generics.RetrieveUpdateAPIView):
