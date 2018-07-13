@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Input, TextField, Button, Divider } from '@material-ui/core';
+import {Input, TextField, Button, Divider } from '@material-ui/core';
 import { Checkbox, ListItemText, Select, MenuItem } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add'
 import ModalButton from '../../ui/ModalWindow';
 import { PostDataAPI } from '../../../services/PostDataAPI';
+import MaskedInput from 'react-text-mask';
+import PropTypes from 'prop-types';
 
-
+let error = "";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -67,21 +70,24 @@ const style = {
         flexDirection: "row",
     }
 }
+function TextMaskCustom(props){
+  const { inputRef, ...other } = props;
 
-let today = new Date();
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0!
+  return (
+    <MaskedInput
+      {...other}
+      ref={inputRef}
+      mask={['(', /[9]/, /[9]/, /[6]/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      showMask
+    />
+  );
+}
 
-let yyyy = today.getFullYear();
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
 
-    if(dd<10){
-        dd='0'+dd;
-    }
-    if(mm<10){
-        mm='0'+mm;
-    }
-
-const now = yyyy + '-' + mm + '-' + dd;
 
 class UserProfile extends Component {
 
@@ -110,33 +116,33 @@ class UserProfile extends Component {
     }
 
     handleSubmit = (event) => {
-      this.state.begin_time += "T" + this.state.end_time + ":00+06:00"
-      this.state.end_time = this.state.begin_time;
-
-      console.log("STATE")
-      console.log(this.state)
-      console.log("STATE")
-      const URL = 'http://159.65.153.5/api/v1/interviews';
-      PostDataAPI(URL, this.state);
+      let count = 0;
+      for(let i = 0;i < this.state.phone.length;i++){
+        count += (this.state.phone[i].length === 16) ? 1 : 0;
+      }
+      let isOk = false;
+      const begin_time = Date.parse(this.state.begin_time);
+      isOk = (!isNaN(begin_time) && count === this.state.phone.length) ? true : false;
+      error = (!isOk) ? "Please, fill all fields." : "";
+      if(isOk){
+        this.state.begin_time += ":00+06:00"
+        this.state.end_time = this.state.begin_time;
+      }
+      return isOk
+      // const URL = 'http://159.65.153.5/api/v1/interviews';
+      // PostDataAPI(URL, this.state);
     }
     handleAddInputForPhoneNumber = () => {
-
       let phone = this.state.phone.concat([''])
       this.setState({
         phone
       })
-      // return props.map((item, index) => {
-      //   <MenuItem key={index} value={item}>
-      //     <TextField/>
-      //     <ListItemText primary={item}/>
-      //   </MenuItem>
-      // })
     }
 
     RenderMultipleSelectItem = (props) => {
       return props.map((item, index) => (
         <MenuItem key={index} value={item}>
-            <Checkbox/>
+            <Checkbox checked={this.state.email_heads.indexOf(item) > -1}/>
             <ListItemText primary={item} />
         </MenuItem>
       ))
@@ -207,17 +213,12 @@ class UserProfile extends Component {
                     title="Заполните все поля"
                     text={
                         <div>
+                          {error}
                             <div className={classes.root}>
                                Дата:
                                <span className={classes.box}>
-                                    <Input type="date" onChange={this.handleChange} name="begin_time" placeholder={now.toString()} required/>
+                               <TextField  onChange={this.handleChange} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
                                </span>
-                            </div>
-                            <div className={classes.root}>
-                                Время:
-                                <span className={classes.box}>
-                                    <TextField type="time" name="end_time" onChange={this.handleChange} placeholder="07:30" required/>
-                                </span>
                             </div>
                             <div className={classes.root}>
                                 Интервьювер:
@@ -235,10 +236,10 @@ class UserProfile extends Component {
                                 Номер телефона:
                                 {this.state.phone.map((phone, index) => (
                                   <span key={index}>
-                                    <TextField onChange={this.handleChangePhoneNumber} name={index} placeholder="996*********" required />
+                                    <Input onChange={this.handleChangePhoneNumber} defaultValue={'996 5'} name={index} id="formatted-text-mask-input" inputComponent={TextMaskCustom} required />
                                   </span>
                                 ))}
-                                <span className={classes.box}><Button type="button" onClick={this.handleAddInputForPhoneNumber} variant="contained">+</Button></span>
+                                <span className={classes.box}><Button type="button" onClick={this.handleAddInputForPhoneNumber} variant="fab" aria-label="add" mini><AddIcon/></Button></span>
                             </div>
                             <div className={classes.root}>
                                 Место:
