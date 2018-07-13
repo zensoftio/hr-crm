@@ -8,15 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
-import com.erkprog.zensofthrcrm.data.network.interviews.InterviewsRepository;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewDetail.InterviewDetail;
 
 import java.util.List;
@@ -49,7 +48,8 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_interviews_list, container, false);
 
-    mPresenter = new InterviewsPresenter(this, new InterviewsRepository(this.getContext()), v.getContext());
+    mPresenter = new InterviewsPresenter(this, CRMApplication.getInstance(requireContext()).getApiService(), v
+        .getContext());
     recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviews);
     layoutManager = new LinearLayoutManager(v.getContext());
     recyclerView.setLayoutManager(layoutManager);

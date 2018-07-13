@@ -4,9 +4,15 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 
 from apps.departments.models import Position, Requirement
-from apps.utils.notifications import request_created
+from apps.notifications.notifications import request_created
 
 User = get_user_model()
+
+REQUEST_STATUS = (
+    ('NOT_REVIEWED', 'Не рассмотрено'),
+    ('APPROVED', 'Утверждено'),
+    ('DECLINED', 'Отклонено'),
+)
 
 
 class Request(models.Model):
@@ -15,7 +21,7 @@ class Request(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     modified = models.DateTimeField(auto_now=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
-    status = models.IntegerField()
+    status = models.CharField(choices=REQUEST_STATUS, max_length=100, default=0)
     requirements = models.ManyToManyField(Requirement)
 
     def __str__(self):

@@ -1,73 +1,87 @@
 package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Context;
 
+import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidateInterviewItem;
-import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CandidateDetailPresenter implements CandidateDetailContract.Presenter,
-    CandidatesRepository.OnDetailCandidateLoadFinishedListener {
-
-  private static final String TAG = "PROFILE PRESENTER";
-
+public class CandidateDetailPresenter implements CandidateDetailContract.Presenter {
   private CandidateDetailContract.View mView;
-  private CandidatesRepository mRepository;
+  private Context mContext;
   private Candidate mCandidate;
+  private ApiInterface mApiService;
 
-  public CandidateDetailPresenter(CandidateDetailContract.View view, CandidatesRepository repository) {
-    mView = view;
-    mRepository = repository;
+  CandidateDetailPresenter(Context context, ApiInterface service) {
+    mApiService = service;
+    mContext = context;
   }
 
   @Override
   public void loadCandidateInfo(int candidateId) {
-    mRepository.getDetailCandidateFromJson(this);
+    mView.showProgress();
+    mApiService.getDetailedCandidate(candidateId).enqueue(new Callback<Candidate>() {
+      @Override
+      public void onResponse(Call<Candidate> call, Response<Candidate> response) {
+        if (isViewAttached()) {
+          mView.dismissProgress();
+          if (response.isSuccessful() && response.body() != null) {
+            mCandidate = response.body();
+            mView.showCandidateDetails(mCandidate);
+          } else {
+            mView.showMessage(mContext.getString(R.string.cd_response_null));
+          }
+        }
+      }
 
+      @Override
+      public void onFailure(Call<Candidate> call, Throwable t) {
+        if (isViewAttached()) {
+          mView.dismissProgress();
+          mView.showMessage(t.getMessage());
+        }
+      }
+    });
   }
 
-  @SuppressLint("LongLogTag")
-  @Override
-  public void onFinished(Response<Candidate> response) {
-    if (!mView.isActive()) {
-      return;
-    }
-    Log.d(TAG, "onFinished: success");
-    mCandidate = response.body();
-    mView.showCandidateDetails(mCandidate);
-  }
-
-  @Override
-  public void onFailure(Throwable t) {
-    Log.d(TAG, "onFailure: starts");
+  private boolean isViewAttached() {
+    return mView != null;
   }
 
   @Override
   public void onInterviewItemClicked(CandidateInterviewItem interviewItem) {
-    mView.showToast(interviewItem.getDate());
-  }
-
-  @Override
-  public void onCommentItemClicked(Comment commentItem) {
-    mView.showToast(commentItem.getText());
+    //TODO: mView.showDetailedInterview() here, showMessage just for test
+    mView.showMessage(interviewItem.getDate());
   }
 
   @Override
   public void onCvItemClicked(Cv cvItem) {
-    mView.showToast(cvItem.getLink());
+    //TODO: download cv file here, showMessage just for test
+    mView.showMessage(cvItem.getLink());
   }
 
   @Override
   public void onCreateInterviewClicked() {
-    if (!mView.isActive() || (mCandidate == null)){
+    if (!isViewAttached() || (mCandidate == null)) {
       return;
     }
 
     mView.startCreateInterview(mCandidate);
+  }
+
+  @Override
+  public void bind(CandidateDetailContract.View view) {
+    mView = view;
+  }
+
+  @Override
+  public void unbind() {
+    mView = null;
   }
 }

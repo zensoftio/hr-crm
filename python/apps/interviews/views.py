@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from apps.interviews.models import Interview, Criteria
 from apps.interviews.serializers import InterviewListSerializer, CriteriaSerializer, InterviewDetailSerializer, \
     InterviewCreateSerializer
+from apps.users.permissions import IsInterviewer
 
 
 class InterviewListCreateView(generics.ListCreateAPIView):

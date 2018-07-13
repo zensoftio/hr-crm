@@ -6,30 +6,23 @@ import com.google.gson.annotations.SerializedName;
 
 public class Candidate {
 
-  @SerializedName("id")
   private Integer id;
   @SerializedName("first_name")
   private String firstName;
   @SerializedName("last_name")
   private String lastName;
-  @SerializedName("email")
   private String email;
-  @SerializedName("position")
   private Position position;
-  @SerializedName("experience")
   private Float experience;
-  @SerializedName("level")
   private String level;
-  @SerializedName("status")
-  private Integer status;
-  @SerializedName("phone")
+  private String status;
   private String phone;
-  @SerializedName("cvs")
-  private List<Cv> cvs = null;
-  @SerializedName("interviews")
-  private List<CandidateInterviewItem> interviews = null;
-  @SerializedName("comments")
-  private List<Comment> comments = null;
+  private String created;
+  private String skype;
+  @SerializedName("CVs")
+  private List<Cv> cvs;
+  private List<CandidateInterviewItem> interviews;
+  private List<Comment> comments;
 
   public Integer getId() {
     return id;
@@ -87,11 +80,11 @@ public class Candidate {
     this.level = level;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
@@ -125,5 +118,13 @@ public class Candidate {
 
   public void setComments(List<Comment> comments) {
     this.comments = comments;
+  }
+
+  public String getCreated() {
+    return created;
+  }
+
+  public void setCreated(String created) {
+    this.created = created;
   }
 }

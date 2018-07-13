@@ -1,6 +1,7 @@
 package com.erkprog.zensofthrcrm.ui;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,13 +16,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+  private static final String TAG = "LOGIN";
   GoogleSignInClient mGoogleSignInClient;
   private static final int RC_SIGN_IN = 1;
-  private static final String TAG = "LOGIN";
   SignInButton signInButton;
 
   @Override
@@ -36,10 +38,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+    mGoogleSignInClient.silentSignIn().addOnCompleteListener(new OnCompleteListener<GoogleSignInAccount>() {
+      @Override
+      public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+        handleSignInResult(task);
+      }
+    });
+
     signInButton = findViewById(R.id.sign_in_button);
     signInButton.setSize(SignInButton.SIZE_WIDE);
     signInButton.setOnClickListener(this);
-
   }
 
   @Override
@@ -81,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
           + " \n " + account.getPhotoUrl()
           + " \n " + account.getIdToken());
 
+      // TODO: send ID Token to server and validate
+
       startMainActivity();
 
     } catch (ApiException e) {
@@ -88,7 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       // Please refer to the GoogleSignInStatusCodes class reference for more information.
       Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
     }
-
   }
 
   private void startMainActivity() {
@@ -96,18 +105,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(intent);
     finish();
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-    if (account != null) {
-      Log.d(TAG, "onStart: Already signed in");
-      Log.d(TAG, "onStart: " + account.getIdToken());
-      Log.d(TAG, "onStart: " + account.getDisplayName());
-
-      startMainActivity();
-    }
   }
 }

@@ -40,7 +40,7 @@
     "fields": {
         "name": "OOP",
         "department": 2,
-        "type": 1
+        "type": "REQUIRED"
     }
 },
 {
@@ -49,7 +49,7 @@
     "fields": {
         "name": "Python Knowledge",
         "department": 2,
-        "type": 2
+        "type": "REQUIRED"
     }
 },
 {
@@ -58,7 +58,7 @@
     "fields": {
         "name": "Java Knowledge",
         "department": 3,
-        "type": 1
+        "type": "OPTIONAL"
     }
 },
 {
@@ -67,7 +67,7 @@
     "fields": {
         "name": "Spring",
         "department": 3,
-        "type": 2
+        "type": "OPTIONAL"
     }
 },
 {
@@ -76,7 +76,7 @@
     "fields": {
         "name": "ES",
         "department": 5,
-        "type": 1
+        "type": "OPTIONAL"
     }
 },
 {
@@ -85,7 +85,7 @@
     "fields": {
         "name": "NestJS",
         "department": 5,
-        "type": 2
+        "type": "OPTIONAL"
     }
 },
 {
@@ -94,7 +94,7 @@
     "fields": {
         "name": "Psychology",
         "department": 4,
-        "type": 2
+        "type": "GENERAL"
     }
 },
 {
@@ -103,7 +103,7 @@
     "fields": {
         "name": "Management",
         "department": 1,
-        "type": 2
+        "type": "GENERAL"
     }
 },
 {

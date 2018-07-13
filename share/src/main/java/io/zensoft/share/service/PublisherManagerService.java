@@ -1,9 +1,7 @@
 package io.zensoft.share.service;
 
 import io.zensoft.share.dto.VacancyDto;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface PublisherManagerService {
 
     /**
