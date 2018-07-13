@@ -19,8 +19,8 @@ class ModalWindow extends Component {
     this.setState({ open: false });
   };
   handleSubmit = (ev) => {
-    this.props.onClick(ev.target.value);
-    this.handleClose();
+    const isOk = this.props.onClick(ev.target.value);
+    if(isOk) this.handleClose();
   }
 
   render() {

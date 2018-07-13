@@ -41,5 +41,15 @@ services:
     depends_on:
       - web
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
       - ./static:/static
+
+  rabbitmq:
+    build: rabbitmq
+    restart: always
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - /opt/rabbitmq:/var/lib/rabbitmq
