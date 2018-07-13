@@ -22,20 +22,9 @@ public interface InterviewDetailContract {
 
   public interface Presenter extends ILifecycle<View> {
 
-    void getDetailedInterview(int interviewId);
+    void getInterviewsInternet(int interviewId);
 
-  }
+    void getInterviewsLocal(int interviewId);
 
-  interface Repository {
-
-    interface OnFinishedListener {
-      void onFinished(Interview interview);
-
-      void onFailure(Throwable t);
-    }
-
-    void getInterviewDetails(InterviewDetailContract.Repository.OnFinishedListener
-                                 onFinishedListener,
-                             Context mContext);
   }
 }
