@@ -57,7 +57,7 @@ class OpenedPositions extends React.Component {
 								<td><Link to="/edit_positions">{item.position}</Link></td>
 								<td>{item.created}</td>
 								<td>
-									<button onClick={() =>this.handleConfirm(item)}>удалить</button>
+									<button onClick={() => this.handleConfirm(item)}>удалить</button>
 								</td>
 							</tr>
 						)

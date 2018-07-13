@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import { Button, CircularProgress } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { REQUESTS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
-import DateConvert from "../../../utils/DateConvert";
+import DateConvert from '../../../utils/DateConvert';
+import { Link } from "react-router-dom";
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
-
-const button = [
-    <Button variant="fab" mini color="primary" aria-label="add">
-        <AddIcon />
-    </Button>
-];
 
 class ListOfPositions extends Component {
 
@@ -20,14 +13,14 @@ class ListOfPositions extends Component {
         super(props);
         this.state = {
             data: [],
-        };
-    }
+            };
+        }
 
-    initStatus = (status) => {
-        if(status === 'NOT_REVIEWED'){
-            return "Не рассмотрено"
-        } else if(status === 'APPROVED'){
-            return "Утверждено"
+        initStatus = (status) => {
+            if(status === 'NOT_REVIEWED'){
+                return "Не рассмотрено"
+            } else if(status === 'APPROVED'){
+                return "Утверждено"
         } else if(status === 'DECLINED'){
             return  "Отклонено"
         } else {
@@ -50,10 +43,6 @@ class ListOfPositions extends Component {
         }))
     }
 
-    addPreloader = () => {
-        return  <CircularProgress />
-    };
-
     render() {
 
         const { data } = this.state;
@@ -64,11 +53,14 @@ class ListOfPositions extends Component {
                 DateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
-                button]
-        });
+                <Link to={`/create_vacancy/${item.request_id}`}>Создать</Link>
+            ]
+        })
 
-        return (
-            <TableList header={header} data={array}/>
+        return ( 
+            <div>
+                <TableList header={header} data={array}/>
+            </div>
         )
     }
 }

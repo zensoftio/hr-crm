@@ -2,7 +2,6 @@ import React from 'react';
 import Header from '../general/Header';
 import { Link } from 'react-router-dom';
 import TableList from '../../components/ui/Table';
-import CreatePosition from '../head/CreatePosition';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
 import { INTERVIEWS_URL } from '../../utils/urls';
 import DateConvert from '../../utils/DateConvert';
