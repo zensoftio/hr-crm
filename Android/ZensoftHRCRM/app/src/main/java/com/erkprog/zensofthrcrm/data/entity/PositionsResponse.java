@@ -11,7 +11,7 @@ public class PositionsResponse {
   private String next;
   @SerializedName("previous")
   private String previous;
-  @SerializedName("positions")
+  @SerializedName("results")
   private List<Position> positionList = null;
 
   public Integer getCount() {

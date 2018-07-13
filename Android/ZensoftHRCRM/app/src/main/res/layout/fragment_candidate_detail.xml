@@ -5,21 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
   <LinearLayout
       android:id="@+id/cd_root_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">
+
     <ProgressBar
         android:id="@+id/cd_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"/>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/first_name"/>
+
     <TextView
         android:id="@+id/cd_first_name"
         android:layout_width="match_parent"
@@ -27,11 +31,13 @@
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/main_attributes"
         tools:text="Candidate's first name"/>
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/last_name"/>
+
     <TextView
         android:id="@+id/cd_last_name"
         android:layout_width="match_parent"
@@ -39,10 +45,12 @@
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/main_attributes"
         tools:text="Candidate's last name"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
       <ImageView
           android:id="@+id/cd_email_image"
           android:layout_width="wrap_content"
@@ -50,6 +58,7 @@
           android:layout_weight="1"
           android:contentDescription="candidate's email"
           android:src="@drawable/ic_email_black"/>
+
       <TextView
           android:id="@+id/cd_email"
           android:layout_width="wrap_content"
@@ -59,16 +68,19 @@
           android:textSize="@dimen/main_attributes"
           tools:text="candidate@mail.com"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
       <ImageView
           android:id="@+id/imageView3"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:src="@drawable/ic_phone_black"/>
+
       <TextView
           android:id="@+id/cd_phone"
           android:layout_width="wrap_content"
@@ -78,11 +90,13 @@
           android:textSize="@dimen/main_attributes"
           tools:text="candidate's phone"/>
     </LinearLayout>
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/department"/>
+
     <TextView
         android:id="@+id/cd_department"
         android:layout_width="match_parent"
@@ -90,11 +104,13 @@
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/main_attributes"
         tools:text="Android dep"/>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/years_of_experience"/>
+
     <TextView
         android:id="@+id/cd_years_xp"
         android:layout_width="match_parent"

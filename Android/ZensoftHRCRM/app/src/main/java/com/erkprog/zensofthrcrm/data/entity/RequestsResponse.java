@@ -12,7 +12,7 @@ public class RequestsResponse {
   private String next;
   @SerializedName("previous")
   private String previous;
-  @SerializedName("requests")
+  @SerializedName("results")
   private List<Request> requestList = null;
 
   public Integer getCount() {

@@ -145,7 +145,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       ID + " INTEGER_PRIMARY_KEY, " +
       FIRST_NAME + " TEXT, " +
       LAST_NAME + " TEXT, " +
-      EMAIL +  " TEXT, " +
+      EMAIL + " TEXT, " +
       LEVEL + " TEXT, " +
       CREATED + " TEXT, " +
       PHONE + " TEXT, " +
