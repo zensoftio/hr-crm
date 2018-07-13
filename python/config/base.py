@@ -48,6 +48,9 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
+    RABBITMQ_USERNAME = values.SecretValue()
+    RABBITMQ_PASSWORD = values.SecretValue()
+
     CSRF_COOKIE_SECURE = False
     CORS_ORIGIN_ALLOW_ALL = True
 

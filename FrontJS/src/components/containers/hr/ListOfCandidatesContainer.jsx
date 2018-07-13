@@ -34,21 +34,12 @@ class ListOfCandidates extends Component {
         <Link to={link}>{element} </Link>
     );
 
-    // TODO: Перенести этот метод в utils
-    // dateConvert = (date) => {
-    //     return new Date(date).toLocaleString('ru', {
-    //         year: 'numeric',
-    //         month: 'long',
-    //         day: 'numeric'
-    //     });
-    // };
-
     getStatus = (status) => {
         return CANDIDATE_STATUS[status]
     };
 
     getLink = (id) => {
-        return CANDIDATES_URL + '/' + id;
+        return 'profile/' + id;
     };
 
     componentWillMount = () => {

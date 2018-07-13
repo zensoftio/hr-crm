@@ -1,7 +1,5 @@
 package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 
-import java.util.Date;
-
 public class CreateInterviewPresenter implements CreateInterviewContract.Presenter {
 
   private CreateInterviewContract.View mView;
@@ -20,4 +18,13 @@ public class CreateInterviewPresenter implements CreateInterviewContract.Present
 
   }
 
+  @Override
+  public void bind(CreateInterviewContract.View view) {
+    this.mView = view;
+  }
+
+  @Override
+  public void unbind() {
+    this.mView = null;
+  }
 }
