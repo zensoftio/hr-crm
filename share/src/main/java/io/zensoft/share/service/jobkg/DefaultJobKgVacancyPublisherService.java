@@ -4,6 +4,7 @@ import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.service.jobkg.auth.AuthorizationFailedException;
 import io.zensoft.share.service.jobkg.auth.JobKgAuthorizationService;
 import io.zensoft.share.service.jobkg.builder.JobKgVacancyPublicationContentBuilderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -18,6 +19,7 @@ import java.nio.charset.Charset;
  * Created by temirlan on 7/12/18.
  */
 @Service
+@Slf4j
 public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublisherService {
     private final JobKgAuthorizationService authorizationService;
     private final JobKgVacancyPublicationContentBuilderService contentBuilderService;
@@ -32,16 +34,21 @@ public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublishe
     @Override
     public void publish(Vacancy vacancy) throws PublicationFailedException {
         try {
+            log.info("Calling authorize() method");
             String cookie = authorizationService.authorize();
+            log.info("Successfully authorized");
+            log.info("Preparing content for publication");
             MultiValueMap<String, String> content = contentBuilderService.build(vacancy);
+            log.info("Content for publication was prepared");
             publish(cookie, content);
         } catch (AuthorizationFailedException e) {
-            throw new PublicationFailedException("Could not authorize");
+            throw new PublicationFailedException(e.getMessage());
         } catch (HttpServerErrorException e) {
             //publishes but throws internal 500 server error
-            //will be logged
+            log.info("Vacancy published but " + e.getClass().getName() + " exception was thrown");
         } catch (Exception e) {
-            throw new PublicationFailedException("An error occurred during publishing");
+            log.error("Could not publish vacancy");
+            throw new PublicationFailedException("An error occurred when publishing. Message : " + e.getMessage());
         }
     }
 
@@ -54,6 +61,10 @@ public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublishe
         headers.set("Cookie", cookie);
         HttpEntity entity = new HttpEntity(content, headers);
         String serverUrl = "http://www.job.kg/cabinet/vacancy/create";
-        restTemplate.exchange(serverUrl, HttpMethod.POST, entity, String.class);
+        log.info("Sending post request to publish");
+        ResponseEntity response = restTemplate.exchange(serverUrl, HttpMethod.POST, entity, String.class);
+        log.info("Request to publish vacancy was sent");
+        log.info("Request to publish vacancy received response with status code " + response.getStatusCode());
+
     }
 }
