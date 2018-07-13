@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Input,
-         TextField,
-         Button,
-         Divider,
-         ListItem,
-         Checkbox,
-         ListItemText,
-         Select,
-         MenuItem,
-         Paper } from '@material-ui/core';
+import {Input, TextField, Button, Divider } from '@material-ui/core';
+import { Checkbox, ListItem, ListItemText,Paper, Select, MenuItem } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add'
 import ModalButton from '../../ui/ModalWindow';
 import { PostDataAPI } from '../../../services/PostDataAPI';
+import MaskedInput from 'react-text-mask';
+import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
-import MaskedInput from 'react-text-mask';
-import PropTypes from 'prop-types';
-import AddIcon from '@material-ui/icons/Add'
+
+let error = "";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -103,21 +97,9 @@ TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
 
-let today = new Date();
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0!
-
-let yyyy = today.getFullYear();
-
-    if(dd<10){
-        dd='0'+dd;
-    }
-    if(mm<10){
-        mm='0'+mm;
-    }
-
 const now = yyyy + '-' + mm + '-' + dd;
 let error = "";
+
 class UserProfile extends Component {
 
     constructor(props){
@@ -201,19 +183,35 @@ class UserProfile extends Component {
       console.log(this.state);
     }
 
-    handleAddInputForPhoneNumber = () => {
+    handleSubmit = (event) => {
+      let count = 0;
+      for(let i = 0;i < this.state.phone.length;i++){
+        count += (this.state.phone[i].length === 16) ? 1 : 0;
+      }
+      let isOk = false;
+      const begin_time = Date.parse(this.state.begin_time);
+      isOk = (!isNaN(begin_time) && count === this.state.phone.length) ? true : false;
+      error = (!isOk) ? "Please, fill all fields." : "";
+      if(isOk){
+        this.state.begin_time += ":00+06:00"
+        this.state.end_time = this.state.begin_time;
+      }
+      return isOk
+      // const URL = 'http://159.65.153.5/api/v1/interviews';
+      // PostDataAPI(URL, this.state);
+    }
 
+    handleAddInputForPhoneNumber = () => {
       let phone = this.state.phone.concat([''])
       this.setState({
         phone
       })
-
     }
 
     RenderMultipleSelectItem = (props) => {
       return props.map((item, index) => (
         <MenuItem key={index} value={item}>
-            <Checkbox checked={this.state.interviewers.indexOf(item) > -1}/>
+            <Checkbox checked={this.state.email_heads.indexOf(item) > -1}/>
             <ListItemText primary={item} />
         </MenuItem>
       ))
@@ -313,12 +311,16 @@ class UserProfile extends Component {
                     title="Заполните все поля"
                     text={
                         <div>
-                        {console.log("HELLO")}
+                          {error}
                             <div className={classes.root}>
-                              Дата:
-                              <span className={classes.box}>
-                                <TextField  onChange={this.handleChangeForTime} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
-                              </span>
+                               Дата:
+                               <span className={classes.box}>
+                               <TextField  onChange={this.handleChange} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
+                               </span>
+                            </div>
+                            <div className={classes.root}>
+                                Интервьювер:
+                                <span className={classes.box}><Select onChange={this.handleChange} name="email_interviewer" value={this.state.email_interviewer} required>{this.RenderSelectItem(Interviewers)}</Select> </span>
                             </div>
                             <div className={classes.root}>
                                 HoD:
