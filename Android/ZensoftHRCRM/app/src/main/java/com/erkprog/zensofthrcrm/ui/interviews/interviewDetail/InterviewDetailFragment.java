@@ -19,7 +19,6 @@ import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.User;
-import com.erkprog.zensofthrcrm.data.network.candidates.CandidatesRepository;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailContract;
 import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetailPresenter;
 

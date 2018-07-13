@@ -16,6 +16,7 @@ import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -85,6 +86,7 @@ class UserProfile extends Component {
 
     constructor(props){
         super(props)
+        console.log(this.props)
         this.state = {
             first_name: "",
             last_name: "",
@@ -125,25 +127,24 @@ class UserProfile extends Component {
                 interviews: candidate.interviews,
                 comments: candidate.comments
             }))
-  
-    }
 
     handleChange = (event) => {
       this.setState({
         [event.target.name]: event.target.value
       })
     }
-    handleChangePhoneNumber = (event) => {
-      this.state.phone[event.target.name] = event.target.value;
-    }
 
     handleSubmit = (event) => {
       this.state.begin_time += "T" + this.state.end_time + ":00+06:00"
       this.state.end_time = this.state.begin_time;
 
-    //   const URL = 'http://159.65.153.5/api/v1/interviews';
-    //   PostDataAPI(URL, this.state);
+      console.log("STATE")
+      console.log(this.state)
+      console.log("STATE")
+      const URL = 'http://159.65.153.5/api/v1/interviews';
+      PostDataAPI(URL, this.state);
     }
+    
     handleAddInputForPhoneNumber = () => {
 
       let phone = this.state.phone.concat([''])
@@ -182,7 +183,7 @@ class UserProfile extends Component {
                 email_interviewer,
                 location,   
                 description } = this.state;
-        
+
         return (
             <div style={{ margin: " 0 1em"}}>
                 <div className={classes.root}>

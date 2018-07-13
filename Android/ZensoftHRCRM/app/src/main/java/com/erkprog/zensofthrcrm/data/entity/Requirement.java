@@ -3,14 +3,11 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class Requirement {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
   private String name;
-  @SerializedName("status")
-  private Integer status;
+  private String type;
   @SerializedName("department")
-  private Department department;
+  private Integer departmentId;
 
   public Integer getId() {
     return id;
@@ -28,19 +25,19 @@ public class Requirement {
     this.name = name;
   }
 
-  public Integer getStatus() {
-    return status;
+  public String getType() {
+    return type;
   }
 
-  public void setStatus(Integer status) {
-    this.status = status;
+  public void setType(String type) {
+    this.type = type;
   }
 
-  public Department getDepartment() {
-    return department;
+  public Integer getDepartmentId() {
+    return departmentId;
   }
 
-  public void setDepartment(Department department) {
-    this.department = department;
+  public void setDepartmentId(Integer departmentId) {
+    this.departmentId = departmentId;
   }
 }

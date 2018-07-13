@@ -1,30 +1,19 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 public class Request {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
   private String name;
-  @SerializedName("created")
   private String created;
-  @SerializedName("modified")
   private String modified;
-  @SerializedName("userCreatedBy")
-  private User userCreatedBy;
-  @SerializedName("department")
-  private Department department;
-  @SerializedName("count")
+  @SerializedName("created_by")
+  private User createdBy;
   private Integer count;
-  @SerializedName("position")
   private Position position;
-  @SerializedName("status")
-  private Integer status;
+  private String status;
   @SerializedName("requirements")
   private List<Requirement> requirementList = null;
 
@@ -60,20 +49,12 @@ public class Request {
     this.modified = modified;
   }
 
-  public User getUserCreatedBy() {
-    return userCreatedBy;
+  public User getCreatedBy() {
+    return createdBy;
   }
 
-  public void setUserCreatedBy(User userCreatedBy) {
-    this.userCreatedBy = userCreatedBy;
-  }
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
+  public void setCreatedBy(User createdBy) {
+    this.createdBy = createdBy;
   }
 
   public Integer getCount() {
@@ -92,11 +73,11 @@ public class Request {
     this.position = position;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
