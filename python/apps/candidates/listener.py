@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 
 import pika
 
@@ -7,7 +8,12 @@ from config.base import Base
 
 
 def callback(ch, method, properties, messages):
-    messages = json.loads(messages.decode('utf-8'))
+    try:
+        messages = json.loads(messages.decode('utf-8'))
+    except JSONDecodeError:
+        print('Wrong JSON format', )
+        return
+
     if messages:
         for message in messages:
             email = message.get('email')
