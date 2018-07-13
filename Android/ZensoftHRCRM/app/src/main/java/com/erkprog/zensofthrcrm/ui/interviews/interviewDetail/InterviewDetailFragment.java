@@ -41,7 +41,7 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mPresenter = new InterviewDetailPresenter(this, CRMApplication.getInstance(requireContext())
-        .getServiceTest());
+        .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }
 
@@ -53,9 +53,7 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
 
     initUI(v);
 
-//    mPresenter.getDetailedInterview(mContext, getArguments().getInt(EXTRA_INTERVIEW_ID));
-    mPresenter.getDetailedInterview();
-
+    mPresenter.getDetailedInterview(getArguments().getInt(EXTRA_INTERVIEW_ID));
     mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviewers);
 
     return v;
@@ -146,6 +144,16 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
   @Override
   public boolean hasInternetConnection(Context context) {
     return false;
+  }
+
+  @Override
+  public void showProgress() {
+
+  }
+
+  @Override
+  public void dismissProgress() {
+
   }
 }
 

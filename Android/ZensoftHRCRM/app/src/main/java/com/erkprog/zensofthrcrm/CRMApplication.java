@@ -4,27 +4,27 @@ import android.app.Application;
 import android.content.Context;
 
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
-import com.erkprog.zensofthrcrm.data.network.test.RestClientTest;
-import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
+import com.erkprog.zensofthrcrm.data.network.ApiClient;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
 public class CRMApplication extends Application {
 
-  private RestServiceTest mServiceTest;
+  private ApiInterface mApiService;
   private SQLiteHelper mSQLiteHelper;
 
   @Override
   public void onCreate() {
     super.onCreate();
-    mServiceTest = RestClientTest.getClient(this);
     mSQLiteHelper = new SQLiteHelper(getApplicationContext());
+    mApiService = ApiClient.getClient(this);
   }
 
   public static CRMApplication getInstance(Context context) {
     return (CRMApplication) context.getApplicationContext();
   }
 
-  public RestServiceTest getServiceTest() {
-    return mServiceTest;
+  public ApiInterface getApiService() {
+    return mApiService;
   }
 
   public SQLiteHelper getSQLiteHelper() {

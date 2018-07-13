@@ -22,7 +22,7 @@ public interface InterviewDetailContract {
 
   public interface Presenter extends ILifecycle<View> {
 
-    void getDetailedInterview();
+    void getDetailedInterview(int interviewId);
 
   }
 

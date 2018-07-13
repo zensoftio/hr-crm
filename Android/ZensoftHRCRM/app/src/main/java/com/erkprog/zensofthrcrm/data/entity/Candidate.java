@@ -20,6 +20,8 @@ public class Candidate {
   private Float experience;
   @SerializedName("level")
   private String level;
+  @SerializedName("created")
+  private String created;
   @SerializedName("skype")
   private String skype;
   @SerializedName("status")
@@ -32,6 +34,14 @@ public class Candidate {
   private List<Interview> interviews = null;
   @SerializedName("comments")
   private List<Comment> comments = null;
+
+  public String getCreated() {
+    return created;
+  }
+
+  public void setCreated(String created) {
+    this.created = created;
+  }
 
   public Position getPosition() {
     return position;

@@ -30,7 +30,7 @@ import java.util.List;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
   private static final String DB_NAME = "HR_CRM";
-  private static final int DB_VERSION = 5;
+  private static final int DB_VERSION = 6;
 
   // Tables
   private static final String INTERVIEWS = "INTERVIEWS";
@@ -140,13 +140,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       CRITERIA + ID + " TEXT);";
 
 
-  private static final String CREATE_TABLE_CANDIDATES = " CREATE TABLE IF NOT EXISTS " +
+  private static final String CREATE_TABLE_CANDIDATES = "CREATE TABLE IF NOT EXISTS " +
       CANDIDATES + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
       FIRST_NAME + " TEXT, " +
       LAST_NAME + " TEXT, " +
-      EMAIL + " TEXT, " +
+      EMAIL +  " TEXT, " +
       LEVEL + " TEXT, " +
+      CREATED + " TEXT, " +
       PHONE + " TEXT, " +
       SKYPE + " TEXT, " +
       CVS + ID + " TEXT, " +
@@ -518,7 +519,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(STATUS, candidate.getStatus());
       cv.put(EXPERIENCE, candidate.getExperience());
       cv.put(POSITION + ID, candidate.getPosition().getId());
-
+      cv.put(CREATED, candidate.getCreated());
       // CVS
       List<String> cvsIds = new ArrayList<String>();
       if (candidate.getCvs() != null) {
@@ -1017,6 +1018,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         candidate.setPosition(getPosition(candidateCursor.getString(candidateCursor
             .getColumnIndex(POSITION + ID))));
         candidate.setSkype(candidateCursor.getString(candidateCursor.getColumnIndex(SKYPE)));
+        candidate.setCreated(candidateCursor.getString(candidateCursor.getColumnIndex(CREATED)));
 
         if (candidateCursor.getString(candidateCursor.getColumnIndex(COMMENTS + ID)) != null) {
           List<String> commentStringList = Converter.convertStringToList(candidateCursor.getString
@@ -1456,7 +1458,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       int interviewsIdIndex = cursor.getColumnIndex(INTERVIEWERS + ID);
       int commentsIdIndex = cursor.getColumnIndex(COMMENTS);
       int statusIndex = cursor.getColumnIndex(STATUS);
-
+      int createdIndex = cursor.getColumnIndex(CREATED);
 
       do {
 
@@ -1474,6 +1476,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String level = cursor.getString(levelIndex);
         String interviewsId = cursor.getString(interviewsIdIndex);
         String commentsId = cursor.getString(commentsIdIndex);
+        String created = cursor.getString(createdIndex);
 
         if (interviewsId != null)
           candidate.setInterviews(getInterviews(Converter.convertStringToList(interviewsId)));
@@ -1491,6 +1494,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         candidate.setEmail(email);
         candidate.setExperience(exp);
         candidate.setId(id);
+        candidate.setCreated(created);
 
         candidates.add(candidate);
       } while (cursor.moveToNext());

@@ -1,7 +1,9 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewDetail;
 
+import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
-import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,17 +13,20 @@ import retrofit2.Response;
 public class InterviewDetailPresenter implements InterviewDetailContract.Presenter {
 
   private InterviewDetailContract.View mView;
-  private RestServiceTest mService;
+  private ApiInterface mService;
+  private SQLiteHelper mSQLiteHelper;
 
-  InterviewDetailPresenter(InterviewDetailContract.View view, RestServiceTest service) {
+  InterviewDetailPresenter(InterviewDetailContract.View view, ApiInterface service, SQLiteHelper
+      sqLiteHelper) {
     mView = view;
     mService = service;
+    mSQLiteHelper = sqLiteHelper;
   }
 
   @Override
-  public void getDetailedInterview() {
+  public void getDetailedInterview(int interviewId) {
 
-    mService.getDetailedInterview().enqueue(new Callback<Interview>() {
+    mService.getDetailedInterview(interviewId).enqueue(new Callback<Interview>() {
       @Override
       public void onResponse(Call<Interview> call, Response<Interview> response) {
         if (isViewAttached()) {
@@ -57,4 +62,5 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   public void unbind() {
     mView = null;
   }
+
 }

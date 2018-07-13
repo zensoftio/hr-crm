@@ -8,4 +8,8 @@ public interface BaseView {
 
   boolean hasInternetConnection(Context context);
 
+  void showProgress();
+
+  void dismissProgress();
+
 }

@@ -21,21 +21,15 @@ class RequestCreateTestCase(CreateTestMixin, APITestCase):
                 'interviews.json']
 
     request_body = {
-        "count": 3,
-        "position": 2,
-        "requirements": [
+        'count': 3,
+        'position': 2,
+        'requirements': [
             1,
             3
         ],
-        "status": 1,
-        "created_by": 1
+        'status': "NOT_REVIEWED",
+        'created_by': 1
     }
-
-    def test_creation(self):
-        url = '/api/v1/' + str(self.model._meta.verbose_name_plural) + '/'
-        response = self.client.post(url, self.request_body)
-        self.assertEqual(201, response.status_code)
-        self.assertEqual(4, self.model.objects.count())
 
 
 class RequestDetailTestCase(GetInstanceTestMixin, APITestCase):
@@ -59,6 +53,6 @@ class RequestUpdateTestCase(UpdateTestMixin, APITestCase):
     def setUp(self):
         self.instance = Request.objects.get(pk=1)
         self.update_data = {
-            "count": 2,
-            "status": 1
+            'count': 2,
+            'status': "APPROVED"
         }

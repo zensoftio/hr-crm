@@ -1,29 +1,29 @@
 import React, {Component} from 'react';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import CreateVacancyContainer from '../../components/containers/hr/CreateVacancyContainer';
 import Header from '../general/Header';
-import Paper from '@material-ui/core/Paper';
+import { Paper } from '@material-ui/core';
 
-const styles = {
-  paperBox: {
-    margin: '1em 1.5em',
-    padding: '1.5em 1em'
-  }
-};
+const styles = () => ({
+    paperBox: {
+        margin: '1.5em 1em',
+        padding: '1em 1.5em'
+    }
+})
 
 class CreateVacancy extends Component {
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         return (
           <div>
             <Header title="Создать Вакансию" />
-            <Paper className={classes.paperBox}> 
-              <CreateVacancyContainer />
-            </Paper>
+              <Paper className={classes.paperBox}>
+                <CreateVacancyContainer vacancyId={this.props.match.params.id}/>
+              </Paper>
           </div>
         );
     }
 }
 
-export default withStyles(styles)(CreateVacancy);
+export default withStyles(styles) (CreateVacancy);

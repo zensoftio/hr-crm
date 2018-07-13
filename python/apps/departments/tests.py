@@ -32,7 +32,7 @@ class RequirementListCreateTestCase(ListTestMixin, CreateTestMixin, APITestCase)
         self.request_body = {
             'name': 'OOP',
             'department': department.id,
-            'type': 0
+            'type': "REQUIRED"
         }
 
 

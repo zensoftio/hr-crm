@@ -37,7 +37,7 @@
         <TextView
             android:id="@+id/i_initial"
             android:textSize="@dimen/main_attributes"
-            android:textColor="@color/main_attributes"
+            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/initial"/>
@@ -52,7 +52,7 @@
         <TextView
             android:id="@+id/i_department"
             android:textSize="@dimen/main_attributes"
-            android:textColor="@color/main_attributes"
+            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/department"/>
@@ -67,7 +67,7 @@
         <TextView
             android:id="@+id/i_date"
             android:textSize="@dimen/main_attributes"
-            android:textColor="@color/main_attributes"
+            android:textColor="@color/colorBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/date"/>

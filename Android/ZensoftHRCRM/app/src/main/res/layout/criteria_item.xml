@@ -16,7 +16,7 @@
       android:layout_marginBottom="20dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/colorBlack"
       tools:text="@string/comments"
       />
 
@@ -28,14 +28,14 @@
       android:layout_marginStart="50dp"
       android:layout_marginTop="30dp"
       app:layout_constraintTop_toTopOf="@id/interview_interviewer_comment"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/colorBlack"
       android:text="@string/criteria"/>
 
   <TextView
       android:id="@+id/rate"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="@color/main_attributes"
+      android:textColor="@color/colorBlack"
       app:layout_constraintBottom_toBottomOf="@+id/interview_interviewer_criteria"
       app:layout_constraintEnd_toEndOf="parent"
       android:layout_margin="5dp"

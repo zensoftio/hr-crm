@@ -30,7 +30,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mPresenter = new InterviewsPresenter(this, CRMApplication.getInstance(requireContext())
-        .getServiceTest(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
+        .getApiService(), CRMApplication.getInstance(requireContext()).getSQLiteHelper());
     mPresenter.bind(this);
   }
 
@@ -75,6 +75,11 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
 
   @Override
   public void showProgress() {
+
+  }
+
+  @Override
+  public void dismissProgress() {
 
   }
 

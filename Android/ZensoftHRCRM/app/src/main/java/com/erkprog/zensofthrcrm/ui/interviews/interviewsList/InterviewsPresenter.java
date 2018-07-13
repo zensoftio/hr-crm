@@ -1,18 +1,11 @@
 package com.erkprog.zensofthrcrm.ui.interviews.interviewsList;
 
 
-import android.util.Log;
-
 import com.erkprog.zensofthrcrm.data.db.SQLiteHelper;
-import com.erkprog.zensofthrcrm.data.entity.Candidate;
-import com.erkprog.zensofthrcrm.data.entity.Department;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
-import com.erkprog.zensofthrcrm.data.entity.Position;
-import com.erkprog.zensofthrcrm.data.network.test.RestServiceTest;
+import com.erkprog.zensofthrcrm.data.network.ApiInterface;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,14 +15,16 @@ import retrofit2.Response;
 public class InterviewsPresenter implements InterviewsContract.Presenter {
 
   private InterviewsContract.View mView;
-  private RestServiceTest mService;
+  private ApiInterface mService;
   private SQLiteHelper mSQLiteHelper;
 
-  InterviewsPresenter(InterviewsContract.View view, RestServiceTest service, SQLiteHelper sqliteHelper) {
+  InterviewsPresenter(InterviewsContract.View view, ApiInterface service, SQLiteHelper
+      sqliteHelper) {
     mView = view;
     mService = service;
     mSQLiteHelper = sqliteHelper;
   }
+
 
 
   @Override
