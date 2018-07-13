@@ -35,11 +35,11 @@ public class FacebookUser {
         return pageAccessToken;
     }
 
-    public void setPageAccessToken(String pageAccessToken) {
-        this.pageAccessToken = pageAccessToken;
-    }
-
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    private void setPageAccessToken(String pageAccessToken) {
+        this.pageAccessToken = pageAccessToken;
     }
 }
