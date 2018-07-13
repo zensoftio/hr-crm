@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestsResponse {
+public class RequestResponse {
     @Enumerated(value = EnumType.STRING)
     private RequestStatus status;
 }
