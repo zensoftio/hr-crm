@@ -3,10 +3,10 @@
   <color name="colorPrimary">#296edb</color>
   <color name="colorPrimaryDark">#164287</color>
   <color name="colorAccent">#FF4081</color>
-  <color name="navViewBackground">#11268e</color>
-  <color name="commentCardViewBackground">#fffee0</color>
-  <color name="commentCardViewTitleBackground">#f4c242</color>
-  <color name="cdInterviewCardViewTitleBackgroud">#68a2ff</color>
-  <color name="main_attributes">#000</color>
-  <color name="white">#FFF</color>
+  <color name="colorLightYellow">#fffee0</color>
+  <color name="colorOrange">#f4c242</color>
+  <color name="colorLightBlue">#eafeff</color>
+  <color name="colorBlack">#000</color>
+  <color name="colorDarkBlue">#11268e</color>
+  <color name="colorWhite">#FFF</color>
 </resources>

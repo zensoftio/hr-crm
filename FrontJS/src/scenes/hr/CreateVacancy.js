@@ -20,8 +20,8 @@ class CreateVacancy extends Component {
             <Header title="Создать Вакансию" />
               <Paper className={classes.paperBox}>
                 <CreateVacancyContainer 
-                requestId={this.props.match.params.id}
-                requestTitle={this.props.match.params.title}/>
+                  requestId={this.props.match.params.id}
+                  requestTitle={this.props.match.params.title}/>
               </Paper>
           </div>
         );

@@ -1,6 +1,5 @@
 package com.erkprog.zensofthrcrm;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -11,15 +10,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.erkprog.zensofthrcrm.ui.candidates.candidatesList.CandidatesFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
+import com.erkprog.zensofthrcrm.ui.requests.requestsList.RequestsFragment;
+import com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList.VacanciesFragment;
+
+import android.view.View;
+import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,15 +86,16 @@ public class MainActivity extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
     if (id == R.id.nav_requests) {
-      // Handle the camera action
+      switchFragment(RequestsFragment.newInstance());
+
     } else if (id == R.id.nav_vacancies) {
+      switchFragment(VacanciesFragment.newInstance());
 
     } else if (id == R.id.nav_candidates) {
       switchFragment(new CandidatesFragment());
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity
   @Override
   protected void onStart() {
     super.onStart();
-    //TODO: set header with google account data here
+    //TODO: set up navHeader with google account data here
     userName.setText("Zensoft Hr");
     userEmail.setText("hr@zensoft.io");
     Picasso.get()

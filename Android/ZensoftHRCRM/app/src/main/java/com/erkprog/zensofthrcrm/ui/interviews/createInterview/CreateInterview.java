@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
@@ -47,7 +46,7 @@ public class CreateInterview extends AppCompatActivity {
     intent.putExtra(EXTRA_CANDIDATE_ID, candidate.getId());
     intent.putExtra(EXTRA_CANDIDATE_LASTNAME, candidate.getLastName());
     intent.putExtra(EXTRA_CANDIDATE_FIRSTNAME, candidate.getFirstName());
-    intent.putExtra(EXTRA_CANDIDATE_DEPARTMENT, candidate.getPosition().getDepartmentModel()
+    intent.putExtra(EXTRA_CANDIDATE_DEPARTMENT, candidate.getPosition().getDepartment()
         .getName());
     return intent;
   }

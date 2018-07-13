@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+let error = ""
 class ModalWindow extends Component {
   state = {
     open: false
@@ -19,8 +19,8 @@ class ModalWindow extends Component {
     this.setState({ open: false });
   };
   handleSubmit = (ev) => {
-    this.props.onClick(ev.target.value);
-    this.handleClose();
+    const isOk = this.props.onClick(ev.target.value);
+    if(isOk) this.handleClose();
   }
 
   render() {
@@ -36,6 +36,7 @@ class ModalWindow extends Component {
           <DialogTitle id="alert-dialog-title">{this.props.title}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
+
               {this.props.text}
             </DialogContentText>
           </DialogContent>
