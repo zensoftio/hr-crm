@@ -24,7 +24,7 @@ class ListOfReserves extends Component {
     );
 
     getLink = (id) => {
-        return CANDIDATES_URL + '/' + id;
+        return 'profile/' + id;
     };
 
 

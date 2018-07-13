@@ -39,7 +39,7 @@ class ListOfCandidates extends Component {
     };
 
     getLink = (id) => {
-        return CANDIDATES_URL + '/' + id;
+        return 'profile/' + id;
     };
 
     componentWillMount = () => {
