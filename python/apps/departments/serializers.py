@@ -9,13 +9,29 @@ class DepartmentSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class PositionSerializer(serializers.ModelSerializer):
+class PositionListSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+
+    class Meta:
+        model = Position
+        fields = ('id', 'department', 'name')
+
+
+class PositionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         fields = ('id', 'department', 'name')
 
 
 class RequirementSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+
+    class Meta:
+        model = Requirement
+        fields = ('id', 'department', 'name', 'type')
+
+
+class RequirementCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement
         fields = ('id', 'department', 'name', 'type')
