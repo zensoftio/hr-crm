@@ -1,11 +1,8 @@
 import json
 
-from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.templates.models import Attachment
-from apps.templates.serializers import AttachmentSerializer
 from apps.utils.rabbitmq import RabbitMQ
 from django.conf import settings
 
@@ -94,7 +91,3 @@ class TemplateDetailView(APIView):
         response_data = json.loads(response_data)
         return Response(response_data)
 
-
-class AttachmentListCreateView(generics.ListCreateAPIView):
-    queryset = Attachment.objects.all()
-    serializer_class = AttachmentSerializer

@@ -6,8 +6,7 @@ from apps.templates import views
 
 urlpatterns = [
     path('templates', views.TemplateListCreateView.as_view()),
-    path('templates/<int:pk>', views.TemplateDetailView.as_view()),
-    path('attachments', views.AttachmentListCreateView.as_view()),
+    path('templates/<int:pk>', views.TemplateDetailView.as_view())
 ]
 
 if settings.DEBUG:
