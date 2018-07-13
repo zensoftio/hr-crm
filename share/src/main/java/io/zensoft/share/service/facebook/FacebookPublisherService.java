@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.imageio.ImageIO;
 import java.awt.Image;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,13 +24,14 @@ public class FacebookPublisherService implements PublisherService {
     private String userAccessToken;
     private String pageAccessToken;
 
-    private Facebook facebookUser;
     private Facebook facebookPage;
     private FacebookConfigs facebookConfigs;
+    private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
 
     @Autowired
-    public FacebookPublisherService(FacebookConfigs facebookConfigs){
+    public FacebookPublisherService(FacebookConfigs facebookConfigs, FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever){
         this.facebookConfigs = facebookConfigs;
+        this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
     }
 
     @Override
@@ -43,27 +43,11 @@ public class FacebookPublisherService implements PublisherService {
         return publishText(vacancy);
     }
 
-    private void setPageAccessToken(String pageAccessToken) {
-        this.pageAccessToken = pageAccessToken;
-    }
-
-    private void setPageAccessToken () {
-        Map<String, String> uriVariables = new LinkedHashMap<>();
-        ResponseEntity<Map> map = null;
-        try {
-            map = ((FacebookTemplate) facebookUser).getRestTemplate().exchange(
-                    "https://graph.facebook.com/" + facebookConfigs.getUserId() + "/accounts",
-                    HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Object object = map.getBody().get("data");
-        ArrayList<Map<String, Object>> pageList = (ArrayList<Map<String, Object>>) object;
-        pageList.forEach( (page) -> {
-            if(page.get("name").toString().contains("Zensoft")){
-                setPageAccessToken(page.get("access_token").toString());
-            }
-        });
+    private void init(Vacancy vacancy) {
+        userAccessToken = vacancy.getFacebookUserAccessToken();
+        facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
+        pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
+        facebookPage = new FacebookTemplate(pageAccessToken, facebookConfigs.getAppNamespace(), facebookConfigs.getAppId());
     }
 
     private boolean isValidImageUrl(String imageUrl) {
@@ -74,14 +58,6 @@ public class FacebookPublisherService implements PublisherService {
             return false;
         }
         return image != null;
-    }
-
-    private void init(Vacancy vacancy) {
-        userAccessToken = vacancy.getFacebookUserAccessToken();
-        facebookUser = new FacebookTemplate(userAccessToken, facebookConfigs.getAppNamespace(), facebookConfigs.getAppId());
-
-        setPageAccessToken();
-        facebookPage = new FacebookTemplate(pageAccessToken, facebookConfigs.getAppNamespace(), facebookConfigs.getAppId());
     }
 
     private VacancyResponse publishText(Vacancy vacancy) {
@@ -121,5 +97,4 @@ public class FacebookPublisherService implements PublisherService {
     private String getText(Vacancy vacancy) {
         return vacancy.getTitle();
     }
-
 }
