@@ -41,7 +41,3 @@ def main():
     print(' [*] Waiting for Candidates. To exit press CTRL+C')
     channel.basic_consume(callback, queue='candidate_queue', no_ack=True)
     channel.start_consuming()
-
-
-if __name__ == '__main__':
-    main()
