@@ -21,6 +21,7 @@ exports.sendMessageH = async (data, recipient) => {
 }
 
 exports.getAllMessages = async (date) => {
+  console.log("IN GET ALL")
   return authorize(getMessagesByDate,date);
 }
 
@@ -87,15 +88,18 @@ const authorize = async (callback, data, recipient) => {
 const getMessagesByDate = async (auth,date,callback) => {
   const gmail = google.gmail({version: 'v1', auth});
   date = new Date(date).getTime() / 1000;
-
   const query = `is:inbox AND after: ${date}`;
 
   const getMail = await gmail.users.messages.list({
     userId: 'me',
     q: query,
-  })
-
-  return getMessageById(getMail.data.messages,gmail);
+  });
+  if (getMail.data.messages){
+    return getMessageById(getMail.data.messages,gmail);
+  }
+  else{
+    return [];
+  }
 }
 
 const getMessageById = async (messages,gmail,callback) => {
