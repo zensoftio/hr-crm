@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,13 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class RabbitMqConnectionConfiguration {
 
+    @Value("${rabbitmq.host}")
+    private String rabbitMqHost;
+    @Value("${rabbitmq.username}")
+    private String rabbitMqUsername;
+    @Value("${rabbitmq.password}")
+    private String rabbitMqPassword;
+
     /*
     * in future will be injected connection needed credentials
     * temporary it runs in a localhost
@@ -24,7 +32,10 @@ public class RabbitMqConnectionConfiguration {
     @Bean
     public ConnectionFactory rabbitMqConnectionFactory() {
         CachingConnectionFactory connectionFactory =
-                new CachingConnectionFactory("localhost");
+                new CachingConnectionFactory();
+        connectionFactory.setPassword(rabbitMqPassword);
+        connectionFactory.setUsername(rabbitMqUsername);
+        connectionFactory.setHost(rabbitMqHost);
         return connectionFactory;
     }
 

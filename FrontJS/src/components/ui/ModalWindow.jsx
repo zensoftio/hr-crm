@@ -19,8 +19,8 @@ class ModalWindow extends Component {
     this.setState({ open: false });
   };
   handleSubmit = (ev) => {
-    this.props.onClick(ev.target.value);
-    this.handleClose();
+    const isOk = this.props.onClick(ev.target.value);
+    if(isOk) this.handleClose();
   }
 
   render() {
@@ -36,6 +36,7 @@ class ModalWindow extends Component {
           <DialogTitle id="alert-dialog-title">{this.props.title}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
+
               {this.props.text}
             </DialogContentText>
           </DialogContent>

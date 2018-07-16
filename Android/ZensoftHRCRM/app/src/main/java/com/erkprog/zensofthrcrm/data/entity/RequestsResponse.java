@@ -10,7 +10,7 @@ public class RequestsResponse {
   private String next;
   private String previous;
   @SerializedName("results")
-  private List<Request> requestList = null;
+  private List<Request> requestList;
 
   public Integer getCount() {
     return count;

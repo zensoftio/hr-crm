@@ -6,6 +6,7 @@ import PositionList from './ListPositions';
 import CreateVacancy from './CreateVacancy';
 import InternList from './ListIntern';
 import CandidateList from './ListCandidates';
+import EditVacancy from './EditVacancy';
 import OpenedVacancies from './VacancyList';
 import Reserve from './Reserve';
 import Statistics from '../general/Statistics';
@@ -30,6 +31,11 @@ const HRNav = [
         name: "Вакансии",
         path: "/opened_vacancies",
         component: OpenedVacancies
+    },
+    {
+        name: "",
+        path: "/vacancy/:id",
+        component: EditVacancy
     },
     {
         name: "Кандидаты",

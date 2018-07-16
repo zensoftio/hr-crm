@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 public class Requirement {
   private Integer id;
   private String name;
+  private Integer department;
   private String type;
-  @SerializedName("department")
-  private Integer departmentId;
+
 
   public Integer getId() {
     return id;
@@ -17,12 +17,12 @@ public class Requirement {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public Integer getDepartment() {
+    return department;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setDepartment(Integer department) {
+    this.department = department;
   }
 
   public String getType() {
@@ -33,11 +33,12 @@ public class Requirement {
     this.type = type;
   }
 
-  public Integer getDepartmentId() {
-    return departmentId;
+  public String getName() {
+    return name;
   }
 
-  public void setDepartmentId(Integer departmentId) {
-    this.departmentId = departmentId;
+  public void setName(String name) {
+    this.name = name;
   }
+
 }

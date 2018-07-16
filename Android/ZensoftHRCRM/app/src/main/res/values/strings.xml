@@ -31,6 +31,10 @@
   <string name="comment_not_found">comment not found</string>
   <string name="interviewers">interviewers</string>
   <string name="interviewers_not_found">interviewers not found</string>
+  <string name="criteria">Criteria</string>
+  <string name="rate">Rate</string>
+  <string name="interviewer">Interviewer</string>
+  <string name="initial">John Beaver</string>
   <string name="cd_response_null">Candidate response is null</string>
   <string name="candidates_response_null">Candidates list in response is null</string>
   <string name="requests_null">Requests list in response is null</string>

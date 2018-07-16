@@ -147,7 +147,7 @@ class Base(Configuration):
 
     WSGI_APPLICATION = 'wsgi.application'
 
-    DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
+    DATABASES = values.DatabaseURLValue()
 
     AUTH_USER_MODEL = 'users.User'
 
@@ -193,3 +193,8 @@ class Base(Configuration):
     USE_L10N = True
 
     USE_TZ = True
+
+    RABBITMQ_USERNAME = values.SecretValue()
+    RABBITMQ_PASSWORD = values.SecretValue()
+    RABBITMQ_HOST = values.SecretValue()
+    RABBITMQ_PORT = values.SecretValue()

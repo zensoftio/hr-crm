@@ -1,6 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -158,6 +159,11 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public boolean hasInternetConnection(Context context) {
+    return false;
   }
 
   @Override

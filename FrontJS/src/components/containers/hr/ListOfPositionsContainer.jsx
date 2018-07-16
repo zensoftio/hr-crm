@@ -3,7 +3,8 @@ import TableList from "../../ui/Table";
 import { REQUESTS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
 import DateConvert from '../../../utils/DateConvert';
-import { Link } from "react-router-dom";
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
 
 const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
@@ -13,8 +14,8 @@ class ListOfPositions extends Component {
         super(props);
         this.state = {
             data: [],
-            };
-        }
+        };
+    }
 
         initStatus = (status) => {
             if(status === 'NOT_REVIEWED'){
@@ -53,7 +54,7 @@ class ListOfPositions extends Component {
                 DateConvert(item.created),
                 item.quantity,
                 this.initStatus(item.status),
-                <Link to={`/create_vacancy/${item.request_id}`}>Создать</Link>
+                makeLinked('Создать', getLink('create_vacancy', item.request_id))
             ]
         })
 

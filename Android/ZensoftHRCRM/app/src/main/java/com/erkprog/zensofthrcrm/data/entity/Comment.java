@@ -2,13 +2,13 @@ package com.erkprog.zensofthrcrm.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Comment {
   private Integer id;
   private String text;
-
   @SerializedName("created_by")
   private User createdBy;
-
   private String created;
 
   public Integer getId() {
@@ -42,5 +42,6 @@ public class Comment {
   public void setCreated(String created) {
     this.created = created;
   }
+
 
 }

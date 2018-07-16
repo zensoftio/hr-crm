@@ -52,9 +52,16 @@ class VacancyPublicationSerializer(serializers.ModelSerializer):
         fields = ['id', 'created_by']
 
 
-class PublicationSerializer(serializers.ModelSerializer):
-    created_by = AuxUserSerializer
+class PublicationListSerializer(serializers.ModelSerializer):
+    created_by = AuxUserSerializer()
+    vacancy = VacancyListSerializer()
 
+    class Meta:
+        model = Publication
+        exclude = []
+
+
+class PublicationCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         exclude = []

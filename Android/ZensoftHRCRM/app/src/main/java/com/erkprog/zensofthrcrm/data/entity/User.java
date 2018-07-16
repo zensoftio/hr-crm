@@ -12,7 +12,7 @@ public class User implements Serializable {
   private String firstName;
   @SerializedName("last_name")
   private String lastName;
-  private Date created;
+  private String created;
   private Department department;
 
   public Integer getId() {
@@ -43,17 +43,18 @@ public class User implements Serializable {
     return lastName;
   }
 
+  public String getCreated() {
+    return created;
+  }
+
+  public void setCreated(String created) {
+    this.created = created;
+  }
+
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
-  public Date getCreated() {
-    return created;
-  }
-
-  public void setCreated(Date created) {
-    this.created = created;
-  }
 
   public Department getDepartment() {
     return department;

@@ -31,7 +31,7 @@ public class InterviewersAdapter extends ArrayAdapter<InterviewerItem> {
     View itemView = convertView;
 
     if (itemView == null) {
-      itemView = LayoutInflater.from(mContext).inflate(R.layout.interviewer_item, parent, false);
+      itemView = LayoutInflater.from(mContext).inflate(R.layout.add_intrvw_item, parent, false);
     }
 
     InterviewerItem interviewer = mInterviewers.get(position);

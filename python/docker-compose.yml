@@ -1,45 +1,65 @@
-version: '2'
+version: '3'
+
+volumes:
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  production_caddy: {}
+  static: {}
 
 services:
-  postgres:
-    container_name: db
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
     restart: always
-    image: postgres:latest
-    expose:
-      - "5432"
-    env_file:
-      - .env
-
-  web:
-    restart: always
-    build: .
     container_name: django
-    expose:
-      - "8000"
-    env_file:
-      - .env
+    image: hr_crm_django
+    volumes:
+      - static:/app/static
     depends_on:
       - postgres
-    command: >
-        bash -c "
-        python wait_for_pg.py
-        && python manage.py migrate
-        && python manage.py collectstatic --noinput
-        && python manage.py loaddata apps/fixtures/*
-        && gunicorn -w 3 -b 0.0.0.0:8000 wsgi"
-    volumes:
-      - ./static:/code/static
+    env_file:
+      - .envs/.django
+      - .envs/.postgres
+    command: /start
 
-  nginx:
-    image: nginx
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
     restart: always
-    container_name: nginx
-    ports:
-      - "80:80"
-    links:
-      - web:web
-    depends_on:
-      - web
+    container_name: postgres
+    image: hr_crm_postgres
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-      - ./static:/static
+      - production_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data_backups:/backups
+    env_file:
+      - .envs/.postgres
+
+  caddy:
+    build:
+      context: .
+      dockerfile: ./compose/caddy/Dockerfile
+    restart: always
+    container_name: caddy
+    image: hr_crm_caddy
+    depends_on:
+      - django
+    volumes:
+      - production_caddy:/root/.caddy
+      - static:/app/static
+    env_file:
+      - .envs/.caddy
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+
+  rabbitmq:
+    build: compose/rabbitmq
+    container_name: rabbitmq
+    image: hr_crm_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - /opt/rabbitmq:/var/lib/rabbitmq

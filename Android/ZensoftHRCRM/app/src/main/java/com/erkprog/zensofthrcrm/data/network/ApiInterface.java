@@ -2,7 +2,6 @@ package com.erkprog.zensofthrcrm.data.network;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
-import com.erkprog.zensofthrcrm.data.entity.CriteriasResponse;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewRequest;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
@@ -14,7 +13,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -26,7 +24,10 @@ public interface ApiInterface {
   @GET("candidates/{id}")
   Call<Candidate> getDetailedCandidate(@Path("id") int id);
 
-  @GET("")
+  @GET("interviews/{id}")
+  Call<Interview> getDetailedInterview(@Path("id") int id);
+
+  @GET("interviews")
   Call<InterviewsResponse> getInterviews();
 
   @GET("vacancies")

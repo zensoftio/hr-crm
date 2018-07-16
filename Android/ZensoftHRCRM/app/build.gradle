@@ -28,6 +28,7 @@ dependencies {
   //create fake responses from json files
   implementation 'com.github.tientun:retrofit-mock-response:1.0.0'
 
+  implementation 'com.thoughtbot:expandablerecyclerview:1.3'
   implementation 'com.squareup.retrofit2:retrofit:2.4.0'
   implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
   testImplementation 'junit:junit:4.12'

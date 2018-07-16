@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Request {
   private Integer id;
-  private String name;
   private String created;
   private String modified;
   @SerializedName("created_by")
@@ -15,7 +14,7 @@ public class Request {
   private Position position;
   private String status;
   @SerializedName("requirements")
-  private List<Requirement> requirementList = null;
+  private List<Requirement> requirementList;
 
   public Integer getId() {
     return id;
@@ -23,14 +22,6 @@ public class Request {
 
   public void setId(Integer id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getCreated() {
@@ -49,11 +40,11 @@ public class Request {
     this.modified = modified;
   }
 
-  public User getCreatedBy() {
+  public User getUserCreatedBy() {
     return createdBy;
   }
 
-  public void setCreatedBy(User createdBy) {
+  public void setUserCreatedBy(User createdBy) {
     this.createdBy = createdBy;
   }
 

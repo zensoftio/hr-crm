@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
 import { CANDIDATES_URL } from "../../../utils/urls";
-import { Link } from "react-router-dom";
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
+import getStatus from '../../../utils/GetStatus';
 
-
-const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'ПРОФИЛЬ'];
+const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'СТАТУС','ПРОФИЛЬ'];
 
 const QUERY_URL = CANDIDATES_URL + '?status=IN_RESERVE';
-
 
 class ListOfReserves extends Component {
 
@@ -19,15 +19,6 @@ class ListOfReserves extends Component {
         }
     }
 
-    makeLinked = (element, link) => (
-        <Link to={link}>{element} </Link>
-    );
-
-    getLink = (id) => {
-        return CANDIDATES_URL + '/' + id;
-    };
-
-
     componentWillMount = () => {
         FetchDataAPI(QUERY_URL)
             .then(response => response.results.map(
@@ -36,6 +27,7 @@ class ListOfReserves extends Component {
                         id: item.id,
                         full_name: item.first_name + ' ' + item.last_name,
                         language: item.position.department.name,
+                        status: item.status
                     }
                 )
             ))
@@ -48,7 +40,8 @@ class ListOfReserves extends Component {
             item => [
                 item.full_name,
                 item.language,
-                this.makeLinked('Открыть', this.getLink(item.id))
+                getStatus(item.status),
+                makeLinked('Открыть', getLink("profile", item.id))
             ]
         );
 
