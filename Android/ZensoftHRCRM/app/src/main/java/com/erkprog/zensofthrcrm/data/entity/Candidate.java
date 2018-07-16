@@ -6,34 +6,22 @@ import java.util.List;
 
 public class Candidate {
 
-  @SerializedName("id")
   private Integer id;
   @SerializedName("first_name")
   private String firstName;
   @SerializedName("last_name")
   private String lastName;
-  @SerializedName("email")
   private String email;
-  @SerializedName("position")
-  private Position position = null;
-  @SerializedName("experience")
+  private Position position;
   private Float experience;
-  @SerializedName("level")
   private String level;
-  @SerializedName("created")
   private String created;
-  @SerializedName("skype")
   private String skype;
-  @SerializedName("status")
   private String status;
-  @SerializedName("phone")
   private String phone;
-  @SerializedName("cvs")
-  private List<Cv> cvs = null;
-  @SerializedName("interviews")
-  private List<Interview> interviews = null;
-  @SerializedName("comments")
-  private List<Comment> comments = null;
+  private List<Cv> cvs;
+  private List<Interview> interviews;
+  private List<Comment> comments;
 
   public String getCreated() {
     return created;
