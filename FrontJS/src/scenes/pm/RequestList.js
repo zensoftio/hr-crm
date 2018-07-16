@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import TableList from '../../components/ui/Table';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
 import DateConvert from '../../utils/DateConvert';
+import { REQUESTS_URL } from '../../utils/urls';
 
 class RequestList extends React.Component {
 	constructor(props){
@@ -15,25 +16,24 @@ class RequestList extends React.Component {
 	}
 
 	componentDidMount() {
-		 const openLink = <Link to="/edit_request">Открыть</Link>;
-		const fetched = FetchDataAPI(`http://159.65.153.5/api/v1/requests`);
-		fetched
+		
+		FetchDataAPI(REQUESTS_URL)
 		.then(response => response.results.map(res => 	
 			[
-					res.position.name,
+				<Link to={`/edit_request/${res.id}`}>{res.position.name}</Link>,
 					DateConvert(res.created),
 					res.count,
-					res.status,
-					openLink
+					res.status
 			]	
 		))
-		.then(data => this.setState({ data }))		
+		.then(data => this.setState({ data }))
+		 .then(resp => console.log(resp))		
 	}
 
 	render() {
 
 		const header = [
-			'#', 'Название', 'Дата создания', 'Количество', 'Статус', 'Действие'
+			'#', 'Название', 'Дата создания', 'Количество', 'Статус'
 		];	
 		
 		return (

@@ -118,57 +118,54 @@ class CreatePositionContainer extends React.Component {
       return (
 				<form onSubmit={this.handleSubmit}>
 					<div>
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>ОТДЕЛ:</span>							
+								<span className="labels">ОТДЕЛ:</span>							
 								<SelectList optionValue={this.state.department} onChange={this.handleChangeDepartment}/>							
 							</label>						
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>КОЛИЧЕСТВО:</span>
-								<PlusMinus getCountFromChild={this.getCountFromChild}/>							
+								<span className="labels">КОЛИЧЕСТВО:</span>
+								<PlusMinus getCountFromChild={this.getCountFromChild}countStarts={this.state.count}/>							
 							</label>
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>НАЗВАНИЕ:</span>	
+								<span className="labels">НАЗВАНИЕ:</span>	
 								<SelectList optionValue={this.state.position} onChange={this.handlePosition}/>
 									
 							</label>						
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>ТРЕБОВАНИЯ:</span>	
-								<span style={instyle}>
+								<span className="labels">ТРЕБОВАНИЯ:</span>	
+								<span className="labels">
 									<MultiSelection optionValue={this.state.requirements}
 									getMultiSelected={this.getMultiSelected}/>
 								</span>	
 							</label>						
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>НАВЫКИ:</span>	
-								<span style={instyle}>
+								<span className="labels">НАВЫКИ:</span>	
+								<span className="labels">
 									<MultiSelection optionValue={this.state.requirements}
 									getMultiSelected={this.getMultiSelected}/>
 								</span>	
 							</label>						
 						</div>					
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>ОБЩИЕ ТРЕБОВАНИЯ:</span>
+								<span className="labels">ОБЩИЕ ТРЕБОВАНИЯ:</span>
 								<TextField multiline placeholder="введите текст" />
 							</label>
 						</div>
-						
-						<div style={divstyle}>
-						</div>	
 					</div>
 							<input type="submit" value="Submit" />
 				</form>

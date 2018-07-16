@@ -21,8 +21,9 @@ class Request(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
     modified = models.DateTimeField(auto_now=True)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
-    status = models.CharField(choices=REQUEST_STATUS, max_length=100, default=0)
+    status = models.CharField(choices=REQUEST_STATUS, max_length=100, default='NOT_REVIEWED')
     requirements = models.ManyToManyField(Requirement)
+    is_vacancy_created = models.BooleanField(default=False)
 
     def __str__(self):
         return self.position.name

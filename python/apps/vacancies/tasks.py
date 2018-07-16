@@ -10,6 +10,7 @@ from apps.vacancies.models import Vacancy, Publication
 
 @celery.task
 def send_message_to_java(queryset, serializer):
+
     rabbit = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
     content = rabbit.call_java(queryset, serializer,
                                exchange_name='share',

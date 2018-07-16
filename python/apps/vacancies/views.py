@@ -5,6 +5,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 
 from apps.utils.serializers import MethodSerializerView
 from .models import Vacancy, Publication
+from apps.requests.models import Request
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
     PublicationListSerializer, JavaVacancySerializer, PublicationCreateSerializer
 from .tasks import send_message_to_java

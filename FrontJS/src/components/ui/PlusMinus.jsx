@@ -4,7 +4,7 @@ export default class PlusMinus extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-			count: 0		
+			count: this.props.countStarts		
 		};
 		
 	}
@@ -19,26 +19,26 @@ export default class PlusMinus extends React.Component {
 		this.setState(prev => ({
 			count: (prev.count > 0) ? prev.count - 1 : 0
 		}), () => this.props.getCountFromChild(this.state.count))
-	}	
+	}
 
 	render() {
+		console.log(this.props);
+		
 
-		let btnstyle = {
-			margin: '0 20px'
-		}
+		
 		
 		return (
 			
 			<span>
-				<span className="plusminus" 
-					onClick={this.decrement} 
-					style={btnstyle}>-</span>
+				<span 
+					className="plusminus" 
+					onClick={this.decrement}>-</span>
 
 				<span>{this.state.count}</span>
 				
-				<span className="plusminus" 
-					onClick={this.increment} 
-					style={btnstyle}>+</span>				
+				<span 
+					className="plusminus" 
+					onClick={this.increment}>+</span>				
 			</span>
 		);
 	}

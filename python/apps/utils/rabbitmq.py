@@ -87,7 +87,6 @@ class RabbitMQ:
         self.response = None
         content = body.decode('utf-8')
         content = json.loads(content)
-        if conte
         self.response = body
         return self.response
 
