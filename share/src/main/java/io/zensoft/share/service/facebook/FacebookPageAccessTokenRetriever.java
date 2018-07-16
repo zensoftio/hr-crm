@@ -41,7 +41,7 @@ public class FacebookPageAccessTokenRetriever {
     }
 
     public void setUserAccessToken(String userAccessToken) {
-        log.info("set user access token to FacebookPageAccessTokenRetriever", userAccessToken);
+        log.info("setting user access token to FacebookPageAccessTokenRetriever", userAccessToken);
         this.userAccessToken = userAccessToken;
     }
 
