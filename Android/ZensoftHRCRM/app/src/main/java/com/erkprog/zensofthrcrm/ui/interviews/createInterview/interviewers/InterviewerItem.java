@@ -7,9 +7,9 @@ public class InterviewerItem {
   private User user;
   private boolean checked;
 
-  public InterviewerItem(User user, boolean checked) {
+  InterviewerItem(User user) {
     this.user = user;
-    this.checked = checked;
+    this.checked = false;
   }
 
   public User getUser() {

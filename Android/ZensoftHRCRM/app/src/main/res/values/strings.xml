@@ -35,4 +35,6 @@
   <string name="candidates_response_null">Candidates list in response is null</string>
   <string name="requests_null">Requests list in response is null</string>
   <string name="vacancies_null">Vacancies list in response is null</string>
+  <string name="add_interviewers">Add interviewers</string>
+  <string name="ok">OK</string>
 </resources>

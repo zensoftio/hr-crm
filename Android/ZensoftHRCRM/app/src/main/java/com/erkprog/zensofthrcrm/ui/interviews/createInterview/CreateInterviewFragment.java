@@ -17,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.interviewers.InterviewersFragment;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CreateInterviewFragment extends Fragment implements CreateInterviewContract.View, View
@@ -169,8 +171,23 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
       //New date and time for interview sucessfully received from DatePickerFragment
       Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
       updateInterviewDate(date);
-
     }
+
+    if (requestCode == REQUEST_ADD_INTERVIEWERS) {
+      ArrayList<User> users = (ArrayList<User>) data.getSerializableExtra(InterviewersFragment.USERS);
+
+      showInterviewers(users);
+    }
+  }
+
+  private void showInterviewers(ArrayList<User> users) {
+    StringBuilder interviewers = new StringBuilder();
+    for (User user : users) {
+      interviewers.append(String.format("%s %s (%s)\n", user.getFirstName(), user.getLastName(),
+          user.getEmail()));
+      Log.d(TAG, "onActivityResult: " + user.getEmail());
+    }
+    mInterviewers.setText(interviewers);
   }
 
   private void updateInterviewDate(Date date) {
