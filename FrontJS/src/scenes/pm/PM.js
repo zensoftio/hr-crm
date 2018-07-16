@@ -22,7 +22,7 @@ export default class AdminScene extends Component {
 					component: Statistics
 				},
 				{		
-					path: '/edit_request',
+					path: '/edit_request/:id',
 					component: EditRequest
 				}
 			];

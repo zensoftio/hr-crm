@@ -27,9 +27,9 @@ class EditPositionContainer extends React.Component {
 					position : response.position.name,
 					requirements : response.requirements.map(res => res.name)
 				}
-			))		
-			
+			))				
 	}
+
 	getCountFromChild = (dataFromChild) => {
 		this.setState({
 			count: dataFromChild
@@ -45,47 +45,40 @@ class EditPositionContainer extends React.Component {
     render() {
 				
 			const { department, position, count, requirements } = this.state;
-			let instyle = {
-				display: 'inline-block',
-				marginRight: 20
-			};
-			let divstyle = {
-				margin: 20
-			}	
 		
       return (
 				<form onSubmit={this.handleSubmit}>
 					<div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>ОТДЕЛ:</span>							
+								<span className="labels">ОТДЕЛ:</span>							
 								<select value={department}>
 									<option>{department}</option>
 								</select>						
 							</label>						
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>КОЛИЧЕСТВО:</span>
-								<PlusMinus getCountFromChild={this.getCountFromChild} countStarts={count}/>							
+								<span className="labels">КОЛИЧЕСТВО:</span>
+								<PlusMinus getCountFromChild={this.getCountFromChild}  countStarts={count}/>							
 							</label>
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>НАЗВАНИЕ:</span>	
+								<span className="labels">НАЗВАНИЕ:</span>	
 								<select value={position}>
 									<option>{position}</option>
 								</select>										
 							</label>						
 						</div>
 
-						<div style={divstyle}>
+						<div className="div_items">
 							<label>
-								<span style={instyle}>ТРЕБОВАНИЯ:</span>	
-								<span style={instyle}>
+								<span className="labels">ТРЕБОВАНИЯ:</span>	
+								<span className="labels">
 									<MultipleSelect optionValue={requirements}
 									/>
 								</span>	
