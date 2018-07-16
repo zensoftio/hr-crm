@@ -1,5 +1,6 @@
 package io.zensoft.share.service.facebook;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class FacebookPageAccessTokenRetriever {
     private String userAccessToken;
     private String pageAccessToken;
 
     public String getZensoftPageAccessToken (){
+        log.info("get Zensoft's page access token by pre-assigned user access token");
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map = null;
         try {
@@ -23,7 +26,7 @@ public class FacebookPageAccessTokenRetriever {
                     "https://graph.facebook.com/me/accounts?access_token=" + userAccessToken,
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("error sending request to get page access token", e);
         }
         Object object = map.getBody().get("data");
         ArrayList<Map<String, Object>> pageList = (ArrayList<Map<String, Object>>) object;
@@ -36,6 +39,7 @@ public class FacebookPageAccessTokenRetriever {
     }
 
     public void setUserAccessToken(String userAccessToken) {
+        log.info("set user access token");
         this.userAccessToken = userAccessToken;
     }
 
