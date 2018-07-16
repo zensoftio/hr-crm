@@ -16,22 +16,24 @@ public class FacebookUrlBuilder {
     }
 
     public String getPublishPhotoRequestUrl(Vacancy vacancy, String pageAccessToken) {
-        log.info("build url for publish photo request to Facebook Graph Api");
+        log.info("building url for publish photo request to Facebook Graph Api");
         String url = facebookConfigs.getPublishPhotoRequestUrlTemplate();
         url = url.replace("{pageId}", facebookConfigs.getPageId());
         url = url.replace("{photoUrl}", vacancy.getImage());
         url = url.replace("{caption}", getText(vacancy));
         url = url.replace("{isPublished}", "true");
         url = url.replace("{access_token}", pageAccessToken);
+        log.info("returning built url for publish photo request to Facebook Graph Api");
         return url;
     }
 
     public String getPublishTextRequestUrl(Vacancy vacancy, String pageAccessToken) {
-        log.info("build url for post request to Facebook Graph Api");
+        log.info("building url for post request to Facebook Graph Api");
         String url = facebookConfigs.getPublishTextRequestUrlTemplate();
         url = url.replace("{pageId}", facebookConfigs.getPageId());
         url = url.replace("{message}", vacancy.getTitle());
         url = url.replace("{access_token}", pageAccessToken);
+        log.info("returning built url for post request to Facebook Graph Api");
         return url;
     }
 
