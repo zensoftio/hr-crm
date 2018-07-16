@@ -4,10 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
-from django.db.models.signals import post_save
 
 from apps.requests.models import Request
-from .signals import vacancy_created
 
 User = get_user_model()
 
@@ -41,9 +39,6 @@ class Vacancy(models.Model):
 
     def get_absolute_url(self):
         return reverse('v1:vacancy-detail', kwargs={'pk': self.id})
-
-
-post_save.connect(receiver=vacancy_created, sender=Vacancy)
 
 
 class Publication(models.Model):
