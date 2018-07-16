@@ -13,7 +13,7 @@ class RequestListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ('id', 'position', 'status', 'count', 'created')
+        fields = ('id', 'position', 'status', 'count', 'created', 'is_vacancy_created')
 
 
 class RequestCreateOrUpdateSerializer(serializers.ModelSerializer):
