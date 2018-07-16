@@ -46,7 +46,6 @@ public class DieselPublisherManagerService implements PublisherManagerService {
     }
 
     @Override
-    @Transactional
     public void publish(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
         vacancyModelService.save(vacancy);

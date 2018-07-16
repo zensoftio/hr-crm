@@ -7,12 +7,12 @@ import lombok.Data;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.StringWriter;
 
 @Data
-@Component
+@Service
 public class PublicationVacancyContentBuilder {
     private String titleOfPost;
     private String contentOfPost;
