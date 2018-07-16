@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class FacebookPublisherService implements PublisherService {
 
     private String userAccessToken;
@@ -35,6 +37,7 @@ public class FacebookPublisherService implements PublisherService {
                                     FacebookRequestSender facebookRequestSender,
                                     FacebookUrlBuilder facebookUrlBuilder){
         this.facebookConfigs = facebookConfigs;
+        log.debug("FacebookConfigs object is assigned", facebookConfigs);
         this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
         this.facebookRequestSender = facebookRequestSender;
         this.facebookUrlBuilder = facebookUrlBuilder;
@@ -42,6 +45,7 @@ public class FacebookPublisherService implements PublisherService {
 
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
+        log.info("get vacancy to publish to Facebook and choose type of the post");
         init(vacancy);
         if (isValidImageUrl(vacancy.getImage())) {
             return publishPhoto(vacancy);
@@ -50,6 +54,7 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private void init(Vacancy vacancy) {
+        log.info("initialize facebook properties after vacancy is gotten");
         userAccessToken = vacancy.getFacebookUserAccessToken();
         facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
         pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
@@ -57,17 +62,19 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private boolean isValidImageUrl(String imageUrl) {
+        log.info("check if image url is valid");
         Image image;
         try {
             image = ImageIO.read(new URL(imageUrl));
         } catch (Exception e) {
-            System.out.println(imageUrl);
+            log.error("error checking image url", e);
             return false;
         }
         return image != null;
     }
 
     private VacancyResponse publishText(Vacancy vacancy) {
+        log.debug("prepare publishing text of the vacancy without image url to Facebook");
         String url = facebookUrlBuilder.getPublishTextRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
@@ -75,6 +82,7 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse publishPhoto(Vacancy vacancy) {
+        log.debug("prepare publishing vacancy with photo to Facebook");
         String url = facebookUrlBuilder.getPublishPhotoRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
@@ -82,6 +90,7 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse post(String url) {
+        log.info("send post request to RequestSender and create response");
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setPublisherServiceType(PublisherServiceType.FACEBOOK);
         try {
