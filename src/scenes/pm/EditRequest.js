@@ -3,8 +3,8 @@ import Header from '../general/Header';
 import Select from '../../components/ui/Select';
 import MultipleSelect from '../../components/ui/MultipleSelect';
 import PlusMinus from '../../components/ui/PlusMinus';
-import TextArea from '../../components/ui/TextArea';
 import Button from '@material-ui/core/Button'
+import { TextField } from '@material-ui/core';
 
 const EditRequest = () => {
 
@@ -86,7 +86,7 @@ const EditRequest = () => {
 			<div style={divstyle}>
 				<label>
 					<span style={instyle}>ОБЩИЕ ТРЕБОВАНИЯ:</span>
-					<TextArea />
+					<TextField multiline placeholder="введите текст" />
 				</label>
 			</div>
 

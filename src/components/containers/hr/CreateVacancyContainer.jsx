@@ -1,75 +1,31 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import CheckboxLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
-import Select from '../../ui/Select';
-import MultiSelect from '../../ui/MultipleSelect';
-import Checkbox from '@material-ui/core/Checkbox';
-import "../../../index.css";
+import { TextField, 
+         Button, 
+         Select, 
+         MenuItem } from '@material-ui/core';
+import { PostDataAPI } from '../../../services/PostDataAPI';
+import { VACANCIES_URL } from '../../../utils/urls'
+import RenderSelectItem from '../../../utils/RenderSelectItem';
 
-// import { DeleteDataAPI } from '../../../services/DeleteDataAPI';
-// import { PutDataAPI } from '../../../services/PutDataAPI';
-// import { PostDataAPI } from '../../../services/PostDataAPI';
+  const CityList = [
+    'Бишкек',
+    'Кара-Балта',
+    'Сокулук',
+    'Кант'
+  ],
+  Working_hours = [
+    'FULL_TIME',
+    'PART_TIME',
+    'REMOTE_JOB'
+  ];
 
-const RateList = [
-        "Стандарт",
-        "Премиум",
-        "VIP"
-    ],
-    CityList = [
-      "Бишкек",
-      "Кара-Балта",
-      "Сокулук",
-      "Кант",
-    ],
-    Requirements = [
-      "Профильное образование",
-      "Опыт работы от 1 до 5 лет (на аналогичной/смежной должности)",
-      "Базовое понятие работы JVM",
-      "Ясное представление о зоне ответственности компонентов системы"
-    ],
-    OptionalReq = [
-      "Владение Spring Boot",
-      "Владение языком Kotlin",
-      "Опыт работы с REST API, HTML5 API, сторонними API (Google, FB, Paypal, Stripe и т.д.)"
-    ],
-    Education = [
-      "Среднее",
-      "Средне-специальное",
-      "Высшее"
-    ],
-    Experience = [
-      "от 1 года",
-      "от 2 лет",
-      "от 3 лет",
-    ],
-    Work_conditions = [
-        `• работа в комфортном современном офисе в центре города;
-    •	руководство, готовое поддерживать вас и помогать в развитии;
-    •	корпоративные вечеринки и совместный отдых;
-    •	приятные бонусы и премии;
-    •	компенсации спорта;
-    •	своевременную оплату труда;
-    •	возможность бесплатного обучения на курсах наших программистов;
-    •	удобный график работы;
-    •	официальное трудоустройство;
-    •	возможность изучать английский язык с квалифицированным преподавателем прямо в офисе;`
-    ],
-    Duties = [
-        `•	Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.`
-    ],
-    EmploymentType = [
-      "Полный рабочий день",
-      "Посменно",
-    ];
-
-  const styles = theme => ({
+  const styles = () => ({
     root: {
       display: 'flex',
-      justifydefaultValue: 'flex-start',
+      justifyvalue: 'flex-start',
       alignItems: 'center',
-      margin: "1em 0"
+      margin: '1em 0'
     },
     box: {
       margin: '0 1em'
@@ -77,141 +33,139 @@ const RateList = [
     textArea: {
       width: '100%',
       margin: '1em 0'
-    }
+    },
 });
 
 class CreateVacancyContainer extends Component { 
-
+    
     constructor(props){
       super(props)
       this.state = {
-          topicName: '',
-          vacancyName: ''
+          request: this.props.requestId,
+          created_by: 1,
+          title: '',
+          city: CityList[0],
+          address: 'Бишкек Ахунбаева 119А',
+          working_hours: Working_hours[0],
+          work_conditions: [
+          'работа в комфортном современном офисе в центре города',
+          'руководство, готовое поддерживать вас и помогать в развитии',
+          'корпоративные вечеринки и совместный отдых',
+          'приятные бонусы и премии',
+          'компенсации спорта',
+          'своевременную оплату труда',
+          'возможность бесплатного обучения на курсах наших программистов',
+          'удобный график работы',
+          'официальное трудоустройство',
+          'возможность изучать английский язык с квалифицированным преподавателем прямо в офисе'],
+          responsibilities: 'Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.',
+          salary_min: 0,
+          salary_max: 0,
+          comments: '',
+          image: null
       };
-    }
+    } 
 
     handleChange = (event) => {
       this.setState({ 
         [event.target.name]: event.target.value 
       });
     }
-    
+
     handleSubmit = (event) => {
       event.preventDefault();
 
-      // const URL = 'http://0.0.0.0:5000/data/';
-
-      // PostDataAPI(URL, data );
       const data = this.state;
-      console.log(data);
+
+      PostDataAPI(VACANCIES_URL, data);
+      // console.log(data)
+    }
+
+    onFileUpload = (event) => {
+      this.setState({
+        image: event.target.files[0]
+      })
+    }
+
+    RenderWorkCondition = (props) => {
+      return props.map((item, index) => (
+        <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+    ))
     }
 
     render() {
+
       const { classes } = this.props;
-      const { topicName, vacancyName } = this.state;
- 
+      const { title,  
+              city, 
+              address, 
+              working_hours,
+              responsibilities,
+              work_conditions,
+              comments,
+              salary_min,
+              salary_max } = this.state;
+      
       return (
-        <div  style={{ margin: " 0 1em"}}>
-          <div className={classes.root}>
-            Тариф Вакансии:
-            <span className={classes.box}><Select name="rateList" optionValue={RateList} /></span>
-          </div>
+
+        <form onSubmit={this.handleSubmit} style={{ margin: ' 0 1em'}}>
           <div className={classes.root}>
             Название темы: 
-            <span className={classes.box}><TextField name="topicName" defaultValue={topicName}  onChange={this.handleChange} className={classes.box} placeholder="введите название" /></span>
-          </div> 
-          <div className={classes.root}>
-            Название вакансии: 
-            <span className={classes.box}><TextField name="vacancyName" defaultValue={vacancyName} onChange={this.handleChange} className={classes.box} placeholder="введите вакансии" /></span>
+            <span className={classes.box}><TextField name='title' value={title} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите название темы' /></span>
           </div>
           <div className={classes.root}>
             Выберите город:
             <span className={classes.box}>
-              <Select optionValue={CityList} />
+              <Select name='city' onChange={(e) => this.handleChange(e)} value={city} displayEmpty>
+                  <MenuItem disabled value=''><em>Выбрать</em></MenuItem>
+                  { RenderSelectItem(CityList) }
+              </Select>
             </span>
-          </div> 
-          <div className={classes.root}>
-            Требования:
-            <span className={classes.box}><MultiSelect multiple className={classes.box} optionValue={Requirements} /></span>
-          </div> 
-          <div className={classes.root}>
-            Опциональные требования: 
-            <span className={classes.box}><MultiSelect multiple className={classes.box} optionValue={OptionalReq} /></span>
           </div> 
           <div className={classes.root}>
             Адрес Офиса: 
-            <span className={classes.box}><TextField className={classes.box} placeholder="введите адрес" defaultValue="Бишкек Ахунбаева 119А" /></span>
+            <span className={classes.box}><TextField name='address' onChange={(e) => this.handleChange(e)} className={classes.box}  placeholder='введите адрес' value={address} /></span>
           </div> 
-          <div className={classes.root}> 
-            Образование:
-            <span className={classes.box}><Select className={classes.box} optionValue={Education} /></span>
-          </div>
           <div className={classes.root}>
             График работы:
-            <span className={classes.box}><Select className={classes.box} optionValue={EmploymentType} /></span>
-          </div>
-          <div className={classes.root}>
-            Опыт работы:
-            <span className={classes.box}><Select className={classes.box} optionValue={Experience} /></span>
+            <span className={classes.box}>
+              <Select name='working_hours' onChange={(e) => this.handleChange(e)} value={working_hours} displayEmpty>
+                  <MenuItem disabled value=''><em>Выбрать</em></MenuItem>
+                  { RenderSelectItem(Working_hours) }
+              </Select>
+            </span>
           </div>
           <div>
             Условия работы:
-            <div><TextField multiline className={classes.textArea} defaultValue={Work_conditions} /></div>
+            <div><TextField name='work_conditions' onChange={(e) => this.handleChange(e)} multiline className={classes.textArea} value={work_conditions.map(i => i.toString())} /></div>
           </div> 
           <div>
             Обязанности:
-            <div><TextField multiline className={classes.textArea} defaultValue={Duties}/></div>
+            <div><TextField name='responsibilities' onChange={(e) => this.handleChange(e)} multiline className={classes.textArea} value={responsibilities}/></div>
           </div> 
           <div className={classes.root}>
             Зарплата:
-              <span className={classes.box}><TextField className={classes.box} placeholder="min" /></span>
-              <span className={classes.box}><TextField className={classes.box} placeholder="max" /></span>
+              <span className={classes.box}><TextField type='number' value={salary_min} name='salary_min' onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='min' /></span>
+              <span className={classes.box}><TextField type='number' value={salary_max} name='salary_max' onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='max' /></span>
           </div>
           <div>
-            Прочее:
-            <div><TextField multiline className={classes.textArea} placeholder="введите текст"/></div>
-          </div>
-          <div className={classes.root}>
-            Соц. сети:
-            <span className={classes.box}>
-              <CheckboxLabel 
-                control={
-                  <Checkbox />
-                }
-                label="Facebook"
-              />
-            </span>
-            <span className={classes.box}>
-              <CheckboxLabel 
-                  control={
-                    <Checkbox />
-                  }
-                  label="Job.kg"
-                />
-            </span>
-            <span className={classes.box}>
-              <CheckboxLabel 
-                  control={
-                    <Checkbox />
-                  }
-                  label="Diesel"
-                />
-            </span>
+            Комментарии:
+            <div><TextField name='comments' onChange={(e) => this.handleChange(e)} value={comments} multiline className={classes.textArea} placeholder='введите текст'/></div>
           </div>
           <div className={classes.root}>
             Изображение:
               <span className={classes.box}>
                 <input
-                  accept="image/*"
-                  multiple
-                  type="file"
+                  accept='image/*'
+                  type='file'
+                  name='image'
                 />
               </span>
           </div>
           <div>
-            <Button type="button" onClick={this.handleSubmit} variant="contained">Опубликовать</Button>
+            <Button type='submit' variant='contained'>Создать</Button>
           </div>
-        </div> 
+        </form> 
       );
     }
 }

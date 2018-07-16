@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import CreateVacancyContainer from '../../components/containers/hr/CreateVacancyContainer';
+import EditVacancyContainer from '../../components/containers/hr/EditVacancyContainer';
 import Header from '../general/Header';
 import Paper from '@material-ui/core/Paper';
 
@@ -19,11 +19,7 @@ class CreateVacancy extends Component {
           <div>
             <Header title="Редактировать Вакансию" />
             <Paper className={classes.paperBox}> 
-              <CreateVacancyContainer />
-              <div>
-                  История изменений:
-
-              </div>
+              <EditVacancyContainer vacancyId={this.props.match.params.id} />
             </Paper>
           </div>
         );
