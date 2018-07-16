@@ -2,6 +2,7 @@ package io.zensoft.share.service.diesel.body;
 
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -9,6 +10,7 @@ import org.springframework.util.MultiValueMap;
 
 @Data
 @Component
+@Slf4j
 public class PublicationPostRequestBody {
     private String Post;
     private String TopicTitle;
@@ -23,6 +25,7 @@ public class PublicationPostRequestBody {
     }
 
     public LinkedMultiValueMap createBodyOfRequestInMap(Vacancy vacancy, String sessionId, String auth_key) {
+        log.info("get created Body of Request placed in LinkedMultiValueMap");
         publicationVacancyContentBuilder.prepareGivenVacancyToHtmlStyle(vacancy);
 
         TopicTitle = publicationVacancyContentBuilder.getTitleOfPost();
