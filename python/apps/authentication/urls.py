@@ -4,5 +4,5 @@ from apps.authentication.views import AndroidAuthenticationView, ConvertRoleToke
 
 urlpatterns = [
     path('auth/android', AndroidAuthenticationView.as_view()),
-    path('auth/convert-role_token', ConvertRoleTokenView.as_view(), )
+    path('auth/convert-role-token', ConvertRoleTokenView.as_view(), )
 ]
