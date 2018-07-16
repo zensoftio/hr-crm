@@ -30,7 +30,7 @@ export default class App extends Component {
 
     render() {
         if(this.state.session) {
-            return <User userRole="head" />
+            return <User userRole="pm" />
         }
         return(
             <div>                
