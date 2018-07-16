@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +24,7 @@ public class LoginPostRequestSender implements RequestSender {
     private String serverUrlPostRequestReceiver;
     private LoginHeader loginHeader;
     private LoginPostRequestBody loginPostRequestBody;
-    private String statusCode;
+    private HttpStatus statusCode;
     private String sessionId;
 
     @Autowired
@@ -39,7 +40,7 @@ public class LoginPostRequestSender implements RequestSender {
         List<String> setCookie = Collections.singletonList(response.getHeaders().getFirst("Set-Cookie"));
         String sessionIdContainer = setCookie.get(0);
         sessionId = getSessionIdFromResponse(sessionIdContainer);
-        statusCode = response.getStatusCode().toString();
+        statusCode = response.getStatusCode();
         RequestResponse requestResponse = new RequestResponse();
 
         return getFilledResponseFromSender(requestResponse);
@@ -59,12 +60,11 @@ public class LoginPostRequestSender implements RequestSender {
 
     @Override
     public RequestResponse getFilledResponseFromSender(RequestResponse requestResponse) {
-        if (!statusCode.equals("302")) {
-            requestResponse.setStatus(RequestStatus.FAILED);
-        }
-        if (statusCode.equals("302")) {
+        if (statusCode.equals(HttpStatus.FOUND)) {
             requestResponse.setStatus(RequestStatus.SUCCESS);
+            return requestResponse;
         }
+        requestResponse.setStatus(RequestStatus.FAILED);
         return requestResponse;
     }
 
