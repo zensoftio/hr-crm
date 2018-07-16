@@ -20,9 +20,6 @@ box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.75);
 }
 .statistic ul li:hover {
 	background: #c1c2c1;
-	-webkit-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75);
-box-shadow: 0px 4px 5px -1px rgba(0,0,0,0.75);
 }
 .statistic span {
 	display: inline-block;
