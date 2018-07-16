@@ -4,8 +4,9 @@ import { CANDIDATES_URL } from "../../../utils/urls";
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
 import makeLinked from '../../../utils/MakeLinked';
 import getLink from '../../../utils/GetLink';
+import getStatus from '../../../utils/GetStatus';
 
-const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'ПРОФИЛЬ'];
+const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'СТАТУС','ПРОФИЛЬ'];
 
 const QUERY_URL = CANDIDATES_URL + '?status=IN_RESERVE';
 
@@ -26,6 +27,7 @@ class ListOfReserves extends Component {
                         id: item.id,
                         full_name: item.first_name + ' ' + item.last_name,
                         language: item.position.department.name,
+                        status: item.status
                     }
                 )
             ))
@@ -38,6 +40,7 @@ class ListOfReserves extends Component {
             item => [
                 item.full_name,
                 item.language,
+                getStatus(item.status),
                 makeLinked('Открыть', getLink("profile", item.id))
             ]
         );

@@ -11,6 +11,7 @@ import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
+import getStatus from '../../../utils/GetStatus';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -101,9 +102,7 @@ TextMaskCustom.propTypes = {
 let today = new Date();	
 let dd = today.getDate();	
 let mm = today.getMonth() + 1; //January is 0!	
-	
-let yyyy = today.getFullYear();	
-	
+		
     if(dd<10){	
         dd='0'+dd;	
     }	
@@ -111,7 +110,6 @@ let yyyy = today.getFullYear();
         mm='0'+mm;	
     }
 
-const now = yyyy + '-' + mm + '-' + dd;
 let error = "";
 
 class UserProfile extends Component {
@@ -128,10 +126,8 @@ class UserProfile extends Component {
             position: "",
             experience: 0,
             level: "",
-            status: "",
             cv: "",
             comments: [],
-            candidate: 0,
             begin_time: "",
             description: "",
             location: "",
@@ -150,7 +146,7 @@ class UserProfile extends Component {
                 candidate_phone: candidate.phone,
                 experience: candidate.experience,
                 level: candidate.level,
-                cv: candidate.CVs[0].url,
+                cv: candidate.CVs[0],
                 status: candidate.status,
                 skype: candidate.skype,
                 position: candidate.position.name,
@@ -245,8 +241,6 @@ class UserProfile extends Component {
                 status,
                 cv,
                 comments,
-                candidate,
-                begin_time,
                 interviewers,
                 location,
                 description } = this.state;
@@ -291,11 +285,11 @@ class UserProfile extends Component {
                 </div>
                 <div className={classes.root}>
                     Статус:
-                    <span className={classes.box}><TextField value={status}/></span>
+                    <span className={classes.box}><TextField value={getStatus(status)}/></span>
                 </div>
                 <div className={classes.root}>
                     Резюме:
-                    <span className={classes.box}><a href={cv}> Ссылка на резюме </a></span>
+                    <span className={classes.box}><a href={cv.url}> Ссылка на резюме </a></span>
                 </div>
                 <div className={classes.root}>
                     <Paper className={classes.commentBox}>
