@@ -42,7 +42,7 @@ public class DieselPublisherService implements PublisherService {
         vacancyResponse.setVacancy(vacancy);
         vacancyResponse.setPublisherServiceType(PublisherServiceType.DIESEL_ELCAT_KG);
         vacancyResponse.setPublishDate(new Date());
-        log.info("check login is failed or not");
+        
         if (activateLoginPostRequestSender(vacancyResponse).getStatus().name().equals("FAILED")) {
             log.info("return VacancyResponse because Login Failed");
             return vacancyResponse;
