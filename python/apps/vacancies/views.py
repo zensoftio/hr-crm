@@ -18,9 +18,6 @@ class VacancyListView(generics.ListCreateAPIView):
         write_serializer.is_valid(raise_exception=True)
         self.perform_create(write_serializer)
         read_serializer = VacancyDetailSerializer(write_serializer.instance)
-        instance = Request.objects.get(pk=request.data['request'])
-        instance.is_vacancy_created = True
-        instance.save()
         return Response(read_serializer.data, status=HTTP_201_CREATED)
 
 
