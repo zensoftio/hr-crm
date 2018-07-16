@@ -11,8 +11,8 @@ export class TemplateService {
         ) {}
 
   async create(Template: Templates): Promise<Templates> {
-    await this.TemplateRepository.save(Template);
-    return Template;
+    console.log("IN CREATE" + Template)
+    return await this.TemplateRepository.save(Template);
   }
 
   async findAll(): Promise<Templates[]> {
@@ -20,7 +20,11 @@ export class TemplateService {
   }
 
   async findOne(int: number): Promise<Templates> {
-    return await this.TemplateRepository.findOne({id: int});
+    try{
+      return await this.TemplateRepository.findOne({id: int});
+    }catch(err){
+      throw  err;
+    }
   }
 
   async deleteOne(int: number): Promise<Templates> {
@@ -34,6 +38,7 @@ export class TemplateService {
   }
 
   async update(int: number,Template: Templates): Promise<Templates> {
+      console.log("IN UPDATE")
       try {
           await this.TemplateRepository.update(int,Template)
           console.log(Template)
