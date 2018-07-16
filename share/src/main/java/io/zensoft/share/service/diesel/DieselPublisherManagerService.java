@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Qualifier("jobKgPublisherManagerService")
+@Qualifier("dieselPublisherManagerService")
 public class DieselPublisherManagerService implements PublisherManagerService {
     private final DtoConverterService<Vacancy, VacancyDto> vacancyConverterService;
     private final DtoConverterService<VacancyResponse, VacancyResponseDto> vacancyResponseConverterService;
