@@ -12,10 +12,12 @@ import io.zensoft.share.service.VacancyRetrieverService;
 import io.zensoft.share.service.converter.DtoConverterService;
 import io.zensoft.share.service.model.VacancyModelService;
 import io.zensoft.share.service.model.VacancyResponseModelService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class FacebookPublisherManagerService implements PublisherManagerService {
 
     private final DtoConverterService<Vacancy,VacancyDto> defaultVacancyConverterService;
@@ -45,6 +47,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
 
     @Override
     public void publish(VacancyDto vacancyDto) {
+        log.info("process publish request from listener");
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = facebookPublisherService.publish(vacancy);
         defaultVacancyResponseModelService.save(vacancyResponse);
@@ -53,18 +56,21 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
+        log.info("process get info request from listener");
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = defaultVacancyRetrieverService.getInfo(vacancy, PublisherServiceType.FACEBOOK);
         convertToDtoAndRespond(vacancyResponse);
     }
 
     private Vacancy convertToVacancyAndSaveToDatabase(VacancyDto vacancyDto) {
+        log.info("convert and save to database VacancyDto");
         Vacancy vacancy = defaultVacancyConverterService.fromDto(vacancyDto);
         defaultVacancyModelService.save(vacancy);
         return  vacancy;
     }
 
     private void convertToDtoAndRespond (VacancyResponse vacancyResponse) {
+        log.info("convert VacancyResponse and respond");
         VacancyResponseDto vacancyResponseDto = defaultVacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
     }
