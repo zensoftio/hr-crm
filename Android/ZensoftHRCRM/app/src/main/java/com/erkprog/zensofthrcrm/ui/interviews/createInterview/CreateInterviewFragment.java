@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.User;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.interviewers.InterviewersFragment;
+import com.erkprog.zensofthrcrm.util.DateConverter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,9 +48,11 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   private Button mSetDateButton;
   private ImageView mAddInterviewersButton;
   private Button mCreateButton;
+  private ProgressBar mProgressBar;
 
   private Date mInterviewDate;
   private int mCandidateId;
+  private ArrayList<Integer> mInterviewersId;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +61,8 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   }
 
   private void initPresenter() {
-    mPresenter = new CreateInterviewPresenter(this);
+    mPresenter = new CreateInterviewPresenter(requireContext(), CRMApplication.getInstance
+        (requireContext()).getApiService());
     mPresenter.bind(this);
   }
 
@@ -85,6 +91,8 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     mAddInterviewersButton.setOnClickListener(this);
     mCreateButton = v.findViewById(R.id.crint_create_button);
     mCreateButton.setOnClickListener(this);
+    mProgressBar = v.findViewById(R.id.crint_progress_bar);
+    dismissProgress();
   }
 
   private void setFields() {
@@ -138,7 +146,8 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
         break;
 
       case R.id.crint_create_button:
-        //TODO: create new interview here (implement POST request)
+        mPresenter.onCreateButtonClick(mCandidateId, mInterviewersId, DateConverter
+            .getFormattedDate(mInterviewDate));
         break;
 
       default:
@@ -153,12 +162,12 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
 
   @Override
   public void showProgress() {
-
+    mProgressBar.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void dismissProgress() {
-
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override
@@ -176,8 +185,18 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     if (requestCode == REQUEST_ADD_INTERVIEWERS) {
       ArrayList<User> users = (ArrayList<User>) data.getSerializableExtra(InterviewersFragment.USERS);
 
+      mInterviewersId = getListId(users);
+
       showInterviewers(users);
     }
+  }
+
+  private ArrayList<Integer> getListId(ArrayList<User> users) {
+    ArrayList<Integer> listId = new ArrayList<>();
+    for (User user : users) {
+      listId.add(user.getId());
+    }
+    return listId;
   }
 
   private void showInterviewers(ArrayList<User> users) {

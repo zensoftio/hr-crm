@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
+import com.erkprog.zensofthrcrm.util.DateConverter;
 
 import java.util.List;
 
@@ -43,7 +44,8 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Ca
         holder.position.setText(candidate.getPosition().getName());
       }
 
-      holder.created.setText(String.format("created: %s", candidate.getCreated()));
+      holder.created.setText(String.format("created: %s", DateConverter.getDisplayDate(candidate
+          .getCreated())));
 
       holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
