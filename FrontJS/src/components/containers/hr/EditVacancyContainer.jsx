@@ -6,9 +6,7 @@ import { TextField,
          MenuItem,
          ListItemText,
          ListItem,
-         Typography,
-         Snackbar,
-         SnackbarContent } from '@material-ui/core';
+         Typography } from '@material-ui/core';
 import { VACANCIES_URL } from '../../../utils/urls'
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import DateConvert from '../../../utils/DateConvert';
@@ -107,7 +105,6 @@ class EditVacancyContainer extends Component {
               comments,
               salary_min,
               salary_max,
-              image,
               created,
               last_published } = this.state;
       return (
