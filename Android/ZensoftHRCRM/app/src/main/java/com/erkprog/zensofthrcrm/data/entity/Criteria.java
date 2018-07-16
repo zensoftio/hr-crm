@@ -3,20 +3,8 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class Criteria {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("name")
   private String name;
-  @SerializedName("department")
-  private Department department;
-
-  public Department getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(Department department) {
-    this.department = department;
-  }
 
   public Integer getId() {
     return id;

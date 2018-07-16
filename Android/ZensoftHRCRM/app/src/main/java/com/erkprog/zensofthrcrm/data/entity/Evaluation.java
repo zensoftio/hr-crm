@@ -7,9 +7,7 @@ import java.util.List;
 public class Evaluation {
 
   private Integer id;
-  @SerializedName("rate")
   private Integer rate;
-  @SerializedName("criteria")
   private Criteria criteria;
 
   public Criteria getCriteria() {
