@@ -9,9 +9,12 @@ import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL } from '../../../utils/urls';
+import { INTERVIEWS_URL } from '../../../utils/urls';
+import { USERS_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
 import getStatus from '../../../utils/GetStatus';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -87,7 +90,7 @@ TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
 async function getUsers(){
-  const users = await FetchDataAPI("http://159.65.153.5/api/v1/users");
+  const users = await FetchDataAPI(USERS_URL);
   for(let i = 0;i < users.results.length;i++){
     Heads[i] = users.results[i];
     email_heads[i] = users.results[i].email
@@ -172,8 +175,7 @@ class UserProfile extends Component {
       }
       const isOk = isPossibleToSend(jsonObj);
       if(isOk){
-        const URL = 'http://159.65.153.5/api/v1/interviews';
-        PostDataAPI(URL, jsonObj);
+        PostDataAPI(INTERVIEWS_URL, jsonObj);
       }
       return isOk;
     }
