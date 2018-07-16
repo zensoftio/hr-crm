@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 
 from apps.requests.models import Request
-# from apps.notifications.notifications import vacancy_created
+from .signals import vacancy_created
 
 User = get_user_model()
 
@@ -41,13 +41,6 @@ class Vacancy(models.Model):
 
     def get_absolute_url(self):
         return reverse('v1:vacancy-detail', kwargs={'pk': self.id})
-
-
-def vacancy_created(sender, **kwargs):
-    if kwargs['created']:
-        instance = Request.objects.get(pk=kwargs['instance'].request.id)
-        instance.is_vacancy_created = True
-        instance.save()
 
 
 post_save.connect(receiver=vacancy_created, sender=Vacancy)
