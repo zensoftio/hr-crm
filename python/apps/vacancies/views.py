@@ -5,7 +5,10 @@ from rest_framework.status import HTTP_201_CREATED
 from apps.utils.serializers import MethodSerializerView
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
-    PublicationListSerializer, PublicationCreateSerializer
+                  PublicationSerializer, VacancyPartialUpdateSerializer, JavaVacancySerializer
+
+from .tasks import send_message_to_java
+from django.contrib import messages
 
 
 class VacancyListView(generics.ListCreateAPIView):
@@ -22,7 +25,7 @@ class VacancyListView(generics.ListCreateAPIView):
 
 class VacancyDetailView(generics.RetrieveUpdateAPIView):
     queryset = Vacancy.objects.all()
-    serializer_class = VacancyDetailSerializer
+    serializer_class = JavaVacancySerializer
 
 
 class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
@@ -33,9 +36,14 @@ class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
         ('POST',): PublicationCreateSerializer
     }
 
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        queryset = Vacancy.objects.get(pk=1)
+        send_message_to_java.delay(queryset, JavaVacancySerializer)
+        messages.success(self.request, "We are publicating. wait a moment and refresh")
+        
+        return Response(data, status="HTTP_201_CREATED")
 
 class PublicationDetail(generics.RetrieveAPIView):
     queryset = Publication.objects.all()
-    serializer_class = PublicationListSerializer
-
-
+    serializer_class = PublicationSerializer

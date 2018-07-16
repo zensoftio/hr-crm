@@ -4,16 +4,21 @@ from apps.departments.serializers import RequirementSerializer, DepartmentSerial
 from apps.requests.models import Request
 from apps.users.serializers import AuxUserSerializer
 from .models import Vacancy, Publication
-from apps.departments.models import Requirement
+from apps.departments.models import Requirement, Department
+
+
+class VacancyDepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        exclude = ['id']
 
 
 class VacancyRequirementSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
+    department = VacancyDepartmentSerializer()
 
     class Meta:
         model = Requirement
-        fields = ('id', 'department', 'name', 'type')
-
+        fields = ('department', 'name', 'type')
 
 class VacancyListSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='request.position.name')
