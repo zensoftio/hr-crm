@@ -7,9 +7,13 @@ import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
@@ -25,6 +29,10 @@ public interface ApiInterface {
 
   @GET("interviews")
   Single<InterviewsResponse> getInterviews();
+
+  @PATCH("candidates/{id}")
+  Completable updateCandidates(@Path("id") int id, @Header("Content-Type") String content_type,
+                               @Body Candidate candidate);
 
   @GET("vacancies")
   Call<VacanciesResponse> getVacancies();

@@ -14,11 +14,15 @@ public interface CandidateDetailContract {
 
     void startCreateInterview(Candidate candidate);
 
+    void startEditCandidate(Candidate candidate);
+
   }
 
   interface Presenter extends ILifecycle<View> {
 
     void onCreateInterviewClicked();
+
+    void onEditCandidateClicked();
 
     void loadCandidateInfo(int candidateId);
 

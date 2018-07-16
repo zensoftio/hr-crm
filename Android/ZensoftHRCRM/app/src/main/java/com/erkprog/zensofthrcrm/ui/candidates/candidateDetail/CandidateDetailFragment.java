@@ -199,6 +199,20 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     startActivity(intent);
   }
 
+  @Override
+  public void startEditCandidate(Candidate candidate) {
+    EditCandidateFragment editFragment = new EditCandidateFragment();
+    Bundle bundle = new Bundle();
+    Candidate obj = candidate;
+    bundle.putSerializable("candidate", obj);
+    editFragment.setArguments(bundle);
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.candidate_detail_container, editFragment);
+    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.commit();
+  }
+
   public static CandidateDetailFragment newInstance(int candidateId) {
     Bundle arguments = new Bundle();
     arguments.putInt(ARGUMENT_CANDIDATE_ID, candidateId);
@@ -227,6 +241,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
     mProgressBar.setVisibility(View.GONE);
   }
 
+
   @Override
   public void onClick(View v) {
     switch (v.getId()) {
@@ -239,12 +254,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
       case R.id.cd_edit_button:
         //TODO: implement profile editing
-        EditCandidateFragment editFragment = new EditCandidateFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.candidate_detail_container, editFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        mPresenter.onEditCandidateClicked();
         break;
       case R.id.cd_message_button:
         //TODO: implement sending message

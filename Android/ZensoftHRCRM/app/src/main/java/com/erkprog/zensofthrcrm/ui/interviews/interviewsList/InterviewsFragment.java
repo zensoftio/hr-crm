@@ -63,7 +63,7 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_interviews_list, container, false);
 
-    ButterKnife.bind(this,v);
+    ButterKnife.bind(this, v);
 
     mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviews);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
@@ -88,12 +88,11 @@ public class InterviewsFragment extends Fragment implements InterviewsContract.V
   public void showInterviews(List<Interview> interviews) {
     dismissProgress();
 
-    if(interviews.size() > 0) {
+    if (interviews.size() > 0) {
       noInterviewsView.setVisibility(View.GONE);
       InterviewsAdapter adapter = new InterviewsAdapter(interviews, this);
       mRecyclerView.setAdapter(adapter);
-    }
-    else
+    } else
       noInterviewsView.setVisibility(View.VISIBLE);
   }
 

@@ -393,9 +393,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
           .getCandidate())));
 
       for (int j = 0; j < interviews.get(i).getInterviewersList().size(); j++) {
-        if(interviews.get(i).getInterviewersList().get(j).getEvaluaionList() != null)
-        saveEvaluations(interviews.get(i)
-            .getInterviewersList().get(j).getEvaluaionList());
+        if (interviews.get(i).getInterviewersList().get(j).getEvaluaionList() != null)
+          saveEvaluations(interviews.get(i)
+              .getInterviewersList().get(j).getEvaluaionList());
 
       }
 
@@ -519,7 +519,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(PHONE, candidate.getPhone());
       cv.put(STATUS, candidate.getStatus());
       cv.put(EXPERIENCE, candidate.getExperience());
-      cv.put(POSITION + ID, candidate.getPosition().getId());
+      if (candidate.getPosition() != null)
+        cv.put(POSITION + ID, candidate.getPosition().getId());
       cv.put(CREATED, candidate.getCreated());
       // CVS
       List<String> cvsIds = new ArrayList<String>();
@@ -896,7 +897,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         request.setModified(requestCursor.getString(requestCursor.getColumnIndex(MODIFIED)));
         request.setStatus(requestCursor.getString(requestCursor.getColumnIndex(STATUS)));
 
-        if (requestCursor.getString(requestCursor.getColumnIndex(REQUIREMENTS+ ID)) != null) {
+        if (requestCursor.getString(requestCursor.getColumnIndex(REQUIREMENTS + ID)) != null) {
           List<String> reqStringList = Converter.convertStringToList(requestCursor.getString
               (requestCursor
                   .getColumnIndex

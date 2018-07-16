@@ -77,6 +77,15 @@ public class CandidateDetailPresenter implements CandidateDetailContract.Present
   }
 
   @Override
+  public void onEditCandidateClicked() {
+    if (!isViewAttached()) {
+      return;
+    }
+
+    mView.startEditCandidate(mCandidate);
+  }
+
+  @Override
   public void bind(CandidateDetailContract.View view) {
     mView = view;
   }

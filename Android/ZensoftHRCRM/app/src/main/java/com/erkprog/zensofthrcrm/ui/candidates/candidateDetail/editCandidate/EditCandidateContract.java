@@ -2,6 +2,7 @@ package com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.editCandidate;
 
 import android.content.Context;
 
+import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.ui.BaseView;
 import com.erkprog.zensofthrcrm.ui.ILifecycle;
@@ -16,14 +17,13 @@ public interface EditCandidateContract extends BaseView {
 
     void showProgress();
 
-    void showData();
+    void onFinishedRequest(int candidateId);
 
   }
 
   interface Presenter extends ILifecycle<View> {
 
-    void fetchData();
-
+    void updateCadidate(Candidate candidate);
 
   }
 
