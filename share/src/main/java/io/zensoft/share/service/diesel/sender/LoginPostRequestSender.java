@@ -27,7 +27,7 @@ public class LoginPostRequestSender implements RequestSender {
     private String sessionId;
 
     @Autowired
-    public LoginPostRequestSender(LoginPostRequestBody loginPostRequestBody, LoginHeader loginHeader){
+    public LoginPostRequestSender(LoginPostRequestBody loginPostRequestBody, LoginHeader loginHeader) {
         this.loginPostRequestBody = loginPostRequestBody;
         this.loginHeader = loginHeader;
     }
@@ -52,18 +52,17 @@ public class LoginPostRequestSender implements RequestSender {
 
         String[] sessionIdContainer = partOfHeaders[1].split(delimiter);
         String resultSessionId = "";
-        for (int i = 0; i < 1; i++) {
-            resultSessionId = resultSessionId + sessionIdContainer[i];
-        }
+        resultSessionId = resultSessionId + sessionIdContainer[0];
+
         return resultSessionId;
     }
 
     @Override
     public RequestResponse getFilledResponseFromSender(RequestResponse requestResponse) {
-        if(!statusCode.equals("302")){
+        if (!statusCode.equals("302")) {
             requestResponse.setStatus(RequestStatus.FAILED);
         }
-        if(statusCode.equals("302")){
+        if (statusCode.equals("302")) {
             requestResponse.setStatus(RequestStatus.SUCCESS);
         }
         return requestResponse;
