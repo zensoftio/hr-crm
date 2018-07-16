@@ -28,7 +28,7 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   }
 
   @Override
-  public void getInterviewsInternet(int interviewId) {
+  public void getInterviewInternet(int interviewId) {
 
     mService.getDetailedInterview(interviewId).enqueue(new Callback<Interview>() {
       @Override
@@ -70,7 +70,7 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
 
 
   @Override
-  public void getInterviewsLocal(int interviewId) {
+  public void getInterviewLocal(int interviewId) {
     Interview interview = mSQLiteHelper.getInterview(String.valueOf(interviewId));
     if (interview != null) {
       mView.showInterviewDetails(interview);

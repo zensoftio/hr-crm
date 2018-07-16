@@ -7,6 +7,7 @@ import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -23,7 +24,7 @@ public interface ApiInterface {
   Call<Interview> getDetailedInterview(@Path("id") int id);
 
   @GET("interviews")
-  Call<InterviewsResponse> getInterviews();
+  Single<InterviewsResponse> getInterviews();
 
   @GET("vacancies")
   Call<VacanciesResponse> getVacancies();

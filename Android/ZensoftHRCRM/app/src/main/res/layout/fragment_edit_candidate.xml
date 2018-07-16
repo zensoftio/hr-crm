@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+
+  <LinearLayout
+      android:id="@+id/ec_root_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ec_firts_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name"/>
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/ec_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="Candidate's first name"/>
+
+    <TextView
+        android:id="@+id/ec_last_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name"/>
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/ec_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="Candidate's last name"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+      <ImageView
+          android:id="@+id/ec_email_image"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:contentDescription="candidate's email"
+          android:src="@drawable/ic_email_black"/>
+
+      <android.support.design.widget.TextInputEditText
+          android:id="@+id/ec_email"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="9"
+          android:textColor="@color/colorBlack"
+          android:textSize="@dimen/main_attributes"
+          tools:text="candidate@mail.com"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+      <ImageView
+          android:id="@+id/ec_phone_image"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:src="@drawable/ic_phone_black"/>
+
+      <android.support.design.widget.TextInputEditText
+          android:id="@+id/ec_phone"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="9"
+          android:textColor="@color/colorBlack"
+          android:textSize="@dimen/main_attributes"
+          tools:text="candidate's phone"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ec_department_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/department"/>
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/ec_department"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="Android dep"/>
+
+    <TextView
+        android:id="@+id/ec_exp_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/years_of_experience"/>
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/ec_exp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/main_attributes"
+        tools:text="5"/>
+  </LinearLayout>
+  <ProgressBar
+      android:id="@+id/ec_progress_bar"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="@dimen/progress_bar_size"
+      android:layout_height="@dimen/progress_bar_size"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/ec_root_layout"
+      app:layout_constraintTop_toTopOf="@+id/ec_root_layout"/>
+
+
+</android.support.constraint.ConstraintLayout>

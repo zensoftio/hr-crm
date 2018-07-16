@@ -18,12 +18,7 @@ public interface InterviewsContract {
 
     void showInterviewDetailUi(int interviewId);
 
-    void showNoInterviews();
-
     void showProgress();
-
-    void hideProgress();
-
 
   }
 
