@@ -10,7 +10,7 @@ class HeadPhoto extends React.Component {
         super(props);
         this.state = {
             photo: profile,
-            name: 'DAVRAN',
+            name: 'User',
             role: HR
         }
     }
@@ -18,7 +18,7 @@ class HeadPhoto extends React.Component {
     componentDidMount () {
         this.setState({
             photo: sessionStorage.getItem("photo"),
-            name: sessionStorage.getItem("user")
+            name: sessionStorage.getItem("username")
         })
     }
 
@@ -41,25 +41,5 @@ let style = {
             color: '#d7f8f7',
             cursor: 'pointer'
 }
-// const HeadPhoto = () => {
-// 		let hod = 'HoD';
-// 		let hr = 'HR';
-//     let instyle = {
-//         display: 'inline-block',
-//         margin: 4,
-// 				color: '#d7f8f7',
-// 				cursor: 'pointer'
-//     }
-//     return (
-//         <div className="headphoto">
-//             <img className="profile_photo" src={profilePhoto} alt="profile_photo"/>
-//             <div>
-//                 <span style={instyle}>{user}</span><br />
-//                 <span style={instyle}>{hod}</span>
-//                 <span style={instyle}>{hr}</span>
-//             </div>
-//         </div>
-//     );
-// }
 
 export default HeadPhoto;

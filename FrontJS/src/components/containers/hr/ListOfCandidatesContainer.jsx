@@ -19,7 +19,7 @@ class ListOfCandidates extends Component {
     }
 
     componentWillMount = () => {
-        FetchDataAPI(CANDIDATES_URL + '?status=NOT_REVIEWED')
+        FetchDataAPI(CANDIDATES_URL)
             .then(response => response.results.map(
                 item => (
                     {

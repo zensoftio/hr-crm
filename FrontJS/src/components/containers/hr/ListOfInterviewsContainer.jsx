@@ -1,22 +1,59 @@
-import React from "react";
+import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import {Link} from "react-router-dom";
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import { INTERVIEWS_URL } from "../../../utils/urls";
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
 
-const ListOfInterviews = (props) => {
+const header = ['№', 'Ф.И.О', 'ПОЗИЦИЯ', 'СТАТУС', 'ДАТА', 'РЕДАКТИРОВАТЬ'];
 
-    function MakeLinked(element, link) {
-        return <Link to={link}>{element} </Link>;
+class ListOfInterviews extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        }
     }
 
-    const data = [
-        ['Islam Akylbek uulu', '29/06/18', 'Junior JS Developer', 'Name Surname', MakeLinked('Изменить', 'edit_interview'), MakeLinked('Удалить', 'DeleteLink')],
-        ['Name surname', '29/06/18', 'Middle JS Developer', 'Name2 Surname', MakeLinked('Изменить', 'edit_interview'), MakeLinked('Удалить', 'DeleteLink')],
-        ['Human human', '29/06/18', 'Senior JS Developer', 'Name3 Surname', MakeLinked('Изменить', 'edit_interview'), MakeLinked('Удалить', 'DeleteLink')],
-    ];
+    parseDate = (value) => {
+        const parsedDate = new Date(value);
 
-    const header = ['№', 'Ф.И.О', 'ДАТА', 'ПОЗИЦИЯ', 'ИНТЕРВЬЮЕР', 'ДЕЙСТВИЯ', 'ДЕЙСТВИЯ'];
+        return parsedDate.toLocaleString('en-US')
+    }
 
-    return (<TableList header={header} data={data}/>);
+    componentWillMount = () => {
+        FetchDataAPI(INTERVIEWS_URL)
+            .then(response => response.results.map(
+                item => (
+                    {
+                        id: item.id,
+                        full_name: item.candidate.first_name + ' ' + item.candidate.last_name,
+                        date: item.date,
+                        status: item.status,
+                        department: item.candidate.position.name,
+                    }
+                )
+            ))
+            .then(data => this.setState({data}))
+    };
+
+    render() {
+        const { data } = this.state;
+
+        const interviews = data.map(
+            item => [
+                item.full_name,
+                item.department,
+                item.status,
+                this.parseDate(item.date),
+                makeLinked('Открыть', getLink("edit_interview", item.id))
+            ]
+        );
+
+        return (<TableList header={header} data={interviews}/>);
+    }
 }
+
 
 export default ListOfInterviews;

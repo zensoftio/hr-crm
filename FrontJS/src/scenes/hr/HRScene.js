@@ -68,8 +68,8 @@ const HRNav = [
         component: Notifications
     },
     {
-        name: "Изменить интервью",
-        path: "/edit_interview",
+        name: "",
+        path: "/edit_interview/:id",
         component: EditInterview
     },
     {

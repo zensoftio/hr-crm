@@ -1,62 +1,125 @@
 import React, { Component } from 'react';
-import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles/index";
-import { Link } from "react-router-dom";
-import Select from '../../ui/SelectList';
+import {withStyles} from '@material-ui/core/styles';
+import { TextField, MenuItem, Button } from '@material-ui/core';
+import { INTERVIEWS_URL } from '../../../utils/urls'
+import { FetchDataAPI } from '../../../services/FetchDataAPI';
+import { PutDataAPI } from '../../../services/PutDataAPI';
+import getStatus from '../../../utils/GetStatus';
 
-const styles = theme => ({
-    label: {
-        margin: "10px 15px"
+  const styles = () => ({
+    root: {
+      display: 'flex',
+      justifyvalue: 'flex-start',
+      alignItems: 'center',
+      margin: '1em 0'
     },
-    span: {
-        margin: "0 15px"
+    box: {
+      margin: '0 1em'
+    },
+    textArea: {
+      width: '100%',
+      margin: '1em 0'
+    },
+    commentBox: {
+        width: '100%'
     }
 });
 
-const VacancyList = [
-    "Junior JS Developer",
-    "Middle Java Developer",
-    "Senior Python Developer"
-];
+class EditInterviewContainer extends Component { 
 
-class EditInterviewContainer extends Component {
-    render() {
-        const {classes} = this.props;
-        return (
-            <div>
-                <div className={classes.label}>
-                    <span className={classes.span}>Ф.И.О:</span>
-                    <TextField placeholder="Имя Фамилия"/>
-                </div>
-                <div className={classes.label}>
-                    <span className={classes.span}>МЕСТО:</span>
-                    <TextField placeholder="Place"/>
-                </div>
-                <div className={classes.label}>
-                    <span className={classes.span}>ДАТА:</span>
-                    <Link to={'date_picker_link'}>{Date()} </Link>;
-                </div>
-                <div className={classes.label}>
-                    <span className={classes.span}>ВАКАНСИЯ:</span>
-                    <Select optionValue={VacancyList}/>
-                </div>
-                <div className={classes.label}>
-                    <span className={classes.span}>ИНТЕРВЬЮЕР:</span>
-                    <TextField placeholder="Имя Фамилия" value="Name Surname"/>
-                    <button>Remove</button>
-                    <br/>
-                    <button>ДОБАВИТЬ ИНТЕРВЬЮЕР</button>
-                </div>
-                <div className={classes.label}>
-                    <button>СОХРАНИТЬ</button>
-                    <button>УДАЛИТЬ</button>
-                    <button>ОТКРЫТЬ ПРОФИЛЬ</button>
-                </div>
+    componentDidMount() {
+        FetchDataAPI(INTERVIEWS_URL + '/' + this.props.interviewId)
+            .then(interview => this.setState({
+                id: interview.id,
+                first_name: interview.candidate.first_name,
+                last_name: interview.candidate.last_name,
+                position: interview.candidate.position.name,
+                department: interview.candidate.position.department.name,
+                created: interview.candidate.created,
+                interviewers: interview.interviewers,
+                status: interview.candidate.status,
+                date: interview.date
+            }))
+    }
+    
+    constructor(props){
+      super(props)
+      this.state = { 
+        id: 0,
+        first_name: '',
+        last_name: '',
+        position: '',
+        department: '',
+        created: '',
+        interviewers: '',
+        status: '',
+        date: ''
+      };
+    } 
 
-            </div>
-        );
+    handleChange = (event) => {
+      this.setState({ 
+        [event.target.name]: event.target.value 
+      });
     }
 
+    updateInterview = (event) => {
+      event.preventDefault();
+
+      const data = this.state;
+      PutDataAPI(INTERVIEWS_URL + '/' + this.props.interviewId, data);
+    }
+
+    RenderMenuItem = (props) => {
+      return props.map((item, index) => (
+          <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+      ))
+    }
+
+    render() {
+
+      const { classes } = this.props;
+      const { first_name,
+              last_name,
+              position,
+              department,
+              status,
+              date } = this.state;
+      const dateTime = new Date(date);
+      console.log(dateTime)
+      return (
+
+        <div style={{ margin: ' 0 1em'}}>
+            <div className={classes.root}>
+                Фамилия: 
+                <span className={classes.box}><TextField name='first_name' value={first_name} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите фамилию' /></span>
+            </div>
+            <div className={classes.root}>
+                Имя: 
+                <span className={classes.box}><TextField name='last_name' value={last_name} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите имя' /></span>
+            </div>
+            <div className={classes.root}>
+                Позиция: 
+                <span className={classes.box}><TextField name='position' value={position} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите название позиции' /></span>
+            </div>
+            <div className={classes.root}>
+                Отдел: 
+                <span className={classes.box}><TextField name='department' value={department} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите название отдела' /></span>
+            </div>
+            <div className={classes.root}>
+                Статус: 
+                <span className={classes.box}><TextField name='status' value={getStatus(status)} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите статус' /></span>
+            </div>
+            <div className={classes.root}>
+                Дата: 
+                <span className={classes.box}><TextField name='date' type='datetime-local' onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите дату' /></span>
+            </div>
+            <div className={classes.root}>
+                <div className={classes.box}><Button variant="contained" color="primary" onClick={this.updateInterview}>Изменить</Button></div>
+            </div>
+        </div> 
+      );
+    }
 }
 
 export default withStyles(styles)(EditInterviewContainer);
