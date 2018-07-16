@@ -2,4 +2,7 @@ from django.apps import AppConfig
 
 
 class VacanciesConfig(AppConfig):
-    name = 'vacancies'
+    name = 'apps.vacancies'
+
+    def ready(self):
+        import apps.vacancies.signals

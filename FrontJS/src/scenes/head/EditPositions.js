@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '../general/Header';
-import CreatePositionContainer from '../../components/containers/head/CreatePositionContainer'
-const EditPositions = () => {
+import EditPositionContainer from '../../components/containers/head/EditPositionContainer';
+const EditPositions = (props) => {
     return (
+			
       <div>
         <Header title="Редактировать Позицию"/>     
-        <CreatePositionContainer/>
+        <EditPositionContainer position_id={props.match.params.id}/>
       </div>
     )
 }
