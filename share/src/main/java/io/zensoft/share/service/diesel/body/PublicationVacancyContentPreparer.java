@@ -40,7 +40,7 @@ public class PublicationVacancyContentPreparer {
     String workConditionsParsed = "";
 
     void prepareGivenVacancyToHtmlStyle(Vacancy vacancy){
-        sortVacanyListsbyType(vacancy);
+        sortVacancyListsbyType(vacancy);
         setTitleOfPost(vacancy.getPosition());
 
         VelocityEngine velocityEngine = new VelocityEngine();
@@ -78,7 +78,7 @@ public class PublicationVacancyContentPreparer {
         setContentOfPost(writer.toString());
     }
 
-    private void sortVacanyListsbyType(Vacancy vacancy) {
+    private void sortVacancyListsbyType(Vacancy vacancy) {
         for (Requirement requirementOrSkill : vacancy.getRequirements()) {
             if (requirementOrSkill.getType() == RequirementType.REQUIRED) {
                 requiredRequirementsParsed = requiredRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
