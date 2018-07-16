@@ -56,7 +56,6 @@ public class DieselPublisherManagerService implements PublisherManagerService {
     }
 
     @Override
-    @Transactional
     public void getInfo(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
         VacancyResponse vacancyResponse = vacancyRetrieverService.getInfo(vacancy, PublisherServiceType.DIESEL_ELCAT_KG);
