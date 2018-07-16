@@ -57,7 +57,7 @@ const HeadNav = [
         component: Statistics
     },
     {			
-        path: '/edit_positions',
+        path: '/edit_positions/:id',
         component: EditPositions
 		},
 		{

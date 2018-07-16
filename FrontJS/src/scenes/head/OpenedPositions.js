@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../general/Header';
 import DateConvert from '../../utils/DateConvert';
+import { REQUESTS_URL } from '../../utils/urls';
+import { FetchDataAPI } from '../../services/FetchDataAPI';
 
 class OpenedPositions extends React.Component {
 	constructor(props) {
@@ -12,23 +14,19 @@ class OpenedPositions extends React.Component {
 	}
 
 	componentDidMount() {
-		this.fetchData();
-	}
-	fetchData(){
-		fetch('http://159.65.153.5/api/v1/requests')
-			.then(res => res.json())			
+		FetchDataAPI( REQUESTS_URL )
 			.then(json => json.results.map(result => (
 				{
 					position: result.position.name,
-					created: DateConvert(result.created)
+					created: DateConvert(result.created),
+					id: result.id
 				}
 			)))
 			.then(positionList => this.setState({
 				positionList
 			}))
-			.catch(err => console.log('FAILED : ',err))
-			
 	}
+
 
 	handleConfirm = (listToDelete) => {
 		const popup = window.confirm("Do You Want to Delete?");
@@ -54,7 +52,7 @@ class OpenedPositions extends React.Component {
 					{this.state.positionList.map((item, i) => {
 						return (
 							<tr key={i}>
-								<td><Link to="/edit_positions">{item.position}</Link></td>
+								<td><Link to={`/edit_positions/${item.id}`}>{item.position}</Link></td>
 								<td>{item.created}</td>
 								<td>
 									<button onClick={() => this.handleConfirm(item)}>удалить</button>

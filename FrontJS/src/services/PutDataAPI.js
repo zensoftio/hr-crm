@@ -4,7 +4,7 @@ export function PutDataAPI(url, data) {
 
     axios({
         url: url,
-        method: "PUT",
+        method: "PATCH",
         data: data
     }).then(function (response) {
         console.log(response);
