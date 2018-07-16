@@ -71,6 +71,6 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     private void convertToDtoAndRespond (VacancyResponse vacancyResponse) {
         VacancyResponseDto vacancyResponseDto = defaultVacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
-        log.info("response of publishing vacancy is sent to monolith");
+        log.info("response of publishing vacancy is sent to monolith", vacancyResponse);
     }
 }
