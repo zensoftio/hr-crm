@@ -27,6 +27,7 @@ public class FacebookPageAccessTokenRetriever {
                     HttpMethod.GET, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
         } catch (Exception e) {
             log.error("error sending request to get page access token", e);
+            return null;
         }
         Object object = map.getBody().get("data");
         ArrayList<Map<String, Object>> pageList = (ArrayList<Map<String, Object>>) object;

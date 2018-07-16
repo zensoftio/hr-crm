@@ -25,7 +25,6 @@ public class FacebookPublisherService implements PublisherService {
     private String userAccessToken;
     private String pageAccessToken;
 
-    private Facebook facebookPage;
     private FacebookConfigs facebookConfigs;
     private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
     private FacebookRequestSender facebookRequestSender;
@@ -58,7 +57,6 @@ public class FacebookPublisherService implements PublisherService {
         userAccessToken = vacancy.getFacebookUserAccessToken();
         facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
         pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
-        facebookPage = new FacebookTemplate(pageAccessToken, facebookConfigs.getAppNamespace(), facebookConfigs.getAppId());
     }
 
     private boolean isValidImageUrl(String imageUrl) {
