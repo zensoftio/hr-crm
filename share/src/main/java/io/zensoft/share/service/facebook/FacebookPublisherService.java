@@ -7,8 +7,6 @@ import io.zensoft.share.model.VacancyStatus;
 import io.zensoft.share.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +23,6 @@ public class FacebookPublisherService implements PublisherService {
     private String userAccessToken;
     private String pageAccessToken;
 
-    private FacebookConfigs facebookConfigs;
     private FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever;
     private FacebookRequestSender facebookRequestSender;
     private FacebookUrlBuilder facebookUrlBuilder;
@@ -35,7 +32,6 @@ public class FacebookPublisherService implements PublisherService {
                                     FacebookPageAccessTokenRetriever facebookPageAccessTokenRetriever,
                                     FacebookRequestSender facebookRequestSender,
                                     FacebookUrlBuilder facebookUrlBuilder){
-        this.facebookConfigs = facebookConfigs;
         log.debug("FacebookConfigs object is assigned", facebookConfigs);
         this.facebookPageAccessTokenRetriever = facebookPageAccessTokenRetriever;
         this.facebookRequestSender = facebookRequestSender;
