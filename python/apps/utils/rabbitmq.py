@@ -33,6 +33,7 @@ class RabbitMQ:
         self.channel = self.connection.channel()
         self.queue = ''
         self.response = None
+        self.uuid = None
 
     @staticmethod
     def message_to_server(query_set, serializer):
@@ -60,9 +61,6 @@ class RabbitMQ:
             message = self.message_to_server(queryset, serializer)
             cor_id = json.loads(message)
             uuid = cor_id['uuid']
-        else:
-            message = message
-            uuid = ''
 
         self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=False)
         self.channel.queue_declare(queue=self.queue, durable=False)
@@ -86,15 +84,15 @@ class RabbitMQ:
         return self.response
 
     def on_response(self, ch, method, properties, body):
-        print('I have got the messsage from server')
+        self.response = None
+        content = body.decode('utf-8')
+        content = json.loads(content)
+        if conte
         self.response = body
-
-
+        return self.response
 
     def call_java(self, queryset=None, serializer=None, exchange_name='', exchange_type='topic', q_receiving='',
-             q_sending='', message=''):
-
-        self.response = None
+                  q_sending='', message=''):
         self.q_sending = q_sending
         self.q_receiving = q_receiving
 
@@ -102,11 +100,8 @@ class RabbitMQ:
         self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
         if queryset and serializer:
             message = self.message_to_server(queryset, serializer)
-            cor_id = json.loads(message)
-            uuid = cor_id['uuid']
-        else:
-            message = message
-            uuid = ''
+            content = json.loads(message)
+            self.uuid = content['uuid']
 
         self.channel.basic_consume(self.on_response, no_ack=True,
                                    queue=self.q_receiving)
@@ -115,18 +110,16 @@ class RabbitMQ:
                                    routing_key=self.q_sending,
                                    properties=pika.BasicProperties(
                                        delivery_mode=2,  # make message persistent
-                                       correlation_id=uuid,
+                                       correlation_id=self.uuid,
                                        content_type='json'
                                    ),
                                    body=message)
 
         while self.response is None:
             self.connection.process_data_events()
-        
+
         self.connection.close()
         return self.response
-
-        
 
     def on_request(self, ch, method, properties, body):
         print("Have message from the client")
@@ -137,7 +130,6 @@ class RabbitMQ:
                          body=response)
 
         ch.basic_ack(delivery_tag=method.delivery_tag)
-
 
     def consume(self, exchange_name='', exchange_type='topic', q_receiving='', q_sending=''):
         self.q_receiving = q_receiving

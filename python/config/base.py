@@ -1,5 +1,6 @@
 import os
 
+import djcelery
 from configurations import Configuration, values
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,10 +44,7 @@ class Base(Configuration):
 
         'djcelery',
     ]
-    import djcelery
     djcelery.setup_loader()
-
-    BROKER_URL = "amqp://guest:guest@localhost:5672//"
 
     SOCIAL_AUTH_RAISE_EXCEPTIONS = True
     SOCIAL_AUTH_URL_NAMESPACE = 'social'
@@ -207,3 +205,13 @@ class Base(Configuration):
     RABBITMQ_PASSWORD = values.SecretValue()
     RABBITMQ_HOST = values.SecretValue()
     RABBITMQ_PORT = values.SecretValue()
+
+    BROKER_URL = "amqp://{username}:{password}@{host}:{port}//".format(
+
+        username=RABBITMQ_USERNAME,
+        password=RABBITMQ_PASSWORD,
+        host=RABBITMQ_HOST,
+        port=RABBITMQ_PORT
+    )
+
+    BROKER_URL = "amqp://guest:guest@localhost:5672//"

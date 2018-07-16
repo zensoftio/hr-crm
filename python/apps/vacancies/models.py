@@ -24,12 +24,14 @@ class Vacancy(models.Model):
     address = models.CharField(max_length=50)
     work_conditions = ArrayField(base_field=models.CharField(max_length=200, blank=True))
     working_hours = models.CharField(choices=WORKING_HOURS, max_length=10, default="FULL_TIME")
-
     salary_min = models.FloatField()
     salary_max = models.FloatField()
     image = models.ImageField(upload_to='media', null=True)
     responsibilities = models.TextField(null=True)
     comments = models.TextField(null=True)
+    diesel = models.BooleanField(default=False)
+    jobkg = models.BooleanField(default=False)
+    facebook = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     last_published = models.DateTimeField(auto_now=True)
 
@@ -44,13 +46,11 @@ class Vacancy(models.Model):
 class Publication(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
-    created = models.DateTimeField(auto_now_add=True)
-    facebook = models.BooleanField(default=False)
-    facebook_url = models.URLField(null=True)
-    diesel_exist = models.BooleanField(default=False)
-    diesel_url = models.URLField(null=True)
-    jobkg_exist = models.BooleanField(default=False)
-    jobkg_url = models.URLField(null=True)
+    message = models.CharField(max_length=200, default='')
+    url = models.URLField(null=True)
+    publisher_service = models.CharField(max_length=50, default='')
+    status = models.CharField(max_length=50, default='')
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         default_related_name = 'publications'
