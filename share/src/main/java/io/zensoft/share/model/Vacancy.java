@@ -15,6 +15,7 @@ public class Vacancy {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String uuid;
     private String title;
     @OneToMany(mappedBy = "vacancy")
