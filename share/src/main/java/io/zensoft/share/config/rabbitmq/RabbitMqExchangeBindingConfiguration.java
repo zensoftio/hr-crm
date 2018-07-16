@@ -62,4 +62,9 @@ public class RabbitMqExchangeBindingConfiguration {
         return bindQueueToTopicWith(jobKgGetInfoQueue, shareTopicExchange, "jobKg." + getInfo);
     }
 
+    @Bean
+    @Autowired
+    public Binding shareResponseBinding(Queue shareResponseQueue) {
+        return bindQueueToTopicWith(shareResponseQueue, shareTopicExchange, "share." + "response");
+    }
 }

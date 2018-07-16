@@ -12,7 +12,7 @@ class CountCallback(object):
     def __call__(self, ch, method, properties, body):
         self.body = body
         self.count -= 1
-
+        print("callback ", self.count, self.body)
         if not self.count:
             ch.stop_consuming()
 
@@ -72,6 +72,8 @@ class RabbitMQ:
                                    body=message)
         print(" [x] Sent %r" % message)
 
+        self.channel.queue_bind(exchange=exchange_name,
+                                queue=queue_to_receive)
         self.channel.queue_declare(queue=queue_to_receive, durable=False)
         callback = CountCallback(1)
         self.channel.basic_consume(callback, no_ack=True,

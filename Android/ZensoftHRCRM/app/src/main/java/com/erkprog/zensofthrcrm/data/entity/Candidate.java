@@ -1,38 +1,54 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Candidate {
 
-  @SerializedName("id")
   private Integer id;
   @SerializedName("first_name")
   private String firstName;
   @SerializedName("last_name")
   private String lastName;
-  @SerializedName("email")
   private String email;
-  @SerializedName("position")
   private Position position;
-  @SerializedName("experience")
   private Float experience;
-  @SerializedName("level")
   private String level;
-  @SerializedName("status")
-  private Integer status;
-  @SerializedName("phone")
+  private String created;
+  private String skype;
+  private String status;
   private String phone;
-  @SerializedName("cvs")
-  private List<Cv> cvs = null;
-  @SerializedName("interviews")
-  private List<CandidateInterviewItem> interviews = null;
-  @SerializedName("comments")
-  private List<Comment> comments = null;
+  private List<Cv> cvs;
+  private List<Interview> interviews;
+  private List<Comment> comments;
+
+  public String getCreated() {
+    return created;
+  }
+
+  public void setCreated(String created) {
+    this.created = created;
+  }
+
+  public Position getPosition() {
+    return position;
+  }
+
+  public void setPosition(Position position) {
+    this.position = position;
+  }
 
   public Integer getId() {
     return id;
+  }
+
+  public String getSkype() {
+    return skype;
+  }
+
+  public void setSkype(String skype) {
+    this.skype = skype;
   }
 
   public void setId(Integer id) {
@@ -63,13 +79,6 @@ public class Candidate {
     this.email = email;
   }
 
-  public Position getPosition() {
-    return position;
-  }
-
-  public void setPosition(Position position) {
-    this.position = position;
-  }
 
   public Float getExperience() {
     return experience;
@@ -87,11 +96,11 @@ public class Candidate {
     this.level = level;
   }
 
-  public Integer getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Integer status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
@@ -111,11 +120,11 @@ public class Candidate {
     this.cvs = cvs;
   }
 
-  public List<CandidateInterviewItem> getInterviews() {
+  public List<Interview> getInterviews() {
     return interviews;
   }
 
-  public void setInterviews(List<CandidateInterviewItem> interviews) {
+  public void setInterviews(List<Interview> interviews) {
     this.interviews = interviews;
   }
 

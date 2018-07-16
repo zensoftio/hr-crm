@@ -6,6 +6,7 @@ import PositionList from './ListPositions';
 import CreateVacancy from './CreateVacancy';
 import InternList from './ListIntern';
 import CandidateList from './ListCandidates';
+import EditVacancy from './EditVacancy';
 import OpenedVacancies from './VacancyList';
 import Reserve from './Reserve';
 import Statistics from '../general/Statistics';
@@ -22,14 +23,19 @@ const HRNav = [
         component: PositionList
     },
     {
-        name: "Создать вакансию",
-        path: "/create_vacancy",
+        name: "",
+        path: "/create_vacancy/:id",
         component: CreateVacancy
     },
     {
         name: "Вакансии",
         path: "/opened_vacancies",
         component: OpenedVacancies
+    },
+    {
+        name: "",
+        path: "/vacancy/:id",
+        component: EditVacancy
     },
     {
         name: "Кандидаты",
@@ -68,7 +74,7 @@ const HRNav = [
     },
     {
         name: "",
-        path: "/profile",
+        path: "/profile/:id",
         component: Profile
     },
 ];
@@ -83,7 +89,7 @@ export default class HRScene extends Component {
 
                     <div className="content">
                         <Switch>
-                            <Route path="/" component={OpenedVacancies} exact/>
+                            <Route path="/" component={PositionList} exact/>
                             <SpecifyTheRoute route={HRNav}/>
                             <Route component={Error}/>
                         </Switch>

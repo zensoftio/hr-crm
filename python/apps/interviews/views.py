@@ -3,10 +3,11 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 import json
 
-from apps.interviews.models import Interview, Criteria, Candidate, Interviewer, User
-from apps.interviews.serializers import InterviewListSerializer, CriteriaSerializer, InterviewDetailSerializer, \
-    InterviewCreateSerializer
+from apps.interviews.models import Interview, Criteria, Candidate
+from apps.interviews.serializers import InterviewListSerializer, CriteriaCreateSerializer, InterviewDetailSerializer, \
+    InterviewCreateSerializer, CriteriaListSerializer
 from apps.utils.rabbitmq import RabbitMQ
+from apps.utils.serializers import MethodSerializerView
 
 User = get_user_model()
 
@@ -88,7 +89,11 @@ class InterviewDetailView(generics.RetrieveUpdateAPIView):
         return Response(read_serializer.data)
 
 
-class CriteriaCreateListView(generics.ListCreateAPIView):
+class CriteriaCreateListView(MethodSerializerView, generics.ListCreateAPIView):
     queryset = Criteria.objects.all()
-    serializer_class = CriteriaSerializer
     filter_fields = ('department',)
+
+    method_serializer_classes = {
+        ('GET',): CriteriaListSerializer,
+        ('POST',): CriteriaCreateSerializer
+    }

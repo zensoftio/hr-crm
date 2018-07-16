@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../general/Header';
 import EvaluateRange from '../../components/ui/EvaluateRange';
-import ButtonSubmit from '../../components/ui/ButtonSubmit';
+import Button from '@material-ui/core/Button';
 
 const CandidateGrade = () => {
 	const evaluate = <EvaluateRange />
@@ -28,7 +28,7 @@ const CandidateGrade = () => {
 			<Header title="Оценка Кандидата" />
 			<div>						
 				{myFunc(skills)}
-				<ButtonSubmit>SUBMIT</ButtonSubmit>
+				<Button variant="contained">SUBMIT</Button>
 			</div>
 		</div>
 	);

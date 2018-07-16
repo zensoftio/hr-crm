@@ -65,3 +65,6 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+#Defaults file
+app/src/main/java/com/erkprog/zensofthrcrm/data/Defaults.java
