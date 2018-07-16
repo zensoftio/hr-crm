@@ -23,6 +23,7 @@ class Request(models.Model):
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
     status = models.CharField(choices=REQUEST_STATUS, max_length=100, default=0)
     requirements = models.ManyToManyField(Requirement)
+    is_vacancy_created = models.BooleanField(default=False)
 
     def __str__(self):
         return self.position.name

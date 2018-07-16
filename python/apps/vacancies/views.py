@@ -4,6 +4,7 @@ from rest_framework.status import HTTP_201_CREATED
 
 from apps.utils.serializers import MethodSerializerView
 from .models import Vacancy, Publication
+from apps.requests.models import Request
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
     PublicationListSerializer, PublicationCreateSerializer
 
@@ -17,6 +18,9 @@ class VacancyListView(generics.ListCreateAPIView):
         write_serializer.is_valid(raise_exception=True)
         self.perform_create(write_serializer)
         read_serializer = VacancyDetailSerializer(write_serializer.instance)
+        instance = Request.objects.get(pk=request.data['request'])
+        instance.is_vacancy_created = True
+        instance.save()
         return Response(read_serializer.data, status=HTTP_201_CREATED)
 
 
