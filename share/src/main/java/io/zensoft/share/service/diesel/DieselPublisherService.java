@@ -29,7 +29,7 @@ public class DieselPublisherService implements PublisherService {
         this.loginPostRequestSender = loginPostRequestSender;
         this.publicationPostRequestSender = publicationPostRequestSender;
         this.authKeyGetRequestSender = authKeyGetRequestSender;
-        restTemplate.getMessageConverters().add(0,new StringHttpMessageConverter(Charset.forName("UTF-8")));
+        restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 
     @Override
@@ -39,33 +39,62 @@ public class DieselPublisherService implements PublisherService {
         vacancyResponse.setPublisherServiceType(PublisherServiceType.DIESEL_ELCAT_KG);
         vacancyResponse.setPublishDate(new Date());
 
-        String statusLogin;
-        statusLogin = loginPostRequestSender.sendPostRequestForLogin(restTemplate).getStatus().name();
-        if(statusLogin.equals("FAILED")){
-            vacancyResponse.setStatus(VacancyStatus.FAILED);
-            vacancyResponse.setMessage("Post request for login is failed.");
+        if (activateLoginPostRequestSender(vacancyResponse).getStatus().name().equals("FAILED")) {
             return vacancyResponse;
         }
 
-        String statusAuthKey;
-        authKeyGetRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
-        statusAuthKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate).getStatus().name();
-        if(statusAuthKey.equals("FAILED")){
-            vacancyResponse.setStatus(VacancyStatus.FAILED);
-            vacancyResponse.setMessage("Get request for authKey executing is failed.");
+        if (activateAuthKeyGetRequestSender(vacancyResponse,
+                loginPostRequestSender).getStatus().name().equals("FAILED")) {
             return vacancyResponse;
         }
 
-        String statusPublication;
-        publicationPostRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
-        statusPublication = publicationPostRequestSender.sendPostRequestForPublication(restTemplate, vacancy, loginPostRequestSender.getSessionId(), authKeyGetRequestSender.getAuthKey()).getStatus().name();
-        if(statusPublication.equals("FAILED")){
-            vacancyResponse.setStatus(VacancyStatus.FAILED);
-            vacancyResponse.setMessage("Post request for publication is failed.");
+        if (activatePublicationPostRequestSender(vacancyResponse,
+                loginPostRequestSender, vacancy).getStatus().name().equals("FAILED")) {
             return vacancyResponse;
         }
         vacancyResponse.setStatus(VacancyStatus.SUCCESS);
         vacancyResponse.setMessage("Vacancy posted successfully, everything is ok.");
+        return vacancyResponse;
+    }
+
+    private VacancyResponse activateLoginPostRequestSender(VacancyResponse vacancyResponse) {
+        String loginStatus;
+        loginStatus = loginPostRequestSender.sendPostRequestForLogin(restTemplate).getStatus().name();
+        if (loginStatus.equals("FAILED")) {
+            vacancyResponse.setStatus(VacancyStatus.FAILED);
+            vacancyResponse.setMessage("Post request for login is failed.");
+        }
+        return vacancyResponse;
+    }
+
+    private VacancyResponse activateAuthKeyGetRequestSender(VacancyResponse vacancyResponse,
+                                                            LoginPostRequestSender loginPostRequestSender) {
+        String statusAuthKey;
+        authKeyGetRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
+        statusAuthKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate).getStatus().name();
+        if (statusAuthKey.equals("FAILED")) {
+            vacancyResponse.setStatus(VacancyStatus.FAILED);
+            vacancyResponse.setMessage("Get request for authKey executing is failed.");
+        }
+        return vacancyResponse;
+    }
+
+    private VacancyResponse activatePublicationPostRequestSender(VacancyResponse vacancyResponse,
+                                                                 LoginPostRequestSender loginPostRequestSender,
+                                                                 Vacancy vacancy) {
+        String statusPublication;
+        publicationPostRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
+        statusPublication = publicationPostRequestSender.sendPostRequestForPublication(
+                restTemplate,
+                vacancy,
+                loginPostRequestSender.getSessionId(),
+                authKeyGetRequestSender.getAuthKey()
+        ).getStatus().name();
+
+        if (statusPublication.equals("FAILED")) {
+            vacancyResponse.setStatus(VacancyStatus.FAILED);
+            vacancyResponse.setMessage("Post request for publication is failed.");
+        }
         return vacancyResponse;
     }
 }
