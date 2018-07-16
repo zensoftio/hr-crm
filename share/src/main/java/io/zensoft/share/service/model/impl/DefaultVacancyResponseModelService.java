@@ -16,9 +16,13 @@ import java.util.List;
  */
 @Service
 public class DefaultVacancyResponseModelService extends AbstractModelRepositoryServiceImpl<VacancyResponse, Long> implements VacancyResponseModelService {
+
+    private VacancyResponseRepository vacancyResponseRepository;
     @Autowired
-    public DefaultVacancyResponseModelService(JpaRepository<VacancyResponse, Long> repository) {
+    public DefaultVacancyResponseModelService(JpaRepository<VacancyResponse, Long> repository,
+                                              VacancyResponseRepository vacancyResponseRepository) {
         super(repository);
+        this.vacancyResponseRepository = vacancyResponseRepository;
     }
 
     @Override
@@ -29,5 +33,14 @@ public class DefaultVacancyResponseModelService extends AbstractModelRepositoryS
     @Override
     public VacancyResponse getByVacancyAndPublisherServiceType(Vacancy vacancy, PublisherServiceType publisherServiceType) {
         return ((VacancyResponseRepository) repository).getByVacancyAndPublisherServiceType(vacancy, publisherServiceType);
+    }
+
+    @Override
+    public VacancyResponse getByVacancy_UuidAndPublisherServiceType(Vacancy vacancy,
+                                                                    PublisherServiceType publisherServiceType) {
+        if(vacancy.getUuid() == null || vacancy.getUuid().length() == 0){
+            return null;
+        }
+        return vacancyResponseRepository.getByVacancy_UuidAndPublisherServiceType(vacancy.getUuid(),publisherServiceType);
     }
 }
