@@ -18,7 +18,7 @@ INTERVIEW_STATUS = (
 
 class Interview(models.Model):
     date = models.DateTimeField()
-    status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default=0)
+    status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default='TO_BE_CONDUCTED')
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
 
     def __str__(self):
