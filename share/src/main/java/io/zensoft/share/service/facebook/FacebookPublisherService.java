@@ -44,7 +44,7 @@ public class FacebookPublisherService implements PublisherService {
 
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
-        log.info("get vacancy to publish to Facebook and choose type of the post");
+        log.info("got vacancy to FacebookPublisherService to publish to Facebook and choose type of the post", vacancy);
         init(vacancy);
         if (isValidImageUrl(vacancy.getImage())) {
             return publishPhoto(vacancy);
@@ -53,14 +53,14 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private void init(Vacancy vacancy) {
-        log.info("initialize facebook properties after vacancy is gotten");
+        log.info("initializing facebook properties after vacancy is gotten");
         userAccessToken = vacancy.getFacebookUserAccessToken();
         facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
         pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
     }
 
     private boolean isValidImageUrl(String imageUrl) {
-        log.info("check if image url is valid");
+        log.info("checking if image url is valid");
         Image image;
         try {
             image = ImageIO.read(new URL(imageUrl));
@@ -72,7 +72,7 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse publishText(Vacancy vacancy) {
-        log.debug("prepare publishing text of the vacancy without image url to Facebook");
+        log.info("preparing publishing text of the vacancy without image url to Facebook");
         String url = facebookUrlBuilder.getPublishTextRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
@@ -80,7 +80,7 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse publishPhoto(Vacancy vacancy) {
-        log.debug("prepare publishing vacancy with photo to Facebook");
+        log.info("preparing publishing vacancy with photo to Facebook");
         String url = facebookUrlBuilder.getPublishPhotoRequestUrl(vacancy, pageAccessToken);
         VacancyResponse vacancyResponse = post(url);
         vacancyResponse.setVacancy(vacancy);
@@ -88,17 +88,19 @@ public class FacebookPublisherService implements PublisherService {
     }
 
     private VacancyResponse post(String url) {
-        log.info("send post request to RequestSender and create response");
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setPublisherServiceType(PublisherServiceType.FACEBOOK);
+        log.info("sending post request to FacebookRequestSender");
         try {
             ResponseEntity<Map> map = facebookRequestSender.post(url);
             vacancyResponse.setStatus(VacancyStatus.SUCCESS);
             vacancyResponse.setUrl("https://www.facebook.com/" + map.getBody().get("id"));
             vacancyResponse.setPublishDate(new Date());
             vacancyResponse.setMessage(map.toString());
+            log.info("returning VacancyResponse after successful post request");
             return vacancyResponse;
         } catch (Exception e) {
+            log.error("error sending post request to Facebook Graph Api", e);
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage(e.getMessage());
             return vacancyResponse;
