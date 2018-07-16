@@ -32,8 +32,6 @@ public class VacanciesPresenter implements VacanciesContract.Presenter {
           mView.dismissProgress();
           if (response.isSuccessful() && response.body().getVacancyList() != null) {
             mView.showVacancies(response.body().getVacancyList());
-          } else {
-            mView.showMessage(mContext.getString(R.string.vacancies_null));
           }
         }
       }

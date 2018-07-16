@@ -15,6 +15,21 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
 
+  <TextView
+      android:id="@+id/txt_empty_vacancies_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:text="@string/msg_no_vacancies"
+      android:textColor="@color/colorGray"
+      android:visibility="gone"
+      android:textSize="@dimen/msg_not_found"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/recycler_view_all_vacancies"
+      app:layout_constraintTop_toTopOf="@+id/recycler_view_all_vacancies"/>
+
+
   <ProgressBar
       android:id="@+id/vacancies_progress_bar"
       style="?android:attr/progressBarStyle"

@@ -32,8 +32,6 @@ public class CandidatesPresenter implements CandidatesContract.Presenter {
           mView.dismissProgress();
           if (response.isSuccessful() && response.body().getCandidateList() != null) {
             mView.showCandidates(response.body().getCandidateList());
-          } else {
-            mView.showMessage(mContext.getString(R.string.candidates_response_null));
           }
         }
       }

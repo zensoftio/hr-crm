@@ -17,6 +17,19 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
+  <TextView
+      android:id="@+id/txt_empty_candidates_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:text="@string/msg_no_candidates"
+      android:textColor="@color/colorGray"
+      android:textSize="@dimen/msg_not_found"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/recycler_view_all_candidates"
+      app:layout_constraintTop_toTopOf="@+id/recycler_view_all_candidates"/>
 
   <ProgressBar
       android:id="@+id/candidates_progress_bar"

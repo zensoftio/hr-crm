@@ -28,7 +28,7 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
   }
 
   @Override
-  public void getInterviewInternet(int interviewId) {
+  public void getInterviewInternet(final int interviewId) {
 
     mService.getDetailedInterview(interviewId).enqueue(new Callback<Interview>() {
       @Override
@@ -47,6 +47,7 @@ public class InterviewDetailPresenter implements InterviewDetailContract.Present
       public void onFailure(Call<Interview> call, Throwable t) {
         if (isViewAttached()) {
           mView.showMessage(t.getMessage());
+          getInterviewLocal(interviewId);
         }
       }
     });

@@ -26,7 +26,7 @@
       android:layout_centerHorizontal="true"
       android:text="@string/msg_no_interviews"
       android:textColor="@color/colorGray"
-      android:textSize="@dimen/msg_no_interviews"
+      android:textSize="@dimen/msg_not_found"
       android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

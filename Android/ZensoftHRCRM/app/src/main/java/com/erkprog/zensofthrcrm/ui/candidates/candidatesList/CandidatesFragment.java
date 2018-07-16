@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erkprog.zensofthrcrm.CRMApplication;
@@ -23,13 +24,23 @@ import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.CandidateDetail;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CandidatesFragment extends Fragment implements CandidatesContract.View,
     ItemClickListener<Candidate> {
 
   private CandidatesContract.Presenter mPresenter;
   private CandidatesAdapter mAdapter;
-  private RecyclerView mRecyclerView;
-  private ProgressBar mProgressBar;
+
+  @BindView(R.id.recycler_view_all_candidates)
+  RecyclerView mRecyclerView;
+
+  @BindView(R.id.candidates_progress_bar)
+  ProgressBar mProgressBar;
+
+  @BindView(R.id.txt_empty_candidates_view)
+  TextView noVacanciesView;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,8 +58,10 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_candidates_list, container, false);
+
+    ButterKnife.bind(this, v);
+
     initRecyclerView(v);
-    mProgressBar = v.findViewById(R.id.candidates_progress_bar);
     dismissProgress();
     return v;
   }
@@ -60,15 +73,19 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
   }
 
   private void initRecyclerView(View v) {
-    mRecyclerView = v.findViewById(R.id.recycler_view_all_candidates);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setLayoutManager(layoutManager);
   }
 
   @Override
   public void showCandidates(List<Candidate> candidates) {
-    mAdapter = new CandidatesAdapter(candidates, this);
-    mRecyclerView.setAdapter(mAdapter);
+    if(candidates.size() > 0) {
+      mAdapter = new CandidatesAdapter(candidates, this);
+      mRecyclerView.setAdapter(mAdapter);
+    }
+    else{
+      noVacanciesView.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override

@@ -53,8 +53,10 @@ public class InterviewsPresenter implements InterviewsContract.Presenter {
 
               @Override
               public void onError(Throwable e) {
-                if (isViewAttached())
+                if (isViewAttached()) {
                   mView.showMessage(e.getMessage());
+                  getInterviewsLocal();
+                }
               }
             })
     );

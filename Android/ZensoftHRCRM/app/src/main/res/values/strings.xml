@@ -40,6 +40,8 @@
   <string name="requests_null">Requests list in response is null</string>
   <string name="vacancies_null">Vacancies list in response is null</string>
   <string name="msg_no_interviews">No interviews found!</string>
+  <string name="msg_no_vacancies">No vacancies found!</string>
+  <string name="msg_no_candidates">No candidates found!</string>
   <string name="phone">+99677217753</string>
   <string name="btn_save">Save</string>
 
