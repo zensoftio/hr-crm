@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import HeadPhoto from './HeadPhoto';
+import './Navigation.css';
 
 const CreateNavItem = (props) => {
     return props.menuItems.map((item, index) => (
