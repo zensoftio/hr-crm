@@ -25,5 +25,29 @@
       "status": "CONDUCTED",
       "candidate": 1
     }
+  },
+  {
+    "model": "interviews.criteria",
+    "pk": 1,
+    "fields": {
+      "name": "Django",
+      "department": 2
+    }
+  },
+  {
+    "model": "interviews.criteria",
+    "pk": 2,
+    "fields": {
+      "name": "ReactJS",
+      "department": 5
+    }
+  },
+  {
+    "model": "interviews.criteria",
+    "pk": 3,
+    "fields": {
+      "name": "Communication Skills",
+      "department": 1
+    }
   }
 ]

@@ -14,11 +14,12 @@ public class Comment {
   @SerializedName("created_by")
   private User createdBy;
 
-//    @SerializedName("created")
-//    private Date created;
-
   @SerializedName("created")
   private String created;
+
+
+  @SerializedName("candidate")
+  private Candidate candidate;
 
   public Integer getId() {
     return id;
@@ -44,6 +45,10 @@ public class Comment {
     this.createdBy = createdBy;
   }
 
+  public Candidate getCandidate() {
+    return candidate;
+  }
+
   public String getCreated() {
     return created;
   }
@@ -52,11 +57,8 @@ public class Comment {
     this.created = created;
   }
 
-  //    public Date getCreated() {
-//        return created;
-//    }
-//
-//    public void setCreated(Date created) {
-//        this.created = created;
-//    }
+  public void setCandidate(Candidate candidate) {
+    this.candidate = candidate;
+  }
+
 }

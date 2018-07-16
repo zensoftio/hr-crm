@@ -2,7 +2,7 @@ from rest_framework.test import APITestCase
 
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
-                                                                                                PublicationSerializer
+                                                                                            PublicationListSerializer
 from apps.utils.base_tests import ListTestMixin, CreateTestMixin, GetInstanceTestMixin
 
 
@@ -48,7 +48,7 @@ class VacancyDetailTestCase(GetInstanceTestMixin, APITestCase):
 
 class PublicationDetailTestCase(GetInstanceTestMixin, APITestCase):
     model = Publication
-    serializer = PublicationSerializer
+    serializer = PublicationListSerializer
 
     fixtures = ['candidates.json', 'departments.json', 'requests.json', 'users.json', 'vacancies.json',
                 'interviews.json']

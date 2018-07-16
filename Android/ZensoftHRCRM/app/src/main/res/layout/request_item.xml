@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <android.support.v7.widget.CardView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBlue">
+
+      <TextView
+          android:id="@+id/ritem_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="8dp"
+          android:textColor="@color/colorBlack"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="Junior Python developer"/>
+
+      <View
+          android:id="@+id/view2"
+          android:layout_width="0dp"
+          android:layout_height="3dp"
+          android:layout_marginEnd="30dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="8dp"
+          android:background="#6ca1f7"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/ritem_name"/>
+
+      <TextView
+          android:id="@+id/ritem_department"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="8dp"
+          android:textColor="@color/colorBlack"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/view2"
+          tools:text="Python"/>
+
+      <TextView
+          android:id="@+id/ritem_status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_marginTop="8dp"
+          android:textColor="@color/colorBlack"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="status"/>
+
+      <TextView
+          android:id="@+id/ritem_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:text="count"
+          android:textColor="@color/colorBlack"
+          app:layout_constraintStart_toStartOf="@+id/ritem_department"
+          app:layout_constraintTop_toBottomOf="@+id/ritem_department"/>
+
+      <TextView
+          android:id="@+id/ritem_created"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:text="@string/created"
+          android:textColor="@color/colorBlack"
+          app:layout_constraintStart_toStartOf="@+id/ritem_count"
+          app:layout_constraintTop_toBottomOf="@+id/ritem_count"/>
+
+    </android.support.constraint.ConstraintLayout>
+  </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

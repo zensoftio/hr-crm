@@ -7,10 +7,20 @@ public class Requirement {
   private Integer id;
   @SerializedName("name")
   private String name;
-  @SerializedName("status")
-  private Integer status;
+
   @SerializedName("department")
   private Department department;
+
+  @SerializedName("type")
+  private Integer type;
+
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
 
   public Integer getId() {
     return id;
@@ -26,14 +36,6 @@ public class Requirement {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Integer getStatus() {
-    return status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
   }
 
   public Department getDepartment() {
