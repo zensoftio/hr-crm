@@ -26,7 +26,7 @@ class AuxCandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         depth = 3
-        fields = ('id', 'first_name', 'last_name', 'position', 'status','created')
+        fields = ('id', 'first_name', 'last_name', 'position', 'status', 'created', 'email')
 
 
 class EvaluationSerializer(serializers.ModelSerializer):
@@ -45,13 +45,21 @@ class InterviewerSerializer(serializers.ModelSerializer):
         fields = ('id', 'user')
 
 
+class InterviewerEmailSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.email')
+
+    class Meta:
+        model = Interviewer
+        fields = ('user',)
+
+
 class InterviewerDetailSerializer(serializers.ModelSerializer):
     user = AuxUserSerializer()
     evaluations = EvaluationSerializer(many=True)
 
     class Meta:
         model = Interviewer
-        fields = ('id', 'user', 'comment', 'evaluations')
+        fields = ['id', 'user', 'comment', 'evaluations']
 
 
 class InterviewListSerializer(serializers.ModelSerializer):
@@ -63,7 +71,7 @@ class InterviewListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
         depth = 3
-        fields = ('id', 'date', 'status', 'candidate', 'interviewers')
+        fields = ('id', 'begin_time', 'end_time', 'status', 'candidate', 'interviewers')
 
 
 class InterviewCreateSerializer(serializers.ModelSerializer):
@@ -71,12 +79,13 @@ class InterviewCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Interview
-        fields = ('candidate', 'interviewers', 'date')
+        exclude = []
 
     def create(self, validated_data):
         users = validated_data.pop('interviewers')
         instance = Interview.objects.create(**validated_data)
         for user in users:
+            user = User.objects.get(email=user)
             Interviewer.objects.create(interview=instance, user=user)
         return instance
 
@@ -103,7 +112,7 @@ class InterviewDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Interview
-        fields = ('id', 'candidate', 'status', 'date', 'interviewers')
+        fields = ['id', 'candidate', 'status', 'begin_time', 'end_time', 'description', 'location', 'interviewers']
 
 
 class AuxInterviewSerializer(serializers.ModelSerializer):
@@ -113,4 +122,14 @@ class AuxInterviewSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 3
         model = Interview
-        fields = ('id', 'status', 'date', 'interviewers')
+        fields = ('id', 'status', 'begin_time', 'end_time', 'interviewers')
+
+
+class JavaScriptInterviewSerializer(serializers.ModelSerializer):
+    interviewers = InterviewerEmailSerializer(many=True)
+    candidate_email = serializers.CharField(source='candidate.email')
+    phone = serializers.CharField(source='candidate.phone')
+
+    class Meta:
+        model = Interview
+        fields = ('begin_time', 'end_time', 'interviewers', 'candidate_email', 'phone')

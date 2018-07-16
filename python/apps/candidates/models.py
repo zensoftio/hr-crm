@@ -52,7 +52,7 @@ post_save.connect(candidate_created, sender=Candidate)
 
 
 class CV(models.Model):
-    url = models.CharField(max_length=50, blank=True, null=True)
+    url = models.CharField(max_length=50, blank=True, default='')
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='CV')
     created = models.DateTimeField(auto_now_add=True)
 
