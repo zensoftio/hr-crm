@@ -4,6 +4,7 @@ import Header from '../general/Header';
 import DateConvert from '../../utils/DateConvert';
 import { REQUESTS_URL } from '../../utils/urls';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
+import './headstyle.css';
 
 class OpenedPositions extends React.Component {
 	constructor(props) {
@@ -55,7 +56,7 @@ class OpenedPositions extends React.Component {
 								<td><Link to={`/edit_positions/${item.id}`}>{item.position}</Link></td>
 								<td>{item.created}</td>
 								<td>
-									<button onClick={() => this.handleConfirm(item)}>удалить</button>
+									<button className="del_btn" onClick={() => this.handleConfirm(item)}>удалить</button>
 								</td>
 							</tr>
 						)
