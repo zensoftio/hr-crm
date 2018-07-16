@@ -4,6 +4,7 @@ import io.zensoft.share.model.Requirement;
 import io.zensoft.share.model.RequirementType;
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -13,6 +14,7 @@ import java.io.StringWriter;
 
 @Data
 @Service
+@Slf4j
 public class PublicationVacancyContentBuilder {
     private String titleOfPost;
     private String contentOfPost;
@@ -40,6 +42,7 @@ public class PublicationVacancyContentBuilder {
     String workConditionsParsed = "";
 
     void prepareGivenVacancyToHtmlStyle(Vacancy vacancy){
+        log.info("prepare given Vacancy to html Style with all the tags");
         sortVacancyListsbyType(vacancy);
         setTitleOfPost(vacancy.getPosition());
 
@@ -76,9 +79,11 @@ public class PublicationVacancyContentBuilder {
         StringWriter writer = new StringWriter();
         template.merge(velocityContext, writer);
         setContentOfPost(writer.toString());
+        log.info("set prepared content to variable 'ContentOfPost'");
     }
 
     private void sortVacancyListsbyType(Vacancy vacancy) {
+        log.info("sort lists of requirements and workConditions given in vacancy");
         for (Requirement requirementOrSkill : vacancy.getRequirements()) {
             if (requirementOrSkill.getType() == RequirementType.REQUIRED) {
                 requiredRequirementsParsed = requiredRequirementsParsed + DOT_SYMBOL + requirementOrSkill.getName() + "<br>";
@@ -93,5 +98,6 @@ public class PublicationVacancyContentBuilder {
         for (String workingCondition : vacancy.getWorkConditions()) {
             workConditionsParsed = workConditionsParsed + DOT_SYMBOL + workingCondition + "<br>";
         }
+        log.info("set values in variables initialized overhead");
     }
 }
