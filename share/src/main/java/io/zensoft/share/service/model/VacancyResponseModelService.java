@@ -24,5 +24,5 @@ public interface VacancyResponseModelService extends ModelRepositoryService<Vaca
      *
      * @return {@link VacancyResponse}
      */
-    VacancyResponse getByVacancy_UuidAndPublisherServiceType(Vacancy vacancy,PublisherServiceType publisherServiceType);
+    VacancyResponse getByVacancyUuidAndPublisherServiceType(Vacancy vacancy,PublisherServiceType publisherServiceType);
 }

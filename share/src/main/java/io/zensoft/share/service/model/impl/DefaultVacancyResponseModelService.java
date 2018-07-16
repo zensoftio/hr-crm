@@ -36,11 +36,11 @@ public class DefaultVacancyResponseModelService extends AbstractModelRepositoryS
     }
 
     @Override
-    public VacancyResponse getByVacancy_UuidAndPublisherServiceType(Vacancy vacancy,
+    public VacancyResponse getByVacancyUuidAndPublisherServiceType(Vacancy vacancy,
                                                                     PublisherServiceType publisherServiceType) {
         if(vacancy.getUuid() == null || vacancy.getUuid().length() == 0){
             return null;
         }
-        return vacancyResponseRepository.getByVacancy_UuidAndPublisherServiceType(vacancy.getUuid(),publisherServiceType);
+        return vacancyResponseRepository.getByVacancyUuidAndPublisherServiceType(vacancy.getUuid(),publisherServiceType);
     }
 }

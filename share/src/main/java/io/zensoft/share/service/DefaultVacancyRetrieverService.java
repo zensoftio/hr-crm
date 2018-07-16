@@ -3,24 +3,24 @@ package io.zensoft.share.service;
 import io.zensoft.share.model.PublisherServiceType;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
-import io.zensoft.share.repository.VacancyResponseRepository;
+import io.zensoft.share.service.model.VacancyResponseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultVacancyRetrieverService implements VacancyRetrieverService {
 
-    private VacancyResponseRepository defaultVacancyResponseModelService;
+    private VacancyResponseModelService defaultVacancyResponseModelService;
 
     @Autowired
-    public DefaultVacancyRetrieverService(VacancyResponseRepository defaultVacancyResponseModelService) {
+    public DefaultVacancyRetrieverService(VacancyResponseModelService defaultVacancyResponseModelService) {
         this.defaultVacancyResponseModelService = defaultVacancyResponseModelService;
     }
 
     @Override
     public VacancyResponse getInfo(Vacancy vacancy, PublisherServiceType publisherServiceType) {
         VacancyResponse vacancyResponse = defaultVacancyResponseModelService
-            .getByVacancy_UuidAndPublisherServiceType(vacancy.getUuid(),publisherServiceType);
+            .getByVacancyUuidAndPublisherServiceType(vacancy,publisherServiceType);
         return vacancyResponse;
     }
 }

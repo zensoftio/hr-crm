@@ -15,5 +15,5 @@ public interface VacancyResponseRepository extends JpaRepository<VacancyResponse
 
     VacancyResponse getByVacancyAndPublisherServiceType(Vacancy vacancy, PublisherServiceType publisherServiceType);
 
-    VacancyResponse getByVacancy_UuidAndPublisherServiceType(String vacancy_uuid, PublisherServiceType publisherServiceType);
+    VacancyResponse getByVacancyUuidAndPublisherServiceType(String vacancy_uuid, PublisherServiceType publisherServiceType);
 }
