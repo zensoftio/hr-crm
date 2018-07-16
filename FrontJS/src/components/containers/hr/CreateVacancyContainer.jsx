@@ -6,38 +6,18 @@ import { TextField,
          MenuItem } from '@material-ui/core';
 import { PostDataAPI } from '../../../services/PostDataAPI';
 import { VACANCIES_URL } from '../../../utils/urls'
+import RenderSelectItem from '../../../utils/RenderSelectItem';
 
   const CityList = [
-    {
-      id: 0,
-      name: 'Бишкек'
-    },
-    {
-      id: 1,
-      name: 'Кара-Балта'
-    },
-    {
-      id: 2,
-      name: 'Сокулук'
-    },
-    {
-      id: 3,
-      name: 'Кант'
-    }
+    'Бишкек',
+    'Кара-Балта',
+    'Сокулук',
+    'Кант'
   ],
   Working_hours = [
-    {
-      id: 0,
-      name: 'Полный рабочий день'
-    },
-    {
-      id: 1,
-      name: 'Гибкий график'
-    },
-    {
-      id: 2,
-      name: 'Удаленная работа'
-    }
+    'FULL_TIME',
+    'PART_TIME',
+    'REMOTE_JOB'
   ];
 
   const styles = () => ({
@@ -64,19 +44,20 @@ class CreateVacancyContainer extends Component {
           request: this.props.requestId,
           created_by: 1,
           title: '',
-          city: 0,
+          city: CityList[0],
           address: 'Бишкек Ахунбаева 119А',
-          working_hours: 0,
-          work_conditions: `• работа в комфортном современном офисе в центре города,
-          • руководство, готовое поддерживать вас и помогать в развитии,
-          • корпоративные вечеринки и совместный отдых,
-          • приятные бонусы и премии,
-          • компенсации спорта,
-          • своевременную оплату труда,
-          • возможность бесплатного обучения на курсах наших программистов,
-          • удобный график работы,
-          • официальное трудоустройство,
-          • возможность изучать английский язык с квалифицированным преподавателем прямо в офисе`,
+          working_hours: Working_hours[0],
+          work_conditions: [
+          'работа в комфортном современном офисе в центре города',
+          'руководство, готовое поддерживать вас и помогать в развитии',
+          'корпоративные вечеринки и совместный отдых',
+          'приятные бонусы и премии',
+          'компенсации спорта',
+          'своевременную оплату труда',
+          'возможность бесплатного обучения на курсах наших программистов',
+          'удобный график работы',
+          'официальное трудоустройство',
+          'возможность изучать английский язык с квалифицированным преподавателем прямо в офисе'],
           responsibilities: 'Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.',
           salary_min: 0,
           salary_max: 0,
@@ -95,19 +76,21 @@ class CreateVacancyContainer extends Component {
       event.preventDefault();
 
       const data = this.state;
+
       PostDataAPI(VACANCIES_URL, data);
+      // console.log(data)
     }
 
-    onFileUpload = event => {
+    onFileUpload = (event) => {
       this.setState({
         image: event.target.files[0]
       })
     }
 
-    RenderMenuItem = (props) => {
+    RenderWorkCondition = (props) => {
       return props.map((item, index) => (
-          <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
-      ))
+        <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+    ))
     }
 
     render() {
@@ -135,7 +118,7 @@ class CreateVacancyContainer extends Component {
             <span className={classes.box}>
               <Select name='city' onChange={(e) => this.handleChange(e)} value={city} displayEmpty>
                   <MenuItem disabled value=''><em>Выбрать</em></MenuItem>
-                  { this.RenderMenuItem(CityList) }
+                  { RenderSelectItem(CityList) }
               </Select>
             </span>
           </div> 
@@ -148,13 +131,13 @@ class CreateVacancyContainer extends Component {
             <span className={classes.box}>
               <Select name='working_hours' onChange={(e) => this.handleChange(e)} value={working_hours} displayEmpty>
                   <MenuItem disabled value=''><em>Выбрать</em></MenuItem>
-                  { this.RenderMenuItem(Working_hours) }
+                  { RenderSelectItem(Working_hours) }
               </Select>
             </span>
           </div>
           <div>
             Условия работы:
-            <div><TextField name='work_conditions' onChange={(e) => this.handleChange(e)} multiline className={classes.textArea} value={work_conditions} /></div>
+            <div><TextField name='work_conditions' onChange={(e) => this.handleChange(e)} multiline className={classes.textArea} value={work_conditions.map(i => i.toString())} /></div>
           </div> 
           <div>
             Обязанности:
@@ -180,7 +163,7 @@ class CreateVacancyContainer extends Component {
               </span>
           </div>
           <div>
-            <Button type='submit' variant='contained'>Опубликовать</Button>
+            <Button type='submit' variant='contained'>Создать</Button>
           </div>
         </form> 
       );

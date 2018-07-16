@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import TableList from "../../ui/Table";
 import { CANDIDATES_URL } from "../../../utils/urls";
-import { Link } from "react-router-dom";
 import { FetchDataAPI } from "../../../services/FetchDataAPI";
-
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
 
 const header = ['№', 'Ф.И.О', 'ДЕПАРТАМЕНТ', 'ПРОФИЛЬ'];
 
 const QUERY_URL = CANDIDATES_URL + '?status=IN_RESERVE';
-
 
 class ListOfReserves extends Component {
 
@@ -18,15 +17,6 @@ class ListOfReserves extends Component {
             data: [],
         }
     }
-
-    makeLinked = (element, link) => (
-        <Link to={link}>{element} </Link>
-    );
-
-    getLink = (id) => {
-        return 'profile/' + id;
-    };
-
 
     componentWillMount = () => {
         FetchDataAPI(QUERY_URL)
@@ -48,7 +38,7 @@ class ListOfReserves extends Component {
             item => [
                 item.full_name,
                 item.language,
-                this.makeLinked('Открыть', this.getLink(item.id))
+                makeLinked('Открыть', getLink("profile", item.id))
             ]
         );
 

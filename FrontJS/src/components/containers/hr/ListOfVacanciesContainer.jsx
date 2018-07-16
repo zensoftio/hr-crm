@@ -1,19 +1,50 @@
-import React from "react";
+import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import Button from '@material-ui/core/Button';
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import { VACANCIES_URL } from '../../../utils/urls'
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
+import DateConvert from '../../../utils/DateConvert';
 
+const header = ['№', 'НАЗВАНИЕ', 'ДАТА СОЗДАНИЯ', 'ПОСЛЕДНЯЯ ПУБЛ.', 'ДЕЙСТВИЕ'];
 
-const ListOfVacancies = (props) => {
+class ListOfVacancies extends Component {
 
-    const data = [
-        ['JavaScript', '12/11/2017', '12/12/2017', 'опубликовано', <Button>открыть</Button>],
-        ['Scala/JS', '18/02/2017', '18/03/2017', 'не опубликовано', <Button>открыть</Button>],
-        ['Python', '21/05/2017', '21/04/2017', 'не опубликовано', <Button>открыть</Button>],
-    ];
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        }
+    }
 
-    const header = ['№', 'НАЗВАНИЕ', 'ДАТА СОЗДАНИЯ', 'ПОСЛЕДНЯЯ ПУБЛ.', 'СТАТУС', 'ДЕЙСТВИЕ'];
+    componentDidMount() {
+        FetchDataAPI(VACANCIES_URL + '?status=1')
+            .then(res => res.results.map(
+                vacancy => (
+                    {
+                        vacancy_id: vacancy.id,
+                        title: vacancy.name,
+                        created: vacancy.created,
+                        last_published: vacancy.last_published
+                    }
+                )
+            )).then(data => this.setState({ data }))
+    }
 
-    return (<TableList header={header} data={data}/>);
+    render() {
+        console.log(VACANCIES_URL)
+        const { data } = this.state;
+        const openedVacancies = data.map(
+            item => [
+                item.title,
+                DateConvert(item.created),
+                DateConvert(item.last_published),
+                makeLinked('Открыть', getLink("vacancy", item.vacancy_id))
+            ]
+        );
+    
+        return (<TableList header={header} data={openedVacancies}/>);
+    } 
 }
 
 export default ListOfVacancies;
