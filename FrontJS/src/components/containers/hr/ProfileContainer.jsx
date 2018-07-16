@@ -146,7 +146,7 @@ class UserProfile extends Component {
                 candidate_phone: candidate.phone,
                 experience: candidate.experience,
                 level: candidate.level,
-                cv: candidate.CVs[0],
+                cv: candidate.CVs,
                 status: candidate.status,
                 skype: candidate.skype,
                 position: candidate.position.name,
@@ -289,7 +289,7 @@ class UserProfile extends Component {
                 </div>
                 <div className={classes.root}>
                     Резюме:
-                    <span className={classes.box}><a href={cv.url}> Ссылка на резюме </a></span>
+                    <span className={classes.box}><a href={ cv.length !== 0 ? cv[0].url : "example-link.com" }> Ссылка на резюме </a></span>
                 </div>
                 <div className={classes.root}>
                     <Paper className={classes.commentBox}>
