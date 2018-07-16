@@ -42,6 +42,7 @@ class AndroidAuthenticationView(APIView):
 
 
 class ConvertRoleTokenView(ConvertTokenView):
+    """Inject 'role' field in response' header"""
     def post(self, request, *args, **kwargs):
         request._request.POST = request._request.POST.copy()
         for key, value in request.data.items():
