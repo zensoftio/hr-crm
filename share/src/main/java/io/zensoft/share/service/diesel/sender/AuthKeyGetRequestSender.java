@@ -55,7 +55,7 @@ public class AuthKeyGetRequestSender implements RequestSender {
         requestResponse.setStatus(RequestStatus.FAILED);
         return requestResponse;
     }
-    
+
     public void addHeaderCookie(String sessionId) {
         authKeyHeader.addCookieToHeaders(sessionId);
     }
