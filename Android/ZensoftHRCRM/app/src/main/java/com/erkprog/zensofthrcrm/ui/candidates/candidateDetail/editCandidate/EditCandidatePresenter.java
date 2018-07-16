@@ -43,4 +43,5 @@ public class EditCandidatePresenter implements EditCandidateContract.Presenter {
   public void fetchData() {
 
   }
+
 }

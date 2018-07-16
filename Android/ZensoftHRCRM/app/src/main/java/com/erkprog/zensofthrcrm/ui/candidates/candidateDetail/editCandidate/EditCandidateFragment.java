@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditCandidateFragment extends Fragment implements EditCandidateContract.View{
+public class EditCandidateFragment extends Fragment implements EditCandidateContract.View {
 
   private EditCandidateContract.Presenter mPresenter;
 
@@ -55,7 +55,6 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   TextView mPhone;
 
 
-
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -78,9 +77,15 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_edit_candidate, container, false);
 
-    ButterKnife.bind(this,v);
+    ButterKnife.bind(this, v);
 
     dismissProgress();
+
+    if (hasInternetConnection(v.getContext())) {
+
+    } else {
+
+    }
 
     return v;
   }
@@ -111,6 +116,11 @@ public class EditCandidateFragment extends Fragment implements EditCandidateCont
   @Override
   public void showProgress() {
     mProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void showData() {
+
   }
 
 }
