@@ -17,8 +17,6 @@ export default class HeadScene extends Component {
         return( 
             <BrowserRouter>
                 <div className="container">
-
-
                 	
                  <Navigation menuItems={HeadNav}/>
 

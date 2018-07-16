@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from apps.candidates.models import Candidate
 from apps.users.serializers import AuxUserSerializer
+from apps.departments.serializers import DepartmentSerializer
 from .models import Interview, Criteria, Interviewer, Evaluation
 
 User = get_user_model()
@@ -14,7 +15,15 @@ class AuxCriteriaSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class CriteriaSerializer(serializers.ModelSerializer):
+class CriteriaListSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+
+    class Meta:
+        model = Criteria
+        fields = ('id', 'name', 'department')
+
+
+class CriteriaCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Criteria
         fields = ('id', 'name', 'department')

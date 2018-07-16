@@ -5,11 +5,12 @@ def candidate_created(sender, **kwargs):
     if kwargs['created']:
         device = FCMDevice.objects.all()
         candidate = kwargs['instance']
-        message = {
-            'title': 'New Candidate',
-            'body': candidate.last_name + ' ' + candidate.first_name
-        }
-        device.send_message(**message)
+        if candidate:
+            message = {
+                'title': 'New Candidate',
+                'body': candidate.email
+            }
+            device.send_message(**message)
 
 
 def interview_created(sender, **kwargs):
@@ -20,6 +21,8 @@ def interview_created(sender, **kwargs):
         message = {
             'title': 'Interview with: ' + candidate.first_name + " " + candidate.last_name,
             'body': 'begin - ' + interview.begin_time.strftime("%A, %d. %B %Y %I:%M%p")
+            'title': 'Interview with: ' + str(candidate.email),
+            'body': 'at - ' + interview.date.strftime("%A, %d. %B %Y %I:%M%p")
         }
         device.send_message(**message)
 

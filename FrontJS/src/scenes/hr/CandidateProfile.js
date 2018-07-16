@@ -10,21 +10,20 @@ const styles = {
       padding: '1.5em 1em'
     }
   };
-  
+
   class Profile extends Component {
       render() {
           const {classes} = this.props;
-  
+
           return (
             <div>
               <Header title="Профиль" />
-              <Paper className={classes.paperBox}> 
-                <ProfileContainer />
+              <Paper className={classes.paperBox}>
+                <ProfileContainer profileId={this.props.match.params.id}/>
               </Paper>
             </div>
           );
       }
   }
-  
+
   export default withStyles(styles)(Profile);
-  

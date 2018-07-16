@@ -6,14 +6,11 @@ import java.util.List;
 
 public class RequestsResponse {
 
-  @SerializedName("count")
   private Integer count;
-  @SerializedName("next")
   private String next;
-  @SerializedName("previous")
   private String previous;
-  @SerializedName("requests")
-  private List<Request> requestList = null;
+  @SerializedName("results")
+  private List<Request> requestList;
 
   public Integer getCount() {
     return count;

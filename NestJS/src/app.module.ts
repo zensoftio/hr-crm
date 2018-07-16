@@ -10,13 +10,15 @@ import { TemplateModule } from './Templates/template.module'
 import { MessageModule } from './Messages/message.module'
 import { RecipientModule } from './Recipients/recipient.module'
 import { EventModule } from './Event/event.module';
+import { InboxModule } from './Inbox/inbox.module';
 
 @Module({
   imports: [
     TemplateModule,
     MessageModule,
     RecipientModule,
-   EventModule,
+    InboxModule,
+    EventModule,
     TypeOrmModule.forRoot()
   ],
   controllers: [AppController],
