@@ -1,29 +1,69 @@
-import React from "react";
+import React, { Component } from "react";
 import TableList from "../../ui/Table";
-import ModalDialog from '../../ui/ModalWindow';
+import { REQUESTS_URL } from '../../../utils/urls'
+import { FetchDataAPI } from "../../../services/FetchDataAPI";
+import DateConvert from '../../../utils/DateConvert';
+import makeLinked from '../../../utils/MakeLinked';
+import getLink from '../../../utils/GetLink';
 
-const modal = [
-    <ModalDialog
-        title="Вакансия уже существует"
-        text="Выберите действие"
-        leftBtn="создать"
-        rightBtn="просмотр"
-    >
-        Создать
-    </ModalDialog>
-];
+const header = ['№', 'ЗАГОЛОВОК', 'ДАТА', 'КОЛ-ВО','СТАТУС', 'СОЗДАТЬ'];
 
-const ListOfPositions = () => {
+class ListOfPositions extends Component {
 
-    const data = [
-        ['Name', 'JavaScript', '12/12/2017', 3, modal],
-        ['Name', 'Python', '18/03/2017', 2, modal],
-        ['Name', 'Java', '21/04/2017', 4, modal],
-    ];
+    constructor(props){
+        super(props);
+        this.state = {
+            data: [],
+        };
+    }
 
-    const header = ['№', 'Ф.И.О', 'НАЗВАНИЕ', 'ДАТА', 'КОЛ-ВО', 'ДЕЙСТВИЕ'];
+        initStatus = (status) => {
+            if(status === 'NOT_REVIEWED'){
+                return "Не рассмотрено"
+            } else if(status === 'APPROVED'){
+                return "Утверждено"
+        } else if(status === 'DECLINED'){
+            return  "Отклонено"
+        } else {
+            return null
+        }
+    };
 
-    return (<TableList header={header} data={data}/>);
+    componentDidMount() {
+        const fetched = FetchDataAPI(REQUESTS_URL);
+        fetched.then(response => response.results.map(item => (
+            {
+                request_id: item.id,
+                title: item.position.name,
+                created: item.created,
+                quantity: item.count,
+                status: item.status
+            })
+        )).then(data => this.setState({
+            data
+        }))
+    }
+
+    render() {
+
+        const { data } = this.state;
+
+        const array = data.map(item => {
+            return [
+                item.title,
+                DateConvert(item.created),
+                item.quantity,
+                this.initStatus(item.status),
+                makeLinked('Создать', getLink('create_vacancy', item.request_id))
+            ]
+        })
+
+        return ( 
+            <div>
+                <TableList header={header} data={array}/>
+            </div>
+        )
+    }
 }
 
 export default ListOfPositions;

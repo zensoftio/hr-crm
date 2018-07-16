@@ -14,7 +14,7 @@ export default class SelectBox extends Component {
 
     RenderSelectItem = (props) => {
         return props.map((item, index) => (
-            <MenuItem key={index} value={index}>{item}</MenuItem>
+            <MenuItem key={index} value={item}>{item}</MenuItem>
         ))
     }
 

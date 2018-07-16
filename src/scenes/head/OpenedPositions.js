@@ -6,20 +6,7 @@ class OpenedPositions extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-			positionList: [
-				// {
-				// 	position: 'Python',
-				// 	created: '12.12.2012'
-				// },
-				// {
-				// 	position: 'JS',
-				// 	created: '12.2.2013'
-				// },
-				// {
-				// 	position: 'iOS',
-				// 	created: '12.2.2013'
-				// }
-			]		
+			positionList: []		
 		};
 	}
 
@@ -27,9 +14,17 @@ class OpenedPositions extends React.Component {
 		this.fetchData();
 	}
 	fetchData(){
-		fetch('https://private-anon-fc0d4b79ec-zensofthr.apiary-mock.com/api/v1/requests?status=&department=')
+		fetch('http://159.65.153.5/api/v1/requests')
 			.then(res => res.json())			
-			.then(json => console.log(json))
+			.then(json => json.results.map(result => (
+				{
+					position: result.position.name,
+					created: result.created
+				}
+			)))
+			.then(positionList => this.setState({
+				positionList
+			}))
 			.catch(err => console.log('FAILED : ',err))
 			
 	}

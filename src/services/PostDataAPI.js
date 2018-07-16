@@ -2,13 +2,11 @@ import axios from 'axios';
 
 export function PostDataAPI(url, data) {
     
-    axios.post(url, {
-        method: "POST",
-        body: data
-    }).then(function (response) {
-        console.log(response);
+    axios.post(url, data).then(function (response) {
+        console.log(response.status)
+        alert("Запрос успешно выполнен!");
     }).catch(function (error) {
-        console.log(error);
+        alert("Возникли ошибки", error);
     });
 
 }

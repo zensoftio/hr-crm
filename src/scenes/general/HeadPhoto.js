@@ -1,32 +1,65 @@
 import React from 'react';
 import profile from '../../components/images/profile.jpg';
 
-const user = sessionStorage.getItem("user");
-const photo = sessionStorage.getItem("photo");
-
 //set default profile photo if user 
 //doesnt have it on google account
-const profilePhoto = photo ? photo : profile;
+const HR = 'Human Resourses';
 
-const HeadPhoto = () => {
-		let hod = 'HoD';
-		let hr = 'HR';
-    let instyle = {
-        display: 'inline-block',
-        margin: 4,
-				color: '#d7f8f7',
-				cursor: 'pointer'
+class HeadPhoto extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            photo: profile,
+            name: 'DAVRAN',
+            role: HR
+        }
     }
-    return (
-        <div className="headphoto">
-            <img className="profile_photo" src={profilePhoto} alt="profile_photo"/>
-            <div>
-                <span style={instyle}>{user}</span><br />
-                <span style={instyle}>{hod}</span>
-                <span style={instyle}>{hr}</span>
+
+    componentDidMount () {
+        this.setState({
+            photo: sessionStorage.getItem("photo"),
+            name: sessionStorage.getItem("user")
+        })
+    }
+
+    render () {
+        return (
+            <div className="headphoto">
+                <img className="profile_photo" src={this.state.photo} alt="profile_photo"/>
+                <div>
+                    <span style={style}>{this.state.name}</span><br />
+                </div>
             </div>
-        </div>
-    );
+        )
+    }
+
 }
+
+let style = {
+    display: 'inline-block',
+    margin: 4,
+            color: '#d7f8f7',
+            cursor: 'pointer'
+}
+// const HeadPhoto = () => {
+// 		let hod = 'HoD';
+// 		let hr = 'HR';
+//     let instyle = {
+//         display: 'inline-block',
+//         margin: 4,
+// 				color: '#d7f8f7',
+// 				cursor: 'pointer'
+//     }
+//     return (
+//         <div className="headphoto">
+//             <img className="profile_photo" src={profilePhoto} alt="profile_photo"/>
+//             <div>
+//                 <span style={instyle}>{user}</span><br />
+//                 <span style={instyle}>{hod}</span>
+//                 <span style={instyle}>{hr}</span>
+//             </div>
+//         </div>
+//     );
+// }
 
 export default HeadPhoto;
