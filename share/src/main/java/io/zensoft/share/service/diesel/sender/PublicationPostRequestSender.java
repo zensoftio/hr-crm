@@ -5,7 +5,7 @@ import io.zensoft.share.model.diesel.RequestResponse;
 import io.zensoft.share.model.diesel.RequestStatus;
 import io.zensoft.share.service.diesel.RequestSender;
 import io.zensoft.share.service.diesel.body.PublicationPostRequestBody;
-import io.zensoft.share.service.diesel.body.PublicationVacancyContentPreparer;
+import io.zensoft.share.service.diesel.body.PublicationVacancyContentBuilder;
 import io.zensoft.share.service.diesel.header.PublicationHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,16 +24,16 @@ public class PublicationPostRequestSender implements RequestSender {
 
     private PublicationHeader publicationHeader;
     private PublicationPostRequestBody publicationPostRequestBody;
-    private PublicationVacancyContentPreparer publicationVacancyContentPreparer;
+    private PublicationVacancyContentBuilder publicationVacancyContentBuilder;
     private HttpStatus statusCode;
 
     @Autowired
     public PublicationPostRequestSender(PublicationHeader publicationHeader,
                                         PublicationPostRequestBody publicationPostRequestBody,
-                                        PublicationVacancyContentPreparer publicationVacancyContentPreparer) {
+                                        PublicationVacancyContentBuilder publicationVacancyContentBuilder) {
         this.publicationHeader = publicationHeader;
         this.publicationPostRequestBody = publicationPostRequestBody;
-        this.publicationVacancyContentPreparer = publicationVacancyContentPreparer;
+        this.publicationVacancyContentBuilder = publicationVacancyContentBuilder;
     }
 
     public RequestResponse sendPostRequestForPublication(RestTemplate restTemplate, Vacancy vacancy, String sessionId, String authKey) {

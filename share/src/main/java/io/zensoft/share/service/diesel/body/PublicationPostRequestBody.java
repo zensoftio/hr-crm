@@ -15,18 +15,18 @@ public class PublicationPostRequestBody {
     private String auth_key;
     private String s;
 
-    private PublicationVacancyContentPreparer publicationVacancyContentPreparer;
+    private PublicationVacancyContentBuilder publicationVacancyContentBuilder;
 
     @Autowired
-    public PublicationPostRequestBody(PublicationVacancyContentPreparer publicationVacancyContentPreparer) {
-        this.publicationVacancyContentPreparer = publicationVacancyContentPreparer;
+    public PublicationPostRequestBody(PublicationVacancyContentBuilder publicationVacancyContentBuilder) {
+        this.publicationVacancyContentBuilder = publicationVacancyContentBuilder;
     }
 
     public LinkedMultiValueMap createBodyOfRequestInMap(Vacancy vacancy, String sessionId, String auth_key) {
-        publicationVacancyContentPreparer.prepareGivenVacancyToHtmlStyle(vacancy);
+        publicationVacancyContentBuilder.prepareGivenVacancyToHtmlStyle(vacancy);
 
-        TopicTitle = publicationVacancyContentPreparer.getTitleOfPost();
-        Post = publicationVacancyContentPreparer.getContentOfPost();
+        TopicTitle = publicationVacancyContentBuilder.getTitleOfPost();
+        Post = publicationVacancyContentBuilder.getContentOfPost();
 
         MultiValueMap<String, String> bodyOfRequest = new LinkedMultiValueMap<>();
         bodyOfRequest.add("FILE_UPLOAD", "");

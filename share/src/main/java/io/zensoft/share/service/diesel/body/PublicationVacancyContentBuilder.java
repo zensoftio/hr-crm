@@ -13,7 +13,7 @@ import java.io.StringWriter;
 
 @Data
 @Component
-public class PublicationVacancyContentPreparer {
+public class PublicationVacancyContentBuilder {
     private String titleOfPost;
     private String contentOfPost;
 
