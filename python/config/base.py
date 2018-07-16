@@ -202,3 +202,8 @@ class Base(Configuration):
     USE_L10N = True
 
     USE_TZ = True
+
+    RABBITMQ_USERNAME = values.SecretValue()
+    RABBITMQ_PASSWORD = values.SecretValue()
+    RABBITMQ_HOST = values.SecretValue()
+    RABBITMQ_PORT = values.SecretValue()

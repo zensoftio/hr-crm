@@ -1,5 +1,6 @@
 package com.erkprog.zensofthrcrm.ui.requests.requestsList;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,6 +76,11 @@ public class RequestsFragment extends Fragment implements RequestsContract.View,
   @Override
   public void showMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public boolean hasInternetConnection(Context context) {
+    return false;
   }
 
   @Override

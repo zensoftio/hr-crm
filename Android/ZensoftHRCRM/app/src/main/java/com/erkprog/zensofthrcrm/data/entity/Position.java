@@ -1,8 +1,13 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Position {
+  @SerializedName("id")
   private Integer id;
+  @SerializedName("name")
   private String name;
+  @SerializedName("department")
   private Department department;
 
   public Integer getId() {
@@ -25,7 +30,7 @@ public class Position {
     return department;
   }
 
-  public void setDepartment(Department departmentModel) {
-    this.department = departmentModel;
+  public void setDepartment(Department department) {
+    this.department = department;
   }
 }

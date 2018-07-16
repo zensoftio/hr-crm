@@ -1,7 +1,8 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED
 
+from apps.utils.serializers import MethodSerializerView
 from .models import Vacancy, Publication
 from .serializers import VacancyListSerializer, VacancyCreateUpdateSerializer, VacancyDetailSerializer, \
                   PublicationSerializer, VacancyPartialUpdateSerializer, JavaVacancySerializer
@@ -27,9 +28,13 @@ class VacancyDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = JavaVacancySerializer
 
 
-class PublicationList(generics.ListCreateAPIView):
+class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
     queryset = Publication.objects.all()
-    serializer_class = PublicationSerializer
+
+    method_serializer_classes = {
+        ('GET',): PublicationListSerializer,
+        ('POST',): PublicationCreateSerializer
+    }
 
     def create(self, request, *args, **kwargs):
         data = request.data

@@ -6,19 +6,22 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMqComponentDeclarationConfiguration {
 
-    public static final String TOPIC_SHARE = "share";
+    @Value("${rabbitmq.exchange}")
+    public static String TOPIC_SHARE;
     public static final String QUEUE_FACEBOOK_PUBLISH = "facebookPublish";
     public static final String QUEUE_FACEBOOK_GET_INFO = "facebookGetInfo";
     public static final String QUEUE_DIESEL_PUBLISH = "dieselPublish";
     public static final String QUEUE_DIESEL_GET_INFO = "dieselGetInfo";
     public static final String QUEUE_JOB_KG_PUBLISH = "jobKgPublish";
     public static final String QUEUE_JOB_KG_GET_INFO = "jobKgGetInfo";
+    public static final String QUEUE_SHARE_RESPONSE = "shareResponse";
 
     @Bean
     public TopicExchange shareTopicExchange() {
@@ -53,6 +56,11 @@ public class RabbitMqComponentDeclarationConfiguration {
     @Bean
     public Queue jobKgGetInfoQueue() {
         return new Queue(QUEUE_JOB_KG_GET_INFO);
+    }
+
+    @Bean
+    public Queue shareResponseQueue(){
+        return new Queue(QUEUE_SHARE_RESPONSE);
     }
 
     @Bean
