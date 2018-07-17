@@ -18,4 +18,17 @@ public enum RequirementType {
         }
         return null;
     }
+
+    public String getText() {
+        if (this.equals(REQUIRED)) {
+            return "Основные требования";
+        }
+        if (this.equals(OPTIONAL)) {
+            return "Плюсом будет";
+        }
+        if (this.equals(GENERAL)) {
+            return "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень";
+        }
+        return "";
+    }
 }
