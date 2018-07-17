@@ -213,5 +213,3 @@ class Base(Configuration):
         host=RABBITMQ_HOST,
         port=RABBITMQ_PORT
     )
-
-    BROKER_URL = "amqp://guest:guest@localhost:5672//"
