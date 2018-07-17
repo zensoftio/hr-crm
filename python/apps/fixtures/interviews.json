@@ -1,29 +1,38 @@
 [
   {
     "model": "interviews.interview",
-    "pk": 1,
+    "pk": 2,
     "fields": {
-      "date": "2018-07-03T04:02:02Z",
+      "begin_time": "2018-07-03T04:02:02Z",
+      "end_time": "2018-07-03T04:02:02Z",
       "status": "TO_BE_CONDUCTED",
-      "candidate": 1
+      "candidate": 1,
+      "description": "dfkgodflgkfdpg",
+      "location": "location"
     }
   },
   {
     "model": "interviews.interview",
     "pk": 2,
     "fields": {
-      "date": "2018-07-03T04:02:02Z",
+      "begin_time": "2018-07-03T04:02:02Z",
+      "end_time": "2018-07-03T04:02:02Z",
       "status": "TO_BE_CONDUCTED",
-      "candidate": 2
+      "candidate": 2,
+      "description": "hello",
+      "location": "location"
     }
   },
   {
     "model": "interviews.interview",
     "pk": 3,
     "fields": {
-      "date": "2018-07-03T04:02:02Z",
-      "status": "CONDUCTED",
-      "candidate": 1
+      "begin_time": "2018-07-03T04:02:02Z",
+      "end_time": "2018-07-03T04:02:02Z",
+      "status": "TO_BE_CONDUCTED",
+      "candidate": 2,
+      "description": "hello",
+      "location": "location"
     }
   },
   {

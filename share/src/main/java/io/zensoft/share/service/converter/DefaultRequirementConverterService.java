@@ -24,7 +24,9 @@ public class DefaultRequirementConverterService implements DtoConverterService<R
     public Requirement fromDto(RequirementDto requirementDto) {
         Requirement requirement = new Requirement();
         requirement.setName(requirementDto.getName());
-        requirement.setDepartment(requirementDto.getDepartment().getName());
+        if (requirementDto.getDepartment() != null) {
+            requirement.setDepartment(requirementDto.getDepartment().getName());
+        }
         requirement.setType(RequirementType.getByString(requirementDto.getType()));
         return requirement;
     }

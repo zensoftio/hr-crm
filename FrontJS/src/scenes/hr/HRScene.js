@@ -58,8 +58,8 @@ const HRNav = [
         component: Notifications
     },
     {
-        name: "Изменить интервью",
-        path: "/edit_interview",
+        name: "",
+        path: "/edit_interview/:id",
         component: EditInterview
     },
     {
@@ -91,7 +91,7 @@ export default class HRScene extends Component {
                         <Switch>
                             <Route path="/" component={PositionList} exact/>
                             <SpecifyTheRoute route={HRNav}/>
-                            <Route component={Error}/>
+                            <Route path="*" component={Error}/>
                         </Switch>
                     </div>
                 </div>
