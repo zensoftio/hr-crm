@@ -25,13 +25,13 @@ public class FacebookPostContentBuilder {
         return content;
     }
     private String getRequirements (Vacancy vacancy) {
-        StringBuilder stringBuilder = new StringBuilder("Основные требования:\n");
+        StringBuilder stringBuilder = new StringBuilder(RequirementType.REQUIRED.getText() + ":\n");
         stringBuilder.append(getRequirementsByType(vacancy, RequirementType.REQUIRED));
 
-        stringBuilder.append("\nВладение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):\n");
+        stringBuilder.append("\n" + RequirementType.GENERAL.getText() + ":\n");
         stringBuilder.append(getRequirementsByType(vacancy, RequirementType.GENERAL));
 
-        stringBuilder.append("\nБудет плюсом:\n");
+        stringBuilder.append("\n" + RequirementType.OPTIONAL.getText() + ":\n");
         stringBuilder.append(getRequirementsByType(vacancy, RequirementType.OPTIONAL));
 
         return stringBuilder.toString();
