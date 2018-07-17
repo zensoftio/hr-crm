@@ -15,14 +15,12 @@ export default class UserRole extends Component {
             return <Admin/>;
         } else if (userRole === "head") {
             return <Head/>;
-        } else if (userRole === "hr") {
+        } else if (userRole === "HR") {
             return <HR/>;
         } else if (userRole === "interviewer") {
             return <Interviewer/>;
         } else if (userRole === "pm") {
             return <PM/>;
-        } else {
-            return <Error/>;
-        }
+        } else return null
     }
 }
