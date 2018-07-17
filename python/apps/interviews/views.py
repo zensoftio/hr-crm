@@ -11,6 +11,13 @@ from apps.utils.serializers import MethodSerializerView
 
 User = get_user_model()
 
+from apps.utils.serializers import MethodSerializerView
+from apps.interviews.models import Interview, Criteria
+from apps.interviews.serializers import InterviewListSerializer, CriteriaListSerializer, InterviewDetailSerializer, \
+    InterviewCreateSerializer, CriteriaCreateSerializer
+from apps.users.permissions import IsInterviewer
+
+
 
 class InterviewListCreateView(generics.ListCreateAPIView):
     queryset = Interview.objects.all()
