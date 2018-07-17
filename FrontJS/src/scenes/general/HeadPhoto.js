@@ -17,8 +17,8 @@ class HeadPhoto extends React.Component {
 
     componentDidMount () {
         this.setState({
-            photo: sessionStorage.getItem("photo"),
-            name: sessionStorage.getItem("username")
+            photo: JSON.parse(localStorage.getItem("photo")),
+            name: JSON.parse(localStorage.getItem("username"))
         })
     }
 

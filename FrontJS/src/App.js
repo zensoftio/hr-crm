@@ -12,27 +12,19 @@ const FailureHandle = () => {
 }
 
 export default class App extends Component { 
-    constructor(props) {
-        super(props)
-        this.state = {
-            session: '',
-            role: '',
-        }
-    }
 
-    signIn = (googleUser) => {
+    signIn = async(googleUser) => {
 
         const authData = googleUser.getAuthResponse();
         const userData = googleUser.getBasicProfile();
 
-        let tempStorage = window.sessionStorage;
-            tempStorage.setItem("username", userData.ig)
-            tempStorage.setItem("photo", userData.Paa)
-
-        this.setState({
-            session: tempStorage
-        })	
-
+        // let tempStorage = window.sessionStorage;
+        //     tempStorage.setItem("username", userData.ig)
+        //     tempStorage.setItem("photo", userData.Paa)
+        let tempStorage = window.localStorage;
+            tempStorage.setItem("username", JSON.stringify(userData.ig))
+            tempStorage.setItem("photo", JSON.stringify(userData.Paa))
+        
         const authReq = {
             grant_type: "convert_token",
             client_id: CLIENT_ID,
@@ -41,26 +33,24 @@ export default class App extends Component {
             token: authData.access_token
         }
 
-        axios.post('https://reachthestars.ml/api/v1/auth/convert-role-token',
+        await axios.post('https://reachthestars.ml/api/v1/auth/convert-role-token',
             authReq,
             {
                 headers: {
                     'access-control-allow-headers': 'role'
                 }
             }).then(res => {
-                this.setState({
-                    role: res.headers.role
-                })
+                localStorage.setItem('role', res.headers.role)
             });
         
     }
 
     render() {
+        let storage = window.localStorage;
 
-        if(this.state.session) {
-            return <User userRole={this.state.role} />     
+        if(storage.getItem('role') !== null){
+            return <User userRole={storage.role} />    
         }
-
         return(
             <div>                
                 <GoogleAPI clientId={CLIENT_ID}
@@ -68,10 +58,10 @@ export default class App extends Component {
                     <div>
                         <div>
                             <GoogleLogin
-                             onLoginSuccess={this.signIn}
-                             onLoginFailure={FailureHandle}
+                                onLoginSuccess={this.signIn}
+                                onLoginFailure={FailureHandle}
                             />
-                         </div>
+                            </div>
                     </div>
                 </GoogleAPI>
             </div>
