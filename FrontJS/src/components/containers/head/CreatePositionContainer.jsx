@@ -128,7 +128,7 @@ class CreatePositionContainer extends React.Component {
 						<div style={divstyle}>
 							<label>
 								<span style={instyle}>КОЛИЧЕСТВО:</span>
-								<PlusMinus getCountFromChild={this.getCountFromChild}/>							
+								<PlusMinus getCountFromChild={this.getCountFromChild}countStarts={this.state.count}/>							
 							</label>
 						</div>
 

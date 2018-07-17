@@ -1,6 +1,6 @@
 package io.zensoft.share.service.facebook;
 
-import io.zensoft.share.model.VacancyStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class FacebookRequestSender {
 
-    public ResponseEntity<Map> post(String url){
+    protected ResponseEntity<Map> post(String url){
+        log.info("sending post request to Facebook Graph Api");
         Map<String, String> uriVariables = new LinkedHashMap<>();
         ResponseEntity<Map> map = new RestTemplate().exchange( url,
                 HttpMethod.POST, (HttpEntity<?>) null, Map.class, (Object) uriVariables);
+        log.info("returning response after post request in sent", map);
         return map;
     }
 }

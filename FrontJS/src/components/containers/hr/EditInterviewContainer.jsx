@@ -110,14 +110,7 @@ class EditInterviewContainer extends Component {
                 Статус: 
                 <span className={classes.box}><TextField name='status' value={getStatus(status)} onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите статус' /></span>
             </div>
-            <div className={classes.root}>
-                Дата: 
-                <span className={classes.box}><TextField name='date' type='datetime-local' onChange={(e) => this.handleChange(e)} className={classes.box} placeholder='введите дату' /></span>
-            </div>
-            <div className={classes.root}>
-                <div className={classes.box}><Button variant="contained" color="primary" onClick={this.updateInterview}>Изменить</Button></div>
-            </div>
-        </div> 
+           </div> 
       );
     }
 }

@@ -1,9 +1,9 @@
 import './index.css';
 import React, { Component } from 'react';
-import {GoogleAPI, GoogleLogin, GoogleLogout} from 'react-google-oauth'
+import {GoogleAPI, GoogleLogin} from 'react-google-oauth'
 /* User Roles */
 import User from './Roles';
-import { PostDataAPI } from './services/PostDataAPI';
+import axios from 'axios';
 import { CLIENT_ID } from './utils/urls';
 
 
@@ -15,22 +15,25 @@ export default class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            session: window.sessionStorage.user
+            session: '',
+            role: '',
         }
     }
 
     signIn = (googleUser) => {
-        const userData = googleUser.getBasicProfile();
+
         const authData = googleUser.getAuthResponse();
-        
-        
-        let tempStorage =  window.sessionStorage;
+        const userData = googleUser.getBasicProfile();
+
+        let tempStorage = window.sessionStorage;
             tempStorage.setItem("username", userData.ig)
             tempStorage.setItem("photo", userData.Paa)
+
         this.setState({
-            session: userData
+            session: tempStorage
         })	
-        const bodyAuth = {
+
+        const authReq = {
             grant_type: "convert_token",
             client_id: CLIENT_ID,
             client_secret:"sM1sLOV08DcAXVhGv9jQcBpQ",
@@ -38,13 +41,26 @@ export default class App extends Component {
             token: authData.access_token
         }
 
-        PostDataAPI('http://192.168.89.129:8000/api/v1/auth/convert-role_token', bodyAuth)
+        axios.post('https://reachthestars.ml/api/v1/auth/convert-role-token',
+            authReq,
+            {
+                headers: {
+                    'access-control-allow-headers': 'role'
+                }
+            }).then(res => {
+                this.setState({
+                    role: res.headers.role
+                })
+            });
+        
     }
 
     render() {
+
         if(this.state.session) {
-            return <User userRole="hr" />
+            return <User userRole={this.state.role} />     
         }
+
         return(
             <div>                
                 <GoogleAPI clientId={CLIENT_ID}
@@ -56,11 +72,6 @@ export default class App extends Component {
                              onLoginFailure={FailureHandle}
                             />
                          </div>
-                        <div>
-                            <GoogleLogout 
-                            onLogoutSuccess={this.signIn}
-                            />
-                        </div>
                     </div>
                 </GoogleAPI>
             </div>

@@ -5,21 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public class Comment {
-  @SerializedName("id")
   private Integer id;
-
-  @SerializedName("text")
   private String text;
-
   @SerializedName("created_by")
   private User createdBy;
-
-  @SerializedName("created")
   private String created;
-
-
-  @SerializedName("candidate")
-  private Candidate candidate;
 
   public Integer getId() {
     return id;
@@ -45,10 +35,6 @@ public class Comment {
     this.createdBy = createdBy;
   }
 
-  public Candidate getCandidate() {
-    return candidate;
-  }
-
   public String getCreated() {
     return created;
   }
@@ -57,8 +43,5 @@ public class Comment {
     this.created = created;
   }
 
-  public void setCandidate(Candidate candidate) {
-    this.candidate = candidate;
-  }
 
 }

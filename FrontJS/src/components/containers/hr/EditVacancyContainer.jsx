@@ -6,7 +6,9 @@ import { TextField,
          MenuItem,
          ListItemText,
          ListItem,
-         Typography } from '@material-ui/core';
+         Typography, 
+         FormControlLabel,
+         Checkbox} from '@material-ui/core';
 import { VACANCIES_URL } from '../../../utils/urls'
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import DateConvert from '../../../utils/DateConvert';
@@ -67,7 +69,10 @@ class EditVacancyContainer extends Component {
         responsibilities: '',
         comments: '',
         created: '',
-        last_published: ''
+        last_published: '',
+        facebook: false,
+        diesel: false,
+        job: false
       };
     } 
 
@@ -84,13 +89,24 @@ class EditVacancyContainer extends Component {
       PutDataAPI(VACANCIES_URL + '/' + this.props.vacancyId, data);
     }
 
+    publishVacancy = (event) => {
+        event.preventDefault();
+
+        console.log(this.state)
+    }
+
     RenderMenuItem = (props) => {
       return props.map((item, index) => (
           <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
       ))
     }
 
-    
+    handleCheckbox = (e) => {
+        this.setState({
+            [e.target.name]: e.target.checked
+        })
+        console.log(this.state)
+    }
 
     render() {
 
@@ -176,7 +192,46 @@ class EditVacancyContainer extends Component {
                     <div className={classes.root}>последняя публикация: { DateConvert(last_published) }</div>
                 </Typography>
             </div>
-            <div className={classes.root} >
+            <div className={classes.root}>
+                Соц. сети
+                <div className={classes.box}>
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={this.state.facebook}
+                            onChange={(e) => this.handleCheckbox(e)}
+                            value={this.state.facebook}
+                            name="facebook"
+                        />
+                        }
+                        label="Facebook"
+                    />
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={this.state.job}
+                            onChange={(e) => this.handleCheckbox(e)}
+                            value={this.state.job}
+                            name="job"
+                        />
+                        }
+                        label="Job.KG"
+                    />
+                    <FormControlLabel
+                        control={
+                        <Checkbox
+                            checked={this.state.diesel}
+                            onChange={(e) => this.handleCheckbox(e)}
+                            value={this.state.diesel}
+                            name="diesel"
+                        />
+                        }
+                        label="Diesel"
+                    />
+                </div>
+                
+            </div>
+            <div className={classes.root}>
                 <div className={classes.box}><Button type='button' variant='contained' onClick={this.updateVacancy} color="primary">Изменить</Button></div>
                 <div className={classes.box}><Button type='button' variant='contained' onClick={this.publishVacancy}>Опубликовать</Button></div>
             </div>

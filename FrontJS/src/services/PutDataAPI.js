@@ -5,7 +5,7 @@ export function PutDataAPI(url, data) {
     axios({
         url: url,
         method: "PUT",
-        data
+        data: data
     }).then(function (response) {
         console.log(response.status);
         alert("Действие успешно совершено!")
