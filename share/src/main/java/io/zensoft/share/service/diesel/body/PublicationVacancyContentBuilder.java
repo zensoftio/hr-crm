@@ -20,7 +20,7 @@ public class PublicationVacancyContentBuilder {
     private String contentOfPost;
 
     private final String REQUIRED_REQUIREMENTS_TITLE = "Основные требования:";
-    private final String GENERAL_REQUIREMENTS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):";
+    private final String GENERAL_REQUIREMENTS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень: ";
     private final String OPTIONAL_REQUIREMENTS_TITLE = "Будет плюсом:";
     private final String RESPONSIBILITIES_TITLE = "Обязанности:";
     private final String RESPONSIBILITIES_DESCRIPTION = "• Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.";
