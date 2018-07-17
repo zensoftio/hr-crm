@@ -5,7 +5,6 @@ import Head from "./scenes/head/HeadScene";
 import HR from "./scenes/hr/HRScene";
 import Interviewer from "./scenes/interviewer/Interviewer";
 import PM from './scenes/pm/PM';
-import Error from "./scenes/general/Error";
 
 export default class UserRole extends Component {
     render() {

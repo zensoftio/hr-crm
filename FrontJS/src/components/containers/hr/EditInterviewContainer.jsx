@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import { TextField, MenuItem, Button } from '@material-ui/core';
+import { TextField, MenuItem } from '@material-ui/core';
 import { INTERVIEWS_URL } from '../../../utils/urls'
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PutDataAPI } from '../../../services/PutDataAPI';

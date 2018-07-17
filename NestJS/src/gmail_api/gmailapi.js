@@ -86,7 +86,8 @@ const authorize = async (callback, data, recipient) => {
 
 const getMessagesByDate = async (auth,date,callback) => {
   const gmail = google.gmail({version: 'v1', auth});
-  date = new Date(date).getTime() / 1000;
+  date = 1530406861;
+  // date = new Date(date).getTime() / 1000;
   const query = `is:inbox AND after: ${date}`;
 
   const getMail = await gmail.users.messages.list({

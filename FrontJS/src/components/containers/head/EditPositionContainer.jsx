@@ -4,7 +4,6 @@ import { REQUESTS_URL } from '../../../utils/urls';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PutDataAPI } from '../../../services/PutDataAPI';
 import MultipleSelect from '../../ui/MultipleSelect';
-import { puts } from 'util';
 
 class EditPositionContainer extends React.Component {
 	constructor(props) {

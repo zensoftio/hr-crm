@@ -15,7 +15,8 @@ import InterviewList from './ListInterviews';
 import SpecifyTheRoute from '../../utils/Route';
 import Profile from './CandidateProfile';
 import EditInterview from "./EditInterview";
-
+import Templates from './ListTemplates'
+import Template from './Template';
 const HRNav = [
     {
         name: "Запросы",
@@ -61,6 +62,16 @@ const HRNav = [
         name: "",
         path: "/edit_interview/:id",
         component: EditInterview
+    },
+    {
+      name: "Шаблоны сообщений",
+      path: "/list_of_templates",
+      component: Templates
+    },
+    {
+      name: "",
+      path: "/template/:id",
+      component: Template
     },
     {
         name: "",
