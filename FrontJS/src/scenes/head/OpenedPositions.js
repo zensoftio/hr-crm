@@ -15,7 +15,7 @@ class OpenedPositions extends React.Component {
 	}
 
 	componentDidMount() {
-		FetchDataAPI( REQUESTS_URL )
+		FetchDataAPI( REQUESTS_URL + '?size=1000' )
 			.then(json => json.results.map(result => (
 				{
 					position: result.position.name,

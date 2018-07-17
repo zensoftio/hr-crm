@@ -2,6 +2,7 @@ package io.zensoft.share.service.diesel.body;
 
 import io.zensoft.share.model.Vacancy;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -9,24 +10,26 @@ import org.springframework.util.MultiValueMap;
 
 @Data
 @Component
+@Slf4j
 public class PublicationPostRequestBody {
     private String Post;
     private String TopicTitle;
     private String auth_key;
     private String s;
 
-    private PublicationVacancyContentPreparer publicationVacancyContentPreparer;
+    private PublicationVacancyContentBuilder publicationVacancyContentBuilder;
 
     @Autowired
-    public PublicationPostRequestBody(PublicationVacancyContentPreparer publicationVacancyContentPreparer) {
-        this.publicationVacancyContentPreparer = publicationVacancyContentPreparer;
+    public PublicationPostRequestBody(PublicationVacancyContentBuilder publicationVacancyContentBuilder) {
+        this.publicationVacancyContentBuilder = publicationVacancyContentBuilder;
     }
 
     public LinkedMultiValueMap createBodyOfRequestInMap(Vacancy vacancy, String sessionId, String auth_key) {
-        publicationVacancyContentPreparer.prepareGivenVacancyToHtmlStyle(vacancy);
+        log.info("get created Body of Request placed in LinkedMultiValueMap");
+        publicationVacancyContentBuilder.prepareGivenVacancyToHtmlStyle(vacancy);
 
-        TopicTitle = publicationVacancyContentPreparer.getTitleOfPost();
-        Post = publicationVacancyContentPreparer.getContentOfPost();
+        TopicTitle = publicationVacancyContentBuilder.getTitleOfPost();
+        Post = publicationVacancyContentBuilder.getContentOfPost();
 
         MultiValueMap<String, String> bodyOfRequest = new LinkedMultiValueMap<>();
         bodyOfRequest.add("FILE_UPLOAD", "");

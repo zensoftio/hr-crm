@@ -106,8 +106,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_REQUIREMENTS = "CREATE TABLE IF NOT EXISTS " +
       REQUIREMENTS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      DEPARTMENT + ID + " TEXT, " +
-      TYPE + " INTEGER, " +
+      DEPARTMENT + ID + " INTEGER, " +
+      TYPE + " TEXT, " +
       NAME + " TEXT);";
 
   private static final String CREATE_TABLE_CVC = "CREATE TABLE IF NOT EXISTS " +
@@ -145,7 +145,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       ID + " INTEGER_PRIMARY_KEY, " +
       FIRST_NAME + " TEXT, " +
       LAST_NAME + " TEXT, " +
-      EMAIL +  " TEXT, " +
+      EMAIL + " TEXT, " +
       LEVEL + " TEXT, " +
       CREATED + " TEXT, " +
       PHONE + " TEXT, " +
@@ -178,13 +178,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String CREATE_TABLE_CRITERIAS = "CREATE TABLE IF NOT EXISTS " +
       CRITERIAS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      DEPARTMENT + ID + " TEXT, " +
       NAME + " TEXT);";
 
   private static final String CREATE_TABLE_COMMENTS = "CREATE TABLE IF NOT EXISTS " +
       COMMENTS + "(" +
       ID + " INTEGER_PRIMARY_KEY, " +
-      CANDIDATE + ID + " TEXT, " +
       CREATED_BY + ID + " TEXT, " +
       TEXT + " TEXT);";
 
@@ -342,8 +340,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       cv.put(ID, requirement.getId());
       cv.put(NAME, requirement.getName());
       cv.put(TYPE, requirement.getType());
-      if (requirement.getDepartment() != null)
-        cv.put(DEPARTMENT + ID, requirement.getDepartment().getName());
+      cv.put(DEPARTMENT + ID, requirement.getId());
 
 
       Cursor cursor = db.rawQuery("SELECT * FROM " + REQUIREMENTS + " WHERE " + ID + " =?", new
@@ -678,7 +675,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
   }
 
   //GET BY ID
-  private Department getDepartment(String departmentId) {
+  public Department getDepartment(String departmentId) {
     Department department = new Department();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -701,7 +698,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return department;
   }
 
-  private Cv getCv(String cvId) {
+  public Cv getCv(String cvId) {
     Cv cv = new Cv();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -724,7 +721,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return cv;
   }
 
-  private Criteria getCriteria(String criteriaId) {
+  public Criteria getCriteria(String criteriaId) {
     Criteria criteria = new Criteria();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -737,8 +734,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         criteria.setId(criteriaCursor.getInt(criteriaCursor.getColumnIndex(ID)));
         criteria.setName(criteriaCursor.getString(criteriaCursor.getColumnIndex(NAME)));
-        criteria.setDepartment(getDepartment(criteriaCursor.getString(criteriaCursor
-            .getColumnIndex(DEPARTMENT + ID))));
+
       } while (criteriaCursor.moveToNext());
     }
 
@@ -748,7 +744,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return criteria;
   }
 
-  private Template getTemplate(String templateId) {
+  public Template getTemplate(String templateId) {
     Template template = new Template();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -773,7 +769,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return template;
   }
 
-  private Position getPosition(String positionId) {
+  public Position getPosition(String positionId) {
     Position position = new Position();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -798,7 +794,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return position;
   }
 
-  private Requirement getRequirement(String requirementId) {
+  public Requirement getRequirement(String requirementId) {
     Requirement requirement = new Requirement();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -811,9 +807,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         requirement.setId(requirementCursor.getInt(requirementCursor.getColumnIndex(ID)));
         requirement.setName(requirementCursor.getString(requirementCursor.getColumnIndex(NAME)));
-        requirement.setDepartment(getDepartment(requirementCursor.getString(requirementCursor
-            .getColumnIndex(DEPARTMENT + ID))));
-        requirement.setType(requirementCursor.getInt(requirementCursor.getColumnIndex(TYPE)));
+        requirement.setDepartment(requirementCursor.getInt(requirementCursor
+            .getColumnIndex(DEPARTMENT + ID)));
+        requirement.setType(requirementCursor.getString(requirementCursor.getColumnIndex(TYPE)));
       } while (requirementCursor.moveToNext());
     }
 
@@ -823,7 +819,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return requirement;
   }
 
-  private Vacancy getVacancy(String vacancyId) {
+  public Vacancy getVacancy(String vacancyId) {
     Vacancy vacancy = new Vacancy();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -848,7 +844,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return vacancy;
   }
 
-  private User getUser(String userId) {
+  public User getUser(String userId) {
     User user = new User();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -875,7 +871,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return user;
   }
 
-  private Request getRequest(String requestId) {
+  public Request getRequest(String requestId) {
     Request request = new Request();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -896,14 +892,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         request.setModified(requestCursor.getString(requestCursor.getColumnIndex(MODIFIED)));
         request.setStatus(requestCursor.getString(requestCursor.getColumnIndex(STATUS)));
 
+        if (requestCursor.getString(requestCursor.getColumnIndex(REQUIREMENTS+ ID)) != null) {
+          List<String> reqStringList = Converter.convertStringToList(requestCursor.getString
+              (requestCursor
+                  .getColumnIndex
+                      (REQUIREMENTS + ID)));
 
-        List<String> reqStringList = Converter.convertStringToList(requestCursor.getString
-            (requestCursor
-                .getColumnIndex
-                    (REQUIREMENTS + ID)));
-
-        request.setRequirementList(getRequirements(reqStringList));
-
+          request.setRequirementList(getRequirements(reqStringList));
+        }
       } while (requestCursor.moveToNext());
     }
 
@@ -913,7 +909,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return request;
   }
 
-  private Evaluation getEvaluation(String evaluationId) {
+  public Evaluation getEvaluation(String evaluationId) {
     Evaluation evaluation = new Evaluation();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -938,7 +934,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return evaluation;
   }
 
-  private Interviewer getInterviewer(String interviewerId) {
+  public Interviewer getInterviewer(String interviewerId) {
     Interviewer interviewer = new Interviewer();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -955,12 +951,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         interviewer.setUser(getUser(interviewerCursor.getString(interviewerCursor
             .getColumnIndex(USER + ID))));
 
-        List<String> evalStringList = Converter.convertStringToList(interviewerCursor.getString
-            (interviewerCursor
-                .getColumnIndex
-                    (EVALUATIONS + ID)));
-        interviewer.setEvaluaionList(getEvaluations(evalStringList));
-
+        if (interviewerCursor.getString(interviewerCursor.getColumnIndex(EVALUATIONS + ID)) != null) {
+          List<String> evalStringList = Converter.convertStringToList(interviewerCursor.getString
+              (interviewerCursor
+                  .getColumnIndex
+                      (EVALUATIONS + ID)));
+          interviewer.setEvaluaionList(getEvaluations(evalStringList));
+        }
       } while (interviewerCursor.moveToNext());
     }
 
@@ -970,7 +967,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return interviewer;
   }
 
-  private Comment getComment(String commentId) {
+  public Comment getComment(String commentId) {
     Comment comment = new Comment();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -983,8 +980,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
       do {
         comment.setId(commentCursor.getInt(commentCursor.getColumnIndex(ID)));
         comment.setText(commentCursor.getString(commentCursor.getColumnIndex(TEXT)));
-        comment.setCandidate(getCandidate(commentCursor.getString(commentCursor.getColumnIndex
-            (CANDIDATE + ID))));
         comment.setCreatedBy(getUser(commentCursor.getString(commentCursor
             .getColumnIndex(CREATED_BY + ID))));
       } while (commentCursor.moveToNext());
@@ -996,7 +991,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return comment;
   }
 
-  private Candidate getCandidate(String candidateId) {
+  public Candidate getCandidate(String candidateId) {
     Candidate candidate = new Candidate();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -1053,7 +1048,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     return candidate;
   }
 
-  private Interview getInterview(String interviewId) {
+  public Interview getInterview(String interviewId) {
     Interview interview = new Interview();
 
     SQLiteDatabase dbReadable = this.getReadableDatabase();
@@ -1071,11 +1066,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         interview.setDate(interviewCursor.getString(interviewCursor.getColumnIndex(DATE)));
         interview.setStatus(interviewCursor.getString(interviewCursor.getColumnIndex(STATUS)));
 
-        List<String> interviewerStringList = Converter.convertStringToList(interviewCursor.getString
-            (interviewCursor
-                .getColumnIndex
-                    (INTERVIEWERS + ID)));
-        interview.setInterviewersList(getInterviewers(interviewerStringList));
+        if (interviewCursor.getString(interviewCursor.getColumnIndex(INTERVIEWERS + ID)) != null) {
+          List<String> interviewerStringList = Converter.convertStringToList(interviewCursor.getString
+              (interviewCursor
+                  .getColumnIndex
+                      (INTERVIEWERS + ID)));
+          interview.setInterviewersList(getInterviewers(interviewerStringList));
+        }
 
       } while (interviewCursor.moveToNext());
     }
@@ -1264,15 +1261,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Requirement requirement = new Requirement();
 
         int id = cursor.getInt(idIndex);
-        String departmentId = cursor.getString(departmentIdIndex);
+        int departmentId = cursor.getInt(departmentIdIndex);
         String name = cursor.getString(nameIndex);
-        int type = cursor.getInt(typeIndex);
+        String type = cursor.getString(typeIndex);
 
-        if (departmentId != null)
-          requirement.setDepartment(getDepartment(departmentId));
+        requirement.setDepartment(departmentId);
         requirement.setId(id);
         requirement.setName(name);
-        requirement.setType(typeIndex);
+        requirement.setType(type);
 
         requirements.add(requirement);
 
@@ -1627,7 +1623,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     if (cursor.moveToFirst()) {
       int idIndex = cursor.getColumnIndex(ID);
-      int candidateIdIndex = cursor.getColumnIndex(CANDIDATE + ID);
       int createdByIdIndex = cursor.getColumnIndex(CREATED_BY + ID);
       int textIndex = cursor.getColumnIndex(TEXT);
 
@@ -1635,7 +1630,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Comment comment = new Comment();
 
         int id = cursor.getInt(idIndex);
-        String candidateId = cursor.getString(candidateIdIndex);
         String createdById = cursor.getString(createdByIdIndex);
         String text = cursor.getString(textIndex);
 
@@ -1643,8 +1637,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         comment.setText(text);
         if (createdById != null)
           comment.setCreatedBy(getUser(createdById));
-        if (candidateId != null)
-          comment.setCandidate(getCandidate(candidateId));
 
         comments.add(comment);
 

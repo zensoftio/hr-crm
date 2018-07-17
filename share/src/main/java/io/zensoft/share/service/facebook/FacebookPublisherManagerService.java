@@ -12,10 +12,12 @@ import io.zensoft.share.service.VacancyRetrieverService;
 import io.zensoft.share.service.converter.DtoConverterService;
 import io.zensoft.share.service.model.VacancyModelService;
 import io.zensoft.share.service.model.VacancyResponseModelService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class FacebookPublisherManagerService implements PublisherManagerService {
 
     private final DtoConverterService<Vacancy,VacancyDto> defaultVacancyConverterService;
@@ -45,6 +47,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
 
     @Override
     public void publish(VacancyDto vacancyDto) {
+        log.info("processing publish request from listener");
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = facebookPublisherService.publish(vacancy);
         defaultVacancyResponseModelService.save(vacancyResponse);
@@ -53,6 +56,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
 
     @Override
     public void getInfo(VacancyDto vacancyDto) {
+        log.info("processing get info request from listener");
         Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
         VacancyResponse vacancyResponse = defaultVacancyRetrieverService.getInfo(vacancy, PublisherServiceType.FACEBOOK);
         convertToDtoAndRespond(vacancyResponse);
@@ -67,5 +71,6 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     private void convertToDtoAndRespond (VacancyResponse vacancyResponse) {
         VacancyResponseDto vacancyResponseDto = defaultVacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
+        log.info("response of publishing vacancy is sent to monolith", vacancyResponse);
     }
 }

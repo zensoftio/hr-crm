@@ -9,6 +9,7 @@ import { DEPARTMENTS_URL,
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PostDataAPI } from '../../../services/PostDataAPI';
 import { TextField } from '@material-ui/core';
+import '../../../scenes/head/headstyle.css';
 
 class CreatePositionContainer extends React.Component {
 	constructor(props){
@@ -106,14 +107,7 @@ class CreatePositionContainer extends React.Component {
 	}
 
 
-    render() {
-		let instyle = {
-			display: 'inline-block',
-			marginRight: 20
-		};
-		let divstyle = {
-			margin: 20
-		}	
+    render() {		
 		
       return (
 				<form onSubmit={this.handleSubmit}>
@@ -169,7 +163,7 @@ class CreatePositionContainer extends React.Component {
 					</div>
 					<div className="div_items">
 					
-							<input type="submit" value="SUBMIT" />
+							<input className="sbmt_btn" type="submit" value="SUBMIT" />
 					</div>
 				</form>
 		);
