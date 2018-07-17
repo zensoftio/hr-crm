@@ -18,7 +18,7 @@ export class TemplateService {
     return await this.TemplateRepository.find();
   }
 
-  async findOne(int: number): Promise<Templates> {
+  async findOne(int: number): Promise<any> {
 
     const a = await this.TemplateRepository.findOne({id: int});
     if (a===undefined){

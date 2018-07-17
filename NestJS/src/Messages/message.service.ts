@@ -14,7 +14,7 @@ export class MessageService {
         private readonly messageRepository: Repository<Message>) {}
 
 
-  async create(message: Message): Promise<number> {
+  async create(message: Message): Promise<any> {
     let messageToDatabase = {
       "subject": message.subject,
       "content" : message.content,

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getManager, getRepository } from 'typeorm';
+import { getManager, getRepository, Repository } from 'typeorm';
 import { Event } from './event.entity';
 import * as google from './calendar/google.calendar';
 import * as channel from 'Rabbit';
@@ -12,10 +12,10 @@ export class EventService {
       private readonly eventRepository: Repository<Event>,
       ) {}
 
-  async createEvent(event: Event): Promise<Event>{
+  async createEvent(event: any): Promise<any>{
     return new Promise(function(resolve, reject){
       google.run(event, function(err, response) {
-        let eventOfDatabase = event.body;
+        let eventOfDatabase: any = event.body;
         if(!err){
           eventOfDatabase.id_event = response.id;
           getRepository(Event).insert(eventOfDatabase);
@@ -26,23 +26,23 @@ export class EventService {
     })
   }
 
-  async getList(): Promise<Event[]>{
-    let eventOfDatabase = await getRepository(Event).find({});
+  async getList(): Promise<any[]>{
+    let eventOfDatabase: any = await getRepository(Event).find({});
 
     if(!eventOfDatabase) eventOfDatabase = "There is no events!";
 
     return eventOfDatabase;
   }
 
-  async getOne(event: Event): Promise<Event>{
-    let eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+  async getOne(event: any): Promise<any>{
+    let eventOfDatabase: any = await getRepository(Event).findOne({id_event: event.body.id_event});
     if(!eventOfDatabase) eventOfDatabase = "whether invalid id_event or no such event";
     return eventOfDatabase;
   }
 
-  async updateEvent(event: Event): Promise<Event>{
+  async updateEvent(event: any): Promise<any>{
     return new Promise(async (resolve, reject) => {
-        const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+        const eventOfDatabase: any = await getRepository(Event).findOne({id_event: event.body.id_event});
         if(!eventOfDatabase){
           reject("whether invalid id_event or no such event!");
         }
@@ -59,15 +59,15 @@ export class EventService {
         }
     });
   }
-  async removeEvent(event: Event): string{
+  async removeEvent(event: any): Promise<any> {
     return new Promise(async (resolve, reject) =>{
 
-      const eventOfDatabase = await getRepository(Event).findOne({id_event: event.body.id_event});
+      const eventOfDatabase: any = await getRepository(Event).findOne({id_event: event.body.id_event});
       if(!eventOfDatabase){
         resolve("whether invalid id_event or no such event!");
       }
       else{
-        const eventForSms = event.body;
+        const eventForSms: any = event.body;
         event.body = eventOfDatabase;
         google.run(event, function(err, response){
           getRepository(Event).delete(eventOfDatabase);

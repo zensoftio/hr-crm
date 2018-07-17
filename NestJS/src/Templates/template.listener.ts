@@ -27,7 +27,7 @@ export class TemplateListener {
       }
     }
 
-    async findAllTemplate = async(template) => {
+    findAllTemplate = async(template) => {
       try {
         const result = await this.templateService.findAll();
         this.sendMessage(result);
@@ -81,8 +81,7 @@ export class TemplateListener {
       var sendQueue = connection.default.declareQueue('template-response',{durable:false})
       connection.default.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
-          exchange.send(msg2,'template-response',{durable:false});
-          console.log(msg2 + "MSG2")
+          exchange.send(msg2,'template-response');
       });
     }
 

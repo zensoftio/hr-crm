@@ -4,6 +4,8 @@ import io.zensoft.share.model.PublisherServiceType;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.model.VacancyStatus;
+import io.zensoft.share.model.diesel.RequestResponse;
+import io.zensoft.share.model.diesel.RequestStatus;
 import io.zensoft.share.service.PublisherService;
 import io.zensoft.share.service.diesel.sender.*;
 import lombok.extern.slf4j.Slf4j;
@@ -44,19 +46,22 @@ public class DieselPublisherService implements PublisherService {
         vacancyResponse.setPublisherServiceType(PublisherServiceType.DIESEL_ELCAT_KG);
         vacancyResponse.setPublishDate(new Date());
 
-        if (activateLoginPostRequestSender(vacancyResponse).getStatus().name().equals("FAILED")) {
+        String responseLogin = activateLoginPostRequestSender(vacancyResponse).getStatus().name();
+        if (responseLogin.equals(VacancyStatus.FAILED.name())) {
             log.info("return VacancyResponse because Login Failed");
             return vacancyResponse;
         }
 
-        if (activateAuthKeyGetRequestSender(vacancyResponse,
-                loginPostRequestSender).getStatus().name().equals("FAILED")) {
+        String responseAuthKey = activateAuthKeyGetRequestSender(vacancyResponse,
+                loginPostRequestSender).getStatus().name();
+        if (responseAuthKey.equals(VacancyStatus.FAILED.name())) {
             log.info("return VacancyResponse because authKeyRetriever Failed");
             return vacancyResponse;
         }
 
-        if (activatePublicationPostRequestSender(vacancyResponse,
-                loginPostRequestSender, vacancy).getStatus().name().equals("FAILED")) {
+        String responsePublication = activatePublicationPostRequestSender(vacancyResponse,
+                loginPostRequestSender, vacancy, authKeyGetRequestSender).getStatus().name();
+        if (responsePublication.equals(VacancyStatus.FAILED.name())) {
             log.info("return VacancyResponse because publication Failed");
             return vacancyResponse;
         }
@@ -71,12 +76,11 @@ public class DieselPublisherService implements PublisherService {
         log.info("run login method and save response's status");
         String loginStatus;
         loginStatus = loginPostRequestSender.sendPostRequestForLogin(restTemplate).getStatus().name();
-        if (loginStatus.equals("FAILED")) {
-            log.info("set values in VacancyReponse if RequestResponse's status is FAILED");
+        if (loginStatus.equals(VacancyStatus.FAILED.name())) {
+            log.info("set values in VacancyResponse if RequestResponse's status is FAILED");
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Post request for login is failed.");
         }
-        log.info("return filled VacancyResponse");
         return vacancyResponse;
     }
 
@@ -86,18 +90,17 @@ public class DieselPublisherService implements PublisherService {
         String statusAuthKey;
         authKeyGetRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
         statusAuthKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate).getStatus().name();
-        if (statusAuthKey.equals("FAILED")) {
-            log.info("set values in VacancyReponse if RequestResponse's status is FAILED");
+        if (statusAuthKey.equals(VacancyStatus.FAILED.name())) {
+            log.info("set values in VacancyResponse if RequestResponse's status is FAILED");
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Get request for authKey executing is failed.");
         }
-        log.info("return filled VacancyResponse");
         return vacancyResponse;
     }
 
     private VacancyResponse activatePublicationPostRequestSender(VacancyResponse vacancyResponse,
                                                                  LoginPostRequestSender loginPostRequestSender,
-                                                                 Vacancy vacancy) {
+                                                                 Vacancy vacancy, AuthKeyGetRequestSender authKeyGetRequestSender) {
         log.info("run publication method and save response's status");
         String statusPublication;
         publicationPostRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
@@ -108,12 +111,11 @@ public class DieselPublisherService implements PublisherService {
                 authKeyGetRequestSender.getAuthKey()
         ).getStatus().name();
 
-        if (statusPublication.equals("FAILED")) {
-            log.info("set values in VacancyReponse if RequestResponse's status is FAILED");
+        if (statusPublication.equals(VacancyStatus.FAILED.name())) {
+            log.info("set values in VacancyResponse if RequestResponse's status is FAILED");
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Post request for publication is failed.");
         }
-        log.info("return filled VacancyResponse");
         return vacancyResponse;
     }
 }
