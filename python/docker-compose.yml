@@ -53,7 +53,6 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
-      - "2015:2015"
 
   rabbitmq:
     build: compose/rabbitmq
