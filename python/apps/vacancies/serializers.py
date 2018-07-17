@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from apps.departments.serializers import RequirementSerializer, DepartmentSerializer
+from apps.departments.models import Requirement, Department
+from apps.departments.serializers import RequirementSerializer
 from apps.requests.models import Request
 from apps.users.serializers import AuxUserSerializer
 from .models import Vacancy, Publication
-from apps.departments.models import Requirement, Department
 
 
 class VacancyDepartmentSerializer(serializers.ModelSerializer):
@@ -19,6 +19,7 @@ class VacancyRequirementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement
         fields = ('department', 'name', 'type')
+
 
 class VacancyListSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='request.position.name')
@@ -85,9 +86,3 @@ class JavaVacancySerializer(serializers.ModelSerializer):
                   'salary_min', 'salary_max', 'image', 'responsibilities'
                   )
 
-
-class VacancyPartialUpdateSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Vacancy
-        fields = ('working_hours')

@@ -4,9 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
-
 from apps.requests.models import Request
-
 User = get_user_model()
 
 WORKING_HOURS = (("FULL_TIME", 'Полный рабочий день'),
