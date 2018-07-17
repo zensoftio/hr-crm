@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Navigation from '../general/Navigation';
-import Notifications from './Notifications';
 import PositionList from './ListPositions';
 import CreateVacancy from './CreateVacancy';
 import InternList from './ListIntern';
@@ -54,11 +53,6 @@ const HRNav = [
         component: InterviewList
     },
     {
-        name: "Уведомления",
-        path: "/notifications",
-        component: Notifications
-    },
-    {
         name: "",
         path: "/edit_interview/:id",
         component: EditInterview
@@ -77,17 +71,17 @@ const HRNav = [
         name: "",
         path: "/profile/:id",
         component: Profile
-		},
-		{
-			name: "",
-			path: "/create_vacancy/:id",
-			component: CreateVacancy
-		},
-		{
-			name: "",
-			path: "/vacancy/:id",
-			component: EditVacancy
-		}
+    },
+    {
+        name: "",
+        path: "/create_vacancy/:id",
+        component: CreateVacancy
+    },
+    {
+        name: "",
+        path: "/vacancy/:id",
+        component: EditVacancy
+    }   
 ];
 
 export default class HRScene extends Component {
