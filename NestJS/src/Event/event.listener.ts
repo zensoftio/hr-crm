@@ -36,7 +36,7 @@ export class EventController {
       else{
         let body = {
           "status": "400",
-          "content": "Incorrect title";
+          "content": "Incorrect title"
         }
         msg.body = body;
       }
@@ -51,7 +51,6 @@ export class EventController {
     connection.default.completeConfiguration().then(() => {
       const msg2 = new Amqp.Message(JSON.stringify(res));
       exchange.send(msg2, 'event-response');
-      console.log(' [x] Sent event-response  \'' + msg2.getContent() + '\'');
     });
   }
 
@@ -59,9 +58,6 @@ export class EventController {
     queue.bind(exchange, 'event');
     queue.activateConsumer((message) => {
         const data = JSON.parse(message.getContent());
-        console.log("GET");
-        console.log(data)
-        console.log("GET");
         this.getDataFromService(data);
     }, {noAck: true})
   }
