@@ -39,7 +39,6 @@ public class FacebookUrlBuilder {
         return url;
     }
 
-
     private String getText(Vacancy vacancy) {
         return facebookPostContentBuilder.getContent(vacancy);
     }
