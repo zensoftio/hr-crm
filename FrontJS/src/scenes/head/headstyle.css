@@ -22,5 +22,10 @@ table {
 }
 
 .sbmt_btn {
-	
+	color: white;
+	background: #2187a8;
+	padding: 8px 15px;
+	font-size: 18px;
+	border-radius: 6px;
 }
+.sbmt_btn:focus {outline:0;}

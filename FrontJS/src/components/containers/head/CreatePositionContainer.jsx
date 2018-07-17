@@ -9,7 +9,6 @@ import { DEPARTMENTS_URL,
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PostDataAPI } from '../../../services/PostDataAPI';
 import { TextField } from '@material-ui/core';
-import '../../../scenes/head/headstyle.css';
 
 class CreatePositionContainer extends React.Component {
 	constructor(props){

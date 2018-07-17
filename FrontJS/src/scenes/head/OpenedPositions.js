@@ -4,7 +4,6 @@ import Header from '../general/Header';
 import DateConvert from '../../utils/DateConvert';
 import { REQUESTS_URL } from '../../utils/urls';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
-import './headstyle.css';
 
 class OpenedPositions extends React.Component {
 	constructor(props) {

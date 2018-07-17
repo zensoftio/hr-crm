@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../general/Header';
 import EditPositionContainer from '../../components/containers/head/EditPositionContainer';
+
+
 const EditPositions = (props) => {
     return (
 			
