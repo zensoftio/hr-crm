@@ -69,7 +69,7 @@ export class TemplateListener {
 
      createTemplate = async(template) => {
       try {
-        const result = await this.templateService.createTemplate(template);
+        const result = await this.templateService.create(template);
         this.sendMessage(result);
       }catch(err) {
         this.sendMessage(err);

@@ -11,7 +11,6 @@ export class TemplateService {
         ) {}
 
   async create(Template: Templates): Promise<Templates> {
-    console.log("IN CREATE" + Template)
     return await this.TemplateRepository.save(Template);
   }
 
@@ -20,10 +19,13 @@ export class TemplateService {
   }
 
   async findOne(int: number): Promise<Templates> {
-    try{
-      return await this.TemplateRepository.findOne({id: int});
-    }catch(err){
-      throw  err;
+
+    const a = await this.TemplateRepository.findOne({id: int});
+    if (a===undefined){
+      return {"status": "NOT_FOUND"};
+    }
+    else{
+      return a;
     }
   }
 
@@ -38,7 +40,6 @@ export class TemplateService {
   }
 
   async update(int: number,Template: Templates): Promise<Templates> {
-      console.log("IN UPDATE")
       try {
           await this.TemplateRepository.update(int,Template)
           console.log(Template)
