@@ -40,6 +40,7 @@ public class FacebookUrlBuilder {
     }
 
     private String getText(Vacancy vacancy) {
+        log.info("calling FacebookPostContentBuilder to get content of the vacancy");
         return facebookPostContentBuilder.getContent(vacancy);
     }
 }
