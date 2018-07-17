@@ -175,7 +175,7 @@ class UserProfile extends Component {
       }
       const isOk = isPossibleToSend(jsonObj);
       if(isOk){
-        PostDataAPI(INTERVIEWS_URL, jsonObj);
+        PostDataAPI('http://192.168.89.82:8000/api/v1/interviews', jsonObj);
       }
       return isOk;
     }
