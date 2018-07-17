@@ -30,7 +30,7 @@ class ListOfPositions extends Component {
     };
 
     componentDidMount() {
-        const fetched = FetchDataAPI(REQUESTS_URL);
+        const fetched = FetchDataAPI(REQUESTS_URL + "?size=1000");
         fetched.then(response => response.results.map(item => (
             {
                 request_id: item.id,
