@@ -79,11 +79,10 @@ public class CandidatesFragment extends Fragment implements CandidatesContract.V
 
   @Override
   public void showCandidates(List<Candidate> candidates) {
-    if(candidates.size() > 0) {
+    if (candidates.size() > 0) {
       mAdapter = new CandidatesAdapter(candidates, this);
       mRecyclerView.setAdapter(mAdapter);
-    }
-    else{
+    } else {
       noVacanciesView.setVisibility(View.VISIBLE);
     }
   }

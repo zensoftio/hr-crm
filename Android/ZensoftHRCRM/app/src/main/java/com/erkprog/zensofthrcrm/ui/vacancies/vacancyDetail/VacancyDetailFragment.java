@@ -49,12 +49,12 @@ public class VacancyDetailFragment extends Fragment implements VacancyDetailCont
 
     initUI(v);
 
-    if(getArguments() != null)
-    if (hasInternetConnection(v.getContext())) {
-      mPresenter.getVacancyInternet(getArguments().getInt(EXTRA_VACANCY_ID));
-    } else {
-      mPresenter.getVacancyLocal(getArguments().getInt(EXTRA_VACANCY_ID));
-    }
+    if (getArguments() != null)
+      if (hasInternetConnection(v.getContext())) {
+        mPresenter.getVacancyInternet(getArguments().getInt(EXTRA_VACANCY_ID));
+      } else {
+        mPresenter.getVacancyLocal(getArguments().getInt(EXTRA_VACANCY_ID));
+      }
 
     return v;
   }

@@ -897,6 +897,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         request.setModified(requestCursor.getString(requestCursor.getColumnIndex(MODIFIED)));
         request.setStatus(requestCursor.getString(requestCursor.getColumnIndex(STATUS)));
 
+
         if (requestCursor.getString(requestCursor.getColumnIndex(REQUIREMENTS + ID)) != null) {
           List<String> reqStringList = Converter.convertStringToList(requestCursor.getString
               (requestCursor

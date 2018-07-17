@@ -55,12 +55,12 @@ public class InterviewDetailFragment extends Fragment implements InterviewDetail
 
     mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_all_interviewers);
 
-    if(getArguments() != null)
-    if (hasInternetConnection(v.getContext())) {
-      mPresenter.getInterviewInternet(getArguments().getInt(EXTRA_INTERVIEW_ID));
-    } else {
-      mPresenter.getInterviewLocal(getArguments().getInt(EXTRA_INTERVIEW_ID));
-    }
+    if (getArguments() != null)
+      if (hasInternetConnection(v.getContext())) {
+        mPresenter.getInterviewInternet(getArguments().getInt(EXTRA_INTERVIEW_ID));
+      } else {
+        mPresenter.getInterviewLocal(getArguments().getInt(EXTRA_INTERVIEW_ID));
+      }
 
     return v;
   }
