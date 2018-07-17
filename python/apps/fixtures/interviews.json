@@ -49,5 +49,41 @@
       "name": "Communication Skills",
       "department": 1
     }
+  },
+  {
+    "model": "interviews.interviewer",
+    "pk": 1,
+    "fields": {
+      "comment": "Some comment",
+      "interview": 1,
+      "user": 1
+    }
+  },
+  {
+    "model": "interviews.interviewer",
+    "pk": 2,
+    "fields": {
+      "comment": "Some comment 2",
+      "interview": 2,
+      "user": 1
+    }
+  },
+  {
+    "model": "interviews.evaluation",
+    "pk": 1,
+    "fields": {
+      "interviewer": 1,
+      "rate": 10,
+      "criteria": 1
+    }
+  },
+  {
+    "model": "interviews.evaluation",
+    "pk": 2,
+    "fields": {
+      "interviewer": 1,
+      "rate": 8,
+      "criteria": 2
+    }
   }
 ]

@@ -123,3 +123,9 @@ class AuxInterviewSerializer(serializers.ModelSerializer):
         depth = 3
         model = Interview
         fields = ('id', 'status', 'date', 'interviewers')
+
+
+class EvaluationCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evaluation
+        exclude = []

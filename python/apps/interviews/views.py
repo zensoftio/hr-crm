@@ -2,11 +2,9 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 
 from apps.utils.serializers import MethodSerializerView
-from apps.interviews.models import Interview, Criteria
+from apps.interviews.models import Interview, Criteria, Evaluation
 from apps.interviews.serializers import InterviewListSerializer, CriteriaListSerializer, InterviewDetailSerializer, \
-    InterviewCreateSerializer, CriteriaCreateSerializer
-from apps.users.permissions import IsInterviewer
-
+    InterviewCreateSerializer, CriteriaCreateSerializer, EvaluationCreateSerializer
 
 
 class InterviewListCreateView(generics.ListCreateAPIView):
@@ -53,3 +51,8 @@ class CriteriaCreateListView(MethodSerializerView, generics.ListCreateAPIView):
         ('GET',): CriteriaListSerializer,
         ('POST',): CriteriaCreateSerializer
     }
+
+
+class EvaluationCreateView(generics.CreateAPIView):
+    queryset = Evaluation.objects.all()
+    serializer_class = EvaluationCreateSerializer
