@@ -90,9 +90,7 @@ class EditVacancyContainer extends Component {
     }
 
     publishVacancy = (event) => {
-        event.preventDefault();
-
-        console.log(this.state)
+        window.open('https://www.facebook.com/v3.0/dialog/oauth?%20client_id=1482536371851716&redirect_uri=https://reachthestars.ml&response_type=token', "Login Facebook", "width=600,height=450");
     }
 
     RenderMenuItem = (props) => {

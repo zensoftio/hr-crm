@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { CANDIDATES_URL, INTERVIEWS_URL, USERS_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
-import RenderSelectItem from '../../../utils/RenderSelectItem';
 import getStatus from '../../../utils/GetStatus';
 
 

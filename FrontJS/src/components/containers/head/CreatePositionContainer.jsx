@@ -107,13 +107,6 @@ class CreatePositionContainer extends React.Component {
 
 
     render() {
-		let instyle = {
-			display: 'inline-block',
-			marginRight: 20
-		};
-		let divstyle = {
-			margin: 20
-		}	
 		
       return (
 				<form onSubmit={this.handleSubmit}>
