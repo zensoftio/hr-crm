@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import './statistics.css'
 
 const Statistics = () => {
 
@@ -25,8 +26,8 @@ const Statistics = () => {
 					{statistics.map((stat, i) => {
 						return (
 							<li key={i}>
-								<span>{stat.desc} </span>
-								<span>{stat.amount}</span>
+								<span className="desc">{stat.desc} </span>
+								<span className="amount">{stat.amount}</span>
 							</li>
 						)
 					})}

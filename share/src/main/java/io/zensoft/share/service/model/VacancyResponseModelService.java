@@ -13,4 +13,16 @@ public interface VacancyResponseModelService extends ModelRepositoryService<Vaca
     List<VacancyResponse> getAllByVacancy(Vacancy vacancy);
 
     VacancyResponse getByVacancyAndPublisherServiceType(Vacancy vacancy, PublisherServiceType publisherServiceType);
+
+    /**
+     * method to retrieve {@link VacancyResponse} by {@link Vacancy#uuid} and {@link PublisherServiceType}
+     * @param vacancy {@link Vacancy} object converted from Dto. !!!IMPORTANT, {@code uuid} must not be null or empty
+     *                               unless return result will be null.
+     *
+     * @param publisherServiceType {@link PublisherServiceType} object. Every implementation of
+     *                                  {@link io.zensoft.share.service.PublisherManagerService} assigns it manually
+     *
+     * @return {@link VacancyResponse}
+     */
+    VacancyResponse getByVacancyUuidAndPublisherServiceType(Vacancy vacancy,PublisherServiceType publisherServiceType);
 }

@@ -17,17 +17,17 @@ class RequestList extends React.Component {
 
 	componentDidMount() {
 		
-		const fetched = FetchDataAPI(REQUESTS_URL);
-		fetched
+		FetchDataAPI(REQUESTS_URL)
 		.then(response => response.results.map(res => 	
 			[
-				<Link to="/edit_request">{res.position.name}</Link>,
+				<Link to={`/edit_request/${res.id}`}>{res.position.name}</Link>,
 					DateConvert(res.created),
 					res.count,
 					res.status
 			]	
 		))
-		.then(data => this.setState({ data }))		
+		.then(data => this.setState({ data }))
+		 .then(resp => console.log(resp))		
 	}
 
 	render() {

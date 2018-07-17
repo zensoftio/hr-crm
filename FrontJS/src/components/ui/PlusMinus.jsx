@@ -25,22 +25,20 @@ export default class PlusMinus extends React.Component {
 		console.log(this.props);
 		
 
-		let btnstyle = {
-			margin: '0 20px'
-		}
+		
 		
 		return (
 			
 			<span>
-				<span className="plusminus" 
-					onClick={this.decrement} 
-					style={btnstyle}>-</span>
+				<span 
+					className="plusminus" 
+					onClick={this.decrement}>-</span>
 
 				<span>{this.state.count}</span>
 				
-				<span className="plusminus" 
-					onClick={this.increment} 
-					style={btnstyle}>+</span>				
+				<span 
+					className="plusminus" 
+					onClick={this.increment}>+</span>				
 			</span>
 		);
 	}

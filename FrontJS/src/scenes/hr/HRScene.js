@@ -23,19 +23,9 @@ const HRNav = [
         component: PositionList
     },
     {
-        name: "",
-        path: "/create_vacancy/:id",
-        component: CreateVacancy
-    },
-    {
         name: "Вакансии",
         path: "/opened_vacancies",
         component: OpenedVacancies
-    },
-    {
-        name: "",
-        path: "/vacancy/:id",
-        component: EditVacancy
     },
     {
         name: "Кандидаты",
@@ -76,7 +66,17 @@ const HRNav = [
         name: "",
         path: "/profile/:id",
         component: Profile
-    },
+		},
+		{
+			name: "",
+			path: "/create_vacancy/:id",
+			component: CreateVacancy
+		},
+		{
+			name: "",
+			path: "/vacancy/:id",
+			component: EditVacancy
+		}
 ];
 
 export default class HRScene extends Component {

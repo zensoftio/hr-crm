@@ -109,6 +109,9 @@ class Base(Configuration):
         'user-agent',
         'x-csrftoken',
         'x-requested-with',
+        'role',
+        'access-control-allow-headers',
+        'access-control-expose-headers'
     )
 
     ROOT_URLCONF = 'urls'
