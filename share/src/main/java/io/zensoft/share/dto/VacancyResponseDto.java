@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 public class VacancyResponseDto {
 
-    private int uid;
+    private String uuid;
 
     private String message;
     private String url;
