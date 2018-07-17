@@ -22,7 +22,7 @@ public class FacebookPostContentBuilder {
                 "\n" +
                 getWorkConditions(vacancy) +
                 "\n" +
-                getContactsInfo(vacancy) +
+                getContactInfo(vacancy) +
                 "\n" +
                 getTags();
         log.info("returning built content of the Facebook post");
@@ -78,12 +78,12 @@ public class FacebookPostContentBuilder {
         return stringBuilder.toString();
     }
 
-    private String getContactsInfo(Vacancy vacancy) {
+    private String getContactInfo(Vacancy vacancy) {
         log.info("building contact information in Facebook post");
         StringBuilder stringBuilder = new StringBuilder("Резюме присылать на почту: jobs@zensoft.kg\n");
         stringBuilder.append("!! В теме обязательно укажите позицию, на которую претендуете:\n");
         stringBuilder.append("\"" + vacancy.getPosition() + "\"");
-        log.info("returning built contanct information in Facebook post");
+        log.info("returning built contact information in Facebook post");
         return stringBuilder.toString();
     }
 
