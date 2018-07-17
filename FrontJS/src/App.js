@@ -17,10 +17,7 @@ export default class App extends Component {
 
         const authData = googleUser.getAuthResponse();
         const userData = googleUser.getBasicProfile();
-
-        // let tempStorage = window.sessionStorage;
-        //     tempStorage.setItem("username", userData.ig)
-        //     tempStorage.setItem("photo", userData.Paa)
+        
         let tempStorage = window.localStorage;
             tempStorage.setItem("username", JSON.stringify(userData.ig))
             tempStorage.setItem("photo", JSON.stringify(userData.Paa))
