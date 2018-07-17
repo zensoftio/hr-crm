@@ -107,13 +107,6 @@ class CreatePositionContainer extends React.Component {
 
 
     render() {
-		let instyle = {
-			display: 'inline-block',
-			marginRight: 20
-		};
-		let divstyle = {
-			margin: 20
-		}	
 		
       return (
 				<form onSubmit={this.handleSubmit}>
@@ -167,7 +160,10 @@ class CreatePositionContainer extends React.Component {
 							</label>
 						</div>
 					</div>
-							<input type="submit" value="Submit" />
+					<div className="div_items">
+					
+							<input type="submit" value="SUBMIT" />
+					</div>
 				</form>
 		);
     }

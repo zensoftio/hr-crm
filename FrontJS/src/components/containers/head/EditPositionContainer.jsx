@@ -4,7 +4,6 @@ import { REQUESTS_URL } from '../../../utils/urls';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import { PutDataAPI } from '../../../services/PutDataAPI';
 import MultipleSelect from '../../ui/MultipleSelect';
-import { puts } from 'util';
 
 class EditPositionContainer extends React.Component {
 	constructor(props) {
@@ -85,7 +84,9 @@ class EditPositionContainer extends React.Component {
 							</label>						
 						</div>
 
-							<input type="submit" value="Submit" />
+						<div className="div_items">					
+							<input type="submit" value="SUBMIT" />
+						</div>
 					</div>
 				</form>
 		);

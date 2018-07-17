@@ -78,7 +78,6 @@ class CreateVacancyContainer extends Component {
       const data = this.state;
 
       PostDataAPI(VACANCIES_URL, data);
-      // console.log(data)
     }
 
     onFileUpload = (event) => {

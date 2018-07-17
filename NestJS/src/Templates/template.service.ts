@@ -11,8 +11,7 @@ export class TemplateService {
         ) {}
 
   async create(Template: Templates): Promise<Templates> {
-    await this.TemplateRepository.save(Template);
-    return Template;
+    return await this.TemplateRepository.save(Template);
   }
 
   async findAll(): Promise<Templates[]> {
@@ -20,7 +19,14 @@ export class TemplateService {
   }
 
   async findOne(int: number): Promise<Templates> {
-    return await this.TemplateRepository.findOne({id: int});
+
+    const a = await this.TemplateRepository.findOne({id: int});
+    if (a===undefined){
+      return {"status": "NOT_FOUND"};
+    }
+    else{
+      return a;
+    }
   }
 
   async deleteOne(int: number): Promise<Templates> {

@@ -17,12 +17,17 @@ INTERVIEW_STATUS = (
 
 
 class Interview(models.Model):
-    date = models.DateTimeField()
-    status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default='TO_BE_CONDUCTED')
+    status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default="TO_BE_CONDUCTED")
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
+    begin_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True)
+    description = models.CharField(max_length=1000, blank=True)
+    location = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
-        return '{name} {date}'.format(date=self.date, name=self.candidate.first_name)
+        return '{name} {begin_time}-{end_time}'.format(begin_time=self.begin_time,
+                                                       end_time=self.end_time,
+                                                       name=self.candidate.first_name)
 
     def get_absolute_url(self):
         return reverse('v1:interview-detail', kwargs={'pk': self.id})

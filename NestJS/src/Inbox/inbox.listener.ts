@@ -6,8 +6,8 @@ import { Inbox } from './inbox.interface';
 import * as moment from 'moment';
 import * as connection from 'Rabbit';
 
-const exchange = connection.default.declareExchange('candidates', 'direct', { durable: false });
-const queue = connection.default.declareQueue('candidate_queue',{durable: false});
+const exchange = connection.default.declareExchange('js-backend', 'direct', { durable: false });
+const queue = connection.default.declareQueue('candidate',{durable: false});
 
 @Controller('inbox')
 export class InboxListener {
@@ -31,34 +31,34 @@ export class InboxListener {
 
     updateInboxList = async(message: any):any => {
       try {
-        const result = await this.inboxService.getMessages(message)
-        this.sendMessage(result)
+        const result = await this.inboxService.getMessages(message);
+        this.sendMessage(result);
       }catch(err) {
-        this.sendMessage("CAN'T GET ONE MESSAGE")
+        this.sendMessage(err);
         throw err;
       }
    }
 
      getOneMessage = async(message: any):any => {
        try {
-         const result = await this.inboxService.getOneMessage(message)
-         this.sendMessage(result)
+         const result = await this.inboxService.getOneMessage(message);
+         this.sendMessage(result);
        }catch(err) {
-         this.sendMessage("CAN'T GET ONE MESSAGE")
+         this.sendMessage(err);
          throw err;
        }
     }
 
     private async sendMessage(msg: any):any {
-      var sendQueue = connection.declareQueue("inboxMessages2")
-      connection.completeConfiguration().then(() => {
+      var sendQueue = connection.default.declareQueue('candidate-response',{durable:false});
+      connection.default.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
-          exchange.send(msg2);
+          exchange.send(msg2,'candidate-response',{durable:false});
       });
     }
 
     private async listenQueue():void {
-      queue.bind(exchange, 'inboxMessages');
+      queue.bind(exchange, 'candidate');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
         msg = JSON.parse(msg)

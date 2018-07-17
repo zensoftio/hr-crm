@@ -8,11 +8,8 @@ import { PostDataAPI } from '../../../services/PostDataAPI';
 import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
-import { CANDIDATES_URL } from '../../../utils/urls';
-import { INTERVIEWS_URL } from '../../../utils/urls';
-import { USERS_URL } from '../../../utils/urls';
+import { CANDIDATES_URL, INTERVIEWS_URL, USERS_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
-import RenderSelectItem from '../../../utils/RenderSelectItem';
 import getStatus from '../../../utils/GetStatus';
 
 
@@ -98,6 +95,20 @@ async function getUsers(){
 }
 getUsers();
 
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth() + 1; //January is 0!
+
+let yyyy = today.getFullYear();
+
+    if(dd<10){
+        dd='0'+dd;
+    }
+    if(mm<10){
+        mm='0'+mm;
+    }
+
+const now = yyyy + '-' + mm + '-' + dd;
 let error = "";
 
 class UserProfile extends Component {
