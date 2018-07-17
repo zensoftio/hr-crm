@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../general/Header';
-import Select from '../../components/ui/Select';
 import MultipleSelect from '../../components/ui/MultipleSelect';
 import PlusMinus from '../../components/ui/PlusMinus';
 import Button from '@material-ui/core/Button'
