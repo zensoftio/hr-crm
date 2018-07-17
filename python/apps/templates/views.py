@@ -11,6 +11,7 @@ from apps.utils.rabbitmq import RabbitMQ
 class TemplateListCreateView(APIView):
 
     def get(self, request, *args, **kwargs):
+
         data = {'title': 'FIND_ALL'}
         data = json.dumps(data)
 
@@ -20,6 +21,7 @@ class TemplateListCreateView(APIView):
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
                              message=data)
+
         response_data = rabbitmq_sender.response.decode('utf-8')
         response_data = json.loads(response_data)
         return Response(response_data, status=status.HTTP_200_OK)
@@ -75,6 +77,7 @@ class TemplateDetailView(APIView):
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
                              message=data)
+
         response_data = rabbitmq_sender.response.decode('utf-8')
         response_data = json.loads(response_data)
         response_data.pop('title')
@@ -93,6 +96,7 @@ class TemplateDetailView(APIView):
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
                              message=data)
+
         response_data = rabbitmq_sender.response.decode('utf-8')
         response_data = json.loads(response_data)
-        return Response(response_data, status=status.HTTP_204_NO_CONTENT)
+        return Response(response_data)
