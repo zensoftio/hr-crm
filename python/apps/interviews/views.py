@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.response import Response
 import json
+from django.conf import settings
 
 from apps.interviews.models import Interview, Criteria, Candidate
 from apps.interviews.serializers import InterviewListSerializer, CriteriaCreateSerializer, InterviewDetailSerializer, \
@@ -94,7 +95,10 @@ def call_javascript_microservice(interviewers, candidate, data):
 
     json_to_microservice = json.dumps(json_to_microservice)
 
-    rabbitmq = RabbitMQ(host='localhost', user='local', password='local')
+    rabbitmq = RabbitMQ(host=settings.RABBITMQ_HOST,
+                        user=settings.RABBITMQ_USERNAME,
+                        password=settings.RABBITMQ_PASSWORD)
+
     rabbitmq.call(exchange_name='js-backend', exchange_type='direct', queue_to_send='event',
                   routing_key_to_send='event', queue_to_receive='event-response', message=json_to_microservice)
 
