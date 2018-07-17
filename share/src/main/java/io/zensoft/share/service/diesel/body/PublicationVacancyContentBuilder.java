@@ -27,7 +27,7 @@ public class PublicationVacancyContentBuilder {
     private final String WORK_CONDITIONS_TITLE = "Условия работы:";
     private final String SALARY_FORK_TITLE = "Вилка заработной платы: $";
     private final String CV_SENDING_TITLE = "Резюме присылать на почту: jobs@secondlab.kg";
-    private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"Java Developer (Junior, Middle, Senior)\"";
+    private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"";
     private final String INFORMATION_ABOUT_US = "<strong>Информация о нас:";
     private final String WEBSITE_LINK = "http://secondlab.io";
     private final String FACEBOOK_LINK = "https://www.facebook.com/secodlab.io";
@@ -59,7 +59,8 @@ public class PublicationVacancyContentBuilder {
         velocityContext.put("workConditionsTitle", WORK_CONDITIONS_TITLE);
         velocityContext.put("salaryForkTitle", SALARY_FORK_TITLE);
         velocityContext.put("cvSendingTitle", CV_SENDING_TITLE);
-        velocityContext.put("setPositionInEmailDisclaimerTitle", SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE);
+        String disclaimerBuilder = SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE + vacancy.getPosition() + "\"";
+        velocityContext.put("setPositionInEmailDisclaimerTitle", disclaimerBuilder);
         velocityContext.put("informationAboutUs", INFORMATION_ABOUT_US);
         velocityContext.put("websiteLink", WEBSITE_LINK);
         velocityContext.put("facebookLink", FACEBOOK_LINK);
@@ -75,7 +76,7 @@ public class PublicationVacancyContentBuilder {
         velocityContext.put("vacancyTitle", vacancy.getTitle());
         velocityContext.put("vacancySalaryMin", vacancy.getSalaryMin());
         velocityContext.put("vacancySalaryMax", vacancy.getSalaryMax());
-
+        
         StringWriter writer = new StringWriter();
         template.merge(velocityContext, writer);
         setContentOfPost(writer.toString());
