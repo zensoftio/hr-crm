@@ -5,14 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DepartmentsResponse {
-  @SerializedName("count")
   private Integer count;
-  @SerializedName("next")
   private String next;
-  @SerializedName("previous")
   private String previous;
-  @SerializedName("departments")
-  private List<Department> departmentList = null;
+  @SerializedName("results")
+  private List<Department> departmentList;
 
   public Integer getCount() {
     return count;

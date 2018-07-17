@@ -11,3 +11,5 @@ export const TEMPLATES_URL = BASE_URL + 'templates';
 export const USERS_URL = BASE_URL + 'users';
 export const VACANCIES_URL = BASE_URL + 'vacancies';
 export const POSITIONS_URL = BASE_URL + 'positions';
+
+export const CLIENT_ID = "161387635546-54csodkv5tms1nnflj33o8c9rhq3srhv.apps.googleusercontent.com";

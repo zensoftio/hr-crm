@@ -3,15 +3,10 @@ package com.erkprog.zensofthrcrm.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 public class Template {
-  @SerializedName("id")
   private Integer id;
-  @SerializedName("subject")
   private String subject;
-  @SerializedName("type")
   private String type;
-  @SerializedName("content")
   private String content;
-  @SerializedName("created")
   private String created;
 
 

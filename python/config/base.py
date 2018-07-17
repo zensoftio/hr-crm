@@ -48,9 +48,6 @@ class Base(Configuration):
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = values.SecretValue()
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = values.SecretValue()
 
-    RABBITMQ_USERNAME = values.SecretValue()
-    RABBITMQ_PASSWORD = values.SecretValue()
-
     CSRF_COOKIE_SECURE = False
     CORS_ORIGIN_ALLOW_ALL = True
 
@@ -112,6 +109,9 @@ class Base(Configuration):
         'user-agent',
         'x-csrftoken',
         'x-requested-with',
+        'role',
+        'access-control-allow-headers',
+        'access-control-expose-headers'
     )
 
     ROOT_URLCONF = 'urls'
@@ -150,7 +150,7 @@ class Base(Configuration):
 
     WSGI_APPLICATION = 'wsgi.application'
 
-    DATABASES = values.DatabaseURLValue('postgres://zensoftuser:zensoftpassword@localhost:5432/zensoftdb')
+    DATABASES = values.DatabaseURLValue()
 
     AUTH_USER_MODEL = 'users.User'
 

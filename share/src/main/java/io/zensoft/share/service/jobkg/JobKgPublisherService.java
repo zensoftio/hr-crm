@@ -36,6 +36,7 @@ public class JobKgPublisherService implements PublisherService {
             vacancyPublisherService.publish(vacancy);
             vacancyResponse.setStatus(VacancyStatus.SUCCESS);
             vacancyResponse.setMessage("Successfully published");
+            vacancyResponse.setUrl("http://www.job.kg/cabinet/vacancy?status=everything");
         } catch (PublicationFailedException e) {
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage(e.getMessage());

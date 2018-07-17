@@ -8,9 +8,11 @@ import { PostDataAPI } from '../../../services/PostDataAPI';
 import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
-import { CANDIDATES_URL } from '../../../utils/urls';
+import { CANDIDATES_URL, INTERVIEWS_URL, USERS_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
+import getStatus from '../../../utils/GetStatus';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -23,32 +25,20 @@ const MenuProps = {
   },
 }
 function isPossibleToSend(json){
+
   let isOk = true;
-  for(let i = 0;i < json.phone.length;i++){
-    if(json.phone[i].length !== 16){
-      isOk = false;
-      break;
-    }
-  }
   const begin_time = Date.parse(json.begin_time);
   isOk = (!isNaN(begin_time)) ? true : false;
-  error = (isOk) ? "" : "Please, fill all fields.";
-  isOk = (json.candidate !== 0) ? true : false;
+  isOk = (json.candidate !== 0 && isOk) ? true : false;
   isOk = (json.description.length > 0 && isOk) ? true : false;
   isOk = (json.location.length > 0 && isOk) ? true : false;
   isOk = (json.interviewers.length > 0 && isOk) ? true : false;
+  error = (isOk) ? "" : "Please, fill all fields.";
   return isOk
 }
-const Interviewers = [
-        'Имя Фамилия1',
-        'Имя Фамилия2',
-        'Имя Фамилия3'
-    ],
-    Heads = [
-      'Head01',
-      'Head02',
-      'Head03'
-    ],
+let Heads = [],
+    email_heads = [],
+
     TopicTemp = [
         "Отправка ТЗ",
         "Приглашение",
@@ -97,6 +87,14 @@ function TextMaskCustom(props){
 TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
+async function getUsers(){
+  const users = await FetchDataAPI(USERS_URL);
+  for(let i = 0;i < users.results.length;i++){
+    Heads[i] = users.results[i];
+    email_heads[i] = users.results[i].email
+  }
+}
+getUsers();
 
 let today = new Date();
 let dd = today.getDate();
@@ -128,10 +126,8 @@ class UserProfile extends Component {
             position: "",
             experience: 0,
             level: "",
-            status: "",
             cv: "",
             comments: [],
-            candidate: 0,
             begin_time: "",
             description: "",
             location: "",
@@ -150,7 +146,7 @@ class UserProfile extends Component {
                 candidate_phone: candidate.phone,
                 experience: candidate.experience,
                 level: candidate.level,
-                cv: candidate.CVs[0].url,
+                cv: candidate.CVs,
                 status: candidate.status,
                 skype: candidate.skype,
                 position: candidate.position.name,
@@ -178,16 +174,20 @@ class UserProfile extends Component {
       let jsonObj = {
         'candidate': this.state.candidate,
         'begin_time': this.state.begin_time,
-        'interviewers': this.state.interviewers,
+        'interviewers': [],
         'description': this.state.description,
         'location': this.state.location,
         'phone': this.state.phone,
         'status': 'TO_BE_CONDUCTED'
       }
+      for(let i = 0;i < Heads.length;i++){
+        if(Heads[i].email === this.state.interviewers[i]){
+          jsonObj.interviewers.push(Heads[i].id);
+        }
+      }
       const isOk = isPossibleToSend(jsonObj);
       if(isOk){
-        const URL = 'http://159.65.153.5/api/v1/interviews';
-        PostDataAPI(URL, this.state);
+        PostDataAPI(INTERVIEWS_URL, jsonObj);
       }
       return isOk;
     }
@@ -197,35 +197,16 @@ class UserProfile extends Component {
       console.log(this.state);
     }
 
-    handleSubmit = (event) => {
-      let count = 0;
-      for(let i = 0;i < this.state.phone.length;i++){
-        count += (this.state.phone[i].length === 16) ? 1 : 0;
-      }
-      let isOk = false;
-      const begin_time = Date.parse(this.state.begin_time);
-      isOk = (!isNaN(begin_time) && count === this.state.phone.length) ? true : false;
-      error = (!isOk) ? "Please, fill all fields." : "";
-      if(isOk){
-        this.state.begin_time += ":00+06:00"
-        this.state.end_time = this.state.begin_time;
-      }
-      return isOk
-      // const URL = 'http://159.65.153.5/api/v1/interviews';
-      // PostDataAPI(URL, this.state);
-    }
-
     handleAddInputForPhoneNumber = () => {
       let phone = this.state.phone.concat([''])
       this.setState({
         phone
       })
     }
-
     RenderMultipleSelectItem = (props) => {
       return props.map((item, index) => (
         <MenuItem key={index} value={item}>
-            <Checkbox checked={this.state.email_heads}/>
+            <Checkbox checked={this.state.interviewers.indexOf(item) > -1}/>
             <ListItemText primary={item} />
         </MenuItem>
       ))
@@ -245,8 +226,6 @@ class UserProfile extends Component {
                 status,
                 cv,
                 comments,
-                candidate,
-                begin_time,
                 interviewers,
                 location,
                 description } = this.state;
@@ -291,11 +270,11 @@ class UserProfile extends Component {
                 </div>
                 <div className={classes.root}>
                     Статус:
-                    <span className={classes.box}><TextField value={status}/></span>
+                    <span className={classes.box}><TextField value={getStatus(status)}/></span>
                 </div>
                 <div className={classes.root}>
                     Резюме:
-                    <span className={classes.box}><a href={cv}> Ссылка на резюме </a></span>
+                    <span className={classes.box}><a href={ cv.length !== 0 ? cv[0].url : "example-link.com" }> Ссылка на резюме </a></span>
                 </div>
                 <div className={classes.root}>
                     <Paper className={classes.commentBox}>
@@ -329,18 +308,14 @@ class UserProfile extends Component {
                             <div className={classes.root}>
                                Дата:
                                <span className={classes.box}>
-                               <TextField  onChange={this.handleChange} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
+                               <TextField  onChange={this.handleChangeForTime} name="begin_time" id="datetime-local" label="Next appointment" type="datetime-local" defaultValue={"2017-05-21,07:00"} className={classes.textField} InputLabelProps={{shrink: true}}/>
                                </span>
-                            </div>
-                            <div className={classes.root}>
-                                Интервьювер:
-                                <span className={classes.box}><Select onChange={this.handleChange} name="email_interviewer" value={this.state.email_interviewer} required>{RenderSelectItem(Interviewers)}</Select></span>
                             </div>
                             <div className={classes.root}>
                                 HoD:
                                 <span className={classes.box}>
                                  <Select multiple name="interviewers" value={interviewers} onChange={this.handleChange} renderValue={selected => selected.join(', ')} MenuProps={MenuProps} required>
-                                   {this.RenderMultipleSelectItem(Heads)}
+                                   {this.RenderMultipleSelectItem(email_heads)}
                                  </Select>
                                 </span>
                             </div>

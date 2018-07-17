@@ -64,7 +64,7 @@ class MultiSelection extends React.Component {
             { 
               optionValue.map((item,i) => (
                 <MenuItem
-                  key={item.id}
+                  key={i}
                   value={item.id}
 									name={item.id}>
                   {item.name}

@@ -56,13 +56,13 @@ const HeadNav = [
         path: '/statistics',
         component: Statistics
     },
-    {			
-        path: '/edit_positions',
-        component: EditPositions
-		},
 		{
 			name: 'Logout',
 			path: '/app',
 			component: App
+		},
+		{			
+			path: '/edit_positions/:id',
+			component: EditPositions
 		}
 ]
