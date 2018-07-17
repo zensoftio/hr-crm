@@ -167,7 +167,10 @@ class CreatePositionContainer extends React.Component {
 							</label>
 						</div>
 					</div>
-							<input type="submit" value="Submit" />
+					<div className="div_items">
+					
+							<input type="submit" value="SUBMIT" />
+					</div>
 				</form>
 		);
     }
