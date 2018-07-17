@@ -17,7 +17,7 @@ class RequestList extends React.Component {
 
 	componentDidMount() {
 		
-		FetchDataAPI(REQUESTS_URL)
+		FetchDataAPI(REQUESTS_URL + '?size=1000' )
 		.then(response => response.results.map(res => 	
 			[
 				<Link to={`/edit_request/${res.id}`}>{res.position.name}</Link>,

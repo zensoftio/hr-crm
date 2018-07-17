@@ -85,7 +85,7 @@ class EditPositionContainer extends React.Component {
 						</div>
 
 						<div className="div_items">					
-							<input type="submit" value="SUBMIT" />
+							<input className="sbmt_btn" type="submit" value="SUBMIT" />
 						</div>
 					</div>
 				</form>

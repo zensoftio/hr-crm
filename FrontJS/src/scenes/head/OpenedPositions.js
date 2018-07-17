@@ -4,7 +4,6 @@ import Header from '../general/Header';
 import DateConvert from '../../utils/DateConvert';
 import { REQUESTS_URL } from '../../utils/urls';
 import { FetchDataAPI } from '../../services/FetchDataAPI';
-import './headstyle.css';
 
 class OpenedPositions extends React.Component {
 	constructor(props) {
@@ -15,7 +14,7 @@ class OpenedPositions extends React.Component {
 	}
 
 	componentDidMount() {
-		FetchDataAPI( REQUESTS_URL )
+		FetchDataAPI( REQUESTS_URL + '?size=1000' )
 			.then(json => json.results.map(result => (
 				{
 					position: result.position.name,

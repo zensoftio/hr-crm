@@ -22,8 +22,7 @@ public class VacancyResponseSenderService implements ResponseSenderService<Vacan
     //real queue name or exchange has to be injected
     @Override
     public void respond(VacancyResponseDto vacancyResponseDto) {
-        rabbitTemplate.convertAndSend(RabbitMqComponentDeclarationConfiguration.TOPIC_SHARE,
-            RabbitMqComponentDeclarationConfiguration.QUEUE_SHARE_RESPONSE,
-            vacancyResponseDto);
+        rabbitTemplate.convertAndSend(RabbitMqComponentDeclarationConfiguration.TOPIC_SHARE, "share.response",
+                vacancyResponseDto);
     }
 }

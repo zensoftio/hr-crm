@@ -51,7 +51,7 @@ public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublishe
         }
     }
 
-    private void publish(String cookie, MultiValueMap<String, String> content) {
+    private void publish(String cookie, MultiValueMap<String, String> content) throws PublicationFailedException {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
@@ -64,6 +64,9 @@ public class DefaultJobKgVacancyPublisherService implements JobKgVacancyPublishe
         ResponseEntity response = restTemplate.exchange(serverUrl, HttpMethod.POST, entity, String.class);
         log.info("Request to publish vacancy was sent");
         log.info("Request to publish vacancy received response with status code " + response.getStatusCode());
-
+        if (!response.getStatusCode().equals(HttpStatus.FOUND)) {
+            log.error("Could not publish");
+            throw new PublicationFailedException(response.getStatusCode().toString());
+        }
     }
 }
