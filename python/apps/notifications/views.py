@@ -15,8 +15,7 @@ class CreateDeviceView(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         device = FCMDevice(**request.data)
-        user = request.user
-        device.user = self.request.user
+        device.user = User.objects.get(email='admin@zensoft.io')
         device.save()
 
         return Response(DeviceSerializer(device).data, status=status.HTTP_201_CREATED)
