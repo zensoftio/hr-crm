@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://159.65.153.5/api/v1/';
+export const BASE_URL = 'https://reachthestars.ml/api/v1/';
 export const CANDIDATES_URL = BASE_URL + 'candidates';
 export const COMMENTS_URL = BASE_URL + 'comments';
 export const CRITERIAS_URL = BASE_URL + 'criterias';
