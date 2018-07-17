@@ -40,9 +40,10 @@ public class DieselPublisherService implements PublisherService {
         log.info("create VacancyResponse and fill with static values");
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);
+        vacancyResponse.setStatus(VacancyStatus.PENDING);
         vacancyResponse.setPublisherServiceType(PublisherServiceType.DIESEL_ELCAT_KG);
         vacancyResponse.setPublishDate(new Date());
-        
+
         if (activateLoginPostRequestSender(vacancyResponse).getStatus().name().equals("FAILED")) {
             log.info("return VacancyResponse because Login Failed");
             return vacancyResponse;
@@ -62,6 +63,7 @@ public class DieselPublisherService implements PublisherService {
         log.info("fill VacancyResponse with positiv values and return it");
         vacancyResponse.setStatus(VacancyStatus.SUCCESS);
         vacancyResponse.setMessage("Vacancy posted successfully, everything is ok.");
+        log.info("Vacancy posted successfully, everything is ok.");
         return vacancyResponse;
     }
 

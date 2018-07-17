@@ -39,7 +39,6 @@ public class LoginPostRequestSender {
         log.info("send POST request to login and receive responseHeaders where we will retrieve 'sessionId'");
         HttpEntity<?> request = new HttpEntity<>(loginPostRequestBody.getCreatedBodyOfRequestInMap(), loginHeader.getLoginHeaders());
         ResponseEntity<String> response = restTemplate.postForEntity(serverUrlPostRequestReceiver, request, String.class);
-        response.getHeaders().get("Set-Cookie").stream().forEach(System.out::println);
         List<String> setCookie = Collections.singletonList(response.getHeaders().getFirst("Set-Cookie"));
         String sessionIdContainer = setCookie.get(0);
         log.info("get sessionId from ResponseHeaders");

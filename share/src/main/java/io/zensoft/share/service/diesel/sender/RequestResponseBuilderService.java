@@ -10,10 +10,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RequestResponseBuilderService {
 
-    public RequestResponseBuilderService(){
-
-    }
-
     public RequestResponse getFilledResponseFromPostRequestSenderSender(RequestResponse requestResponse, HttpStatus statusCode){
         log.info("fill RequestResponse object and return it");
         if (statusCode.equals(HttpStatus.FOUND)) {
