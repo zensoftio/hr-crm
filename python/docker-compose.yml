@@ -1,11 +1,5 @@
 version: '3'
 
-volumes:
-  production_postgres_data: {}
-  production_postgres_data_backups: {}
-  production_caddy: {}
-  static: {}
-
 services:
   django:
     build:
@@ -15,7 +9,7 @@ services:
     container_name: django
     image: hr_crm_django
     volumes:
-      - static:/app/static
+      - ./static:/app/static
     depends_on:
       - postgres
     env_file:
@@ -31,8 +25,8 @@ services:
     container_name: postgres
     image: hr_crm_postgres
     volumes:
-      - production_postgres_data:/var/lib/postgresql/data
-      - production_postgres_data_backups:/backups
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./postgres_backups:/backups
     env_file:
       - .envs/.postgres
 
@@ -46,8 +40,8 @@ services:
     depends_on:
       - django
     volumes:
-      - production_caddy:/root/.caddy
-      - static:/app/static
+      - ./caddy:/root/.caddy
+      - ./static:/app/static
     env_file:
       - .envs/.caddy
     ports:
@@ -59,7 +53,7 @@ services:
     container_name: rabbitmq
     image: hr_crm_rabbitmq
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "15673:15672"
+      - "5673:5672"
     volumes:
       - /opt/rabbitmq:/var/lib/rabbitmq

@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  react:
+    build: .
+    restart: always
+    container_name: react
+    image: hr_crm_react
+    volumes:
+      - ./build:/app/build
+    ports:
+      - "3000:3000"
