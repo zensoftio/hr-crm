@@ -20,14 +20,14 @@ public class PublicationVacancyContentBuilder {
     private String contentOfPost;
 
     private final String REQUIRED_REQUIREMENTS_TITLE = "Основные требования:";
-    private final String GENERAL_REQUIREMENTS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень (Junior, Middle, Senior):";
+    private final String GENERAL_REQUIREMENTS_TITLE = "Владение / наличие следующих навыков и знаний определят Ваш квалификационный уровень: ";
     private final String OPTIONAL_REQUIREMENTS_TITLE = "Будет плюсом:";
     private final String RESPONSIBILITIES_TITLE = "Обязанности:";
     private final String RESPONSIBILITIES_DESCRIPTION = "• Вам предстоит заниматься разработкой долгосрочных стартап-проектов, которые развиваются на протяжении уже многих лет и являются успешными в своем направлении.";
     private final String WORK_CONDITIONS_TITLE = "Условия работы:";
     private final String SALARY_FORK_TITLE = "Вилка заработной платы: $";
     private final String CV_SENDING_TITLE = "Резюме присылать на почту: jobs@secondlab.kg";
-    private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"Java Developer (Junior, Middle, Senior)\"";
+    private final String SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE = "!! В теме обязательно укажите позицию, на которую претендуете: \"";
     private final String INFORMATION_ABOUT_US = "<strong>Информация о нас:";
     private final String WEBSITE_LINK = "http://secondlab.io";
     private final String FACEBOOK_LINK = "https://www.facebook.com/secodlab.io";
@@ -59,7 +59,8 @@ public class PublicationVacancyContentBuilder {
         velocityContext.put("workConditionsTitle", WORK_CONDITIONS_TITLE);
         velocityContext.put("salaryForkTitle", SALARY_FORK_TITLE);
         velocityContext.put("cvSendingTitle", CV_SENDING_TITLE);
-        velocityContext.put("setPositionInEmailDisclaimerTitle", SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE);
+        String disclaimerBuilder = SET_POSITION_IN_EMAIL_DISCLAIMER_TITLE + vacancy.getPosition() + "\"";
+        velocityContext.put("setPositionInEmailDisclaimerTitle", disclaimerBuilder);
         velocityContext.put("informationAboutUs", INFORMATION_ABOUT_US);
         velocityContext.put("websiteLink", WEBSITE_LINK);
         velocityContext.put("facebookLink", FACEBOOK_LINK);
@@ -75,7 +76,7 @@ public class PublicationVacancyContentBuilder {
         velocityContext.put("vacancyTitle", vacancy.getTitle());
         velocityContext.put("vacancySalaryMin", vacancy.getSalaryMin());
         velocityContext.put("vacancySalaryMax", vacancy.getSalaryMax());
-
+        
         StringWriter writer = new StringWriter();
         template.merge(velocityContext, writer);
         setContentOfPost(writer.toString());
