@@ -68,6 +68,7 @@ class ConvertRoleTokenView(ConvertTokenView):
 
         url, headers, body, status = self.create_token_response(request._request)
         headers['role'] = roles_scope
+        headers['access-control-expose-headers'] = 'role'
         response = Response(data=json.loads(body), status=status)
 
         for k, v in headers.items():
