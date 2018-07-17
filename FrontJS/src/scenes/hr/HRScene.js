@@ -16,6 +16,7 @@ import Profile from './CandidateProfile';
 import EditInterview from "./EditInterview";
 import Templates from './ListTemplates'
 import Template from './Template';
+import ListNotifications from './Notifications';
 const HRNav = [
     {
         name: "Запросы",
@@ -56,7 +57,7 @@ const HRNav = [
  
         name: "Уведомления",
         path: "/notifications",
-        component: Notifications
+        component: ListNotifications
     },   
     {
       name: "Шаблоны сообщений",
@@ -72,11 +73,6 @@ const HRNav = [
       name: "",
       path: "/template/:id",
       component: Template
-		},
-		{
-			name: "",
-			path: "/edit_interview/:id",
-			component: EditInterview
 		},
     {
         name: "",
