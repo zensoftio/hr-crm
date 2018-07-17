@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FacebookUrlBuilder {
     private FacebookConfigs facebookConfigs;
+    private FacebookPostContentBuilder facebookPostContentBuilder;
 
     @Autowired
-    public FacebookUrlBuilder(FacebookConfigs facebookConfigs) {
+    public FacebookUrlBuilder(FacebookConfigs facebookConfigs, FacebookPostContentBuilder facebookPostContentBuilder) {
         this.facebookConfigs = facebookConfigs;
+        this.facebookPostContentBuilder = facebookPostContentBuilder;
     }
 
     public String getPublishPhotoRequestUrl(Vacancy vacancy, String pageAccessToken) {
@@ -39,6 +41,6 @@ public class FacebookUrlBuilder {
 
 
     private String getText(Vacancy vacancy) {
-        return vacancy.getTitle();
+        return facebookPostContentBuilder.getContent(vacancy);
     }
 }
