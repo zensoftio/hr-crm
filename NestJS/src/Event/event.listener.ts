@@ -13,7 +13,7 @@ export class EventController {
   }
 
   public async getDataFromService(message: any) {
-    let msg = {
+    let msg: any = {
       'title': message.title,
       'body': message.body
     }
@@ -34,7 +34,11 @@ export class EventController {
          msg.body = await this.eventService.removeEvent(msg);
       }
       else{
-         msg.body = await 'Incorrect title';
+        let body = {
+          "status": "400",
+          "content": "Incorrect title";
+        }
+        msg.body = body;
       }
     }
     catch(err){
