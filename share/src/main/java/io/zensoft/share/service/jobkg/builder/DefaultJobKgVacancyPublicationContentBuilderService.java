@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class DefaultJobKgVacancyPublicationContentBuilderService implements JobKgVacancyPublicationContentBuilderService {
+
     @Override
     public MultiValueMap<String, String> build(Vacancy vacancy) {
         log.info("Preparing content with Vacancy body " + vacancy);
@@ -36,18 +37,23 @@ public class DefaultJobKgVacancyPublicationContentBuilderService implements JobK
         return map;
     }
 
-    //may need a change
     private String prepareRequirements(List<Requirement> requirements) {
-        StringBuffer required = new StringBuffer("Основные требования:\n");
-        StringBuffer optional = new StringBuffer("Плюсом будет:\n");
+        StringBuffer required = new StringBuffer(RequirementType.REQUIRED.getText() + ":\n");
+        StringBuffer general = new StringBuffer(RequirementType.GENERAL.getText() + ":\n");
+        StringBuffer optional = new StringBuffer(RequirementType.OPTIONAL.getText() + ":\n");
         for (Requirement requirement : requirements) {
             if (requirement.getType().equals(RequirementType.REQUIRED)) {
-                required.append("- " + requirement.getName());
+                required.append("• " + requirement.getName() + "\n");
             }
             if (requirement.getType().equals(RequirementType.OPTIONAL)) {
-                optional.append("- " + requirement.getName());
+                optional.append("• " + requirement.getName() + "\n");
+            }
+            if (requirement.getType().equals(RequirementType.GENERAL)) {
+                general.append("• " + requirement.getName() + "\n");
             }
         }
+        required.append("\n");
+        required.append(general.toString());
         required.append("\n");
         return required.append(optional.toString()).toString();
     }
@@ -55,7 +61,7 @@ public class DefaultJobKgVacancyPublicationContentBuilderService implements JobK
     private String prepareListOfString(List<String> list) {
         StringBuffer result = new StringBuffer();
         for (String s : list) {
-            result.append("- " + s);
+            result.append("• " + s);
         }
         return result.toString();
     }
