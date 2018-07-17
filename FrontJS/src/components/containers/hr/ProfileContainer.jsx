@@ -8,9 +8,7 @@ import { PostDataAPI } from '../../../services/PostDataAPI';
 import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
-import { CANDIDATES_URL } from '../../../utils/urls';
-import { INTERVIEWS_URL } from '../../../utils/urls';
-import { USERS_URL } from '../../../utils/urls';
+import { CANDIDATES_URL, INTERVIEWS_URL, USERS_URL } from '../../../utils/urls';
 import DateConvert from '../../../utils/DateConvert';
 import RenderSelectItem from '../../../utils/RenderSelectItem';
 import getStatus from '../../../utils/GetStatus';
@@ -175,7 +173,7 @@ class UserProfile extends Component {
       }
       const isOk = isPossibleToSend(jsonObj);
       if(isOk){
-        PostDataAPI('http://192.168.89.82:8000/api/v1/interviews', jsonObj);
+        PostDataAPI(INTERVIEWS_URL, jsonObj);
       }
       return isOk;
     }
