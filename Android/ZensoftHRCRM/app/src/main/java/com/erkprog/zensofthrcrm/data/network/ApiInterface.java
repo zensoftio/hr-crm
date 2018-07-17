@@ -6,6 +6,7 @@ import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
 import com.erkprog.zensofthrcrm.data.entity.VacanciesResponse;
+import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -26,6 +27,9 @@ public interface ApiInterface {
 
   @GET("interviews/{id}")
   Call<Interview> getDetailedInterview(@Path("id") int id);
+
+  @GET("vacancies/{id}")
+  Call<Vacancy> getDetailedVacancy(@Path("id") int id);
 
   @GET("interviews")
   Single<InterviewsResponse> getInterviews();

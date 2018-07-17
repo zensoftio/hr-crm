@@ -12,6 +12,8 @@ public interface VacanciesContract {
 
     void showVacancies(List<Vacancy> vacancies);
 
+    void showDetailedVacancy(int vacancyId);
+
   }
 
   interface Presenter extends ILifecycle<View> {

@@ -1,6 +1,7 @@
 package com.erkprog.zensofthrcrm.ui.vacancies.vacanciesList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
 import com.erkprog.zensofthrcrm.data.entity.Vacancy;
 import com.erkprog.zensofthrcrm.ui.ItemClickListener;
+import com.erkprog.zensofthrcrm.ui.interviews.interviewDetail.InterviewDetail;
+import com.erkprog.zensofthrcrm.ui.vacancies.vacancyDetail.VacancyDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,13 @@ public class VacanciesFragment extends Fragment implements VacanciesContract.Vie
     } else {
       noVacanciesView.setVisibility(View.VISIBLE);
     }
+  }
+
+  @Override
+  public void showDetailedVacancy(int vacancyId) {
+    Intent intent = new Intent(getActivity(), VacancyDetail.class);
+    intent.putExtra("vacancy_id", vacancyId);
+    startActivity(intent);
   }
 
   @Override

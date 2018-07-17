@@ -44,5 +44,5 @@
   <string name="msg_no_candidates">No candidates found!</string>
   <string name="phone">+99677217753</string>
   <string name="btn_save">Save</string>
-
+  <string name="initials_label">Initials</string>
 </resources>

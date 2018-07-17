@@ -24,10 +24,11 @@
       </intent-filter>
     </activity>
     <activity android:name=".ui.candidates.candidateDetail.CandidateDetail"/>
+    <activity android:name=".ui.vacancies.vacancyDetail.VacancyDetail"/>
     <activity
-        android:name=".ui.interviews.interviewDetail.InterviewDetail"
-        android:label="@string/interviews"/>
-    <activity android:name=".ui.interviews.createInterview.CreateInterview">
+        android:name=".ui.interviews.interviewDetail.InterviewDetail"/>
+    <activity
+      android:name=".ui.interviews.createInterview.CreateInterview">
     </activity>
   </application>
 
