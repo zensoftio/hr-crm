@@ -1,11 +1,11 @@
 import json
 
+from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.utils.rabbitmq import RabbitMQ
-from django.conf import settings
 
 
 class TemplateListCreateView(APIView):
@@ -14,7 +14,8 @@ class TemplateListCreateView(APIView):
         data = {'title': 'FIND_ALL'}
         data = json.dumps(data)
 
-        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME,
+                                   password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='js-backend', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
@@ -27,7 +28,8 @@ class TemplateListCreateView(APIView):
         data = request.data
         data['title'] = 'CREATE'
 
-        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME,
+                                   password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='js-backend', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
@@ -47,7 +49,8 @@ class TemplateDetailView(APIView):
         }
         data = json.dumps(data)
 
-        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME,
+                                   password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='js-backend', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
@@ -66,7 +69,8 @@ class TemplateDetailView(APIView):
         data['id'] = pk
         data = json.dumps(data)
 
-        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME,
+                                   password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='js-backend', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
@@ -83,7 +87,8 @@ class TemplateDetailView(APIView):
         }
         data = json.dumps(data)
 
-        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
+        rabbitmq_sender = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME,
+                                   password=settings.RABBITMQ_PASSWORD)
         rabbitmq_sender.call(exchange_name='js-backend', exchange_type='direct',
                              queue_to_send='template', routing_key_to_send='template',
                              queue_to_receive='template-response',
@@ -91,4 +96,3 @@ class TemplateDetailView(APIView):
         response_data = rabbitmq_sender.response.decode('utf-8')
         response_data = json.loads(response_data)
         return Response(response_data, status=status.HTTP_204_NO_CONTENT)
-
