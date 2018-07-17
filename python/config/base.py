@@ -206,10 +206,13 @@ class Base(Configuration):
     RABBITMQ_HOST = values.SecretValue()
     RABBITMQ_PORT = values.SecretValue()
 
-    BROKER_URL = "amqp://{username}:{password}@{host}:{port}//".format(
+    # BROKER_URL = "amqp://{username}:{password}@{host}:{port}//".format(
+    #
+    #     username=RABBITMQ_USERNAME,
+    #     password=RABBITMQ_PASSWORD,
+    #     host=RABBITMQ_HOST,
+    #     port=RABBITMQ_PORT
+    # )
+    #
 
-        username=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD,
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT
-    )
+    BROKER_URL = "amqp://guest:guest@159.65.153.5:5672//"

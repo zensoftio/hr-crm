@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "uuid": "aada680d-c43b-413b-86db-b63da812832f",
-        "title": "Django Developer Needed",
+        "title": "Go Developer Needed",
         "request": 2,
         "created_by": 1,
         "city": "Bishkek",
@@ -33,7 +33,7 @@
         "created_by": 1,
         "city": "Bishkek",
         "address": "Admin str. 123",
-        "work_conditions": "[\"Sjdfkgdfklgjkldfgjkl\"]",
+        "work_conditions": "[\"Mvahahahahahaha\", \"hELOO ASDFADSF\"]",
         "working_hours": "FULL_TIME",
         "salary_min": 200.0,
         "salary_max": 2020.0,
