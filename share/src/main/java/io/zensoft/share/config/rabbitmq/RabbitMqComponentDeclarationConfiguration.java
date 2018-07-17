@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqComponentDeclarationConfiguration {
 
-    @Value("${rabbitmq.exchange}")
-    public static String TOPIC_SHARE;
+    public static final String TOPIC_SHARE = "share";
     public static final String QUEUE_FACEBOOK_PUBLISH = "facebookPublish";
     public static final String QUEUE_FACEBOOK_GET_INFO = "facebookGetInfo";
     public static final String QUEUE_DIESEL_PUBLISH = "dieselPublish";
@@ -59,7 +59,7 @@ public class RabbitMqComponentDeclarationConfiguration {
     }
 
     @Bean
-    public Queue shareResponseQueue(){
+    public Queue shareResponseQueue() {
         return new Queue(QUEUE_SHARE_RESPONSE);
     }
 
