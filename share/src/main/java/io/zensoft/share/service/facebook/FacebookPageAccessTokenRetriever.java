@@ -16,6 +16,7 @@ import java.util.Map;
 public class FacebookPageAccessTokenRetriever {
     private String userAccessToken;
     private String pageAccessToken;
+    private String pageId;
 
     public String getZensoftPageAccessToken (){
         Map<String, String> uriVariables = new LinkedHashMap<>();
@@ -34,6 +35,7 @@ public class FacebookPageAccessTokenRetriever {
         pageList.forEach( (page) -> {
             if(page.get("name").toString().contains("Zensoft")){
                 setPageAccessToken(page.get("access_token").toString());
+                setPageId(page.get("id").toString());
             }
         });
         log.info("page access token is retrieved successfully", pageAccessToken);
@@ -47,5 +49,13 @@ public class FacebookPageAccessTokenRetriever {
 
     private void setPageAccessToken(String pageAccessToken) {
         this.pageAccessToken = pageAccessToken;
+    }
+
+    public String getPageId() {
+        return pageId;
+    }
+
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
     }
 }
