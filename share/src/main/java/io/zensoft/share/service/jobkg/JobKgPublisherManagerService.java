@@ -49,18 +49,16 @@ public class JobKgPublisherManagerService implements PublisherManagerService {
     }
 
     @Override
-    @Transactional
     public void publish(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
-        vacancyModelService.save(vacancy);
+        //vacancyModelService.save(vacancy);
         VacancyResponse vacancyResponse = jobKgPublisherService.publish(vacancy);
-        vacancyResponseModelService.save(vacancyResponse);
+        //vacancyResponseModelService.save(vacancyResponse);
         VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
         vacancyResponseSenderService.respond(vacancyResponseDto);
     }
 
     @Override
-    @Transactional
     public void getInfo(VacancyDto vacancyDto) {
         Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
         VacancyResponse vacancyResponse = vacancyRetrieverService.getInfo(vacancy, PublisherServiceType.JOB_KG);
