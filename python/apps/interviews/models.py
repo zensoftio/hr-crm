@@ -17,6 +17,7 @@ INTERVIEW_STATUS = (
 
 
 class Interview(models.Model):
+    event = models.CharField(max_length=100, null=True)
     status = models.CharField(choices=INTERVIEW_STATUS, max_length=100, default="TO_BE_CONDUCTED")
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT, related_name='interviews')
     begin_time = models.DateTimeField()
