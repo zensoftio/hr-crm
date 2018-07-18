@@ -76,7 +76,7 @@ public class PublicationVacancyContentBuilder {
         velocityContext.put("vacancyTitle", vacancy.getTitle());
         velocityContext.put("vacancySalaryMin", vacancy.getSalaryMin());
         velocityContext.put("vacancySalaryMax", vacancy.getSalaryMax());
-        
+
         StringWriter writer = new StringWriter();
         template.merge(velocityContext, writer);
         setContentOfPost(writer.toString());

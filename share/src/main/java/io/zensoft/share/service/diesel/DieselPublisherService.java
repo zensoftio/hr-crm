@@ -4,8 +4,6 @@ import io.zensoft.share.model.PublisherServiceType;
 import io.zensoft.share.model.Vacancy;
 import io.zensoft.share.model.VacancyResponse;
 import io.zensoft.share.model.VacancyStatus;
-import io.zensoft.share.model.diesel.RequestResponse;
-import io.zensoft.share.model.diesel.RequestStatus;
 import io.zensoft.share.service.PublisherService;
 import io.zensoft.share.service.diesel.sender.*;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +37,6 @@ public class DieselPublisherService implements PublisherService {
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
         log.info("publish given Vacancy in diesel.elcat.kg");
-        log.info("create VacancyResponse and fill with static values");
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);
         vacancyResponse.setStatus(VacancyStatus.PENDING);
@@ -95,6 +92,7 @@ public class DieselPublisherService implements PublisherService {
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Get request for authKey executing is failed.");
         }
+        authKeyGetRequestSender.deleteHeaderCookie();
         return vacancyResponse;
     }
 
@@ -116,6 +114,7 @@ public class DieselPublisherService implements PublisherService {
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Post request for publication is failed.");
         }
+        publicationPostRequestSender.deleteHeaderCookie();
         return vacancyResponse;
     }
 }

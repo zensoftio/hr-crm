@@ -5,6 +5,7 @@ volumes:
   production_postgres_data_backups: {}
   production_caddy: {}
   static: {}
+  rabbitmq: {}
 
 services:
   django:
@@ -22,6 +23,21 @@ services:
       - .envs/.django
       - .envs/.postgres
     command: /start
+
+  listener:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    restart: always
+    container_name: listener
+    image: hr_crm_django
+    depends_on:
+      - postgres
+      - django
+    env_file:
+      - .envs/.django
+      - .envs/.postgres
+    command: /listen
 
   postgres:
     build:
@@ -51,15 +67,15 @@ services:
     env_file:
       - .envs/.caddy
     ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
+      - "80:80"
+      - "443:443"
 
   rabbitmq:
     build: compose/rabbitmq
     container_name: rabbitmq
     image: hr_crm_rabbitmq
     ports:
-      - "15672:15672"
+      - "15673:15672"
       - "5672:5672"
     volumes:
-      - /opt/rabbitmq:/var/lib/rabbitmq
+      - rabbitmq:/var/lib/rabbitmq

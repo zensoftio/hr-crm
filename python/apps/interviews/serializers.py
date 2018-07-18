@@ -142,3 +142,9 @@ class JavaScriptInterviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
         fields = ('begin_time', 'end_time', 'interviewers', 'candidate_email', 'phone')
+
+
+class EvaluationCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evaluation
+        exclude = []

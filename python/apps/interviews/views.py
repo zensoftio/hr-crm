@@ -13,10 +13,9 @@ from apps.utils.serializers import MethodSerializerView
 User = get_user_model()
 
 from apps.utils.serializers import MethodSerializerView
-from apps.interviews.models import Interview, Criteria
+from apps.interviews.models import Interview, Criteria, Evaluation
 from apps.interviews.serializers import InterviewListSerializer, CriteriaListSerializer, InterviewDetailSerializer, \
-    InterviewCreateSerializer, CriteriaCreateSerializer
-from apps.users.permissions import IsInterviewer
+    InterviewCreateSerializer, CriteriaCreateSerializer, EvaluationCreateSerializer
 
 
 class InterviewListCreateView(generics.ListCreateAPIView):
@@ -82,7 +81,7 @@ def call_javascript_microservice(interviewers, candidate, data):
     for interviewer in interviewers:
         emails.append(interviewer.email)
 
-    emails.append(candidate.email) #
+    emails.append(candidate.email)
 
     # json data for send on microservice
     json_to_microservice = {
