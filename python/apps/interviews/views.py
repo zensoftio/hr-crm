@@ -30,9 +30,9 @@ class InterviewListCreateView(generics.ListCreateAPIView):
         interviewers_id = data['interviewers']
         candidate_id = data['candidate']
 
-        data_json = call_javascript_microservice(interviewers, candidate, data)
+        data_response_js = call_javascript_microservice(interviewers, candidate, data)
 
-        new_data = convert_data(data_json, interviewers_id, candidate_id)
+        new_data = convert_data(data_response_js, interviewers_id, candidate_id)
 
         write_serializer = InterviewCreateSerializer(data=new_data)
         write_serializer.is_valid(raise_exception=True)
@@ -75,13 +75,12 @@ class CriteriaCreateListView(MethodSerializerView, generics.ListCreateAPIView):
 
 
 def call_javascript_microservice(interviewers, candidate, data):
-
     emails = []  # emails of interviwers and candidate to JS-microservice
 
     for interviewer in interviewers:
         emails.append(interviewer.email)
 
-    emails.append(candidate.email) #
+    emails.append(candidate.email)
 
     # json data for send on microservice
     json_to_microservice = {
@@ -123,3 +122,7 @@ def convert_data(data_json, interviewers_id, candidate_id):
 
     return new_data
 
+
+class EvaluationCreateView(generics.CreateAPIView):
+    queryset = Evaluation.objects.all()
+    serializer_class = EvaluationCreateSerializer
