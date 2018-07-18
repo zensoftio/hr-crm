@@ -35,6 +35,6 @@ public class PublicationHeader {
 
     public void deleteCookieFromHeaders() {
         log.info("delete header cookie from publication headers");
-        publicationHeaders.remove("Cookie");
+        publicationHeaders.remove(HttpHeaders.COOKIE);
     }
 }
