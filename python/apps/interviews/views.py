@@ -27,10 +27,14 @@ class InterviewListCreateView(generics.ListCreateAPIView):
         data = request.data
         interviewers = User.objects.filter(pk__in=data['interviewers'])
         candidate = Candidate.objects.get(pk=data['candidate'])
+        interviewers_id = data['interviewers']
+        candidate_id = data['candidate']
 
-        call_javascript_microservice(interviewers, candidate, data)
+        data_json = call_javascript_microservice(interviewers, candidate, data)
 
-        write_serializer = InterviewCreateSerializer(data=request.data)
+        new_data = convert_data(data_json, interviewers_id, candidate_id)
+
+        write_serializer = InterviewCreateSerializer(data=new_data)
         write_serializer.is_valid(raise_exception=True)
         self.perform_create(write_serializer)
 
@@ -71,12 +75,13 @@ class CriteriaCreateListView(MethodSerializerView, generics.ListCreateAPIView):
 
 
 def call_javascript_microservice(interviewers, candidate, data):
-    emails = []
+
+    emails = []  # emails of interviwers and candidate to JS-microservice
+
     for interviewer in interviewers:
         emails.append(interviewer.email)
 
-    emails.append(candidate.email)
-    print(emails)
+    emails.append(candidate.email) #
 
     # json data for send on microservice
     json_to_microservice = {
@@ -104,7 +109,17 @@ def call_javascript_microservice(interviewers, candidate, data):
     data_json = rabbitmq.response.decode('utf-8')
     data_json = json.loads(data_json)
 
+    return data_json
 
-class EvaluationCreateView(generics.CreateAPIView):
-    queryset = Evaluation.objects.all()
-    serializer_class = EvaluationCreateSerializer
+
+def convert_data(data_json, interviewers_id, candidate_id):
+    new_data = data_json['body']
+    new_data['candidate'] = candidate_id
+    new_data['event'] = new_data['id_event']
+    new_data.pop('id_event')
+    new_data['interviewers'] = interviewers_id
+    new_data.pop('email')
+    new_data.pop('phone')
+
+    return new_data
+
