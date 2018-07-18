@@ -43,4 +43,8 @@ public class FacebookUrlBuilder {
         log.info("calling FacebookPostContentBuilder to get content of the vacancy");
         return facebookPostContentBuilder.getContent(vacancy);
     }
+
+    public void setPageId(String pageId) {
+        facebookConfigs.setPageId(pageId);
+    }
 }

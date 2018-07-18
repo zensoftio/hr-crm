@@ -13,10 +13,9 @@ from apps.utils.serializers import MethodSerializerView
 User = get_user_model()
 
 from apps.utils.serializers import MethodSerializerView
-from apps.interviews.models import Interview, Criteria
+from apps.interviews.models import Interview, Criteria, Evaluation
 from apps.interviews.serializers import InterviewListSerializer, CriteriaListSerializer, InterviewDetailSerializer, \
-    InterviewCreateSerializer, CriteriaCreateSerializer
-from apps.users.permissions import IsInterviewer
+    InterviewCreateSerializer, CriteriaCreateSerializer, EvaluationCreateSerializer
 
 
 class InterviewListCreateView(generics.ListCreateAPIView):
@@ -123,3 +122,4 @@ def convert_data(data_json, interviewers_id, candidate_id):
     new_data.pop('phone')
 
     return new_data
+

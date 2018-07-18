@@ -55,6 +55,11 @@ public class AuthKeyGetRequestSender {
         authKeyHeader.addCookieToHeaders(sessionId);
     }
 
+    public void deleteHeaderCookie() {
+        log.info("call method from header class to delete header with cookie(sessionId)");
+        authKeyHeader.deleteCookieFromHeaders();
+    }
+
     public String getAuthKey() {
         return authKey;
     }

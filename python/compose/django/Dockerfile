@@ -20,6 +20,10 @@ COPY ./compose/django/start /start
 RUN sed -i 's/\r//' /start
 RUN chmod +x /start
 
+COPY ./compose/django/listen /listen
+RUN sed -i 's/\r//' /listen
+RUN chmod +x /listen
+
 COPY . /app
 
 WORKDIR /app
