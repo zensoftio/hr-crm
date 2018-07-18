@@ -22,11 +22,9 @@ export default class PlusMinus extends React.Component {
 	}
 
 	render() {
-		console.log(this.props);
+		console.log('count starts',this.props);
 		
 
-		
-		
 		return (
 			
 			<span>

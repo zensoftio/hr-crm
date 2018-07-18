@@ -46,7 +46,7 @@ export default class App extends Component {
         let storage = window.localStorage;
 
         if(storage.getItem('role') !== null){
-            return <User userRole='pm' />    
+            return <User userRole={storage.role} />    
         }
         return(
             <div>                
