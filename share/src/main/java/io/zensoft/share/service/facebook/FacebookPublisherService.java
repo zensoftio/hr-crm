@@ -53,6 +53,7 @@ public class FacebookPublisherService implements PublisherService {
         userAccessToken = vacancy.getFacebookUserAccessToken();
         facebookPageAccessTokenRetriever.setUserAccessToken(userAccessToken);
         pageAccessToken = facebookPageAccessTokenRetriever.getZensoftPageAccessToken();
+        facebookUrlBuilder.setPageId(facebookPageAccessTokenRetriever.getPageId());
     }
 
     private boolean isValidImageUrl(String imageUrl) {
