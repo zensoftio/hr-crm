@@ -1,5 +1,0 @@
-POSTGRES_HOST: share_postgresql
-POSTGRES_PORT: 5432
-POSTGRES_DB: share_micro_service
-POSTGRES_USERNAME: postgres
-POSTGRES_PASSWORD: root
