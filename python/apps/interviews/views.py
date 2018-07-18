@@ -111,6 +111,11 @@ def call_javascript_microservice(interviewers, candidate, data):
 
     return data_json
 
+class EvaluationCreateView(generics.CreateAPIView):
+    queryset = Evaluation.objects.all()
+    serializer_class = EvaluationCreateSerializer
+
+
 
 def convert_data(data_json, interviewers_id, candidate_id):
     new_data = data_json['body']
