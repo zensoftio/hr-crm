@@ -7,5 +7,3 @@ RUN cd /app && npm install
 COPY . /app
 
 WORKDIR /app
-
-RUN npm run

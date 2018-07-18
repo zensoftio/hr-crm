@@ -6,7 +6,6 @@ services:
     restart: always
     container_name: react
     image: hr_crm_react
+    command: "npm start"
     volumes:
       - ./build:/app/build
-    ports:
-      - "3000:3000"

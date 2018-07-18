@@ -42,11 +42,14 @@ services:
     volumes:
       - ./caddy:/root/.caddy
       - ./static:/app/static
+      - ../FrontJS/build:/www/reachthestars.ml
     env_file:
       - .envs/.caddy
     ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
+      - "80:80"
+      - "443:443"
+      - "3000:3000"
+      - "2015:2015"
 
   rabbitmq:
     build: compose/rabbitmq

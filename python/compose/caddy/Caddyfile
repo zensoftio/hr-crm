@@ -1,16 +1,12 @@
-{$DOMAIN_NAME} {
-    root /www/reachthestars.ml
+{$DOMAIN_NAME}:3000 {
     proxy / react:3000 {
-        header_upstream Host {host}
-        header_upstream X-Real-IP {remote}
-        header_upstream X-Forwarded-Proto {scheme}
     }
     log stdout
     errors stdout
     gzip
 }
 
-dev.{$DOMAIN_NAME} {
+{$DOMAIN_NAME} {
     root /app
     proxy / django:5000 {
         transparent
