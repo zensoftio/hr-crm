@@ -75,7 +75,6 @@ class CriteriaCreateListView(MethodSerializerView, generics.ListCreateAPIView):
 
 
 def call_javascript_microservice(interviewers, candidate, data):
-
     emails = []  # emails of interviwers and candidate to JS-microservice
 
     for interviewer in interviewers:
@@ -111,11 +110,6 @@ def call_javascript_microservice(interviewers, candidate, data):
 
     return data_json
 
-class EvaluationCreateView(generics.CreateAPIView):
-    queryset = Evaluation.objects.all()
-    serializer_class = EvaluationCreateSerializer
-
-
 
 def convert_data(data_json, interviewers_id, candidate_id):
     new_data = data_json['body']
@@ -127,3 +121,8 @@ def convert_data(data_json, interviewers_id, candidate_id):
     new_data.pop('phone')
 
     return new_data
+
+
+class EvaluationCreateView(generics.CreateAPIView):
+    queryset = Evaluation.objects.all()
+    serializer_class = EvaluationCreateSerializer
