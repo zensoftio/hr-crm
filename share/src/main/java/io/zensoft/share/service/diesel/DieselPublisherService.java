@@ -37,7 +37,6 @@ public class DieselPublisherService implements PublisherService {
     @Override
     public VacancyResponse publish(Vacancy vacancy) {
         log.info("publish given Vacancy in diesel.elcat.kg");
-        log.info("create VacancyResponse and fill with static values");
         VacancyResponse vacancyResponse = new VacancyResponse();
         vacancyResponse.setVacancy(vacancy);
         vacancyResponse.setStatus(VacancyStatus.PENDING);

@@ -31,6 +31,6 @@ public class AuthKeyHeader {
 
     public void deleteCookieFromHeaders() {
         log.info("delete header cookie from authkey headers");
-        authKeyGetterHeaders.remove("Cookie");
+        authKeyGetterHeaders.remove(HttpHeaders.COOKIE);
     }
 }
