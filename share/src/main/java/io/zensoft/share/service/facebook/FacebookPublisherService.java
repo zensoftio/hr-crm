@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Map;
@@ -62,7 +64,7 @@ public class FacebookPublisherService implements PublisherService {
         try {
             image = ImageIO.read(new URL(imageUrl));
         } catch (Exception e) {
-            log.error("error checking image url", e);
+            log.info("error checking image url");
             return false;
         }
         return image != null;
