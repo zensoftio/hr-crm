@@ -21,7 +21,7 @@ services:
     links:
       - share_postgresql
 
-    env_files:
+    env_file:
       - .env/.rabbitmq
-      - .env/.rabbitmq
+      - .env/.postgresql
 
