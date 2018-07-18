@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  share_postgresql:
+    image: postgres:latest
+    container_name: share_postgresql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=share_micro_service
+    ports:
+      - "5432:5432"
+    hostname: share_postgresql
+
+  share_service:
+    build:
+      context: ./
+    container_name: share_micro_service
+    depends_on:
+      - share_postgresql
+    links:
+      - share_postgresql
+
+    env_file:
+      - .env/.rabbitmq
+      - .env/.postgresql
+
