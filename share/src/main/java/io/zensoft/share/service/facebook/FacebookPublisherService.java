@@ -92,7 +92,7 @@ public class FacebookPublisherService implements PublisherService {
             vacancyResponse.setStatus(VacancyStatus.SUCCESS);
             vacancyResponse.setUrl("https://www.facebook.com/" + map.getBody().get("id"));
             vacancyResponse.setPublishDate(new Date());
-            vacancyResponse.setMessage(map.toString());
+            vacancyResponse.setMessage("post on Facebook page created successfully");
             log.info("returning VacancyResponse after successful post request");
             return vacancyResponse;
         } catch (Exception e) {
