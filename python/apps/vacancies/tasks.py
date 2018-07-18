@@ -9,13 +9,12 @@ from apps.vacancies.models import Vacancy, Publication
 
 
 @celery.task
-def send_message_to_java(queryset, serializer, service='', facebook=False):
-
+def send_message_to_java(queryset, serializer, service=''):
     rabbit = RabbitMQ(host=settings.RABBITMQ_HOST, user=settings.RABBITMQ_USERNAME, password=settings.RABBITMQ_PASSWORD)
     content = rabbit.call_java(queryset, serializer,
                                exchange_name='share',
                                q_receiving='shareResponse',
-                               q_sending=service+'.publish', facebook=facebook)
+                               q_sending=service + '.publish', service=service)
 
     content = content.decode('utf-8')
 
@@ -34,3 +33,12 @@ def send_message_to_java(queryset, serializer, service='', facebook=False):
     print(data)
 
     Publication.objects.create(**data)
+
+    if content['status'] == 'SUCCESS':
+        if service == 'facebook':
+            Vacancy.objects.filter(uuid=content['uuid']).update(facebook=True)
+        if service == 'jobkg':
+            Vacancy.objects.filter(uuid=content['uuid']).update(jobkg=True)
+
+        if service == 'diesel':
+            Vacancy.objects.filter(uuid=content['uuid']).update(jobkg=True)

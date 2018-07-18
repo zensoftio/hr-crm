@@ -86,3 +86,8 @@ class JavaVacancySerializer(serializers.ModelSerializer):
                   'salary_min', 'salary_max', 'image', 'responsibilities'
                   )
 
+
+class VacancyCreateOrUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        exclude = []

@@ -89,7 +89,7 @@ class RabbitMQ:
         self.response = body
 
     def call_java(self, queryset=None, serializer=None, exchange_name='', exchange_type='topic', q_receiving='',
-                  q_sending='', message='', facebook=False):
+                  q_sending='', message='', service=''):
         self.response = None
         self.q_sending = q_sending
         self.q_receiving = q_receiving
@@ -98,10 +98,11 @@ class RabbitMQ:
         self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
         if queryset and serializer:
             message = self.message_to_server(queryset, serializer)
-            if facebook:
+            if service == 'facebook':
                 message = message.decode('utf-8')
                 message = json.loads(message)
-                message['facebook_user_access_token'] = 'EAAVEWZBXPkcQBAOtPLDrQPgBykLVbYoHdmFhwZAjfNhRYK4U0Vus9A2uYSQn41x78ftbSZAvqxZAzTZBx5VVQr4xZBiMQlggHtM4yPa9kDcqC24Q4ZAk9fDD99ry24ncCLjG0Hd1ZB0U4RHyggyCdZC0SI7xrcSWMR5SYPZCKv2pgDke6RZAaA7McnhC7nnk6UZCkx4ZD'
+                message[
+                    'facebook_user_access_token'] = 'EAAVEWZBXPkcQBAO3XMIbN81TUXKDK0muErpujlKWwRDo27Exw4AFMHo6mj1I1o7bqvhWegEhbQhckwDGsVGTqYnLDBLe8lEVkziu45YgNFREDdjahhOk4AemY1mottWJfdqZCALjVnA0eRrLXVdAslLY9ZBFZAC4J3XDguNOr2hMjdmd9ZCw7OTABmahxZAUDKRTpgcHuRiwZDZD'
                 message = json.dumps(message)
             content = json.loads(message)
             self.uuid = content['uuid']

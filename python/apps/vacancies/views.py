@@ -26,6 +26,22 @@ class VacancyDetailView(generics.RetrieveUpdateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyDetailSerializer
 
+    def partial_update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        write_serializer = VacancyCreateUpdateSerializer(
+            instance, data=request.data, partial=partial
+        )
+        write_serializer.is_valid(raise_exception=True)
+        self.perform_update(write_serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        read_serializer = VacancyDetailSerializer(instance)
+
+        return Response(read_serializer.data)
+
 
 class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
     queryset = Publication.objects.all()
@@ -39,7 +55,7 @@ class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
         data = request.data
         queryset = Vacancy.objects.get(pk=data['vacancy'])
         if data['facebook']:
-            send_message_to_java.delay(queryset, JavaVacancySerializer, 'facebook', facebook=True)
+            send_message_to_java.delay(queryset, JavaVacancySerializer, 'facebook')
         if data['jobkg']:
             send_message_to_java.delay(queryset, JavaVacancySerializer, 'jobKg')
         if data['diesel']:
