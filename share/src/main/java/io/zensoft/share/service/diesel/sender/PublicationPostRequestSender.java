@@ -51,4 +51,9 @@ public class PublicationPostRequestSender {
         publicationHeader.addCookieToHeaders(sessionId);
     }
 
+    public void deleteHeaderCookie() {
+        log.info("call method from header class to delete header with cookie(sessionId)");
+        publicationHeader.deleteCookieFromHeaders();
+    }
+
 }

@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import * as Amqp from "amqp-ts";
 import { CronJob } from 'cron';
 import { InboxService } from './inbox.service';
-import { Inbox } from './inbox.interface';
 import * as moment from 'moment';
 import * as connection from 'Rabbit';
 
@@ -12,8 +11,8 @@ const queue = connection.default.declareQueue('candidate',{durable: false});
 @Controller('inbox')
 export class InboxListener {
     constructor(private readonly inboxService: InboxService){
-      this.startCron('00 00 08 * * 1-5');
-      this.startCron('00 00 13 * * 1-5');
+      this.startCron('00 00 08 * * 1-5',true,'Asia/Bishkek');
+      this.startCron('00 00 13 * * 1-5',true,'Asia/Bishkek');
       this.listenQueue();
     }
 
@@ -29,7 +28,7 @@ export class InboxListener {
       }
     }
 
-    updateInboxList = async(message: any):any => {
+    updateInboxList = async(message: any): Promise<any> => {
       try {
         const result = await this.inboxService.getMessages(message);
         this.sendMessage(result);
@@ -39,7 +38,7 @@ export class InboxListener {
       }
    }
 
-     getOneMessage = async(message: any):any => {
+     getOneMessage = async(message: any): Promise<any> =>{
        try {
          const result = await this.inboxService.getOneMessage(message);
          this.sendMessage(result);
@@ -49,15 +48,15 @@ export class InboxListener {
        }
     }
 
-    private async sendMessage(msg: any):any {
+    private async sendMessage(msg: any): Promise<any> {
       var sendQueue = connection.default.declareQueue('candidate-response',{durable:false});
       connection.default.completeConfiguration().then(() => {
           var msg2 = new Amqp.Message(msg);
-          exchange.send(msg2,'candidate-response',{durable:false});
+          exchange.send(msg2,'candidate-response');
       });
     }
 
-    private async listenQueue():void {
+    private async listenQueue():Promise<void> {
       queue.bind(exchange, 'candidate');
       queue.activateConsumer((message) => {
         var msg = message.getContent()
@@ -66,17 +65,18 @@ export class InboxListener {
         }, {noAck: true})
     }
 
-    private async startCron(date: string):void{
-      var job = new CronJob(date, () => {
+    private async startCron(date: string, a: any, b: any): Promise<any> {
+      var job = new CronJob(date,(): Promise<any> => {
         const date = moment().tz('Asia/Bishkek').format("YYYY-MM-DDTHH:mm:ss");
         var data = {
           "date": date
         }
-         this.updateInboxList(data);
+         return this.updateInboxList(data);
         },
-        true,
-        'Asia/Bishkek'
+        a,
+        b
       );
+      return true;
     }
 
 }

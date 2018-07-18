@@ -39,11 +39,11 @@ def main():
 
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
-    channel.exchange_declare(exchange='candidates', exchange_type='direct')
-    channel.queue_declare(queue='candidate_queue', durable=False)
+    channel.exchange_declare(exchange='js-backend', exchange_type='direct')
+    channel.queue_declare(queue='candidate-response', durable=False)
 
-    channel.queue_bind(exchange='candidates', queue='candidate_queue', routing_key='candidate')
+    channel.queue_bind(exchange='js-backend', queue='candidate-response', routing_key='candidate-response')
 
     print(' [*] Waiting for Candidates. To exit press CTRL+C')
-    channel.basic_consume(callback, queue='candidate_queue', no_ack=True)
+    channel.basic_consume(callback, queue='candidate-response', no_ack=True)
     channel.start_consuming()

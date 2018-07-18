@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { TEMPLATES_URL } from '../../../utils/urls';
 import { FetchDataAPI } from '../../../services/FetchDataAPI';
 import {Input, TextField, Button, Divider } from '@material-ui/core';
-import Upload from 'material-ui-upload/Upload';
+//import Upload from '@material-ui-upload/Upload';
 import { PutDataAPI } from '../../../services/PutDataAPI';
 import { DeleteDataAPI } from '../../../services/DeleteDataAPI';
 import { Redirect } from 'react-router-dom';
