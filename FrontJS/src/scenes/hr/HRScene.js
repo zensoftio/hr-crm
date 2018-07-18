@@ -51,13 +51,7 @@ const HRNav = [
         name: "Интервью",
         path: "/list_of_interviews",
         component: InterviewList
-    },
-    {
- 
-        name: "Уведомления",
-        path: "/notifications",
-        component: Notifications
-    },   
+    }, 
     {
       name: "Шаблоны сообщений",
       path: "/list_of_templates",
@@ -72,11 +66,6 @@ const HRNav = [
       name: "",
       path: "/template/:id",
       component: Template
-		},
-		{
-			name: "",
-			path: "/edit_interview/:id",
-			component: EditInterview
 		},
     {
         name: "",

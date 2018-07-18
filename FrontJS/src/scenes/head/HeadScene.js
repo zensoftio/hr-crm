@@ -24,11 +24,9 @@ export default class HeadScene extends Component {
                         <Switch>
                             <Route path="/" component={OpenedPositions} exact/>
                             <SpecifyTheRoute route={HeadNav} />
-                            <Route component={Error}/>											
-
+                            <Route component={Error}/>			
                         </Switch>
                     </div>
-
                 </div>
             </BrowserRouter>
         );

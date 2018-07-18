@@ -78,8 +78,11 @@ class EditPositionContainer extends React.Component {
 							<label>
 								<span className="labels">ТРЕБОВАНИЯ:</span>	
 								<span className="labels">
-									<MultipleSelect optionValue={requirements}
-									/>
+									<ul className="requirements">
+										{requirements.map((item, i) => (
+											<li key={i}>{item}</li>
+										))}
+									</ul>
 								</span>	
 							</label>						
 						</div>
