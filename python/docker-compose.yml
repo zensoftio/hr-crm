@@ -13,7 +13,7 @@ services:
       context: .
       dockerfile: ./compose/django/Dockerfile
     restart: always
-    container_name: django
+    container_name: django_main
     image: hr_crm_django
     volumes:
       - static:/app/static
@@ -29,11 +29,12 @@ services:
       context: .
       dockerfile: ./compose/django/Dockerfile
     restart: always
-    container_name: listener
+    container_name: django_listener
     image: hr_crm_django
     depends_on:
       - postgres
       - django
+      - rabbitmq
     env_file:
       - .envs/.django
       - .envs/.postgres
@@ -44,7 +45,7 @@ services:
       context: .
       dockerfile: ./compose/postgres/Dockerfile
     restart: always
-    container_name: postgres
+    container_name: postgres_django
     image: hr_crm_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
