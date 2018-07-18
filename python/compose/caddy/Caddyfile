@@ -1,11 +1,3 @@
-{$DOMAIN_NAME}:3000 {
-    proxy / react:3000 {
-    }
-    log stdout
-    errors stdout
-    gzip
-}
-
 {$DOMAIN_NAME} {
     root /app
     proxy / django:5000 {
