@@ -48,10 +48,15 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
     @Override
     public void publish(VacancyDto vacancyDto) {
         log.info("processing publish request from listener");
-        Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
-        VacancyResponse vacancyResponse = facebookPublisherService.publish(vacancy);
-        defaultVacancyResponseModelService.save(vacancyResponse);
-        convertToDtoAndRespond(vacancyResponse);
+        try {
+            Vacancy vacancy = convertToVacancyAndSaveToDatabase(vacancyDto);
+            VacancyResponse vacancyResponse = null;
+            vacancyResponse = facebookPublisherService.publish(vacancy);
+//            defaultVacancyResponseModelService.save(vacancyResponse);
+            convertToDtoAndRespond(vacancyResponse);
+        } catch (Exception e) {
+            log.error("error processing publish request from listener", e);
+        }
     }
 
     @Override
@@ -64,7 +69,7 @@ public class FacebookPublisherManagerService implements PublisherManagerService 
 
     private Vacancy convertToVacancyAndSaveToDatabase(VacancyDto vacancyDto) {
         Vacancy vacancy = defaultVacancyConverterService.fromDto(vacancyDto);
-        defaultVacancyModelService.save(vacancy);
+//        defaultVacancyModelService.save(vacancy);
         return  vacancy;
     }
 
