@@ -49,15 +49,13 @@ public class DieselPublisherService implements PublisherService {
             return vacancyResponse;
         }
 
-        String responseAuthKey = activateAuthKeyGetRequestSender(vacancyResponse,
-                loginPostRequestSender).getStatus().name();
+        String responseAuthKey = activateAuthKeyGetRequestSender(vacancyResponse).getStatus().name();
         if (responseAuthKey.equals(VacancyStatus.FAILED.name())) {
             log.info("return VacancyResponse because authKeyRetriever Failed");
             return vacancyResponse;
         }
 
-        String responsePublication = activatePublicationPostRequestSender(vacancyResponse,
-                loginPostRequestSender, vacancy, authKeyGetRequestSender).getStatus().name();
+        String responsePublication = activatePublicationPostRequestSender(vacancyResponse, vacancy).getStatus().name();
         if (responsePublication.equals(VacancyStatus.FAILED.name())) {
             log.info("return VacancyResponse because publication Failed");
             return vacancyResponse;
@@ -81,10 +79,10 @@ public class DieselPublisherService implements PublisherService {
         return vacancyResponse;
     }
 
-    private VacancyResponse activateAuthKeyGetRequestSender(VacancyResponse vacancyResponse,
-                                                            LoginPostRequestSender loginPostRequestSender) {
+    private VacancyResponse activateAuthKeyGetRequestSender(VacancyResponse vacancyResponse) {
         log.info("run authKeySender method and save response's status");
         String statusAuthKey;
+        authKeyGetRequestSender.deleteHeaderCookie();
         authKeyGetRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
         statusAuthKey = authKeyGetRequestSender.sendGetRequestToGetResponseWithAuthKey(restTemplate).getStatus().name();
         if (statusAuthKey.equals(VacancyStatus.FAILED.name())) {
@@ -92,15 +90,14 @@ public class DieselPublisherService implements PublisherService {
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Get request for authKey executing is failed.");
         }
-        authKeyGetRequestSender.deleteHeaderCookie();
         return vacancyResponse;
     }
 
     private VacancyResponse activatePublicationPostRequestSender(VacancyResponse vacancyResponse,
-                                                                 LoginPostRequestSender loginPostRequestSender,
-                                                                 Vacancy vacancy, AuthKeyGetRequestSender authKeyGetRequestSender) {
+                                                                 Vacancy vacancy) {
         log.info("run publication method and save response's status");
         String statusPublication;
+        publicationPostRequestSender.deleteHeaderCookie();
         publicationPostRequestSender.addHeaderCookie(loginPostRequestSender.getSessionId());
         statusPublication = publicationPostRequestSender.sendPostRequestForPublication(
                 restTemplate,
@@ -114,7 +111,6 @@ public class DieselPublisherService implements PublisherService {
             vacancyResponse.setStatus(VacancyStatus.FAILED);
             vacancyResponse.setMessage("Post request for publication is failed.");
         }
-        publicationPostRequestSender.deleteHeaderCookie();
         return vacancyResponse;
     }
 }
