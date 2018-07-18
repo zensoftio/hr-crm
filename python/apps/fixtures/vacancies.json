@@ -16,6 +16,9 @@
         "image": "",
         "responsibilities": "qqweqweqweqweqweqweqwe",
         "comments": "Comment 1",
+        "diesel": false,
+        "jobkg":false,
+        "facebook":true,
         "created": "2018-07-09T08:05:58.278Z",
         "last_published": "2018-07-09T08:05:58.278Z"
     }
@@ -36,6 +39,9 @@
         "salary_max": 2020.0,
         "responsibilities": "ergklgjerklgjerklerjgklerjklerjlrgor",
         "comments": "Comment 2",
+        "diesel": true,
+        "jobkg":false,
+        "facebook":false,
         "created": "2018-07-09T08:08:01.196Z",
         "last_published": "2018-07-09T08:08:01.196Z"
     }
@@ -47,12 +53,10 @@
 			"vacancy": 1,
 			"created_by": 1,
             "created": "2018-07-09T08:08:01.196Z",
-			"facebook": false,
-            "facebook_url": "http://some_url",
-            "diesel_exist": false,
-            "diesel_url": "http://some_url",
-			"jobkg_exist": true,
-            "jobkg_url": "http://some_url"
+	        "message":"Successfully published to facebook",
+            "url":"https://facebook.com/adsf",
+            "publisher_service":"FACEBOOK",
+            "status":"SUCCESS"
 		}
 	},
 	{
@@ -60,14 +64,13 @@
 		"pk": 2,
 		"fields": {
 			"vacancy": 2,
-			"created_by": 2,
+			"created_by": 1,
             "created": "2018-07-09T08:08:01.196Z",
-			"facebook": true,
-            "facebook_url": "http://some_url",
-            "diesel_exist": true,
-            "diesel_url": "http://some_url",
-			"jobkg_exist": true,
-            "jobkg_url": "http://some_url"
+	        "message":"Successfully published to diesel",
+            "url":"https://diesel.kg/adsf",
+            "publisher_service":"DIESEL",
+            "status":"SUCCESS"
+
 		}
 	}
 ]
