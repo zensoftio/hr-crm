@@ -44,7 +44,7 @@ class Vacancy(models.Model):
 class Publication(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
-    message = models.CharField(max_length=200, default='')
+    message = models.CharField(max_length=200, null = True)
     url = models.URLField(null=True)
     publisher_service = models.CharField(max_length=50, default='')
     status = models.CharField(max_length=50, default='')

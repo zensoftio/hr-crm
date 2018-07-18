@@ -43,6 +43,7 @@ class Base(Configuration):
         'apps.templates',
 
         'djcelery',
+
     ]
     djcelery.setup_loader()
 
@@ -205,11 +206,4 @@ class Base(Configuration):
     RABBITMQ_PASSWORD = values.SecretValue()
     RABBITMQ_HOST = values.SecretValue()
     RABBITMQ_PORT = values.SecretValue()
-
-    BROKER_URL = "amqp://{username}:{password}@{host}:{port}//".format(
-
-        username=RABBITMQ_USERNAME,
-        password=RABBITMQ_PASSWORD,
-        host=RABBITMQ_HOST,
-        port=RABBITMQ_PORT
-    )
+    BROKER_URL = values.SecretValue()
