@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 public class PublicationPostRequestBody {
     private String Post;
     private String TopicTitle;
-    private String auth_key;
     private String s;
 
     private PublicationVacancyContentBuilder publicationVacancyContentBuilder;

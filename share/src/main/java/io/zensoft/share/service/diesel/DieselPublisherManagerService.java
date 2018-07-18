@@ -15,7 +15,6 @@ import io.zensoft.share.service.model.VacancyResponseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Qualifier("dieselPublisherManagerService")
@@ -47,12 +46,16 @@ public class DieselPublisherManagerService implements PublisherManagerService {
 
     @Override
     public void publish(VacancyDto vacancyDto) {
-        Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
-        vacancyModelService.save(vacancy);
-        VacancyResponse vacancyResponse = dieselPublisherService.publish(vacancy);
-        vacancyResponseModelService.save(vacancyResponse);
-        VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
-        vacancyResponseSenderService.respond(vacancyResponseDto);
+        try {
+            Vacancy vacancy = vacancyConverterService.fromDto(vacancyDto);
+            //vacancyModelService.save(vacancy);
+            VacancyResponse vacancyResponse = dieselPublisherService.publish(vacancy);
+            //vacancyResponseModelService.save(vacancyResponse);
+            VacancyResponseDto vacancyResponseDto = vacancyResponseConverterService.toDto(vacancyResponse);
+            vacancyResponseSenderService.respond(vacancyResponseDto);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @Override
