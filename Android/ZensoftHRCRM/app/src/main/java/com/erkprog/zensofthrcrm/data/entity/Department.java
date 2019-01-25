@@ -1,8 +1,8 @@
 package com.erkprog.zensofthrcrm.data.entity;
 
-import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class Department {
+public class Department implements Serializable {
 
   private Integer id;
   private String name;

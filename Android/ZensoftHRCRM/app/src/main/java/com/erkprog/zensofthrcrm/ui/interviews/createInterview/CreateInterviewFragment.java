@@ -14,11 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.erkprog.zensofthrcrm.CRMApplication;
 import com.erkprog.zensofthrcrm.R;
+import com.erkprog.zensofthrcrm.data.entity.User;
+import com.erkprog.zensofthrcrm.ui.interviews.createInterview.interviewers.InterviewersFragment;
+import com.erkprog.zensofthrcrm.util.DateConverter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CreateInterviewFragment extends Fragment implements CreateInterviewContract.View, View
@@ -29,8 +35,10 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   public static final String CANDIDATE_LASTNAME = "candidate last name";
   public static final String CANDIDATE_FIRSTNAME = "candidate first name";
   public static final String CANDIDATE_DEPARTMENT = "candidate department";
-  private static final String DIALOG = "Date and time dialog";
+  private static final String DATE_AND_TIME_DIALOG = "Date and time dialog";
+  private static final String INTERVIEWERS_DIALOG = "add interviewers";
   public static final int REQUEST_DATE_CODE = 7;
+  public static final int REQUEST_ADD_INTERVIEWERS = 1;
 
   private CreateInterviewContract.Presenter mPresenter;
 
@@ -41,9 +49,11 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   private Button mSetDateButton;
   private ImageView mAddInterviewersButton;
   private Button mCreateButton;
+  private ProgressBar mProgressBar;
 
   private Date mInterviewDate;
   private int mCandidateId;
+  private ArrayList<Integer> mInterviewersId;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +62,8 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
   }
 
   private void initPresenter() {
-    mPresenter = new CreateInterviewPresenter(this);
+    mPresenter = new CreateInterviewPresenter(requireContext(), CRMApplication.getInstance
+        (requireContext()).getApiService());
     mPresenter.bind(this);
   }
 
@@ -81,6 +92,8 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     mAddInterviewersButton.setOnClickListener(this);
     mCreateButton = v.findViewById(R.id.crint_create_button);
     mCreateButton.setOnClickListener(this);
+    mProgressBar = v.findViewById(R.id.crint_progress_bar);
+    dismissProgress();
   }
 
   private void setFields() {
@@ -112,7 +125,14 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
     FragmentManager fm = getFragmentManager();
     DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mInterviewDate);
     datePickerFragment.setTargetFragment(CreateInterviewFragment.this, REQUEST_DATE_CODE);
-    datePickerFragment.show(fm, DIALOG);
+    datePickerFragment.show(fm, DATE_AND_TIME_DIALOG);
+  }
+
+  public void startAddInterviewers() {
+    FragmentManager fm = getFragmentManager();
+    InterviewersFragment interviewersFragment = InterviewersFragment.newInstance();
+    interviewersFragment.setTargetFragment(CreateInterviewFragment.this, REQUEST_ADD_INTERVIEWERS);
+    interviewersFragment.show(fm, INTERVIEWERS_DIALOG);
   }
 
   @Override
@@ -123,11 +143,12 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
         break;
 
       case R.id.crint_add_image:
-        //TODO: display list of available interviewers here
+        startAddInterviewers();
         break;
 
       case R.id.crint_create_button:
-        //TODO: create new interview here (implement POST request)
+        mPresenter.onCreateButtonClick(mCandidateId, mInterviewersId, DateConverter
+            .getFormattedDate(mInterviewDate));
         break;
 
       default:
@@ -147,12 +168,12 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
 
   @Override
   public void showProgress() {
-
+    mProgressBar.setVisibility(View.VISIBLE);
   }
 
   @Override
   public void dismissProgress() {
-
+    mProgressBar.setVisibility(View.GONE);
   }
 
   @Override
@@ -165,8 +186,33 @@ public class CreateInterviewFragment extends Fragment implements CreateInterview
       //New date and time for interview sucessfully received from DatePickerFragment
       Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
       updateInterviewDate(date);
-
     }
+
+    if (requestCode == REQUEST_ADD_INTERVIEWERS) {
+      ArrayList<User> users = (ArrayList<User>) data.getSerializableExtra(InterviewersFragment.USERS);
+
+      mInterviewersId = getListId(users);
+
+      showInterviewers(users);
+    }
+  }
+
+  private ArrayList<Integer> getListId(ArrayList<User> users) {
+    ArrayList<Integer> listId = new ArrayList<>();
+    for (User user : users) {
+      listId.add(user.getId());
+    }
+    return listId;
+  }
+
+  private void showInterviewers(ArrayList<User> users) {
+    StringBuilder interviewers = new StringBuilder();
+    for (User user : users) {
+      interviewers.append(String.format("%s %s (%s)\n", user.getFirstName(), user.getLastName(),
+          user.getEmail()));
+      Log.d(TAG, "onActivityResult: " + user.getEmail());
+    }
+    mInterviewers.setText(interviewers);
   }
 
   private void updateInterviewDate(Date date) {

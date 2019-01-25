@@ -3,6 +3,8 @@ package com.erkprog.zensofthrcrm.ui.interviews.createInterview;
 import com.erkprog.zensofthrcrm.ui.BaseView;
 import com.erkprog.zensofthrcrm.ui.ILifecycle;
 
+import java.util.List;
+
 public interface CreateInterviewContract {
 
   interface View extends BaseView {
@@ -14,7 +16,7 @@ public interface CreateInterviewContract {
 
     void onSetDateButtonClick();
 
-    void onCreateButtonClick();
+    void onCreateButtonClick(int candidateId, List<Integer> interviewersId, String date);
 
   }
 }
