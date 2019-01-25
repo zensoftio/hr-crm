@@ -2,7 +2,6 @@ package com.erkprog.zensofthrcrm.data.network;
 
 import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.CandidatesResponse;
-import com.erkprog.zensofthrcrm.data.entity.CriteriasResponse;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
 import com.erkprog.zensofthrcrm.data.entity.InterviewsResponse;
 import com.erkprog.zensofthrcrm.data.entity.RequestsResponse;
