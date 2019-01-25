@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,9 @@ import com.erkprog.zensofthrcrm.data.entity.Candidate;
 import com.erkprog.zensofthrcrm.data.entity.Comment;
 import com.erkprog.zensofthrcrm.data.entity.Cv;
 import com.erkprog.zensofthrcrm.data.entity.Interview;
+import com.erkprog.zensofthrcrm.ui.candidates.candidateDetail.editCandidate.EditCandidateFragment;
 import com.erkprog.zensofthrcrm.ui.interviews.createInterview.CreateInterview;
+import com.erkprog.zensofthrcrm.ui.interviews.interviewsList.InterviewsFragment;
 
 import java.util.List;
 
@@ -235,7 +239,12 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
       case R.id.cd_edit_button:
         //TODO: implement profile editing
-        showMessage("Edit profile");
+        EditCandidateFragment editFragment = new EditCandidateFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.candidate_detail_container, editFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
         break;
       case R.id.cd_message_button:
         //TODO: implement sending message
@@ -245,6 +254,7 @@ public class CandidateDetailFragment extends Fragment implements CandidateDetail
         break;
     }
   }
+
 
   @Override
   public void onDestroy() {

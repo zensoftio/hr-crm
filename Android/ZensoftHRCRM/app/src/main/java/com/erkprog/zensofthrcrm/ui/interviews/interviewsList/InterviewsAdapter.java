@@ -16,6 +16,9 @@ import com.erkprog.zensofthrcrm.ui.ItemClickListener;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.InterviewViewHolder> {
 
   private List<Interview> mInterviews;
@@ -69,19 +72,24 @@ public class InterviewsAdapter extends RecyclerView.Adapter<InterviewsAdapter.In
 
   static class InterviewViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.iitem_firstName)
     TextView firstName;
+
+    @BindView(R.id.iitem_lastName)
     TextView lastName;
+
+    @BindView(R.id.iitem_department)
     TextView department;
+
+    @BindView(R.id.iitem_date)
     TextView date;
+
+    @BindView(R.id.iitem_status)
     TextView status;
 
     public InterviewViewHolder(View itemView) {
       super(itemView);
-      firstName = itemView.findViewById(R.id.iitem_firstName);
-      lastName = itemView.findViewById(R.id.iitem_lastName);
-      department = itemView.findViewById(R.id.iitem_department);
-      date = itemView.findViewById(R.id.iitem_date);
-      status = itemView.findViewById(R.id.iitem_status);
+      ButterKnife.bind(this, itemView);
     }
   }
 }

@@ -17,4 +17,34 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
+
+
+  <TextView
+      android:id="@+id/txt_empty_interviews_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:text="@string/msg_no_interviews"
+      android:textColor="@color/colorGray"
+      android:textSize="@dimen/msg_no_interviews"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/recycler_view_all_interviews"
+      app:layout_constraintTop_toTopOf="@+id/recycler_view_all_interviews"/>
+
+  <ProgressBar
+      android:id="@+id/interviews_progress_bar"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="@dimen/progress_bar_size"
+      android:layout_height="@dimen/progress_bar_size"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/recycler_view_all_interviews"
+      app:layout_constraintTop_toTopOf="@+id/recycler_view_all_interviews"/>
+
 </android.support.constraint.ConstraintLayout>
