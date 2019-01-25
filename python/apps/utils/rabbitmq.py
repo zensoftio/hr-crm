@@ -32,7 +32,6 @@ class RabbitMQ:
         self.connection = pika.BlockingConnection(self.parameters)
         self.channel = self.connection.channel()
         self.queue = ''
-        self.response = None
         self.uuid = None
 
     @staticmethod
@@ -42,6 +41,8 @@ class RabbitMQ:
         serializer = serializer(queryset)
 
         message = JSONRenderer().render(serializer.data)
+
+        print(message)
 
         return message
 
@@ -83,15 +84,13 @@ class RabbitMQ:
 
         return self.response
 
-    def on_response(self, ch, method, properties, body):
-        self.response = None
-        content = body.decode('utf-8')
-        content = json.loads(content)
+    def on_response(self, ch, method, props, body):
+
         self.response = body
-        return self.response
 
     def call_java(self, queryset=None, serializer=None, exchange_name='', exchange_type='topic', q_receiving='',
-                  q_sending='', message=''):
+                  q_sending='', message='', facebook=False):
+        self.response = None
         self.q_sending = q_sending
         self.q_receiving = q_receiving
 
@@ -99,24 +98,32 @@ class RabbitMQ:
         self.channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
         if queryset and serializer:
             message = self.message_to_server(queryset, serializer)
+            if facebook:
+                message = message.decode('utf-8')
+                message = json.loads(message)
+                message['facebook_user_access_token'] = 'EAAVEWZBXPkcQBAOtPLDrQPgBykLVbYoHdmFhwZAjfNhRYK4U0Vus9A2uYSQn41x78ftbSZAvqxZAzTZBx5VVQr4xZBiMQlggHtM4yPa9kDcqC24Q4ZAk9fDD99ry24ncCLjG0Hd1ZB0U4RHyggyCdZC0SI7xrcSWMR5SYPZCKv2pgDke6RZAaA7McnhC7nnk6UZCkx4ZD'
+                message = json.dumps(message)
             content = json.loads(message)
             self.uuid = content['uuid']
 
-        self.channel.basic_consume(self.on_response, no_ack=True,
-                                   queue=self.q_receiving)
+        self.channel.basic_consume(self.on_response,
+                                   no_ack=True,
+                                   queue=q_receiving)
 
         self.channel.basic_publish(exchange=exchange_name,
                                    routing_key=self.q_sending,
                                    properties=pika.BasicProperties(
                                        delivery_mode=2,  # make message persistent
-                                       correlation_id=self.uuid,
                                        content_type='json'
                                    ),
                                    body=message)
 
+        print(self.response)
         while self.response is None:
             self.connection.process_data_events()
 
+        print("Self Response:")
+        print(self.response)
         self.connection.close()
         return self.response
 

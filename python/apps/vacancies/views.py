@@ -38,7 +38,13 @@ class PublicationList(MethodSerializerView, generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         data = request.data
         queryset = Vacancy.objects.get(pk=data['vacancy'])
-        send_message_to_java.delay(queryset, JavaVacancySerializer)
+        if data['facebook']:
+            send_message_to_java.delay(queryset, JavaVacancySerializer, 'facebook', facebook=True)
+        if data['jobkg']:
+            send_message_to_java.delay(queryset, JavaVacancySerializer, 'jobKg')
+        if data['diesel']:
+            send_message_to_java.delay(queryset, JavaVacancySerializer, 'diesel')
+
         messages.success(self.request, "We are publicating. wait a moment and refresh")
         print("Message from create method")
         return Response(data, status=HTTP_200_OK)
